@@ -1040,13 +1040,67 @@
         }
     </style>
       <style>
-#backToTop { position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px; border-radius: 50%; border: none; background: linear-gradient(135deg,var(rgb(171, 93, 93)),var(rgb(222, 166, 63))); color: white; font-size: 18px; cursor: pointer; box-shadow: 0 4px 12px rgba(175,134,80,0.4); display: none; z-index: 999; transition: all 0.3s ease; }
+#backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: none;
+    z-index: 999;
+    padding: 0;
+}
 
-#backToTop i { animation: sunRotate 6s linear infinite; }
+/* Vòng mặt trời bên ngoài */
+#backToTop .sun-ring {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: sunRotate 6s linear infinite;
+}
 
-@keyframes sunRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+#backToTop .sun-ring i {
+    font-size: 56px;
+    color: #ffcc33;
+    filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
+}
 
-#backToTop:hover { transform: translateY(-5px) scale(1.05); background: linear-gradient(135deg,var(rgb(212, 69, 69)),var(rgb(204, 168, 100))); }
+/* Mũi tên bên trong */
+#backToTop .arrow-up {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#backToTop .arrow-up i {
+    font-size: 18px;
+    color: white;
+    text-shadow: 0 0 6px rgba(255,255,255,0.8);
+    z-index: 2;
+}
+
+/* Hover nhẹ */
+#backToTop:hover {
+    transform: translateY(-6px) scale(1.05);
+    transition: 0.3s ease;
+}
+
+/* Animation xoay mặt trời */
+@keyframes sunRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
 
     </style>
 </head>
@@ -1067,8 +1121,8 @@
                     <button class="nav-arrow">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <a href="index.html" class="day-btn">TRANG CHỦ</a>
-                    <a href="solar.html" class="day-btn active">HỆ MẶT TRỜI</a>
+                    <a href="index.html" class="day-btn active">TRANG CHỦ</a>
+                    <a href="solar.html" class="day-btn ">HỆ MẶT TRỜI</a>
                     <a href="music.html" class="day-btn">ÂM NHẠC</a>
                     <a href="news.html" class="day-btn">TIN TỨC</a>
                     <a href="contact.html" class="day-btn">LIÊN HỆ</a>
@@ -1127,8 +1181,8 @@
                 <i class="fas fa-chevron-left"></i>
             </button>
             <div class="d-inline-flex gap-1">
-                <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
-                <a href="solar.html" class="day-btn mobile-day-btn active">Hệ mặt trời</a>
+                <a href="index.html" class="day-btn mobile-day-btn active">Trang chủ</a>
+                <a href="solar.html" class="day-btn mobile-day-btn ">Khóa học</a>
                 <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
                 <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
                 <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
@@ -1148,13 +1202,13 @@
         <div class="offcanvas-body">
             <div class="menu-section">
                 <div class="section-title">Navigation</div>
-                <a href="index.html" class="menu-item">
+                <a href="index.html" class="menu-item active">
                     <i class="fas fa-home"></i>
                     Trang chủ
                 </a>
-                <a href="solar.html" class="menu-item active">
+                <a href="solar.html" class="menu-item ">
                     <i class="fas fa-sun"></i>
-                    Hệ mặt trời
+                    Khóa học
                 </a>
                 <a href="music.html" class="menu-item">
                     <i class="fas fa-music"></i>
@@ -1176,39 +1230,29 @@
                 <div class="section-title">Explore</div>
                 <a href="#sun" class="menu-item">
                     <i class="fas fa-sun"></i>
-                    Mặt trời
+                    Trắc nghiệm
                 </a>
                 <a href="#mercury" class="menu-item">
                     <i class="fas fa-circle"></i>
-                    Sao Thủy
+                    Tài liệu
                 </a>
                 <a href="#venus" class="menu-item">
                     <i class="fas fa-circle"></i>
-                    Sao Kim
+                    Thi thử
                 </a>
-                <a href="#earth" class="menu-item">
-                    <i class="fas fa-globe"></i>
-                    Trái Đất
+                
+            </div>
+            <div class="menu-divider"></div>
+
+            <div class="menu-section">
+                <div class="section-title">Account</div>
+                <a href="login.html" class="menu-item">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Đăng nhập
                 </a>
-                <a href="#mars" class="menu-item">
-                    <i class="fas fa-circle"></i>
-                    Sao Hỏa
-                </a>
-                <a href="#jupiter" class="menu-item">
-                    <i class="fas fa-circle"></i>
-                    Sao Mộc
-                </a>
-                <a href="#saturn" class="menu-item">
-                    <i class="fas fa-circle"></i>
-                    Sao Thổ
-                </a>
-                <a href="#uranus" class="menu-item">
-                    <i class="fas fa-circle"></i>
-                    Sao Thiên Vương
-                </a>
-                <a href="#neptune" class="menu-item">
-                    <i class="fas fa-circle"></i>
-                    Sao Hải Vương
+                <a href="settings.html" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    Cài đặt
                 </a>
             </div>
         </div>
@@ -1225,405 +1269,555 @@
     <h3>Chọn nội dung bạn muốn học</h3>
         <div class="container-solarsystem">
             <a href="#sun" class="sun">
-                <model-viewer src="assets/Sun.glb" alt="Sun" auto-rotate camera-controls ar
+                <model-viewer interaction-prompt="none" src="assets/Sun.glb" alt="Sun" auto-rotate camera-controls ar
                     ios-src="assets/sun.glb" loading="lazy"></model-viewer>
             </a>
             <a href="#mercury" class="mercury">
-                <model-viewer src="assets/Mercury.glb" alt="Mercury" auto-rotate camera-controls ar
+                <model-viewer interaction-prompt="none" src="assets/Mercury.glb" alt="Mercury" auto-rotate camera-controls ar
                     ios-src="assets/Mercury.glb" loading="lazy"></model-viewer>
             </a>
             <a href="#venus" class="venus">
-                <model-viewer src="assets/Venus(surface).glb" alt="Venus" auto-rotate camera-controls ar
+                <model-viewer interaction-prompt="none" src="assets/Venus(surface).glb" alt="Venus" auto-rotate camera-controls ar
                     ios-src="assets/Venus(surface).glb" loading="lazy"></model-viewer>
             </a>
             <a href="#earth" class="earth">
-                <model-viewer src="assets/Earth.glb" alt="Earth" auto-rotate camera-controls ar
+                <model-viewer interaction-prompt="none" src="assets/Earth.glb" alt="Earth" auto-rotate camera-controls ar
                     ios-src="assets/Earth.glb" loading="lazy"></model-viewer>
             </a>
             <a href="#mars" class="mars">
-                <model-viewer src="assets/Mars.glb" alt="Mars" auto-rotate camera-controls ar
+                <model-viewer interaction-prompt="none" src="assets/Mars.glb" alt="Mars" auto-rotate camera-controls ar
                     ios-src="assets/Mars.glb" loading="lazy"></model-viewer>
             </a>
             <a href="#jupiter" class="jupiter">
-                <model-viewer src="assets/Jupiter.glb" alt="Jupiter" auto-rotate camera-controls ar
+                <model-viewer interaction-prompt="none" src="assets/Jupiter.glb" alt="Jupiter" auto-rotate camera-controls ar
                     ios-src="assets/Jupiter.glb" loading="lazy"></model-viewer>
             </a>
             <a href="#saturn" class="saturn">
-                <model-viewer src="assets/Saturn.glb" alt="Saturn" auto-rotate camera-controls ar
+                <model-viewer interaction-prompt="none" src="assets/Saturn.glb" alt="Saturn" auto-rotate camera-controls ar
                     ios-src="assets/Saturn.glb" loading="lazy"></model-viewer>
             </a>
             <a href="#uranus" class="uranus">
-                <model-viewer src="assets/Uranus.glb" alt="Uranus" auto-rotate camera-controls ar
+                <model-viewer interaction-prompt="none" src="assets/Uranus.glb" alt="Uranus" auto-rotate camera-controls ar
                     ios-src="assets/Uranus.glb" loading="lazy"></model-viewer>
             </a>
             <a href="#neptune" class="neptune">
-                <model-viewer src="assets/Neptune.glb" alt="Neptune" auto-rotate camera-controls ar
+                <model-viewer interaction-prompt="none" src="assets/Neptune.glb" alt="Neptune" auto-rotate camera-controls ar
                     ios-src="assets/Neptune.glb" loading="lazy"></model-viewer>
             </a>
         </div>
     </main>
+       <section class="container-solar" id="earth">
+    <div class="content-earth">
+        <p></p>
+    </div>
+    <div>
+        <div class="card-solar">
+            <div class="text-solar">
+                <h3>Trắc nghiệm</h3>
+                <h1>Đánh giá năng lực</h1>
 
-    <section class="container-solar" id="sun">
-        <div class="content-sun">
-            <p></p>
-        </div>
-        <div>
-            <div class="card-solar">
-                <div class="text-solar">
-                    <h3>ดวงอาทิตย์</h3>
-                    <h1>Sun</h1>
-                    <p>ดาวฤกษ์ที่อยู่ตรงศูนย์กลางของระบบสุริยะ
-                        มีขนาดเส้นผ่านศูนย์กลาง 1.4
-                        ล้านกิโลเมตร หรือ 109 เท่าของเส้นผ่านศูนย์กลางโลก
-                        ดวงอาทิตย์มีมวลมากกว่าโลก 333,000 เท่า
-                        แต่มีความหนาแน่นเพียง
-                        0.25 เท่าของโลก
-                        เนื่องจากมีองค์ประกอบเป็นไฮโดรเจน 74% ฮีเลียม 25%
-                        และธาตุชนิดอื่น 1% </p>
-                </div>
-                <model-viewer src="assets/Sun.glb" alt="Sun" auto-rotate camera-controls ar
-                    ios-src="assets/sun.glb"
-                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
-            </div>
-            <div class="info-solar">
-                <div>
-                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
-                    <p>1.4 ล้านกิโลเมตร</p>
-                </div>
-                <div>
-                    <h6>มวล<br>(Mass)</h6>
-                    <p>1.9 ล้านกิโลกรัม</p>
-                </div>
-                <div>
-                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
-                    <p>0 ดวง</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                <p>
+                    Hệ thống trắc nghiệm của THEDUNG cho phép người học
+                    làm bài theo từng chương hoặc toàn bộ chuyên đề,
+                    với câu hỏi được sắp xếp khoa học
+                    và bám sát nội dung học tập.
+                </p>
 
-    <section class="container-solar" id="mercury">
-        <div class="content-mercury">
-            <p></p>
-        </div>
-        <div>
-            <div class="card-solar">
-                <div class="text-solar">
-                    <h3>ดาวพุธ</h3>
-                    <h1>Mercury</h1>
-                    <p>ดาวเคราะห์ซึ่งอยู่ใกล้กับดวงอาทิตย์มากที่สุด เป็นดาวเคราะห์ขนาดเล็ก และไม่มีดวงจันทร์เป็นบริวาร
-                        โครงสร้างภายในของดาวพุธประกอบไปด้วยแกนเหล็กขนาดใหญ่มีรัศมีประมาณ 1,800 ถึง 1,900 กิโลเมตร
-                        ล้อมรอบด้วยชั้นที่เป็นซิลิเกต (ในทำนองเดียวกับที่แกนของโลกถูกห่อหุ้มด้วยแมนเทิลและเปลือก)
-                        ซึ่งหนาเพียง 500 ถึง 600 กิโลเมตร บางส่วนของแกนอาจจะยังหลอมละลายอยู่</p>
-                    <p>ดาวพุธไม่มีชั้นบรรยากาศห่อหุ้ม ดาวพุธอยู่ใกล้ดวงอาทิตย์มาก กลางวันจึงมีอุณหภูมิสูงถึง 430 °C
-                        แต่กลางคืนอุณหภูมิลดเหลือเพียง -180°C อุณหภูมิกลางวันกลางคืนแตกต่างกันถึง 610°C</p>
-                </div>
-                <model-viewer src="assets/Mercury.glb" alt="Mercury" auto-rotate camera-controls ar
-                    ios-src="assets/Mercury.glb"
-                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
+                <p>
+                    Sau khi nộp bài, hệ thống sẽ tự động chấm điểm,
+                    hiển thị câu đúng – câu sai rõ ràng,
+                    giúp người học nhận ra điểm mạnh,
+                    điểm yếu và điều chỉnh phương pháp học kịp thời.
+                </p>
             </div>
-            <div class="info-solar">
-                <div>
-                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
-                    <p>4,880 กิโลเมตร</p>
-                </div>
-                <div>
-                    <h6>มวล<br>(Mass)</h6>
-                    <p>3.30E23 ล้านกิโลกรัม</p>
-                </div>
-                <div>
-                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
-                    <p>0 ดวง</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="container-solar" id="venus">
-        <div class="content-venus">
-            <p></p>
+            <!-- Model minh họa -->
+            <model-viewer interaction-prompt="none"
+                src="assets/Earth.glb"
+                alt="Online Quiz"
+                auto-rotate
+                camera-controls
+                ar
+                ios-src="assets/Earth.glb"
+                style="width: 600px; height: 600px; filter: saturate(150%);"
+                loading="lazy">
+            </model-viewer>
         </div>
-        <div>
-            <div class="card-solar">
-                <div class="text-solar">
-                    <h3>ดาวศุกร์</h3>
-                    <h1>Venus</h1>
-                    <p>ดาวเคราะห์ที่มีขนาดใหญ่เป็นอันดับที่ 6 ไม่มีดวงจันทร์บริวาร<br>ดาวศุกร์มีลักษณะที่คล้ายคลึงกับโลก
-                        จนได้ชื่อว่าเป็นดาวเคราะห์ฝาแฝดกับโลกของเรา โครงสร้างภายในของดาวศุกร์ ประกอบด้วย
-                        แกนกลางที่เป็นเหล็กมีรัศมีประมาณ 3,000 กิโลเมตร ห่อหุ้มด้วยชั้นแมนเทิลที่มีความหนาประมาณ 3,000
-                        กิโลเมตร และเปลือกแข็งที่ประกอบด้วยหินซิลิเกต</p>
-                </div>
-                <model-viewer src="assets/Venus(surface).glb" alt="Venus" auto-rotate camera-controls ar
-                    ios-src="assets/Venus(surface).glb"
-                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
-            </div>
-            <div class="info-solar">
-                <div>
-                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
-                    <p>12,104 กิโลเมตร</p>
-                </div>
-                <div>
-                    <h6>มวล<br>(Mass)</h6>
-                    <p>4.87E24 ล้านกิโลกรัม</p>
-                </div>
-                <div>
-                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
-                    <p>0 ดวง</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="container-solar" id="earth">
-        <div class="content-earth">
-            <p></p>
-        </div>
-        <div>
-            <div class="card-solar">
-                <div class="text-solar">
-                    <h3>ดาวโลก</h3>
-                    <h1>Earth</h1>
-                    <p>ดาวเคราะห์ดวงเดียวในระบบสุริยะที่มีสภาวะแวดล้อมเอื้ออำนวยต่อการดำรงชีวิตของสิ่งมีชีวิต
-                        โลกอยู่ห่างจากดวงอาทิตย์เป็นลำดับที่ 3 และมีขนาดใหญ่เป็นอันดับที่ 5
-                        โลกมีสัณฐานเป็นทรงกลมแป้นมีรัศมีเฉลี่ย 6,371 กิโลเมตร</p>
-                    <p>โครงสร้างภายในของโลกประกอบไปด้วยแก่นชั้นในที่เป็นเหล็ก มีรัศมีประมาณ 1,200 กิโลเมตร
-                        ห่อหุ้มด้วยแก่นชั้นนอกที่เป็นของเหลว (Liquid) ประกอบด้วยเหล็กและนิเกิล มีความหนาประมาณ 2,200
-                        กิโลเมตร ถัดขึ้นมาเป็นชั้นแมนเทิลซึ่งเป็นของแข็งเนื้ออ่อนที่ยืดหยุ่นได้ (Plastic) ประกอบไปด้วย
-                        เหล็ก แมกนีเซียม ซิลิกอน และธาตุอื่นๆ มีความหนาประมาณ 3,000 กิโลเมตร เปลือกโลกเป็นของแข็ง
-                        (Solid) มีองค์ประกอบส่วนใหญ่เป็นเฟลด์สปาร์ และควอตช์ (ซิลิกอนไดออกไซด์)</p>
-                </div>
-                <model-viewer src="assets/Earth.glb" alt="Earth" auto-rotate camera-controls ar
-                    ios-src="assets/Earth.glb"
-                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
+        <div class="info-solar">
+            <div>
+                <h6>Hình thức</h6>
+                <p>Trắc nghiệm trực tuyến</p>
             </div>
-            <div class="info-solar">
-                <div>
-                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
-                    <p>12,756 กิโลเมตร</p>
-                </div>
-                <div>
-                    <h6>มวล<br>(Mass)</h6>
-                    <p>5.97E24 ล้านกิโลกรัม</p>
-                </div>
-                <div>
-                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
-                    <p>1 ดวง</p>
-                </div>
+            <div>
+                <h6>Chấm điểm</h6>
+                <p>Tự động – Chính xác</p>
+            </div>
+            <div>
+                <h6>Kết quả</h6>
+                <p>Hiển thị đúng / sai</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="container-solar" id="mars">
-        <div class="content-mars">
-            <p></p>
-        </div>
-        <div>
-            <div class="card-solar">
-                <div class="text-solar">
-                    <h3>ดาวอังคาร</h3>
-                    <h1>Mars</h1>
-                    <p>ดาวเคราะห์ที่อยู่ห่างจากดวงอาทิตย์เป็นอันดับที่ 4 ในบรรดาดาวเคราะห์ทั้งหมด
-                        ดาวอังคารมีขนาดเส้นผ่านศูนย์กลางประมาณ 0.5 เท่าของโลก
-                        ดาวอังคารมีโครงสร้างภายในประกอบด้วยแก่นของแข็งมีรัศมีประมาณ 1,700 กิโลเมตร
-                        ห่อหุ้มด้วยชั้นแมนเทิลที่เป็นหินหนืดหนาประมาณ 1,600 กิโลเมตร และมีเปลือกแข็งเช่นเดียวกับโลก</p>
-                    <p>ดาวอังคารมีสีแดงเนื่องจากพื้นผิวประกอบด้วยออกไซด์ของเหล็ก (สนิมเหล็ก)
-                        พื้นผิวของดาวอังคารเต็มไปด้วยหุบเหวต่างๆ มากมาย หุบเหวขนาดใหญ่ชื่อ หุบเหวมาริเนอริส (Valles
-                        Marineris) มีความยาว 4,000 กิโลเมตร กว้าง 600 กิโลเมตร ลึก 8 กิโลเมตร
-                        นอกจากนี้ดาวอังคารยังมีภูเขาไฟที่สูงที่สุดในระบบสุริยะชื่อ ภูเขาไฟโอลิมปัส (Mount Olympus) สูง
-                        25 กิโลเมตร ฐานที่แผ่ออกไปมีรัศมี 300 กิโลเมตร</p>
-                </div>
-                <model-viewer src="assets/Mars.glb" alt="Mars" auto-rotate camera-controls ar
-                    ios-src="assets/Mars.glb"
-                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
+   <section class="container-solar" id="sun">
+    <div class="content-sun">
+        <p></p>
+    </div>
+    <div>
+        <div class="card-solar">
+            <div class="text-solar">
+                <h3>Giới thiệu nền tảng</h3>
+                <h1>THEDUNG EDUCATION</h1>
+                <p>
+                    THEDUNG là nền tảng học tập và luyện thi trực tuyến,
+                    giúp người học tiếp cận kiến thức một cách trực quan,
+                    sinh động và dễ hiểu thông qua hình ảnh, mô hình 3D
+                    và hệ thống bài tập tương tác.
+                </p>
+                <p>
+                    Website tập trung vào việc học chủ động,
+                    cho phép người học tự khám phá kiến thức,
+                    luyện tập không giới hạn và đánh giá năng lực
+                    thông qua các bài trắc nghiệm và mô phỏng.
+                </p>
             </div>
-            <div class="info-solar">
-                <div>
-                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
-                    <p>6,794 กิโลเมตร</p>
-                </div>
-                <div>
-                    <h6>มวล<br>(Mass)</h6>
-                    <p>6.42E23 ล้านกิโลกรัม</p>
-                </div>
-                <div>
-                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
-                    <p>2 ดวง</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="container-solar" id="jupiter">
-        <div class="content-jupiter">
-            <p></p>
+            <!-- Mô hình Mặt Trời chỉ dùng làm hình minh họa -->
+            <model-viewer interaction-prompt="none"
+                src="assets/Sun.glb"
+                alt="THEDUNG Education"
+                auto-rotate
+                camera-controls
+                ar
+                ios-src="assets/sun.glb"
+                style="width: 600px; height: 600px; filter: saturate(150%);"
+                loading="lazy">
+            </model-viewer>
         </div>
-        <div>
-            <div class="card-solar">
-                <div class="text-solar">
-                    <h3>ดาวพฤหัส</h3>
-                    <h1>Jupiter</h1>
-                    <p>วัตถุท้องฟ้าที่มีความสว่างมากเป็นอันดับที่ 4 รองจากดวงอาทิตย์ ดวงจันทร์ และดาวศุกร์
-                        และเป็นที่รู้จักกันมาตั้งแต่ยุคก่อนประวัติศาสตร์ ดาวพฤหัสบดีถูกสำรวจเป็นครั้งแรกโดยยานไพโอเนียร์
-                        10 ในปี พ.ศ.2516 ติดตามด้วย ไพโอเนียร์ 11, วอยเอเจอร์ 1, วอยเอเจอร์ 2, ยูลิซิส และกาลิเลโอ</p>
-                    <p>ดาวพฤหัสบดีเป็นดาวเคราะห์แก๊สซึ่งบรรยากาศหนาแน่น มีองค์ประกอบหลักเป็นไฮโดรเจน 90% และฮีเลียม 10%
-                        ปะปนด้วยมีเทน น้ำ และแอมโมเนียจำนวนเล็กน้อย
-                        ลึกลงไปด้านล่างเป็นแมนเทิลชั้นนอกซึ่งประกอบไปด้วยไฮโดรเจนและฮีเลียมเหลว
-                        และแมนเทิลชั้นในที่ประกอบไปด้วยไฮโดรเจนซึ่งมีสมบัติเป็นโลหะ และแก่นกลางที่เป็นหินแข็งมีขนาดเป็น
-                        2 เท่าของโลก</p>
-                </div>
-                <model-viewer src="assets/Jupiter.glb" alt="Jupiter" auto-rotate camera-controls ar
-                    ios-src="assets/Jupiter.glb"
-                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
-            </div>
-            <div class="info-solar">
-                <div>
-                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
-                    <p>142,984 กิโลเมตร</p>
-                </div>
-                <div>
-                    <h6>มวล<br>(Mass)</h6>
-                    <p>1.90E27 ล้านกิโลกรัม</p>
-                </div>
-                <div>
-                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
-                    <p>39 ดวง</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="container-solar" id="saturn">
-        <div class="content-saturn">
-            <p></p>
-        </div>
-        <div>
-            <div class="card-solar">
-                <div class="text-solar">
-                    <h3>ดาวเสาร์</h3>
-                    <h1>Saturn</h1>
-                    <p>ดาวเคราะห์ที่รู้จักกันมาตั้งแต่ก่อนยุคประวัติศาสตร์
-                        กาลิเลโอสังเกตดาวเสาร์ด้วยกล้องโทรทรรศน์เป็นครั้งแรกเมื่อปี พ.ศ. 2153</p>
-                    <p>ดาวเสาร์ถูกสำรวจโดยยานไพโอเนียร์ 11 ในปี พ.ศ.2522 ตามด้วยยานวอยเอเจอร์ 1 ยานวอยเอเจอร์ 2
-                        และยานแคสสินีในปี พ.ศ.2547 บรรยากาศของดาวเสาร์เป็น ไฮโดรเจน 75% ฮีเลียม 25% ปะปนไปด้วยน้ำ มีเทน
-                        แอมโมเนีย จำนวนเล็กน้อย แถบสีบนดาวเสาร์เกิดขึ้นจากการหมุนรอบตัวเองเร็วมาก
-                        จนทำให้เกิดการหมุนวนของชั้นบรรยากาศที่มีอุณหภูมิแตกต่างกัน จึงปรากฏเป็นแถบเข้มและจางสลับกันไป
-                        โครงสร้างภายในของดาวเสาร์มีลักษณะคล้ายคลึงกับของดาวพฤหัสบดี มีแกนกลางที่เป็นหินแข็ง
-                        ห่อหุ้มด้วยแมนเทิลชั้นในที่เป็นโลหะไฮโดรเจน และแมนเทิลชั้นนอกที่เป็นไฮโดรเจนและฮีเลียมเหลว</p>
-                </div>
-                <model-viewer src="assets/Saturn.glb" alt="Saturn" auto-rotate camera-controls ar
-                    ios-src="assets/Saturn.glb"
-                    style="width: 600px; height: 600px; filter: saturate(150%); transform: rotate(-20deg);" loading="lazy"></model-viewer>
+        <div class="info-solar">
+            <div>
+                <h6>Hình thức học</h6>
+                <p>Trực tuyến – Tương tác</p>
             </div>
-            <div class="info-solar">
-                <div>
-                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
-                    <p>120,536 กิโลเมตร</p>
-                </div>
-                <div>
-                    <h6>มวล<br>(Mass)</h6>
-                    <p>5.69E25ล้านกิโลกรัม</p>
-                </div>
-                <div>
-                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
-                    <p>30 ดวง</p>
-                </div>
+            <div>
+                <h6>Nội dung</h6>
+                <p>Lý thuyết • Trắc nghiệm • Mô phỏng</p>
+            </div>
+            <div>
+                <h6>Mục tiêu</h6>
+                <p>Hiểu đúng – Nhớ lâu – Ứng dụng tốt</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="container-solar" id="uranus">
-        <div class="content-uranus">
-            <p></p>
-        </div>
-        <div>
-            <div class="card-solar">
-                <div class="text-solar">
-                    <h3>ดาวยูเรนัส</h3>
-                    <h1>Uranus</h1>
-                    <p> ถูกค้นพบครั้งแรกโดย วิลเลี่ยม เฮอส์เชล ในปี พ.ศ.2534 สองร้อยปีต่อมา ยานวอยเอเจอร์ 2
-                        ทำการสำรวจดาวยูเรนัสในปี พ.ศ. 2529 พบว่า บรรยากาศของดาวยูเรนัสประกอบด้วยไฮโดรเจน 83%, ฮีเลียม
-                        15% และมีเทน 2% ดาวยูเรนัสมีสีฟ้าเนื่องจากแก๊สมีเทนดูดกลืนสีแดงและสะท้อนสีน้ำเงิน
-                        บรรยากาศมีลมพัดแรงมาก ลึกลงไปที่แก่นของดาวห่อหุ้มด้วยโลหะไฮโดรเจนเหลว</p>
-                    <p>ขณะที่ดาวเคราะห์ส่วนใหญ่มีแกนหมุนรอบตัวเองเกือบตั้งฉากกับระนาบสุริยวิถี
-                        แต่แกนของดาวยูเรนัสวางตัวเกือบขนานกับสุริยวิถี
-                        ดังนั้นอุณหภูมิบริเวณขั้วดาวจึงสูงกว่าบริเวณเส้นศูนย์สูตร
-                        ดาวยูเรนัสมีวงแหวนเช่นเดียวกับดาวเคราะห์ชั้นนอกดวงอื่นๆ วงแหวนของดาวยูเรนัสมีความสว่างไม่มาก
-                        เนื่องจากประกอบด้วยอนุภาคขนาดเล็ก มีขนาดตั้งแต่ฝุ่นผงจนถึง 10 เมตร
-                        ดาวยูเรนัสมีดวงจันทร์บริวารอย่างน้อย 27 ดวง ดวงจันทร์ขนาดใหญ่ที่มีรูปร่างเป็นทรงกลม ได้แก่
-                        มิรันดา แอเรียล อัมเบรียล ไททาเนีย และ โอเบรอน</p>
-                </div>
-                <model-viewer src="assets/Uranus.glb" alt="Uranus" auto-rotate camera-controls ar
-                    ios-src="assets/Uranus.glb"
-                    style="width: 600px; height: 600px; filter: saturate(150%); transform: rotate(-20deg);" loading="lazy"></model-viewer>
-            </div>
-            <div class="info-solar">
-                <div>
-                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
-                    <p>51,118 กิโลเมตร</p>
-                </div>
-                <div>
-                    <h6>มวล<br>(Mass)</h6>
-                    <p>8.86E25ล้านกิโลกรัม</p>
-                </div>
-                <div>
-                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
-                    <p>21 ดวง</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <section class="container-solar" id="mercury">
+    <div class="content-mercury">
+        <p></p>
+    </div>
+    <div>
+        <div class="card-solar">
+            <div class="text-solar">
+                <h3>Phương pháp học</h3>
+                <h1>Học chủ động & trực quan</h1>
 
-    <section class="container-solar" id="neptune">
-        <div class="content-neptune">
-            <p></p>
-        </div>
-        <div>
-            <div class="card-solar">
-                <div class="text-solar">
-                    <h3>ดาวเนปจูน</h3>
-                    <h1>Neptune</h1>
-                    <p> ถูกค้นพบเนื่องจากนักดาราศาสตร์พบว่า
-                        ตำแหน่งของดาวยูเรนัสในวงโคจรรอบดวงอาทิตย์ไม่ได้เป็นไปตามกฏของนิวตันจึงตั้งสมมติฐานว่า
-                        จะต้องมีดาวเคราะห์อีกดวงหนึ่งที่อยู่ไกลถัดออกไปมารบกวนวงโคจรของดาวยูเรนัส
-                        ในที่สุดดาวเนปจูนก็ถูกค้นพบโดย โจฮานน์ กัลเล ในปี พ.ศ.2389</p>
-                    <p>ดาวเนปจูนมีองค์ประกอบคล้ายคลึงกับดาวยูเรนัส คือ มีบรรยากาศเป็นไฮโดรเจนและฮีเลียม
-                        และมีมีเทนเจือปนอยู่จึงมีสีน้ำเงิน ดาวเนปจูนมีขนาดเล็กกว่าดาวยูเรนัสเล็กน้อย
-                        แต่มีความหนาแน่นมากกว่า โดยที่แก่นของดาวเนปจูนเป็นของแข็งมีขนาดใกล้เคียงกับโลกของเรา
-                        ในช่วงเวลาที่ยานวอยเอเจอร์ 2 เข้าใกล้ดาวเนปจูนได้ถ่ายภาพ จุดมืดใหญ่ (Great dark spot)
-                        ทางซีกใต้ของดาวมีขนาดใหญ่เกือบครึ่งหนึ่งของจุดแดงใหญ่บนดาวพฤหัสบดี
-                        (ประมาณเท่ากับเส้นผ่านศูนย์กลางของโลก)
-                        จุดมืดใหญ่นี้เป็นพายุหมุนเช่นเดียวกับจุดแดงใหญ่บนดาวพฤหัสบดี มีกระแสลมพัดแรงที่สุดในระบบสุริยะ
-                        ความเร็วลม 300 เมตร/วินาที หรือ 1,080 กิโลเมตรต่อชั่วโมง </p>
-                </div>
-                <model-viewer src="assets/Neptune.glb" alt="Neptune" auto-rotate camera-controls ar
-                    ios-src="assets/Neptune.glb"
-                    style="width: 600px; height: 600px; filter: saturate(150%); transform: rotate(-20deg);" loading="lazy"></model-viewer>
+                <p>
+                    THEDUNG tập trung vào phương pháp học chủ động,
+                    giúp người học không chỉ đọc – ghi nhớ,
+                    mà còn trực tiếp quan sát, tương tác
+                    và khám phá kiến thức thông qua mô hình 3D
+                    và nội dung trực quan.
+                </p>
+
+                <p>
+                    Người học có thể tự lựa chọn nội dung,
+                    học theo tốc độ cá nhân,
+                    làm bài luyện tập nhiều lần
+                    để hiểu sâu bản chất và ghi nhớ lâu hơn.
+                </p>
             </div>
-            <div class="info-solar">
-                <div>
-                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
-                    <p>49,528 กิโลเมตร</p>
-                </div>
-                <div>
-                    <h6>มวล<br>(Mass)</h6>
-                    <p>1.02E25ล้านกิโลกรัม</p>
-                </div>
-                <div>
-                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
-                    <p>8 ดวง</p>
-                </div>
+
+            <!-- Mô hình chỉ mang tính minh họa giao diện -->
+            <model-viewer interaction-prompt="none"
+                src="assets/Mercury.glb"
+                alt="Learning Method"
+                auto-rotate
+                camera-controls
+                ar
+                ios-src="assets/Mercury.glb"
+                style="width: 600px; height: 600px; filter: saturate(150%);"
+                loading="lazy">
+            </model-viewer>
+        </div>
+
+        <div class="info-solar">
+            <div>
+                <h6>Hình thức học</h6>
+                <p>Tự học – Chủ động</p>
+            </div>
+            <div>
+                <h6>Công cụ hỗ trợ</h6>
+                <p>Mô hình 3D – Hình ảnh</p>
+            </div>
+            <div>
+                <h6>Hiệu quả</h6>
+                <p>Hiểu nhanh – Nhớ lâu</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+
+   <section class="container-solar" id="venus">
+    <div class="content-venus">
+        <p></p>
+    </div>
+    <div>
+        <div class="card-solar">
+            <div class="text-solar">
+                <h3>Nội dung học tập</h3>
+                <h1>Kiến thức trọng tâm</h1>
+
+                <p>
+                    THEDUNG cung cấp hệ thống kiến thức được xây dựng
+                    theo từng chương, từng chuyên đề rõ ràng,
+                    bám sát chương trình học và nội dung thi thực tế.
+                </p>
+
+                <p>
+                    Nội dung được trình bày ngắn gọn, dễ hiểu,
+                    kết hợp hình ảnh, mô hình 3D và ví dụ minh họa,
+                    giúp người học tiếp cận kiến thức một cách trực quan
+                    và không bị quá tải.
+                </p>
+            </div>
+
+            <!-- Model chỉ mang tính minh họa giao diện -->
+            <model-viewer interaction-prompt="none"
+                src="assets/Venus(surface).glb"
+                alt="Learning Content"
+                auto-rotate
+                camera-controls
+                ar
+                ios-src="assets/Venus(surface).glb"
+                style="width: 600px; height: 600px; filter: saturate(150%);"
+                loading="lazy">
+            </model-viewer>
+        </div>
+
+        <div class="info-solar">
+            <div>
+                <h6>Cấu trúc bài học</h6>
+                <p>Theo chương & chuyên đề</p>
+            </div>
+            <div>
+                <h6>Hình thức trình bày</h6>
+                <p>Ngắn gọn – Trực quan</p>
+            </div>
+            <div>
+                <h6>Mục tiêu</h6>
+                <p>Dễ hiểu – Dễ ghi nhớ</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+ <section class="container-solar" id="mars">
+    <div class="content-mars">
+        <p></p>
+    </div>
+    <div>
+        <div class="card-solar">
+            <div class="text-solar">
+                <h3>Thi thử</h3>
+                <h1>Mô phỏng kỳ thi thật</h1>
+
+                <p>
+                    Tính năng thi thử của THEDUNG được thiết kế
+                    nhằm mô phỏng sát với cấu trúc đề thi thực tế,
+                    bao gồm số lượng câu hỏi, mức độ khó
+                    và giới hạn thời gian làm bài.
+                </p>
+
+                <p>
+                    Người học có thể làm bài như trong phòng thi thật,
+                    rèn luyện tâm lý, kỹ năng quản lý thời gian
+                    và đánh giá chính xác năng lực của bản thân
+                    trước các kỳ thi quan trọng.
+                </p>
+            </div>
+
+            <!-- Model minh họa -->
+            <model-viewer interaction-prompt="none"
+                src="assets/Mars.glb"
+                alt="Mock Exam"
+                auto-rotate
+                camera-controls
+                ar
+                ios-src="assets/Mars.glb"
+                style="width: 600px; height: 600px; filter: saturate(150%);"
+                loading="lazy">
+            </model-viewer>
+        </div>
+
+        <div class="info-solar">
+            <div>
+                <h6>Hình thức</h6>
+                <p>Thi thử trực tuyến</p>
+            </div>
+            <div>
+                <h6>Thời gian</h6>
+                <p>Giới hạn như thi thật</p>
+            </div>
+            <div>
+                <h6>Mục tiêu</h6>
+                <p>Làm quen – Tự tin hơn</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+  <section class="container-solar" id="jupiter">
+    <div class="content-jupiter">
+        <p></p>
+    </div>
+    <div>
+        <div class="card-solar">
+            <div class="text-solar">
+                <h3>Phân tích kết quả</h3>
+                <h1>Theo dõi tiến độ học tập</h1>
+
+                <p>
+                    Hệ thống cung cấp chức năng tổng hợp và phân tích
+                    kết quả học tập của người dùng sau mỗi bài luyện tập
+                    và bài thi thử.
+                </p>
+
+                <p>
+                    Thông qua các thống kê chi tiết như số câu đúng – sai,
+                    tỷ lệ hoàn thành và mức độ tiến bộ theo thời gian,
+                    người học có thể dễ dàng nhận ra điểm mạnh,
+                    điểm yếu và điều chỉnh phương pháp học phù hợp.
+                </p>
+            </div>
+
+            <!-- Model minh họa -->
+            <model-viewer interaction-prompt="none"
+                src="assets/Jupiter.glb"
+                alt="Learning Analytics"
+                auto-rotate
+                camera-controls
+                ar
+                ios-src="assets/Jupiter.glb"
+                style="width: 600px; height: 600px; filter: saturate(150%);"
+                loading="lazy">
+            </model-viewer>
+        </div>
+
+        <div class="info-solar">
+            <div>
+                <h6>Báo cáo</h6>
+                <p>Kết quả chi tiết</p>
+            </div>
+            <div>
+                <h6>Thống kê</h6>
+                <p>Tiến độ theo thời gian</p>
+            </div>
+            <div>
+                <h6>Mục tiêu</h6>
+                <p>Cải thiện hiệu quả học</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+  <section class="container-solar" id="saturn">
+    <div class="content-saturn">
+        <p></p>
+    </div>
+    <div>
+        <div class="card-solar">
+            <div class="text-solar">
+                <h3>Lộ trình học tập</h3>
+                <h1>Kế hoạch học cá nhân</h1>
+
+                <p>
+                    Hệ thống xây dựng lộ trình học tập rõ ràng,
+                    được sắp xếp theo từng giai đoạn từ cơ bản
+                    đến nâng cao, giúp người học tiếp cận kiến thức
+                    một cách có hệ thống.
+                </p>
+
+                <p>
+                    Mỗi lộ trình được thiết kế phù hợp với năng lực
+                    và mục tiêu của từng người học, kết hợp giữa
+                    lý thuyết – thực hành – kiểm tra đánh giá,
+                    đảm bảo quá trình học tập diễn ra liên tục
+                    và hiệu quả.
+                </p>
+            </div>
+
+            <!-- Model minh họa -->
+            <model-viewer
+                interaction-prompt="none"
+                src="assets/Saturn.glb"
+                alt="Learning Path"
+                auto-rotate
+                camera-controls
+                ar
+                ios-src="assets/Saturn.glb"
+                style="width: 600px; height: 600px; filter: saturate(150%); transform: rotate(-20deg);"
+                loading="lazy">
+            </model-viewer>
+        </div>
+
+        <div class="info-solar">
+            <div>
+                <h6>Lộ trình</h6>
+                <p>Cơ bản → nâng cao</p>
+            </div>
+            <div>
+                <h6>Kế hoạch</h6>
+                <p>Học tập có định hướng</p>
+            </div>
+            <div>
+                <h6>Hiệu quả</h6>
+                <p>Tiến bộ bền vững</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container-solar" id="uranus">
+    <div class="content-uranus">
+        <p></p>
+    </div>
+    <div>
+        <div class="card-solar">
+            <div class="text-solar">
+                <h3>Công nghệ học tập</h3>
+                <h1>Học thông minh</h1>
+
+                <p>
+                    Website ứng dụng công nghệ hiện đại nhằm hỗ trợ
+                    người học tiếp cận kiến thức một cách trực quan,
+                    sinh động và dễ hiểu hơn thông qua mô hình 3D,
+                    hình ảnh và nội dung tương tác.
+                </p>
+
+                <p>
+                    Hệ thống cho phép cá nhân hóa quá trình học tập,
+                    ghi nhận tiến độ, kết quả và đề xuất nội dung phù hợp
+                    với năng lực của từng người học, giúp nâng cao
+                    hiệu quả và trải nghiệm học tập.
+                </p>
+            </div>
+
+            <model-viewer
+                interaction-prompt="none"
+                src="assets/Uranus.glb"
+                alt="Learning Technology"
+                auto-rotate
+                camera-controls
+                ar
+                ios-src="assets/Uranus.glb"
+                style="width: 600px; height: 600px; filter: saturate(150%); transform: rotate(-20deg);"
+                loading="lazy">
+            </model-viewer>
+        </div>
+
+        <div class="info-solar">
+            <div>
+                <h6>Công nghệ</h6>
+                <p>Mô hình 3D – tương tác</p>
+            </div>
+            <div>
+                <h6>Cá nhân hóa</h6>
+                <p>Nội dung phù hợp người học</p>
+            </div>
+            <div>
+                <h6>Trải nghiệm</h6>
+                <p>Học tập trực quan</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+ <section class="container-solar" id="neptune">
+    <div class="content-neptune">
+        <p></p>
+    </div>
+    <div>
+        <div class="card-solar">
+            <div class="text-solar">
+                <h3>Tầm nhìn tương lai</h3>
+                <h1>Neptune</h1>
+
+                <p>
+                    Website hướng tới việc xây dựng một nền tảng học tập
+                    hiện đại, nơi người học có thể tiếp cận tri thức
+                    một cách toàn diện, sâu sắc và không giới hạn
+                    bởi không gian hay thời gian.
+                </p>
+
+                <p>
+                    Trong tương lai, hệ thống sẽ được mở rộng với nhiều
+                    nội dung học tập hơn, tích hợp công nghệ mới,
+                    hỗ trợ định hướng học tập – nghề nghiệp
+                    và tạo ra một cộng đồng học tập sáng tạo,
+                    chủ động và bền vững.
+                </p>
+            </div>
+
+            <model-viewer
+                interaction-prompt="none"
+                src="assets/Neptune.glb"
+                alt="Future Learning"
+                auto-rotate
+                camera-controls
+                ar
+                ios-src="assets/Neptune.glb"
+                style="width: 600px; height: 600px; filter: saturate(150%); transform: rotate(-20deg);"
+                loading="lazy">
+            </model-viewer>
+        </div>
+
+        <div class="info-solar">
+            <div>
+                <h6>Định hướng</h6>
+                <p>Phát triển dài hạn</p>
+            </div>
+            <div>
+                <h6>Mở rộng</h6>
+                <p>Nội dung & tính năng</p>
+            </div>
+            <div>
+                <h6>Cộng đồng</h6>
+                <p>Học tập bền vững</p>
+            </div>
+        </div>
+    </div>
+</section>
 
     
 
   
-        <!-- Back to Top Button -->
-<button id="backToTop" title="Lên đầu trang">
-    <i class="fas fa-sun"></i>
-
+     <button id="backToTop" title="Lên đầu trang">
+    <span class="sun-ring">
+        <i class="fas fa-sun"></i>
+    </span>
+    <span class="arrow-up">
+        <i class="fas fa-chevron-up"></i>
+    </span>
 </button>
+
     <script src="js/bootstrap.min.js"></script>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
