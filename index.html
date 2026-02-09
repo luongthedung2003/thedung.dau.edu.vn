@@ -164,19 +164,18 @@
     box-shadow: none;
 }
 
-.day-btn.active::after {
-    content: "";
-    position: absolute;
-    left: 15%;
-    bottom: 0px;
-    width: 70%;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #00e5ff, #ff1744);
-    box-shadow: 
-        0 0 6px #00e5ff,
-        0 0 12px #ff1744;
-}
+ .day-btn.active::after {
+            opacity: 1;
+            transform: scaleX(1);
+            background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
+            background-size: 200% 100%;
+            animation: glowMove 2s linear infinite;
+            box-shadow: 0 0 8px #00e5ff, 0 0 18px #ff1744;
+        }
+ @keyframes glowMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
 
 
         .nav-arrow {

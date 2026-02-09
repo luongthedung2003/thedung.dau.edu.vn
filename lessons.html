@@ -6,16 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <title>THEDUNG</title>
+    <title>THEDUNG - Trắc Nghiệm</title>
     <link rel="icon" href="images/logo.png">
 
     <style>
-        
-
         :root {
             --gold-color: #5120bb;
             --gold-light: #08179c;
@@ -105,79 +103,43 @@
             color: white;
         }
 
-.day-btn {
-    position: relative;
-    background: transparent;
-    color: #d1d5db;
-}
+        .day-btn::after {
+            content: "";
+            position: absolute;
+            left: 15%;
+            bottom: 2px;
+            width: 70%;
+            height: 2px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #00e5ff, #ff1744);
+            opacity: 0;
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+        }
 
-/* Hover: hiện gạch phát sáng */
-.day-btn::after {
-    content: "";
-    position: absolute;
-    left: 15%;
-    bottom: 2px;
-    width: 70%;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #00e5ff, #ff1744);
-    opacity: 0;
-    transform: scaleX(0);
-    transition: all 0.3s ease;
-}
+        .day-btn:hover::after {
+            opacity: 1;
+            transform: scaleX(1);
+            box-shadow: 0 0 6px #00e5ff, 0 0 12px #ff1744;
+        }
 
-/* Hover effect */
-.day-btn:hover::after {
-    opacity: 1;
-    transform: scaleX(1);
-    box-shadow:
-        0 0 6px #00e5ff,
-        0 0 12px #ff1744;
-}
+        .day-btn.active {
+            color: white;
+        }
 
-/* Active: luôn hiện + mạnh hơn */
-.day-btn.active {
-    color: white;
-}
+        .day-btn.active::after {
+            opacity: 1;
+            transform: scaleX(1);
+            background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
+            background-size: 200% 100%;
+            animation: glowMove 2s linear infinite;
+            box-shadow: 0 0 8px #00e5ff, 0 0 18px #ff1744;
+        }
 
-.day-btn.active::after {
-    opacity: 1;
-    transform: scaleX(1);
-    background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
-    background-size: 200% 100%;
-    animation: glowMove 2s linear infinite;
-    box-shadow:
-        0 0 8px #00e5ff,
-        0 0 18px #ff1744;
-}
-
-/* Animation chạy ánh sáng */
-@keyframes glowMove {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
-}
-
-
-.day-btn.active {
-    background: transparent;
-    color: white;
-    box-shadow: none;
-}
-
-.day-btn.active::after {
-    content: "";
-    position: absolute;
-    left: 15%;
-    bottom: 0px;
-    width: 70%;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #00e5ff, #ff1744);
-    box-shadow: 
-        0 0 6px #00e5ff,
-        0 0 12px #ff1744;
-}
-
+        @keyframes glowMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
 
         .nav-arrow {
             width: 32px;
@@ -340,93 +302,303 @@
 
         main {
             background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
-            height: 1200px;
+            min-height: 100vh;
             background-size: cover;
             background-position: center;
+            padding: 60px 0;
         }
 
-       
-
-
-       
-       
-
-       
-
-       
-
-
-        
-
-      
         /* ========================================
-           RESPONSIVE DESIGN
+           LESSONS SECTION
            ======================================== */
 
-        @media screen and (max-width: 1024px) {
-            .logo-box {
-                width: 36px;
-                height: 36px;
-            }
-
-            .logo-box i {
-                font-size: 18px;
-            }
-
-            .brand-text {
-                font-size: 1.125rem;
-            }
-
-            .icon-btn {
-                width: 36px;
-                height: 36px;
-            }
-
-            
+        .lessons-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 0 20px;
         }
 
-       
-        @media screen and (max-width: 480px) {
-            .logo-box {
-                width: 32px;
-                height: 32px;
-            }
-
-            .logo-box i {
-                font-size: 16px;
-            }
-
-            .brand-text {
-                font-size: 1rem;
-            }
-
-            .icon-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 0.875rem;
-            }
-
-            main {
-                min-height: 700px;
-            }
+        .lessons-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00e5ff 0%, #ff1744 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
 
-        @media screen and (max-width: 360px) {
-            .offcanvas-end {
-                max-width: 100% !important;
-            }
+        .lessons-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Performance optimization for mobile */
-        @media (max-width: 768px) {
-            /* Disable auto-rotate on mobile for better performance */
-            model-viewer {
-                --poster-color: transparent;
-            }
+        .lessons-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-    </style>
 
- <style>
+        /* ========================================
+           LESSON CARDS GRID
+           ======================================== */
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .lesson-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-10px);
+            border-color: #00e5ff;
+            box-shadow: 0 15px 40px rgba(0, 229, 255, 0.3);
+        }
+
+        .lesson-card:hover::before {
+            opacity: 1;
+        }
+
+        .lesson-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .lesson-icon-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .lesson-planet-icon {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .lesson-planet-icon model-viewer {
+            width: 100%;
+            height: 100%;
+        }
+
+        .lesson-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+        }
+
+        .lesson-back-btn {
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: #00e5ff;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .lesson-back-btn:hover {
+            background: rgba(0, 229, 255, 0.2);
+            border-color: #00e5ff;
+        }
+
+        .lesson-stats {
+            margin-bottom: 20px;
+        }
+
+        .lesson-main-stat {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .lesson-sub-stat {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .lesson-progress {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00e5ff 0%, #5120bb 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .lesson-details {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .lesson-detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .detail-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .detail-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(0, 229, 255, 0.2);
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: #00e5ff;
+            font-weight: 600;
+        }
+
+        .lesson-action-btn {
+            width: 100%;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #ff1744 0%, #5120bb 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+        }
+
+        .lesson-action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 30px rgba(255, 23, 68, 0.6);
+        }
+
+        .lesson-action-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Special card styles for different types */
+        .lesson-card.type-quiz {
+            border-color: rgba(255, 204, 51, 0.3);
+        }
+
+        .lesson-card.type-quiz:hover {
+            border-color: #ffcc33;
+            box-shadow: 0 15px 40px rgba(255, 204, 51, 0.3);
+        }
+
+        .lesson-card.type-practice {
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+
+        .lesson-card.type-practice:hover {
+            border-color: #00e5ff;
+            box-shadow: 0 15px 40px rgba(0, 229, 255, 0.3);
+        }
+
+        .lesson-card.type-exam {
+            border-color: rgba(255, 23, 68, 0.3);
+        }
+
+        .lesson-card.type-exam:hover {
+            border-color: #ff1744;
+            box-shadow: 0 15px 40px rgba(255, 23, 68, 0.3);
+        }
+
+        /* Mini chart visualization */
+        .mini-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 60px;
+            margin: 15px 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: rgba(0, 229, 255, 0.3);
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            min-height: 10px;
+        }
+
+        .chart-bar.highlight {
+            background: linear-gradient(180deg, #00e5ff 0%, #5120bb 100%);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+
+        .lesson-card:hover .chart-bar {
+            background: rgba(0, 229, 255, 0.5);
+        }
+
+        /* Footer styles */
         :root {
             --footer-primary-purple: #5120bb;
             --footer-light-purple: #08179c;
@@ -436,9 +608,6 @@
             --footer-neon-yellow: #ffcc33;
         }
 
-        /* ========================================
-           NEWSLETTER SECTION - FOOTER
-           ======================================== */
         .footer-newsletter-wrapper {
             background: linear-gradient(135deg, rgba(81, 32, 187, 0.1) 0%, rgba(0, 0, 0, 0.95) 100%);
             padding: 3rem 0;
@@ -454,9 +623,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(255, 23, 68, 0.05) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255, 23, 68, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -549,9 +716,6 @@
             font-size: 1.2rem;
         }
 
-        /* ========================================
-           MAIN FOOTER WRAPPER
-           ======================================== */
         .thedung-main-footer-wrapper {
             background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(28, 29, 122, 0.1) 50%, rgba(0, 0, 0, 0.95) 100%);
             padding: 4rem 0 2rem;
@@ -565,8 +729,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: 
-                radial-gradient(circle at 2px 2px, rgba(0, 229, 255, 0.1) 1px, transparent 0);
+            background-image: radial-gradient(circle at 2px 2px, rgba(0, 229, 255, 0.1) 1px, transparent 0);
             background-size: 40px 40px;
             opacity: 0.3;
             pointer-events: none;
@@ -589,9 +752,6 @@
             z-index: 1;
         }
 
-        /* ========================================
-           FOOTER BRAND SECTION
-           ======================================== */
         .thedung-footer-brand-section {
             animation: thedungFooterFadeInUp 0.6s ease-out;
         }
@@ -716,9 +876,6 @@
             z-index: 1;
         }
 
-        /* ========================================
-           FOOTER CONTENT COLUMNS
-           ======================================== */
         .thedung-footer-content-column {
             animation: thedungFooterFadeInUp 0.6s ease-out;
             animation-fill-mode: both;
@@ -794,9 +951,6 @@
             transform: translateX(0);
         }
 
-        /* ========================================
-           FOOTER CONTACT INFORMATION
-           ======================================== */
         .thedung-footer-contact-info-box {
             display: flex;
             align-items: flex-start;
@@ -850,9 +1004,6 @@
             font-family: 'Space Mono', monospace;
         }
 
-        /* ========================================
-           FOOTER MAP SECTION
-           ======================================== */
         .thedung-footer-map-display-container {
             position: relative;
             border-radius: 12px;
@@ -866,10 +1017,7 @@
         .thedung-footer-map-placeholder-area {
             width: 100%;
             height: 100%;
-            background: 
-                linear-gradient(135deg, rgba(81, 32, 187, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%),
-                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px),
-                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px);
+            background: linear-gradient(135deg, rgba(81, 32, 187, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%), repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -911,62 +1059,6 @@
             50% { transform: translate(-50%, -50%) rotate(-45deg) translateY(-10px); }
         }
 
-        /* ========================================
-           FOOTER THANK YOU BANNER
-           ======================================== */
-        .thedung-footer-thankyou-banner-wrapper {
-            margin-top: 3rem;
-            padding: 2rem;
-            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1) 0%, rgba(255, 23, 68, 0.1) 100%);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .thedung-footer-thankyou-banner-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.2), transparent);
-            animation: thedungFooterThankYouShine 3s ease-in-out infinite;
-        }
-
-        @keyframes thedungFooterThankYouShine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .thedung-footer-thankyou-banner-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 12px;
-            padding: 2px;
-            background: linear-gradient(135deg, var(--footer-neon-cyan), var(--footer-neon-red));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-
-        .thedung-footer-thankyou-message-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            position: relative;
-            z-index: 1;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Space Mono', monospace;
-        }
-
-        /* ========================================
-           FOOTER BOTTOM COPYRIGHT SECTION
-           ======================================== */
         .thedung-footer-bottom-copyright-wrapper {
             padding: 2rem 0;
             border-top: 1px solid rgba(0, 229, 255, 0.2);
@@ -1001,9 +1093,98 @@
             text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         }
 
-        /* ========================================
-           RESPONSIVE DESIGN - TABLET
-           ======================================== */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: none;
+            z-index: 999;
+            padding: 0;
+        }
+
+        #backToTop .sun-ring {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: sunRotate 6s linear infinite;
+        }
+
+        #backToTop .sun-ring i {
+            font-size: 56px;
+            color: #ffcc33;
+            filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
+        }
+
+        #backToTop .arrow-up {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #backToTop .arrow-up i {
+            font-size: 18px;
+            color: white;
+            text-shadow: 0 0 6px rgba(255,255,255,0.8);
+            z-index: 2;
+        }
+
+        #backToTop:hover {
+            transform: translateY(-6px) scale(1.05);
+            transition: 0.3s ease;
+        }
+
+        @keyframes sunRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .lessons-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .lesson-main-stat {
+                font-size: 1.75rem;
+            }
+
+            .lesson-details {
+                gap: 15px;
+            }
+
+            .lessons-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lesson-card {
+                padding: 20px;
+            }
+
+            .lesson-main-stat {
+                font-size: 1.5rem;
+            }
+
+            .mini-chart {
+                height: 50px;
+            }
+
+            .lessons-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
         @media (max-width: 1024px) {
             .thedung-footer-columns-grid {
                 grid-template-columns: 1fr 1fr 1fr;
@@ -1016,9 +1197,6 @@
             }
         }
 
-        /* ========================================
-           RESPONSIVE DESIGN - MOBILE LANDSCAPE
-           ======================================== */
         @media (max-width: 768px) {
             .footer-newsletter-content-grid {
                 grid-template-columns: 1fr;
@@ -1061,9 +1239,6 @@
             }
         }
 
-        /* ========================================
-           RESPONSIVE DESIGN - MOBILE PORTRAIT
-           ======================================== */
         @media (max-width: 480px) {
             .footer-newsletter-container {
                 padding: 0 1rem;
@@ -1093,21 +1268,8 @@
                 width: 100%;
             }
 
-            .thedung-footer-columns-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
-
-            .thedung-footer-brand-section {
-                grid-column: 1 / -1;
-            }
-
             .thedung-footer-brand-name-text {
                 font-size: 1.5rem;
-            }
-
-            .thedung-footer-thankyou-message-text {
-                font-size: 1.1rem;
             }
 
             .thedung-footer-social-icons-container {
@@ -1128,90 +1290,6 @@
                 margin: 1.5rem auto;
             }
         }
-
-        /* ========================================
-           RESPONSIVE DESIGN - EXTRA SMALL
-           ======================================== */
-        @media (max-width: 360px) {
-            .footer-newsletter-main-title {
-                font-size: 1.25rem;
-            }
-
-            .thedung-footer-brand-name-text {
-                font-size: 1.25rem;
-            }
-
-            .thedung-footer-contact-info-box {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-        }
-    </style>
-
-      <style>
-#backToTop {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 56px;
-    height: 56px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: none;
-    z-index: 999;
-    padding: 0;
-}
-
-/* Vòng mặt trời bên ngoài */
-#backToTop .sun-ring {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: sunRotate 6s linear infinite;
-}
-
-#backToTop .sun-ring i {
-    font-size: 56px;
-    color: #ffcc33;
-    filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
-}
-
-/* Mũi tên bên trong */
-#backToTop .arrow-up {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#backToTop .arrow-up i {
-    font-size: 18px;
-    color: white;
-    text-shadow: 0 0 6px rgba(255,255,255,0.8);
-    z-index: 2;
-}
-
-/* Hover nhẹ */
-#backToTop:hover {
-    transform: translateY(-6px) scale(1.05);
-    transition: 0.3s ease;
-}
-
-/* Animation xoay mặt trời */
-@keyframes sunRotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
     </style>
 </head>
 
@@ -1231,7 +1309,7 @@
                     <button class="nav-arrow">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <a href="index.html" class="day-btn ">TRANG CHỦ</a>
+                    <a href="index.html" class="day-btn">TRANG CHỦ</a>
                     <a href="courses.html" class="day-btn active">KHÓA HỌC</a>
                     <a href="music.html" class="day-btn">ÂM NHẠC</a>
                     <a href="news.html" class="day-btn">TIN TỨC</a>
@@ -1291,7 +1369,7 @@
                 <i class="fas fa-chevron-left"></i>
             </button>
             <div class="d-inline-flex gap-1">
-                <a href="index.html" class="day-btn mobile-day-btn ">Trang chủ</a>
+                <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
                 <a href="courses.html" class="day-btn mobile-day-btn active">Khóa học</a>
                 <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
                 <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
@@ -1312,7 +1390,7 @@
         <div class="offcanvas-body">
             <div class="menu-section">
                 <div class="section-title">Navigation</div>
-                <a href="index.html" class="menu-item ">
+                <a href="index.html" class="menu-item">
                     <i class="fas fa-home"></i>
                     Trang chủ
                 </a>
@@ -1350,7 +1428,6 @@
                     <i class="fas fa-circle"></i>
                     Thi thử
                 </a>
-                
             </div>
             <div class="menu-divider"></div>
 
@@ -1368,61 +1445,329 @@
         </div>
     </div>
 
+    <!-- Main Content -->
     <main>
-       
+        <!-- Lessons Header -->
+        <div class="lessons-header" data-aos="fade-down">
+            <h1>DANH SÁCH TRẮC NGHIỆM</h1>
+            <p>Luyện tập và kiểm tra kiến thức với các bài trắc nghiệm chất lượng</p>
+        </div>
 
-    <h3>Chọn nội dung bạn muốn học</h3>
-        <div class="container-solarsystem">
-            <a href="#sun" class="sun">
-                <model-viewer interaction-prompt="none" src="assets/Sun.glb" alt="Sun" auto-rotate camera-controls ar
-                    ios-src="assets/sun.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#mercury" class="mercury">
-                <model-viewer interaction-prompt="none" src="assets/Mercury.glb" alt="Mercury" auto-rotate camera-controls ar
-                    ios-src="assets/Mercury.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#venus" class="venus">
-                <model-viewer interaction-prompt="none" src="assets/Venus(surface).glb" alt="Venus" auto-rotate camera-controls ar
-                    ios-src="assets/Venus(surface).glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#earth" class="earth">
-                <model-viewer interaction-prompt="none" src="assets/Earth.glb" alt="Earth" auto-rotate camera-controls ar
-                    ios-src="assets/Earth.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#mars" class="mars">
-                <model-viewer interaction-prompt="none" src="assets/Mars.glb" alt="Mars" auto-rotate camera-controls ar
-                    ios-src="assets/Mars.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#jupiter" class="jupiter">
-                <model-viewer interaction-prompt="none" src="assets/Jupiter.glb" alt="Jupiter" auto-rotate camera-controls ar
-                    ios-src="assets/Jupiter.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#saturn" class="saturn">
-                <model-viewer interaction-prompt="none" src="assets/Saturn.glb" alt="Saturn" auto-rotate camera-controls ar
-                    ios-src="assets/Saturn.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#uranus" class="uranus">
-                <model-viewer interaction-prompt="none" src="assets/Uranus.glb" alt="Uranus" auto-rotate camera-controls ar
-                    ios-src="assets/Uranus.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#neptune" class="neptune">
-                <model-viewer interaction-prompt="none" src="assets/Neptune.glb" alt="Neptune" auto-rotate camera-controls ar
-                    ios-src="assets/Neptune.glb" loading="lazy"></model-viewer>
-            </a>
+        <!-- Lessons Container -->
+        <div class="lessons-container">
+            <div class="lessons-grid">
+                
+                <!-- Lesson Card 1: Toán Học -->
+                <div class="lesson-card type-quiz" data-aos="fade-up" data-aos-delay="100">
+                    <div class="lesson-card-header">
+                        <div class="lesson-icon-wrapper">
+                            <div class="lesson-planet-icon">
+                                <model-viewer 
+                                    interaction-prompt="none" 
+                                    src="assets/Mercury.glb" 
+                                    alt="Mercury" 
+                                    auto-rotate 
+                                    camera-controls 
+                                    loading="lazy">
+                                </model-viewer>
+                            </div>
+                            <h3 class="lesson-title">Toán Học</h3>
+                        </div>
+                        <button class="lesson-back-btn">
+                            Quiz <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="lesson-stats">
+                        <div class="lesson-main-stat">45 câu</div>
+                        <div class="lesson-sub-stat">Đã hoàn thành: 32/45</div>
+                    </div>
+
+                    <div class="lesson-progress">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" style="width: 71%"></div>
+                        </div>
+                        <div class="progress-labels">
+                            <span>71% hoàn thành</span>
+                            <span>13 câu còn lại</span>
+                        </div>
+                    </div>
+
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Thời gian</span>
+                            <span class="detail-value">45 phút</span>
+                        </div>
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Độ khó</span>
+                            <span class="detail-badge">Trung bình</span>
+                        </div>
+                    </div>
+
+                    <button class="lesson-action-btn">Thi ngay</button>
+                </div>
+
+                <!-- Lesson Card 2: Vật Lý -->
+                <div class="lesson-card type-practice" data-aos="fade-up" data-aos-delay="200">
+                    <div class="lesson-card-header">
+                        <div class="lesson-icon-wrapper">
+                            <div class="lesson-planet-icon">
+                                <model-viewer 
+                                    interaction-prompt="none" 
+                                    src="assets/Venus(surface).glb" 
+                                    alt="Venus" 
+                                    auto-rotate 
+                                    camera-controls 
+                                    loading="lazy">
+                                </model-viewer>
+                            </div>
+                            <h3 class="lesson-title">Vật Lý</h3>
+                        </div>
+                        <button class="lesson-back-btn">
+                            Practice <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="lesson-stats">
+                        <div class="lesson-main-stat">1,248 điểm</div>
+                        <div class="lesson-sub-stat">Điểm cao nhất</div>
+                    </div>
+
+                    <div class="mini-chart">
+                        <div class="chart-bar" style="height: 30%"></div>
+                        <div class="chart-bar" style="height: 45%"></div>
+                        <div class="chart-bar" style="height: 60%"></div>
+                        <div class="chart-bar highlight" style="height: 85%"></div>
+                        <div class="chart-bar" style="height: 70%"></div>
+                        <div class="chart-bar" style="height: 55%"></div>
+                        <div class="chart-bar" style="height: 40%"></div>
+                    </div>
+
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Câu hỏi</span>
+                            <span class="detail-value">50 câu</span>
+                        </div>
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Độ khó</span>
+                            <span class="detail-badge">Khó</span>
+                        </div>
+                    </div>
+
+                    <button class="lesson-action-btn">Thi ngay</button>
+                </div>
+
+                <!-- Lesson Card 3: Hóa Học -->
+                <div class="lesson-card type-exam" data-aos="fade-up" data-aos-delay="300">
+                    <div class="lesson-card-header">
+                        <div class="lesson-icon-wrapper">
+                            <div class="lesson-planet-icon">
+                                <model-viewer 
+                                    interaction-prompt="none" 
+                                    src="assets/Earth.glb" 
+                                    alt="Earth" 
+                                    auto-rotate 
+                                    camera-controls 
+                                    loading="lazy">
+                                </model-viewer>
+                            </div>
+                            <h3 class="lesson-title">Hóa Học</h3>
+                        </div>
+                        <button class="lesson-back-btn">
+                            Exam <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="lesson-stats">
+                        <div class="lesson-main-stat">38h 48m</div>
+                        <div class="lesson-sub-stat">Tổng thời gian luyện tập</div>
+                    </div>
+
+                    <div class="lesson-progress">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" style="width: 55%"></div>
+                        </div>
+                        <div class="progress-labels">
+                            <span>55% hoàn thành</span>
+                            <span>28/50 câu</span>
+                        </div>
+                    </div>
+
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Lần thi</span>
+                            <span class="detail-value">3 lần</span>
+                        </div>
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Điểm TB</span>
+                            <span class="detail-value">7.5/10</span>
+                        </div>
+                    </div>
+
+                    <button class="lesson-action-btn">Thi ngay</button>
+                </div>
+
+                <!-- Lesson Card 4: Sinh Học -->
+                <div class="lesson-card type-quiz" data-aos="fade-up" data-aos-delay="400">
+                    <div class="lesson-card-header">
+                        <div class="lesson-icon-wrapper">
+                            <div class="lesson-planet-icon">
+                                <model-viewer 
+                                    interaction-prompt="none" 
+                                    src="assets/Mars.glb" 
+                                    alt="Mars" 
+                                    auto-rotate 
+                                    camera-controls 
+                                    loading="lazy">
+                                </model-viewer>
+                            </div>
+                            <h3 class="lesson-title">Sinh Học</h3>
+                        </div>
+                        <button class="lesson-back-btn">
+                            Quiz <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="lesson-stats">
+                        <div class="lesson-main-stat">40 câu</div>
+                        <div class="lesson-sub-stat">Chưa bắt đầu</div>
+                    </div>
+
+                    <div class="lesson-progress">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-labels">
+                            <span>0% hoàn thành</span>
+                            <span>40 câu</span>
+                        </div>
+                    </div>
+
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Thời gian</span>
+                            <span class="detail-value">40 phút</span>
+                        </div>
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Độ khó</span>
+                            <span class="detail-badge">Dễ</span>
+                        </div>
+                    </div>
+
+                    <button class="lesson-action-btn">Thi ngay</button>
+                </div>
+
+                <!-- Lesson Card 5: Tiếng Anh -->
+                <div class="lesson-card type-practice" data-aos="fade-up" data-aos-delay="500">
+                    <div class="lesson-card-header">
+                        <div class="lesson-icon-wrapper">
+                            <div class="lesson-planet-icon">
+                                <model-viewer 
+                                    interaction-prompt="none" 
+                                    src="assets/Jupiter.glb" 
+                                    alt="Jupiter" 
+                                    auto-rotate 
+                                    camera-controls 
+                                    loading="lazy">
+                                </model-viewer>
+                            </div>
+                            <h3 class="lesson-title">Tiếng Anh</h3>
+                        </div>
+                        <button class="lesson-back-btn">
+                            Practice <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="lesson-stats">
+                        <div class="lesson-main-stat">70.00 điểm</div>
+                        <div class="lesson-sub-stat">Điểm trung bình</div>
+                    </div>
+
+                    <div class="mini-chart">
+                        <div class="chart-bar" style="height: 50%"></div>
+                        <div class="chart-bar" style="height: 60%"></div>
+                        <div class="chart-bar" style="height: 70%"></div>
+                        <div class="chart-bar" style="height: 65%"></div>
+                        <div class="chart-bar highlight" style="height: 90%"></div>
+                        <div class="chart-bar" style="height: 75%"></div>
+                        <div class="chart-bar" style="height: 80%"></div>
+                    </div>
+
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Câu hỏi</span>
+                            <span class="detail-value">60 câu</span>
+                        </div>
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Trạng thái</span>
+                            <span class="detail-badge">Ổn định</span>
+                        </div>
+                    </div>
+
+                    <button class="lesson-action-btn">Thi ngay</button>
+                </div>
+
+                <!-- Lesson Card 6: Lịch Sử -->
+                <div class="lesson-card type-exam" data-aos="fade-up" data-aos-delay="600">
+                    <div class="lesson-card-header">
+                        <div class="lesson-icon-wrapper">
+                            <div class="lesson-planet-icon">
+                                <model-viewer 
+                                    interaction-prompt="none" 
+                                    src="assets/Saturn.glb" 
+                                    alt="Saturn" 
+                                    auto-rotate 
+                                    camera-controls 
+                                    loading="lazy">
+                                </model-viewer>
+                            </div>
+                            <h3 class="lesson-title">Lịch Sử</h3>
+                        </div>
+                        <button class="lesson-back-btn">
+                            Exam <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="lesson-stats">
+                        <div class="lesson-main-stat">08:45 - 10:00</div>
+                        <div class="lesson-sub-stat">Thời gian thi</div>
+                    </div>
+
+                    <div class="lesson-progress">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" style="width: 100%"></div>
+                        </div>
+                        <div class="progress-labels">
+                            <span>Đã hoàn thành</span>
+                            <span>35/35 câu</span>
+                        </div>
+                    </div>
+
+                    <div class="lesson-details">
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Kết quả</span>
+                            <span class="detail-value">8.5/10</span>
+                        </div>
+                        <div class="lesson-detail-item">
+                            <span class="detail-label">Xếp hạng</span>
+                            <span class="detail-badge">Giỏi</span>
+                        </div>
+                    </div>
+
+                    <button class="lesson-action-btn">Xem lại</button>
+                </div>
+
+            </div>
         </div>
     </main>
- 
 
-
-
-
- <!-- Newsletter Section -->
+    <!-- Newsletter Section -->
     <section class="footer-newsletter-wrapper">
         <div class="footer-newsletter-container">
             <div class="footer-newsletter-content-grid">
                 <h2 class="footer-newsletter-main-title">Subscribe</h2>
                 <p class="footer-newsletter-description-text">
-                     Đăng ký tài khoản để nhận thông báo khi có khóa học mới!
+                    Đăng ký để nhận thông báo khi có bài trắc nghiệm mới!
                 </p>
                 <form class="footer-newsletter-subscribe-form">
                     <input type="email" class="footer-newsletter-email-input" placeholder="Email của bạn..." required>
@@ -1533,7 +1878,6 @@
                 </div>
             </div>
 
-        
             <!-- Bottom Footer -->
             <div class="thedung-footer-bottom-copyright-wrapper">
                 <div>&copy; 2025 THEDUNG. All rights reserved.</div>
@@ -1546,144 +1890,54 @@
         </div>
     </footer>
 
-  
-     <button id="backToTop" title="Lên đầu trang">
-    <span class="sun-ring">
-        <i class="fas fa-sun"></i>
-    </span>
-    <span class="arrow-up">
-        <i class="fas fa-chevron-up"></i>
-    </span>
-</button>
+    <!-- Back to Top Button -->
+    <button id="backToTop" title="Lên đầu trang">
+        <span class="sun-ring">
+            <i class="fas fa-sun"></i>
+        </span>
+        <span class="arrow-up">
+            <i class="fas fa-chevron-up"></i>
+        </span>
+    </button>
 
     <script src="js/bootstrap.min.js"></script>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-<!-- 
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    
     <script>
-        if (window.innerWidth <= 768) {
-            document.addEventListener('DOMContentLoaded', function() {
-                const modelViewers = document.querySelectorAll('model-viewer');
-                modelViewers.forEach(viewer => {
-                    viewer.removeAttribute('auto-rotate');
-                });
-            });
-        }
-    </script> -->
-<script>
-const text = "Hỗ trợ học tập";
-const typingElement = document.getElementById("typingText");
-const sound = document.getElementById("typeSound");
+        // Back to top button
+        const backToTopBtn = document.getElementById("backToTop");
 
-/* ===== DANH SÁCH MÀU ===== */
-const colors = [
-    "#ffffff",   // trắng
-    "#00e5ff",   // xanh cyan
-    "#ff1744",   // đỏ neon
-    "#ffcc33",   // vàng
-    "#7c4dff",   // tím
-    "#00e676"    // xanh lá
-];
-
-let colorIndex = 0;
-
-let index = 1;        // bắt đầu từ chữ H
-let isDeleting = false;
-let lastSoundTime = 0;
-
-const TYPE_SPEED = 120;
-const DELETE_SPEED = 80;
-const PAUSE_AFTER_TYPE = 1200;
-const PAUSE_AFTER_DELETE = 600;
-const SOUND_GAP = 90;
-
-function playSoundSafe() {
-    const now = Date.now();
-    if (now - lastSoundTime > SOUND_GAP) {
-        sound.currentTime = 0;
-        sound.play().catch(() => {});
-        lastSoundTime = now;
-    }
-}
-
-function changeColor() {
-    colorIndex = (colorIndex + 1) % colors.length;
-    typingElement.style.color = colors[colorIndex];
-}
-
-function typeLoop() {
-    if (!isDeleting) {
-        // Gõ chữ
-        typingElement.textContent = text.substring(0, index);
-        playSoundSafe();
-        index++;
-
-        if (index > text.length) {
-            // Gõ xong → đổi màu
-            changeColor();
-            setTimeout(() => isDeleting = true, PAUSE_AFTER_TYPE);
-        }
-    } else {
-        // Xóa chữ nhưng KHÔNG xóa chữ H
-        if (index > 1) {
-            typingElement.textContent = text.substring(0, index);
-            playSoundSafe();
-            index--;
-        } else {
-            // Dừng ở chữ H
-            setTimeout(() => isDeleting = false, PAUSE_AFTER_DELETE);
-        }
-    }
-
-    setTimeout(
-        typeLoop,
-        isDeleting ? DELETE_SPEED : TYPE_SPEED
-    );
-}
-
-// Khởi tạo ban đầu
-typingElement.textContent = "H";
-typingElement.style.color = colors[0];
-typeLoop();
-</script>
-
-
-
-    <script>
-    const backToTopBtn = document.getElementById("backToTop");
-
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-            backToTopBtn.style.display = "flex";
-        } else {
-            backToTopBtn.style.display = "none";
-        }
-    });
-
-    backToTopBtn.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = "flex";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
         });
-    });
-</script>
- <script>
+
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
         // Newsletter form submission
-        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+        document.querySelector('.footer-newsletter-subscribe-form').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('Cảm ơn bạn đã đăng ký!');
             this.reset();
         });
-    </script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 900,        // thời gian animation
-    easing: 'ease-out-cubic',
-    once: true,           // chỉ chạy 1 lần
-    offset: 120           // khoảng cách trigger
-  });
-</script>
 
+        // Initialize AOS
+        AOS.init({
+            duration: 900,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 120
+        });
+    </script>
 </body>
 
 </html>
