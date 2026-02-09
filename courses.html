@@ -6,16 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <title>THEDUNG</title>
+    <title>THEDUNG - Khóa Học</title>
     <link rel="icon" href="images/logo.png">
 
     <style>
-        
-
         :root {
             --gold-color: #5120bb;
             --gold-light: #08179c;
@@ -105,79 +103,43 @@
             color: white;
         }
 
-.day-btn {
-    position: relative;
-    background: transparent;
-    color: #d1d5db;
-}
+        .day-btn::after {
+            content: "";
+            position: absolute;
+            left: 15%;
+            bottom: 2px;
+            width: 70%;
+            height: 2px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #00e5ff, #ff1744);
+            opacity: 0;
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+        }
 
-/* Hover: hiện gạch phát sáng */
-.day-btn::after {
-    content: "";
-    position: absolute;
-    left: 15%;
-    bottom: 2px;
-    width: 70%;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #00e5ff, #ff1744);
-    opacity: 0;
-    transform: scaleX(0);
-    transition: all 0.3s ease;
-}
+        .day-btn:hover::after {
+            opacity: 1;
+            transform: scaleX(1);
+            box-shadow: 0 0 6px #00e5ff, 0 0 12px #ff1744;
+        }
 
-/* Hover effect */
-.day-btn:hover::after {
-    opacity: 1;
-    transform: scaleX(1);
-    box-shadow:
-        0 0 6px #00e5ff,
-        0 0 12px #ff1744;
-}
+        .day-btn.active {
+            color: white;
+        }
 
-/* Active: luôn hiện + mạnh hơn */
-.day-btn.active {
-    color: white;
-}
+        .day-btn.active::after {
+            opacity: 1;
+            transform: scaleX(1);
+            background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
+            background-size: 200% 100%;
+            animation: glowMove 2s linear infinite;
+            box-shadow: 0 0 8px #00e5ff, 0 0 18px #ff1744;
+        }
 
-.day-btn.active::after {
-    opacity: 1;
-    transform: scaleX(1);
-    background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
-    background-size: 200% 100%;
-    animation: glowMove 2s linear infinite;
-    box-shadow:
-        0 0 8px #00e5ff,
-        0 0 18px #ff1744;
-}
-
-/* Animation chạy ánh sáng */
-@keyframes glowMove {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
-}
-
-
-.day-btn.active {
-    background: transparent;
-    color: white;
-    box-shadow: none;
-}
-
-.day-btn.active::after {
-    content: "";
-    position: absolute;
-    left: 15%;
-    bottom: 0px;
-    width: 70%;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #00e5ff, #ff1744);
-    box-shadow: 
-        0 0 6px #00e5ff,
-        0 0 12px #ff1744;
-}
-
+        @keyframes glowMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
 
         .nav-arrow {
             width: 32px;
@@ -340,93 +302,281 @@
 
         main {
             background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
-            height: 1200px;
+            min-height: 100vh;
             background-size: cover;
             background-position: center;
+            padding: 60px 0;
         }
 
-       
+        /* ========================================
+           COURSES SECTION
+           ======================================== */
 
+        .courses-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 0 20px;
+        }
 
-       
-       
+        .courses-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00e5ff 0%, #ff1744 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
 
-       
+        .courses-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-       
+        .courses-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
+        .course-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 30px;
+            position: relative;
+        }
 
-        
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
 
-      
+        .course-card:hover {
+            transform: translateY(-10px);
+            border-color: #00e5ff;
+            box-shadow: 0 20px 60px rgba(0, 229, 255, 0.3);
+        }
+
+        .course-card:hover::before {
+            opacity: 1;
+        }
+
+        .course-planet {
+            flex-shrink: 0;
+            width: 280px;
+            height: 280px;
+            position: relative;
+        }
+
+        .course-planet model-viewer {
+            width: 100%;
+            height: 100%;
+        }
+
+        .course-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .course-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .course-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .course-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 204, 51, 0.2);
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 204, 51, 0.4);
+        }
+
+        .course-rating i {
+            color: #ffcc33;
+            font-size: 1.2rem;
+        }
+
+        .rating-number {
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .course-description {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .course-tags {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .course-tag {
+            background: rgba(81, 32, 187, 0.3);
+            border: 1px solid rgba(81, 32, 187, 0.5);
+            padding: 8px 20px;
+            border-radius: 20px;
+            color: #00e5ff;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .course-tag:hover {
+            background: rgba(81, 32, 187, 0.5);
+            border-color: #00e5ff;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course-date {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .course-date i {
+            color: #ff1744;
+            font-size: 1.1rem;
+        }
+
+        .course-date span {
+            font-weight: 600;
+        }
+
+        .view-more-btn {
+            background: linear-gradient(135deg, #ff1744 0%, #5120bb 100%);
+            border: none;
+            padding: 12px 35px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .view-more-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
+        }
+
         /* ========================================
            RESPONSIVE DESIGN
            ======================================== */
 
-        @media screen and (max-width: 1024px) {
-            .logo-box {
-                width: 36px;
-                height: 36px;
+        @media (max-width: 1024px) {
+            .course-card {
+                flex-direction: column;
+                text-align: center;
             }
 
-            .logo-box i {
-                font-size: 18px;
+            .course-planet {
+                width: 220px;
+                height: 220px;
             }
 
-            .brand-text {
-                font-size: 1.125rem;
+            .course-header-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
             }
 
-            .icon-btn {
-                width: 36px;
-                height: 36px;
+            .course-tags {
+                justify-content: center;
             }
 
-            
-        }
-
-       
-        @media screen and (max-width: 480px) {
-            .logo-box {
-                width: 32px;
-                height: 32px;
-            }
-
-            .logo-box i {
-                font-size: 16px;
-            }
-
-            .brand-text {
-                font-size: 1rem;
-            }
-
-            .icon-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 0.875rem;
-            }
-
-            main {
-                min-height: 700px;
+            .course-footer {
+                flex-direction: column;
+                gap: 20px;
             }
         }
 
-        @media screen and (max-width: 360px) {
-            .offcanvas-end {
-                max-width: 100% !important;
-            }
-        }
-
-        /* Performance optimization for mobile */
         @media (max-width: 768px) {
-            /* Disable auto-rotate on mobile for better performance */
-            model-viewer {
-                --poster-color: transparent;
+            .courses-header h1 {
+                font-size: 2rem;
+            }
+
+            .course-planet {
+                width: 180px;
+                height: 180px;
+            }
+
+            .course-title {
+                font-size: 1.5rem;
+            }
+
+            .course-card {
+                padding: 20px;
             }
         }
-    </style>
 
- <style>
+        @media (max-width: 480px) {
+            .courses-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .course-planet {
+                width: 150px;
+                height: 150px;
+            }
+
+            .course-title {
+                font-size: 1.25rem;
+            }
+
+            .view-more-btn {
+                width: 100%;
+            }
+        }
+
+        /* Footer styles (reusing from original) */
         :root {
             --footer-primary-purple: #5120bb;
             --footer-light-purple: #08179c;
@@ -436,9 +586,6 @@
             --footer-neon-yellow: #ffcc33;
         }
 
-        /* ========================================
-           NEWSLETTER SECTION - FOOTER
-           ======================================== */
         .footer-newsletter-wrapper {
             background: linear-gradient(135deg, rgba(81, 32, 187, 0.1) 0%, rgba(0, 0, 0, 0.95) 100%);
             padding: 3rem 0;
@@ -454,9 +601,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(255, 23, 68, 0.05) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255, 23, 68, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -549,9 +694,6 @@
             font-size: 1.2rem;
         }
 
-        /* ========================================
-           MAIN FOOTER WRAPPER
-           ======================================== */
         .thedung-main-footer-wrapper {
             background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(28, 29, 122, 0.1) 50%, rgba(0, 0, 0, 0.95) 100%);
             padding: 4rem 0 2rem;
@@ -565,8 +707,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: 
-                radial-gradient(circle at 2px 2px, rgba(0, 229, 255, 0.1) 1px, transparent 0);
+            background-image: radial-gradient(circle at 2px 2px, rgba(0, 229, 255, 0.1) 1px, transparent 0);
             background-size: 40px 40px;
             opacity: 0.3;
             pointer-events: none;
@@ -589,9 +730,6 @@
             z-index: 1;
         }
 
-        /* ========================================
-           FOOTER BRAND SECTION
-           ======================================== */
         .thedung-footer-brand-section {
             animation: thedungFooterFadeInUp 0.6s ease-out;
         }
@@ -716,9 +854,6 @@
             z-index: 1;
         }
 
-        /* ========================================
-           FOOTER CONTENT COLUMNS
-           ======================================== */
         .thedung-footer-content-column {
             animation: thedungFooterFadeInUp 0.6s ease-out;
             animation-fill-mode: both;
@@ -794,9 +929,6 @@
             transform: translateX(0);
         }
 
-        /* ========================================
-           FOOTER CONTACT INFORMATION
-           ======================================== */
         .thedung-footer-contact-info-box {
             display: flex;
             align-items: flex-start;
@@ -850,9 +982,6 @@
             font-family: 'Space Mono', monospace;
         }
 
-        /* ========================================
-           FOOTER MAP SECTION
-           ======================================== */
         .thedung-footer-map-display-container {
             position: relative;
             border-radius: 12px;
@@ -866,10 +995,7 @@
         .thedung-footer-map-placeholder-area {
             width: 100%;
             height: 100%;
-            background: 
-                linear-gradient(135deg, rgba(81, 32, 187, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%),
-                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px),
-                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px);
+            background: linear-gradient(135deg, rgba(81, 32, 187, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%), repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -911,62 +1037,6 @@
             50% { transform: translate(-50%, -50%) rotate(-45deg) translateY(-10px); }
         }
 
-        /* ========================================
-           FOOTER THANK YOU BANNER
-           ======================================== */
-        .thedung-footer-thankyou-banner-wrapper {
-            margin-top: 3rem;
-            padding: 2rem;
-            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1) 0%, rgba(255, 23, 68, 0.1) 100%);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .thedung-footer-thankyou-banner-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.2), transparent);
-            animation: thedungFooterThankYouShine 3s ease-in-out infinite;
-        }
-
-        @keyframes thedungFooterThankYouShine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .thedung-footer-thankyou-banner-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 12px;
-            padding: 2px;
-            background: linear-gradient(135deg, var(--footer-neon-cyan), var(--footer-neon-red));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-
-        .thedung-footer-thankyou-message-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            position: relative;
-            z-index: 1;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Space Mono', monospace;
-        }
-
-        /* ========================================
-           FOOTER BOTTOM COPYRIGHT SECTION
-           ======================================== */
         .thedung-footer-bottom-copyright-wrapper {
             padding: 2rem 0;
             border-top: 1px solid rgba(0, 229, 255, 0.2);
@@ -1001,9 +1071,60 @@
             text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         }
 
-        /* ========================================
-           RESPONSIVE DESIGN - TABLET
-           ======================================== */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: none;
+            z-index: 999;
+            padding: 0;
+        }
+
+        #backToTop .sun-ring {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: sunRotate 6s linear infinite;
+        }
+
+        #backToTop .sun-ring i {
+            font-size: 56px;
+            color: #ffcc33;
+            filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
+        }
+
+        #backToTop .arrow-up {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #backToTop .arrow-up i {
+            font-size: 18px;
+            color: white;
+            text-shadow: 0 0 6px rgba(255,255,255,0.8);
+            z-index: 2;
+        }
+
+        #backToTop:hover {
+            transform: translateY(-6px) scale(1.05);
+            transition: 0.3s ease;
+        }
+
+        @keyframes sunRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         @media (max-width: 1024px) {
             .thedung-footer-columns-grid {
                 grid-template-columns: 1fr 1fr 1fr;
@@ -1016,9 +1137,6 @@
             }
         }
 
-        /* ========================================
-           RESPONSIVE DESIGN - MOBILE LANDSCAPE
-           ======================================== */
         @media (max-width: 768px) {
             .footer-newsletter-content-grid {
                 grid-template-columns: 1fr;
@@ -1061,9 +1179,6 @@
             }
         }
 
-        /* ========================================
-           RESPONSIVE DESIGN - MOBILE PORTRAIT
-           ======================================== */
         @media (max-width: 480px) {
             .footer-newsletter-container {
                 padding: 0 1rem;
@@ -1093,21 +1208,8 @@
                 width: 100%;
             }
 
-            .thedung-footer-columns-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
-
-            .thedung-footer-brand-section {
-                grid-column: 1 / -1;
-            }
-
             .thedung-footer-brand-name-text {
                 font-size: 1.5rem;
-            }
-
-            .thedung-footer-thankyou-message-text {
-                font-size: 1.1rem;
             }
 
             .thedung-footer-social-icons-container {
@@ -1128,90 +1230,6 @@
                 margin: 1.5rem auto;
             }
         }
-
-        /* ========================================
-           RESPONSIVE DESIGN - EXTRA SMALL
-           ======================================== */
-        @media (max-width: 360px) {
-            .footer-newsletter-main-title {
-                font-size: 1.25rem;
-            }
-
-            .thedung-footer-brand-name-text {
-                font-size: 1.25rem;
-            }
-
-            .thedung-footer-contact-info-box {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-        }
-    </style>
-
-      <style>
-#backToTop {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 56px;
-    height: 56px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: none;
-    z-index: 999;
-    padding: 0;
-}
-
-/* Vòng mặt trời bên ngoài */
-#backToTop .sun-ring {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: sunRotate 6s linear infinite;
-}
-
-#backToTop .sun-ring i {
-    font-size: 56px;
-    color: #ffcc33;
-    filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
-}
-
-/* Mũi tên bên trong */
-#backToTop .arrow-up {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#backToTop .arrow-up i {
-    font-size: 18px;
-    color: white;
-    text-shadow: 0 0 6px rgba(255,255,255,0.8);
-    z-index: 2;
-}
-
-/* Hover nhẹ */
-#backToTop:hover {
-    transform: translateY(-6px) scale(1.05);
-    transition: 0.3s ease;
-}
-
-/* Animation xoay mặt trời */
-@keyframes sunRotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
     </style>
 </head>
 
@@ -1231,7 +1249,7 @@
                     <button class="nav-arrow">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <a href="index.html" class="day-btn ">TRANG CHỦ</a>
+                    <a href="index.html" class="day-btn">TRANG CHỦ</a>
                     <a href="courses.html" class="day-btn active">KHÓA HỌC</a>
                     <a href="music.html" class="day-btn">ÂM NHẠC</a>
                     <a href="news.html" class="day-btn">TIN TỨC</a>
@@ -1291,7 +1309,7 @@
                 <i class="fas fa-chevron-left"></i>
             </button>
             <div class="d-inline-flex gap-1">
-                <a href="index.html" class="day-btn mobile-day-btn ">Trang chủ</a>
+                <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
                 <a href="courses.html" class="day-btn mobile-day-btn active">Khóa học</a>
                 <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
                 <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
@@ -1312,7 +1330,7 @@
         <div class="offcanvas-body">
             <div class="menu-section">
                 <div class="section-title">Navigation</div>
-                <a href="index.html" class="menu-item ">
+                <a href="index.html" class="menu-item">
                     <i class="fas fa-home"></i>
                     Trang chủ
                 </a>
@@ -1350,7 +1368,6 @@
                     <i class="fas fa-circle"></i>
                     Thi thử
                 </a>
-                
             </div>
             <div class="menu-divider"></div>
 
@@ -1368,61 +1385,259 @@
         </div>
     </div>
 
+    <!-- Main Content -->
     <main>
-       
+        <!-- Courses Header -->
+        <div class="courses-header" data-aos="fade-down">
+            <h1>KHÓA HỌC CỦA BẠN</h1>
+            <p>Khám phá vũ trụ kiến thức với các khóa học chất lượng cao</p>
+        </div>
 
-    <h3>Chọn nội dung bạn muốn học</h3>
-        <div class="container-solarsystem">
-            <a href="#sun" class="sun">
-                <model-viewer interaction-prompt="none" src="assets/Sun.glb" alt="Sun" auto-rotate camera-controls ar
-                    ios-src="assets/sun.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#mercury" class="mercury">
-                <model-viewer interaction-prompt="none" src="assets/Mercury.glb" alt="Mercury" auto-rotate camera-controls ar
-                    ios-src="assets/Mercury.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#venus" class="venus">
-                <model-viewer interaction-prompt="none" src="assets/Venus(surface).glb" alt="Venus" auto-rotate camera-controls ar
-                    ios-src="assets/Venus(surface).glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#earth" class="earth">
-                <model-viewer interaction-prompt="none" src="assets/Earth.glb" alt="Earth" auto-rotate camera-controls ar
-                    ios-src="assets/Earth.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#mars" class="mars">
-                <model-viewer interaction-prompt="none" src="assets/Mars.glb" alt="Mars" auto-rotate camera-controls ar
-                    ios-src="assets/Mars.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#jupiter" class="jupiter">
-                <model-viewer interaction-prompt="none" src="assets/Jupiter.glb" alt="Jupiter" auto-rotate camera-controls ar
-                    ios-src="assets/Jupiter.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#saturn" class="saturn">
-                <model-viewer interaction-prompt="none" src="assets/Saturn.glb" alt="Saturn" auto-rotate camera-controls ar
-                    ios-src="assets/Saturn.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#uranus" class="uranus">
-                <model-viewer interaction-prompt="none" src="assets/Uranus.glb" alt="Uranus" auto-rotate camera-controls ar
-                    ios-src="assets/Uranus.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#neptune" class="neptune">
-                <model-viewer interaction-prompt="none" src="assets/Neptune.glb" alt="Neptune" auto-rotate camera-controls ar
-                    ios-src="assets/Neptune.glb" loading="lazy"></model-viewer>
-            </a>
+        <!-- Courses Container -->
+        <div class="courses-container">
+            <!-- Course 1: English Lecture (Earth) -->
+            <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="course-planet">
+                    <model-viewer 
+                        interaction-prompt="none" 
+                        src="assets/Earth.glb" 
+                        alt="Earth" 
+                        auto-rotate 
+                        camera-controls 
+                        ar
+                        ios-src="assets/Earth.glb" 
+                        loading="lazy">
+                    </model-viewer>
+                </div>
+                <div class="course-content">
+                    <div class="course-header-row">
+                        <h2 class="course-title">English Lecture</h2>
+                        <div class="course-rating">
+                            <i class="fas fa-star"></i>
+                            <span class="rating-number">4.5</span>
+                        </div>
+                    </div>
+                    <p class="course-description">
+                        Language lessons with the most popular teachers. Học tiếng Anh hiệu quả với phương pháp hiện đại và giáo viên chất lượng.
+                    </p>
+                    <div class="course-tags">
+                        <span class="course-tag">Languages</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Satart 20 July</span>
+                        </div>
+                        <button class="view-more-btn">View More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 2: Design Stategy (Mars) -->
+            <div class="course-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="course-planet">
+                    <model-viewer 
+                        interaction-prompt="none" 
+                        src="assets/Mars.glb" 
+                        alt="Mars" 
+                        auto-rotate 
+                        camera-controls 
+                        ar
+                        ios-src="assets/Mars.glb" 
+                        loading="lazy">
+                    </model-viewer>
+                </div>
+                <div class="course-content">
+                    <div class="course-header-row">
+                        <h2 class="course-title">Design Stategy</h2>
+                        <div class="course-rating">
+                            <i class="fas fa-star"></i>
+                            <span class="rating-number">4.0</span>
+                        </div>
+                    </div>
+                    <p class="course-description">
+                        Lesson on planning a design concept and proper planning of work. Nắm vững quy trình thiết kế chuyên nghiệp.
+                    </p>
+                    <div class="course-tags">
+                        <span class="course-tag">UI/UX Design</span>
+                        <span class="course-tag">Web Design</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Satart 22 July</span>
+                        </div>
+                        <button class="view-more-btn">View More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 3: Python Programming (Jupiter) -->
+            <div class="course-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="course-planet">
+                    <model-viewer 
+                        interaction-prompt="none" 
+                        src="assets/Jupiter.glb" 
+                        alt="Jupiter" 
+                        auto-rotate 
+                        camera-controls 
+                        ar
+                        ios-src="assets/Jupiter.glb" 
+                        loading="lazy">
+                    </model-viewer>
+                </div>
+                <div class="course-content">
+                    <div class="course-header-row">
+                        <h2 class="course-title">Python Programming</h2>
+                        <div class="course-rating">
+                            <i class="fas fa-star"></i>
+                            <span class="rating-number">4.8</span>
+                        </div>
+                    </div>
+                    <p class="course-description">
+                        Master Python from basics to advanced. Học lập trình Python từ cơ bản đến nâng cao với dự án thực tế.
+                    </p>
+                    <div class="course-tags">
+                        <span class="course-tag">Programming</span>
+                        <span class="course-tag">Python</span>
+                        <span class="course-tag">Data Science</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Satart 25 July</span>
+                        </div>
+                        <button class="view-more-btn">View More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 4: Mathematics (Saturn) -->
+            <div class="course-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="course-planet">
+                    <model-viewer 
+                        interaction-prompt="none" 
+                        src="assets/Saturn.glb" 
+                        alt="Saturn" 
+                        auto-rotate 
+                        camera-controls 
+                        ar
+                        ios-src="assets/Saturn.glb" 
+                        loading="lazy">
+                    </model-viewer>
+                </div>
+                <div class="course-content">
+                    <div class="course-header-row">
+                        <h2 class="course-title">Advanced Mathematics</h2>
+                        <div class="course-rating">
+                            <i class="fas fa-star"></i>
+                            <span class="rating-number">4.6</span>
+                        </div>
+                    </div>
+                    <p class="course-description">
+                        Deep dive into calculus, algebra and statistics. Khám phá toán học nâng cao với phương pháp giảng dạy dễ hiểu.
+                    </p>
+                    <div class="course-tags">
+                        <span class="course-tag">Mathematics</span>
+                        <span class="course-tag">Calculus</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Satart 28 July</span>
+                        </div>
+                        <button class="view-more-btn">View More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 5: Physics (Neptune) -->
+            <div class="course-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="course-planet">
+                    <model-viewer 
+                        interaction-prompt="none" 
+                        src="assets/Neptune.glb" 
+                        alt="Neptune" 
+                        auto-rotate 
+                        camera-controls 
+                        ar
+                        ios-src="assets/Neptune.glb" 
+                        loading="lazy">
+                    </model-viewer>
+                </div>
+                <div class="course-content">
+                    <div class="course-header-row">
+                        <h2 class="course-title">Modern Physics</h2>
+                        <div class="course-rating">
+                            <i class="fas fa-star"></i>
+                            <span class="rating-number">4.7</span>
+                        </div>
+                    </div>
+                    <p class="course-description">
+                        Explore quantum mechanics and relativity. Tìm hiểu vật lý hiện đại với các thí nghiệm thú vị.
+                    </p>
+                    <div class="course-tags">
+                        <span class="course-tag">Physics</span>
+                        <span class="course-tag">Science</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Satart 01 August</span>
+                        </div>
+                        <button class="view-more-btn">View More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 6: Chemistry (Uranus) -->
+            <div class="course-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="course-planet">
+                    <model-viewer 
+                        interaction-prompt="none" 
+                        src="assets/Uranus.glb" 
+                        alt="Uranus" 
+                        auto-rotate 
+                        camera-controls 
+                        ar
+                        ios-src="assets/Uranus.glb" 
+                        loading="lazy">
+                    </model-viewer>
+                </div>
+                <div class="course-content">
+                    <div class="course-header-row">
+                        <h2 class="course-title">Organic Chemistry</h2>
+                        <div class="course-rating">
+                            <i class="fas fa-star"></i>
+                            <span class="rating-number">4.3</span>
+                        </div>
+                    </div>
+                    <p class="course-description">
+                        Master organic chemistry with practical experiments. Học hóa học hữu cơ qua thực hành và ứng dụng thực tế.
+                    </p>
+                    <div class="course-tags">
+                        <span class="course-tag">Chemistry</span>
+                        <span class="course-tag">Science</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Satart 05 August</span>
+                        </div>
+                        <button class="view-more-btn">View More</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
- 
 
-
-
-
- <!-- Newsletter Section -->
+    <!-- Newsletter Section -->
     <section class="footer-newsletter-wrapper">
         <div class="footer-newsletter-container">
             <div class="footer-newsletter-content-grid">
                 <h2 class="footer-newsletter-main-title">Subscribe</h2>
                 <p class="footer-newsletter-description-text">
-                     Đăng ký tài khoản để nhận thông báo khi có khóa học mới!
+                    Đăng ký tài khoản để nhận thông báo khi có khóa học mới!
                 </p>
                 <form class="footer-newsletter-subscribe-form">
                     <input type="email" class="footer-newsletter-email-input" placeholder="Email của bạn..." required>
@@ -1533,7 +1748,6 @@
                 </div>
             </div>
 
-        
             <!-- Bottom Footer -->
             <div class="thedung-footer-bottom-copyright-wrapper">
                 <div>&copy; 2025 THEDUNG. All rights reserved.</div>
@@ -1546,144 +1760,54 @@
         </div>
     </footer>
 
-  
-     <button id="backToTop" title="Lên đầu trang">
-    <span class="sun-ring">
-        <i class="fas fa-sun"></i>
-    </span>
-    <span class="arrow-up">
-        <i class="fas fa-chevron-up"></i>
-    </span>
-</button>
+    <!-- Back to Top Button -->
+    <button id="backToTop" title="Lên đầu trang">
+        <span class="sun-ring">
+            <i class="fas fa-sun"></i>
+        </span>
+        <span class="arrow-up">
+            <i class="fas fa-chevron-up"></i>
+        </span>
+    </button>
 
     <script src="js/bootstrap.min.js"></script>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-<!-- 
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    
     <script>
-        if (window.innerWidth <= 768) {
-            document.addEventListener('DOMContentLoaded', function() {
-                const modelViewers = document.querySelectorAll('model-viewer');
-                modelViewers.forEach(viewer => {
-                    viewer.removeAttribute('auto-rotate');
-                });
-            });
-        }
-    </script> -->
-<script>
-const text = "Hỗ trợ học tập";
-const typingElement = document.getElementById("typingText");
-const sound = document.getElementById("typeSound");
+        // Back to top button
+        const backToTopBtn = document.getElementById("backToTop");
 
-/* ===== DANH SÁCH MÀU ===== */
-const colors = [
-    "#ffffff",   // trắng
-    "#00e5ff",   // xanh cyan
-    "#ff1744",   // đỏ neon
-    "#ffcc33",   // vàng
-    "#7c4dff",   // tím
-    "#00e676"    // xanh lá
-];
-
-let colorIndex = 0;
-
-let index = 1;        // bắt đầu từ chữ H
-let isDeleting = false;
-let lastSoundTime = 0;
-
-const TYPE_SPEED = 120;
-const DELETE_SPEED = 80;
-const PAUSE_AFTER_TYPE = 1200;
-const PAUSE_AFTER_DELETE = 600;
-const SOUND_GAP = 90;
-
-function playSoundSafe() {
-    const now = Date.now();
-    if (now - lastSoundTime > SOUND_GAP) {
-        sound.currentTime = 0;
-        sound.play().catch(() => {});
-        lastSoundTime = now;
-    }
-}
-
-function changeColor() {
-    colorIndex = (colorIndex + 1) % colors.length;
-    typingElement.style.color = colors[colorIndex];
-}
-
-function typeLoop() {
-    if (!isDeleting) {
-        // Gõ chữ
-        typingElement.textContent = text.substring(0, index);
-        playSoundSafe();
-        index++;
-
-        if (index > text.length) {
-            // Gõ xong → đổi màu
-            changeColor();
-            setTimeout(() => isDeleting = true, PAUSE_AFTER_TYPE);
-        }
-    } else {
-        // Xóa chữ nhưng KHÔNG xóa chữ H
-        if (index > 1) {
-            typingElement.textContent = text.substring(0, index);
-            playSoundSafe();
-            index--;
-        } else {
-            // Dừng ở chữ H
-            setTimeout(() => isDeleting = false, PAUSE_AFTER_DELETE);
-        }
-    }
-
-    setTimeout(
-        typeLoop,
-        isDeleting ? DELETE_SPEED : TYPE_SPEED
-    );
-}
-
-// Khởi tạo ban đầu
-typingElement.textContent = "H";
-typingElement.style.color = colors[0];
-typeLoop();
-</script>
-
-
-
-    <script>
-    const backToTopBtn = document.getElementById("backToTop");
-
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-            backToTopBtn.style.display = "flex";
-        } else {
-            backToTopBtn.style.display = "none";
-        }
-    });
-
-    backToTopBtn.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = "flex";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
         });
-    });
-</script>
- <script>
+
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
         // Newsletter form submission
-        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+        document.querySelector('.footer-newsletter-subscribe-form').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('Cảm ơn bạn đã đăng ký!');
             this.reset();
         });
-    </script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 900,        // thời gian animation
-    easing: 'ease-out-cubic',
-    once: true,           // chỉ chạy 1 lần
-    offset: 120           // khoảng cách trigger
-  });
-</script>
 
+        // Initialize AOS
+        AOS.init({
+            duration: 900,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 120
+        });
+    </script>
 </body>
 
 </html>
