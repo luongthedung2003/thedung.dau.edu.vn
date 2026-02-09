@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Exploration Space</title>
+    <link rel="icon" href="images/logo.png">
+    <style>
+       
+
+        :root {
+            --gold-color: #af8650;
+            --gold-light: #c9a66b;
+            --gold-dark: #8b6840;
+        }
+
+        * {
+           font-family: 'Be Vietnam Pro', sans-serif;
+            color: white;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ========================================
+           NEW NAVIGATION STYLES
+           ======================================== */
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(175, 134, 80, 0.2);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+        }
+
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(175, 134, 80, 0.3);
+        }
+
+        .logo-box i {
+            color: white;
+            font-size: 20px;
+        }
+
+        .brand-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            margin-left: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .day-navigator {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid rgba(175, 134, 80, 0.2);
+        }
+
+        .day-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #d1d5db;
+            transition: all 0.2s;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .day-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .day-btn.active {
+            background: var(--gold-color);
+            color: white;
+            box-shadow: 0 4px 6px rgba(175, 134, 80, 0.3);
+        }
+
+        .nav-arrow {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--gold-color);
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            color: #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .icon-btn:hover {
+            background: rgba(175, 134, 80, 0.2);
+            color: var(--gold-color);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 0, 0, 0.95);
+        }
+
+        /* Mobile Day Navigator */
+        .mobile-day-nav {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 0.5rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+        }
+
+        .mobile-day-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-day-btn {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+            display: inline-block;
+        }
+
+        /* Offcanvas Menu Styles */
+        .offcanvas-end {
+            width: 100% !important;
+            max-width: 320px !important;
+            background: rgba(0, 0, 0, 0.98);
+            border-left: 1px solid rgba(175, 134, 80, 0.2);
+        }
+
+        .offcanvas-header {
+            background: rgba(0, 0, 0, 0.95);
+            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+            padding: 1rem 1.25rem;
+        }
+
+        .offcanvas-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin: 0;
+            color: white;
+        }
+
+        .offcanvas-header .btn-close {
+            opacity: 0.5;
+            font-size: 0.875rem;
+            filter: invert(1);
+        }
+
+        .offcanvas-body {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 1rem;
+        }
+
+        .menu-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem 0.75rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #d1d5db;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: 0.2s;
+            margin-bottom: 0.25rem;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            background: rgba(175, 134, 80, 0.2);
+            color: white;
+        }
+
+        .menu-item.active {
+            background: rgba(175, 134, 80, 0.3);
+            color: var(--gold-color);
+        }
+
+        .menu-item i {
+            width: 20px;
+            font-size: 1rem;
+            color: #9ca3af;
+        }
+
+        .menu-item.active i {
+            color: var(--gold-color);
+        }
+
+        .menu-divider {
+            margin: 1rem 0;
+            border: none;
+            height: 1px;
+            background: rgba(175, 134, 80, 0.2);
+        }
+
+        /* ========================================
+           MAIN CONTENT STYLES
+           ======================================== */
+
+        main {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url("images/moon-surface-11088_1920.jpg");
+            height: 980px;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .box-1 {
+            margin: 140px 250px;
+            padding-top: 80px;
+        }
+
+        .box-1 h1 {
+            font-size: 120px;
+            font-weight: 800;
+        }
+
+        .box-1 p {
+            font-size: 16px;
+            font-weight: lighter;
+            opacity: 0.8;
+            font-family: prompt;
+            margin-top: 20px;
+        }
+
+        .box-1 button {
+            background-color: transparent;
+            border: 0.1em solid white;
+            border-radius: 50px;
+            padding: 5px;
+            width: 120px;
+            margin: 50px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease 0s;
+            cursor: pointer;
+        }
+
+        .box-1 button a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .box-1 button i {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin-left: 5px;
+        }
+
+        .box-1 button:hover {
+            opacity: 0.5;
+            transform: scale(1.1);
+        }
+
+        .astronaut {
+            width: 550px;
+            filter: brightness(60%) grayscale(50%);
+            position: absolute;
+            top: 300px;
+            right: 15%;
+            animation-name: ease-out;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+
+        @keyframes ease-out {
+            from {
+                right: 15%;
+                top: 295px;
+            }
+            to {
+                right: 18%;
+                top: 310px;
+            }
+        }
+
+        .container-second-main {
+            text-align: center;
+            height: 300px;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            padding: 0px;
+        }
+
+        .container-second-main a {
+            opacity: 0.7;
+            color: lightgrey;
+            font-family: prompt;
+            font-size: 16px;
+        }
+
+        .container-second-main a:hover {
+            color: lightgrey;
+            opacity: 0.5;
+        }
+
+        .container-1 {
+            height: 500px;
+            padding: 80px 0px;
+            text-align: center;
+            background-color: white;
+            background-blend-mode: multiply, luminosity;
+            background-position: center;
+            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 1)), url(images/world-g449192a8a_1920.jpg);
+        }
+
+        .container-1 h3 {
+            font-size: 30px;
+            font-weight: 500;
+        }
+
+        .container-1 a {
+            opacity: 0.7;
+            color: lightgrey;
+            font-family: prompt;
+            font-size: 16px;
+        }
+
+        .container-1 a:hover {
+            color: lightgrey;
+            opacity: 0.5;
+        }
+
+        .box-age {
+            margin: 50px 0px 100px 0px;
+        }
+
+        .box-age-process {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box-2 {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin: 90px 100px 30px 100px;
+        }
+
+        .box-2 h1 {
+            font-size: 60px;
+            font-weight: bold;
+        }
+
+        .box-2 p {
+            font-family: prompt;
+            font-size: 18px;
+        }
+
+        .container-2 {
+            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 1)), url("images/astronaut-11080_1920.jpg");
+            height: 800px;
+            padding: 220px 100px;
+            display: flex;
+            justify-content: right;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .box-3 h1 {
+            font-size: 40px;
+            margin: 0px 0px 50px 0px;
+            font-family: prompt;
+            font-weight: 500;
+        }
+
+        .box-3 h6 {
+            font-size: 25px;
+            margin: 20px 0px;
+            color: #af8650;
+            font-family: sansserifbook;
+        }
+
+        .box-3 p {
+            font-size: 18px;
+            font-family: prompt;
+        }
+
+        .box-3 a {
+            opacity: 0.7;
+            color: lightgrey;
+            font-family: prompt;
+            font-size: 16px;
+        }
+
+        .box-3 a:hover {
+            color: lightgrey;
+            opacity: 0.5;
+        }
+
+        .container-3 {
+            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1)), url("images/stars-2539245_1920.jpg");
+            height: 1200px;
+            display: flex;
+            justify-content: space-evenly;
+            text-align: center;
+            padding: 350px;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .card-menu {
+            padding: 30px;
+            width: 500px;
+            height: 550px;
+            margin: 0px 50px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            transition: all 0.5s ease 0s;
+        }
+
+        .card-images {
+            padding: 0px;
+        }
+
+        .container-3 img {
+            margin: 50px 0px;
+        }
+
+        .container-3 h1 {
+            color: white;
+            font-size: 40px;
+            font-weight: 500;
+        }
+
+        .container-3 h5 {
+            font-family: prompt;
+            color: #af8650;
+            font-size: 16px;
+        }
+
+        .container-3 p {
+            font-family: prompt;
+            font-weight: 100;
+            font-size: 16px;
+            margin: 20px 0px;
+        }
+
+        .button-card {
+            position: relative;
+            top: -250px;
+            border: 1px solid white;
+            padding: 10px;
+            background-color: transparent;
+            opacity: 0;
+            border-radius: 50px;
+            width: 120px;
+            transition: all 0.5s ease 0s;
+        }
+
+        .button-card a {
+            color: #af8650;
+            text-decoration: none;
+        }
+
+        .button-card a:hover {
+            color: white;
+        }
+
+        .card-menu:hover .button-card {
+            opacity: 1;
+        }
+
+        .card-menu:hover .card-images {
+            opacity: 0.1;
+        }
+
+        .card-menu:hover .card-text {
+            opacity: 0.1;
+        }
+
+        .card-menu:hover {
+            transform: scale(1.1);
+        }
+
+        .container-4 {
+            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 1)), url("images/moon.jpg");
+            height: 1100px;
+            margin: 0px;
+            padding: 300px;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .box-4 {
+            margin: 50px 0px 100px 0px;
+        }
+
+        .box-4 h1 {
+            font-family: prompt;
+            font-size: 45px;
+            font-weight: 700;
+        }
+
+        .box-4 h6 {
+            color: #af8650;
+            font-family: prompt;
+            font-size: 18px;
+        }
+
+        .box-4 p {
+            font-family: prompt;
+            font-size: 18px;
+            font-weight: 100;
+            margin: 80px 0px;
+        }
+
+        .container-4 a {
+            opacity: 0.7;
+            color: lightgrey;
+            font-family: prompt;
+            font-size: 16px;
+        }
+
+        .container-4 a:hover {
+            color: lightgrey;
+            opacity: 0.5;
+        }
+
+        .ref {
+            margin-top: 0px;
+            padding: 100px;
+        }
+
+        .ref span {
+            display: flex;
+        }
+
+        .ref h1 {
+            font-family: prompt;
+            font-weight: bold;
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .ref p {
+            font-family: prompt;
+            font-size: 16px;
+        }
+
+        .ref a {
+            margin-left: 10px;
+            color: #af8650;
+            font-size: 20px;
+        }
+
+        footer {
+            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url("images/earth-1365995_1920.jpg");
+            height: 350px;
+            margin: 0px;
+            background-position: center;
+            background-size: cover;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        footer p {
+            font-family: prompt;
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN - MEDIA QUERIES
+           ======================================== */
+
+        /* Tablet - Large devices (1024px and below) */
+        @media screen and (max-width: 1024px) {
+            .logo-box {
+                width: 36px;
+                height: 36px;
+            }
+
+            .logo-box i {
+                font-size: 18px;
+            }
+
+            .brand-text {
+                font-size: 1.125rem;
+            }
+
+            .icon-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .box-1 {
+                margin: 100px 100px;
+            }
+
+            .box-1 h1 {
+                font-size: 80px;
+            }
+
+            .astronaut {
+                width: 400px;
+                top: 320px;
+                right: 10%;
+            }
+
+            @keyframes ease-out {
+                from {
+                    right: 10%;
+                    top: 315px;
+                }
+                to {
+                    right: 12%;
+                    top: 325px;
+                }
+            }
+
+            .box-2 {
+                margin: 50px 50px 30px 50px;
+            }
+
+            .box-2 h1 {
+                font-size: 50px;
+            }
+
+            .box-2 p {
+                font-size: 16px;
+            }
+
+            .container-2 {
+                padding: 150px 50px;
+            }
+
+            .container-3 {
+                padding: 150px 50px;
+                height: auto;
+            }
+
+            .card-menu {
+                width: 350px;
+                height: 450px;
+                margin: 0px 20px;
+            }
+
+            .container-3 h1 {
+                font-size: 32px;
+            }
+
+            .container-4 {
+                padding: 150px 50px;
+                height: auto;
+            }
+
+            .ref {
+                padding: 80px 50px;
+            }
+        }
+
+        /* Tablet - Medium devices (768px and below) */
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 0.5rem 0;
+            }
+
+            main {
+                height: 700px;
+            }
+
+            .box-1 {
+                margin: 80px 30px;
+                padding-top: 60px;
+            }
+
+            .box-1 h1 {
+                font-size: 60px;
+            }
+
+            .box-1 p {
+                font-size: 14px;
+            }
+
+            .astronaut {
+                width: 300px;
+                top: 380px;
+                right: 5%;
+            }
+
+            @keyframes ease-out {
+                from {
+                    right: 5%;
+                    top: 375px;
+                }
+                to {
+                    right: 7%;
+                    top: 385px;
+                }
+            }
+
+            .container-second-main {
+                height: auto;
+                padding: 30px 20px;
+            }
+
+            .box-age {
+                margin: 30px 0px 50px 0px;
+            }
+
+            .box-age-process {
+                flex-direction: column;
+            }
+
+            .box-age-process > div {
+                margin: 10px 0px !important;
+                text-align: center !important;
+            }
+
+            .box-age-process .progress {
+                width: 90% !important;
+                margin-top: 20px;
+            }
+
+            .container-1 {
+                height: auto;
+                padding: 50px 20px;
+            }
+
+            .container-1 h3 {
+                font-size: 24px;
+                padding: 0px 20px;
+            }
+
+            .box-2 {
+                flex-direction: column;
+                margin: 40px 20px;
+            }
+
+            .box-2 > div {
+                margin: 20px 0px;
+            }
+
+            .box-2 h1 {
+                font-size: 40px;
+            }
+
+            .box-2 p {
+                font-size: 15px;
+            }
+
+            .container-2 {
+                padding: 80px 30px;
+                height: auto;
+                justify-content: center;
+            }
+
+            .box-3 h1 {
+                font-size: 30px;
+                margin: 0px 0px 30px 0px;
+            }
+
+            .box-3 h6 {
+                font-size: 20px;
+            }
+
+            .box-3 p {
+                font-size: 16px;
+            }
+
+            .container-3 {
+                flex-direction: column;
+                padding: 80px 20px;
+                height: auto;
+            }
+
+            .card-menu {
+                width: 100%;
+                max-width: 400px;
+                margin: 20px auto;
+                height: auto;
+                padding: 40px 20px;
+            }
+
+            .container-3 img {
+                margin: 30px 0px;
+            }
+
+            .container-3 h1 {
+                font-size: 28px;
+            }
+
+            .button-card {
+                top: 0px;
+                opacity: 1;
+                margin-top: 20px;
+                position: static;
+            }
+
+            .card-menu:hover {
+                transform: scale(1.02);
+            }
+
+            .card-menu:hover .card-images,
+            .card-menu:hover .card-text {
+                opacity: 1;
+            }
+
+            .container-4 {
+                padding: 80px 30px;
+                height: auto;
+            }
+
+            .box-4 h1 {
+                font-size: 32px;
+            }
+
+            .box-4 h6 {
+                font-size: 16px;
+            }
+
+            .box-4 p {
+                font-size: 16px;
+                margin: 40px 0px;
+            }
+
+            .ref {
+                padding: 50px 30px;
+            }
+
+            .ref h1 {
+                font-size: 28px;
+            }
+
+            .ref span {
+                flex-direction: column;
+            }
+
+            .ref a {
+                margin-left: 0px;
+                margin-top: 5px;
+            }
+
+            footer {
+                height: 250px;
+                padding: 30px 20px;
+            }
+        }
+
+        /* Mobile - Small devices (480px and below) */
+        @media screen and (max-width: 480px) {
+            .logo-box {
+                width: 32px;
+                height: 32px;
+            }
+
+            .logo-box i {
+                font-size: 16px;
+            }
+
+            .brand-text {
+                font-size: 1rem;
+            }
+
+            .icon-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 0.875rem;
+            }
+
+            main {
+                height: 600px;
+            }
+
+            .box-1 {
+                margin: 50px 20px;
+            }
+
+            .box-1 h1 {
+                font-size: 45px;
+            }
+
+            .box-1 p {
+                font-size: 12px;
+                margin-top: 15px;
+            }
+
+            .box-1 button {
+                margin: 30px 0px;
+                width: 100px;
+            }
+
+            .box-1 button a,
+            .box-1 button i {
+                font-size: 16px;
+            }
+
+            .astronaut {
+                width: 200px;
+                top: 430px;
+                right: 0%;
+            }
+
+            @keyframes ease-out {
+                from {
+                    right: 0%;
+                    top: 275px;
+                }
+                to {
+                    right: 2%;
+                    top: 305px;
+                }
+            }
+
+            .container-second-main {
+                padding: 20px 15px;
+            }
+
+            .box-age h3 {
+                font-size: 20px;
+            }
+
+            .box-age p {
+                font-size: 14px;
+            }
+
+            .container-1 h3 {
+                font-size: 20px;
+                padding: 0px 15px;
+            }
+
+            .box-2 {
+                margin: 30px 15px;
+            }
+
+            .box-2 h1 {
+                font-size: 35px;
+            }
+
+            .box-2 p {
+                font-size: 14px;
+            }
+
+            .container-2 {
+                padding: 50px 20px;
+            }
+
+            .box-3 h1 {
+                font-size: 24px;
+                margin: 0px 0px 20px 0px;
+            }
+
+            .box-3 h6 {
+                font-size: 18px;
+            }
+
+            .box-3 p {
+                font-size: 14px;
+                margin: 15px 0px;
+            }
+
+            .container-3 {
+                padding: 50px 15px;
+            }
+
+            .card-menu {
+                padding: 30px 15px;
+            }
+
+            .container-3 img {
+                width: 200px !important;
+                height: auto !important;
+                margin: 20px 0px;
+            }
+
+            .container-3 h1 {
+                font-size: 24px;
+            }
+
+            .container-3 h5 {
+                font-size: 14px;
+            }
+
+            .container-3 p {
+                font-size: 14px;
+            }
+
+            .container-4 {
+                padding: 50px 20px;
+            }
+
+            .box-4 {
+                margin: 30px 0px 50px 0px;
+            }
+
+            .box-4 h1 {
+                font-size: 26px;
+            }
+
+            .box-4 h6 {
+                font-size: 14px;
+            }
+
+            .box-4 p {
+                font-size: 14px;
+                margin: 30px 0px;
+            }
+
+            .ref {
+                padding: 40px 20px;
+            }
+
+            .ref h1 {
+                font-size: 24px;
+            }
+
+            .ref p {
+                font-size: 14px;
+            }
+
+            .ref a {
+                font-size: 16px;
+            }
+
+            footer {
+                height: 200px;
+            }
+
+            footer p {
+                font-size: 14px;
+                padding: 0px 20px;
+            }
+        }
+
+        /* Extra Small Mobile (360px and below) */
+        @media screen and (max-width: 360px) {
+            .offcanvas-end {
+                max-width: 100% !important;
+            }
+
+            .box-1 h1 {
+                font-size: 38px;
+            }
+
+            .box-1 p {
+                font-size: 11px;
+            }
+
+            .astronaut {
+                width: 150px;
+                top: 480px;
+            }
+
+            .container-3 img {
+                width: 150px !important;
+            }
+
+            .box-2 h1 {
+                font-size: 30px;
+            }
+
+            .box-4 h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+    <style>
+        /* =========================
+   BACK TO TOP BUTTON
+   ========================= */
+#backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold-color));
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(175, 134, 80, 0.4);
+    display: none;
+    z-index: 999;
+    transition: all 0.3s ease;
+}
+#backToTop i {
+    animation: sunRotate 6s linear infinite;
+}
+
+@keyframes sunRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#backToTop:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: linear-gradient(135deg, var(--gold-color), var(--gold-dark));
+}
+
+    </style>
+</head>
+
+<body>
+    <!-- Desktop Navigation -->
+    <nav class="navbar d-none d-md-block">
+        <div class="container px-4">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <!-- Logo -->
+                <div class="d-flex align-items-center">
+                    <div class="logo-box">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <span class="brand-text">THEDUNG</span>
+                </div>
+
+                <!-- Day Navigator -->
+                <div class="day-navigator">
+                    <button class="nav-arrow">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <a href="index.html" class="day-btn active">TRANG CHỦ</a>
+                    <a href="courses.html" class="day-btn">KHÓA HỌC</a>
+                    <a href="music.html" class="day-btn">ÂM NHẠC</a>
+                    <a href="news.html" class="day-btn">TIN TỨC</a>
+                    <a href="contact.html" class="day-btn">LIÊN HỆ</a>
+                    <button class="nav-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- Right Actions -->
+                <div class="d-flex align-items-center gap-2">
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-comment"></i>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <a href="login.html" class="icon-btn">
+                        <i class="fa-regular fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <nav class="navbar d-md-none">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <!-- Logo -->
+                <div class="d-flex align-items-center">
+                    <div class="logo-box">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <span class="brand-text">THEDUNG</span>
+                </div>
+
+                <!-- Right Icons -->
+                <div class="d-flex align-items-center gap-1">
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-comment"></i>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Day Navigator -->
+    <div class="mobile-day-nav d-md-none">
+        <div class="d-flex align-items-center gap-2">
+            <button class="nav-arrow">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="d-inline-flex gap-1">
+                <a href="index.html" class="day-btn mobile-day-btn active">Trang chủ</a>
+                <a href="courses.html" class="day-btn mobile-day-btn">Khóa học</a>
+                <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
+                <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
+                <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
+            </div>
+            <button class="nav-arrow">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Offcanvas Menu -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="menu-section">
+                <div class="section-title">Navigation</div>
+                <a href="index.html" class="menu-item active">
+                    <i class="fas fa-home"></i>
+                    Trang chủ
+                </a>
+                <a href="courses.html" class="menu-item">
+                    <i class="fas fa-book"></i>
+                    Khóa học
+                </a>
+                <a href="music.html" class="menu-item">
+                    <i class="fas fa-music"></i>
+                    Âm nhạc
+                </a>
+                <a href="news.html" class="menu-item">
+                    <i class="fas fa-newspaper"></i>
+                    Tin tức
+                </a>
+                <a href="contact.html" class="menu-item">
+                    <i class="fas fa-envelope"></i>
+                    Liên hệ
+                </a>
+            </div>
+
+            <div class="menu-divider"></div>
+
+            <div class="menu-section">
+                <div class="section-title">Explore</div>
+                <a href="solar.html" class="menu-item">
+                    <i class="fas fa-sun"></i>
+                    Trắc nghiệm
+                </a>
+                <a href="constellation.html" class="menu-item">
+                    <i class="fas fa-star"></i>
+                    Ôn tập
+                </a>
+                <a href="exploration.html" class="menu-item">
+                    <i class="fas fa-satellite"></i>
+                    Thi thử
+                </a>
+            </div>
+
+            <div class="menu-divider"></div>
+
+            <div class="menu-section">
+                <div class="section-title">Account</div>
+                <a href="login.html" class="menu-item">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Đăng nhập
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    Cài đặt
+                </a>
+            </div>
+        </div>
+    </div>
+
+  <main>
+    <div class="box-1">
+        <h1>THEDUNG</h1>
+        <h1 style="color: transparent;
+                -webkit-text-stroke-color: white;
+                -webkit-text-stroke-width: 1px;
+                font-weight: 500;">EDUCATION.</h1>
+        <p>
+            Nền tảng học tập & luyện thi trực tuyến<br>
+            Trắc nghiệm – ôn tập – thi thử theo chuyên đề<br>
+            Giúp bạn học đúng trọng tâm, thi đúng năng lực
+        </p>
+        <button>
+            <a href="solar.html">Bắt đầu</a>
+            <i class="bi bi-arrow-right-short"></i>
+        </button>
+    </div>
+    <img class="astronaut" src="images/as2.png" title="astronaut by pngwing">
+</main>
+
+<section class="container-second-main">
+    <div class="box-age">
+        <h3>Hiệu quả học tập</h3>
+        <div class="box-age-process">
+            <div style="text-align: right;">
+                <p style="color: #af8650; font-family: prompt;">Số lượt làm bài</p>
+                <p style="color: #af8650; font-family: prompt;">Tỉ lệ hoàn thành</p>
+            </div>
+            <div style="text-align: left; margin-left: 20px; margin-right: 50px;">
+                <p style="font-family: prompt;">Hơn 10.000+</p>
+                <p style="font-family: prompt;">Trên 85%</p>
+            </div>
+            <div class="progress" style="height: 5px; width: 70%">
+                <div class="progress-bar" role="progressbar" aria-label="Segment one"
+                     style="width: 85%; background-color: #af8650;"
+                     aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+        </div>
+        <a href="#">Dữ liệu thống kê từ hệ thống học tập</a>
+    </div>
+</section>
+
+  <section class="container-1" title="Image by WikiImages - Pixabay">
+    <h3>Thống kê học tập nổi bật</h3>
+    <div class="box-2">
+        <div>
+            <h1>1.200+</h1>
+            <p>Bộ đề trắc nghiệm theo chương & chuyên đề</p>
+        </div>
+        <div>
+            <h1>15+</h1>
+            <p>Môn học và lĩnh vực luyện thi</p>
+        </div>
+        <div>
+            <h1>95%</h1>
+            <p>Người học cải thiện kết quả sau khi luyện tập</p>
+        </div>
+        <div>
+            <h1>24/7</h1>
+            <p>Học tập và làm bài mọi lúc, mọi nơi</p>
+        </div>
+    </div>
+    <a href="#">Dữ liệu thống kê từ hệ thống THEDUNG</a>
+</section>
+
+<section class="container-2" title="image by WikiImages on Pixabay ">
+    <div class="box-3">
+        <h6>Tại sao nên học và luyện thi trực tuyến?</h6>
+        <h1>Lợi ích khi học cùng THEDUNG</h1>
+        <p>☆ Hệ thống câu hỏi trắc nghiệm bám sát nội dung thi thật</p>
+        <p>☆ Tự động chấm điểm, hiển thị đáp án đúng – sai rõ ràng</p>
+        <p>☆ Random đề và đáp án giúp tránh học tủ, học vẹt</p>
+        <p style="margin-bottom: 50px;">
+            ☆ Thi lại không giới hạn để củng cố kiến thức và nâng cao điểm số
+        </p>
+        <a href="#">Cam kết chất lượng nội dung học tập</a>
+    </div>
+</section>
+
+
+   <section class="container-3" title="image by Gerd Altmann on Pixabay ">
+    <div class="card-menu">
+        <img class="card-images" src="images/saturn.png" title="image by pngwing"
+             width="300px" style="margin:70px 0px">
+        <div class="card-text">
+            <h1>Trắc nghiệm</h1>
+            <h5>Luyện thi</h5>
+            <p>
+                Làm bài trắc nghiệm theo từng chương<br>
+                Random câu hỏi – chấm điểm tự động<br>
+                Giúp bạn nắm chắc kiến thức
+            </p>
+        </div>
+        <button class="button-card"><a href="solar.html">Xem thêm</a></button>
+    </div>
+
+    <div class="card-menu">
+        <img class="card-images" src="images/starg.png" title="image by pngitem"
+             width="300px" height="180px" style="margin:50px 0px">
+        <div class="card-text">
+            <h1>Ôn tập</h1>
+            <h5>Kiến thức</h5>
+            <p>
+                Tổng hợp lý thuyết trọng tâm<br>
+                Phù hợp ôn thi giữa kỳ – cuối kỳ<br>
+                Học nhanh, nhớ lâu, dễ áp dụng
+            </p>
+        </div>
+        <button class="button-card"><a href="constellation.html">Xem thêm</a></button>
+    </div>
+
+    <div class="card-menu">
+        <img class="card-images" src="images/saturn.png" title="image by kindpng"
+             width="300px" height="180px"
+             style="filter: brightness(80%) grayscale(50%); margin:50px 0px">
+        <div class="card-text">
+            <h1>Thi thử</h1>
+            <h5>Đánh giá năng lực</h5>
+            <p>
+                Mô phỏng đề thi thật theo thời gian<br>
+                Hiển thị kết quả & đáp án chi tiết<br>
+                Giúp bạn tự tin trước kỳ thi chính thức
+            </p>
+        </div>
+        <button class="button-card"><a href="exploration.html">Xem thêm</a></button>
+    </div>
+</section>
+
+<section class="container-4" title="image by Tumisu on Pixabay ">
+    <div class="box-4">
+        <h6>Định hướng phát triển</h6>
+        <h1>Mục tiêu của THEDUNG</h1>
+        <p>
+            Xây dựng nền tảng học tập và luyện thi trực tuyến hiện đại<br>
+            Đơn giản – hiệu quả – dễ tiếp cận cho mọi đối tượng học tập<br>
+            Giúp người học chủ động kiểm tra và đánh giá kiến thức<br>
+            Từng bước cải thiện kết quả học tập một cách bền vững
+        </p>
+    </div>
+    <a href="#">Giới thiệu về định hướng phát triển</a>
+    <br>
+</section>
+
+
+    <section class="ref">
+        <h1>แหล่งที่มา</h1>
+        <span>
+            <p>รูปภาพประกอบบางส่วน :</p>
+            <a href="https://www.pngitem.com/">pngitem.com</a>
+        </span>
+        <span>
+            <p>รูปภาพประกอบบางส่วน :</p>
+            <a href="https://www.pngwing.com/">pngwing.com</a>
+        </span>
+        <span>
+            <p>รูปภาพประกอบบางส่วน :</p>
+            <a href="https://www.pngegg.com/th">pngegg.com</a>
+        </span>
+        <span>
+            <p>ภาพพื้นหลังบางส่วน :</p>
+            <a href="https://pixabay.com/th/">pixabay.com</a>
+        </span>
+    </section>
+
+    <footer>
+        <p style="color: grey;">Designed & Built by Pannisa Samerjai</p>
+    </footer>
+    <!-- Back to Top Button -->
+<button id="backToTop" title="Lên đầu trang">
+    <i class="fas fa-sun"></i>
+
+</button>
+
+
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+    const backToTopBtn = document.getElementById("backToTop");
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.style.display = "flex";
+        } else {
+            backToTopBtn.style.display = "none";
+        }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+</script>
+
+</body>
+
+</html>

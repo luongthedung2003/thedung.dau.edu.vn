@@ -6,29 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <title>Exploration Space</title>
+    <title>Solar System</title>
     <link rel="icon" href="images/logo.png">
-    <style>
-        @font-face {
-            font-family: prompt;
-            src: url(fonts/Prompt-Light.ttf);
-        }
 
-        @font-face {
-            font-family: sansserifbook;
-            src: url(fonts/SansSerifBookFLF.otf);
-        }
+    <style>
+        
 
         :root {
-            --gold-color: #af8650;
-            --gold-light: #c9a66b;
-            --gold-dark: #8b6840;
+            --gold-color: #5120bb;
+            --gold-light: #08179c;
+            --gold-dark: #1c1d7a;
         }
 
         * {
-            font-family: ROBOTO;
+            font-family: 'Space Mono', monospace;
             color: white;
         }
 
@@ -43,7 +37,7 @@
         }
 
         /* ========================================
-           NEW NAVIGATION STYLES
+           NAVIGATION STYLES
            ======================================== */
 
         .navbar {
@@ -102,6 +96,7 @@
             transition: all 0.2s;
             white-space: nowrap;
             cursor: pointer;
+            position: relative;
         }
 
         .day-btn:hover {
@@ -109,11 +104,79 @@
             color: white;
         }
 
-        .day-btn.active {
-            background: var(--gold-color);
-            color: white;
-            box-shadow: 0 4px 6px rgba(175, 134, 80, 0.3);
-        }
+.day-btn {
+    position: relative;
+    background: transparent;
+    color: #d1d5db;
+}
+
+/* Hover: hiện gạch phát sáng */
+.day-btn::after {
+    content: "";
+    position: absolute;
+    left: 15%;
+    bottom: 2px;
+    width: 70%;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #00e5ff, #ff1744);
+    opacity: 0;
+    transform: scaleX(0);
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.day-btn:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+    box-shadow:
+        0 0 6px #00e5ff,
+        0 0 12px #ff1744;
+}
+
+/* Active: luôn hiện + mạnh hơn */
+.day-btn.active {
+    color: white;
+}
+
+.day-btn.active::after {
+    opacity: 1;
+    transform: scaleX(1);
+    background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
+    background-size: 200% 100%;
+    animation: glowMove 2s linear infinite;
+    box-shadow:
+        0 0 8px #00e5ff,
+        0 0 18px #ff1744;
+}
+
+/* Animation chạy ánh sáng */
+@keyframes glowMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+
+.day-btn.active {
+    background: transparent;
+    color: white;
+    box-shadow: none;
+}
+
+.day-btn.active::after {
+    content: "";
+    position: absolute;
+    left: 15%;
+    bottom: 0px;
+    width: 70%;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #00e5ff, #ff1744);
+    box-shadow: 
+        0 0 6px #00e5ff,
+        0 0 12px #ff1744;
+}
+
 
         .nav-arrow {
             width: 32px;
@@ -165,7 +228,6 @@
             border: 2px solid rgba(0, 0, 0, 0.95);
         }
 
-        /* Mobile Day Navigator */
         .mobile-day-nav {
             background: rgba(0, 0, 0, 0.9);
             padding: 0.5rem;
@@ -185,7 +247,6 @@
             display: inline-block;
         }
 
-        /* Offcanvas Menu Styles */
         .offcanvas-end {
             width: 100% !important;
             max-width: 320px !important;
@@ -243,7 +304,6 @@
             font-weight: 500;
             transition: 0.2s;
             margin-bottom: 0.25rem;
-            position: relative;
         }
 
         .menu-item:hover {
@@ -278,356 +338,287 @@
            ======================================== */
 
         main {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)), url("images/moon-surface-11088_1920.jpg");
-            height: 980px;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
+            height: 1200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        main h1 {
+            font-size: 100px;
+            text-align: center;
+            padding-top: 80px;
+            margin: 0;
+        }
+
+        main h3 {
+            color: #af8650;
+            text-align: center;
+            animation: shakeIt 2s ease-in infinite;
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 50px;
+        }
+
+        @keyframes shakeIt {
+            0% {
+                animation-timing-function: ease-out;
+                transform: scale(1);
+                transform-origin: center center;
+            }
+            10% {
+                animation-timing-function: ease-in;
+                transform: scale(0.91);
+            }
+            17% {
+                animation-timing-function: ease-out;
+                transform: scale(0.98);
+            }
+            33% {
+                animation-timing-function: ease-in;
+                transform: scale(0.87);
+            }
+            45% {
+                animation-timing-function: ease-out;
+                transform: scale(1);
+            }
+        }
+
+        main p {
+            font-size: 16px;
+            font-weight: lighter;
+            opacity: 0.6;
+            font-family: prompt;
+            margin-top: 30px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .container-solarsystem {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .container-solarsystem model-viewer {
+            filter: saturate(120%);
+            margin: 10px;
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        .container-solarsystem model-viewer:hover {
+            transform: scale(1.2);
+        }
+
+        .sun model-viewer:hover {
+            transform: scale(1.1);
+        }
+
+        .sun model-viewer {
+            height: 450px;
+            width: 450px;
+        }
+
+        .mercury model-viewer {
+            height: 50px;
+            width: 50px;
+        }
+
+        .venus model-viewer {
+            height: 80px;
+            width: 80px;
+        }
+
+        .earth model-viewer {
+            height: 80px;
+            width: 80px;
+        }
+
+        .mars model-viewer {
+            height: 40px;
+            width: 40px;
+        }
+
+        .jupiter model-viewer {
+            filter: saturate(200%);
+            height: 250px;
+            width: 250px;
+        }
+
+        .saturn model-viewer {
+            filter: saturate(200%);
+            transform: rotate(-40deg);
+            height: 300px;
+            width: 300px;
+        }
+
+        .uranus model-viewer {
+            filter: saturate(200%);
+            height: 110px;
+            width: 110px;
+        }
+
+        .neptune model-viewer {
+            filter: saturate(200%);
+            height: 110px;
+            width: 110px;
+        }
+
+        .container-solar {
+            min-height: 800px;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.95)), url(images/2k_stars.jpg);
+            padding: 20px 0px;
+            display: flex;
+            justify-content: center;
+            margin-top: 150px;
             background-position: center;
             background-size: cover;
         }
 
-        .box-1 {
-            margin: 140px 250px;
-            padding-top: 80px;
-        }
-
-        .box-1 h1 {
-            font-size: 120px;
-            font-weight: 800;
-        }
-
-        .box-1 p {
-            font-size: 16px;
-            font-weight: lighter;
-            opacity: 0.8;
-            font-family: prompt;
-            margin-top: 20px;
-        }
-
-        .box-1 button {
-            background-color: transparent;
-            border: 0.1em solid white;
-            border-radius: 50px;
-            padding: 5px;
-            width: 120px;
-            margin: 50px 0px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s ease 0s;
-            cursor: pointer;
-        }
-
-        .box-1 button a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-        }
-
-        .box-1 button i {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            margin-left: 5px;
-        }
-
-        .box-1 button:hover {
-            opacity: 0.5;
-            transform: scale(1.1);
-        }
-
-        .astronaut {
-            width: 550px;
-            filter: brightness(60%) grayscale(50%);
-            position: absolute;
-            top: 300px;
-            right: 15%;
-            animation-name: ease-out;
-            animation-duration: 2s;
-            animation-iteration-count: infinite;
-            animation-direction: alternate;
-        }
-
-        @keyframes ease-out {
-            from {
-                right: 15%;
-                top: 295px;
-            }
-            to {
-                right: 18%;
-                top: 310px;
-            }
-        }
-
-        .container-second-main {
-            text-align: center;
-            height: 300px;
-            background-color: black;
-            display: flex;
-            flex-direction: column;
-            padding: 0px;
-        }
-
-        .container-second-main a {
-            opacity: 0.7;
-            color: lightgrey;
-            font-family: prompt;
-            font-size: 16px;
-        }
-
-        .container-second-main a:hover {
-            color: lightgrey;
-            opacity: 0.5;
-        }
-
-        .container-1 {
-            height: 500px;
-            padding: 80px 0px;
-            text-align: center;
-            background-color: white;
-            background-blend-mode: multiply, luminosity;
-            background-position: center;
-            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 1)), url(images/world-g449192a8a_1920.jpg);
-        }
-
-        .container-1 h3 {
-            font-size: 30px;
-            font-weight: 500;
-        }
-
-        .container-1 a {
-            opacity: 0.7;
-            color: lightgrey;
-            font-family: prompt;
-            font-size: 16px;
-        }
-
-        .container-1 a:hover {
-            color: lightgrey;
-            opacity: 0.5;
-        }
-
-        .box-age {
-            margin: 50px 0px 100px 0px;
-        }
-
-        .box-age-process {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .box-2 {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            margin: 90px 100px 30px 100px;
-        }
-
-        .box-2 h1 {
-            font-size: 60px;
+        .container-solar h1 {
+            font-size: 100px;
             font-weight: bold;
         }
 
-        .box-2 p {
+        .container-solar p {
             font-family: prompt;
-            font-size: 18px;
-        }
-
-        .container-2 {
-            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 1)), url("images/astronaut-11080_1920.jpg");
-            height: 800px;
-            padding: 220px 100px;
-            display: flex;
-            justify-content: right;
-            background-position: center;
-            background-size: cover;
-        }
-
-        .box-3 h1 {
-            font-size: 40px;
-            margin: 0px 0px 50px 0px;
-            font-family: prompt;
-            font-weight: 500;
-        }
-
-        .box-3 h6 {
-            font-size: 25px;
-            margin: 20px 0px;
-            color: #af8650;
-            font-family: sansserifbook;
-        }
-
-        .box-3 p {
-            font-size: 18px;
-            font-family: prompt;
-        }
-
-        .box-3 a {
-            opacity: 0.7;
-            color: lightgrey;
-            font-family: prompt;
-            font-size: 16px;
-        }
-
-        .box-3 a:hover {
-            color: lightgrey;
-            opacity: 0.5;
-        }
-
-        .container-3 {
-            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1)), url("images/stars-2539245_1920.jpg");
-            height: 1200px;
-            display: flex;
-            justify-content: space-evenly;
-            text-align: center;
-            padding: 350px;
-            background-position: center;
-            background-size: cover;
-        }
-
-        .card-menu {
-            padding: 30px;
             width: 500px;
-            height: 550px;
-            margin: 0px 50px;
-            cursor: pointer;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            transition: all 0.5s ease 0s;
-        }
-
-        .card-images {
-            padding: 0px;
-        }
-
-        .container-3 img {
-            margin: 50px 0px;
-        }
-
-        .container-3 h1 {
-            color: white;
-            font-size: 40px;
-            font-weight: 500;
-        }
-
-        .container-3 h5 {
-            font-family: prompt;
-            color: #af8650;
-            font-size: 16px;
-        }
-
-        .container-3 p {
-            font-family: prompt;
-            font-weight: 100;
-            font-size: 16px;
             margin: 20px 0px;
         }
 
-        .button-card {
-            position: relative;
-            top: -250px;
-            border: 1px solid white;
-            padding: 10px;
-            background-color: transparent;
-            opacity: 0;
-            border-radius: 50px;
-            width: 120px;
-            transition: all 0.5s ease 0s;
-        }
-
-        .button-card a {
-            color: #af8650;
-            text-decoration: none;
-        }
-
-        .button-card a:hover {
-            color: white;
-        }
-
-        .card-menu:hover .button-card {
-            opacity: 1;
-        }
-
-        .card-menu:hover .card-images {
-            opacity: 0.1;
-        }
-
-        .card-menu:hover .card-text {
-            opacity: 0.1;
-        }
-
-        .card-menu:hover {
-            transform: scale(1.1);
-        }
-
-        .container-4 {
-            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 1)), url("images/moon.jpg");
-            height: 1100px;
-            margin: 0px;
-            padding: 300px;
-            background-position: center;
-            background-size: cover;
-        }
-
-        .box-4 {
-            margin: 50px 0px 100px 0px;
-        }
-
-        .box-4 h1 {
+        .container-solar h3 {
             font-family: prompt;
-            font-size: 45px;
+            padding-top: 50px;
+            font-size: 25px;
+            color: #af8650;
+        }
+
+        .card-solar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .content-sun,
+        .content-mercury,
+        .content-venus,
+        .content-earth,
+        .content-mars,
+        .content-jupiter,
+        .content-saturn,
+        .content-uranus,
+        .content-neptune {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+            height: 800px;
+            width: 500px;
+            background-size: cover;
+            background-position: center;
+            margin-right: 50px;
+        }
+
+        .content-sun {
+            background-image: linear-gradient(30deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.99), rgba(0, 0, 0, 1)), url(images/2k_sun.jpg);
+        }
+
+        .content-mercury {
+            background-image: linear-gradient(30deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.99), rgba(0, 0, 0, 1)), url(images/2k_mercury.jpg);
+        }
+
+        .content-venus {
+            background-image: linear-gradient(30deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.99), rgba(0, 0, 0, 1)), url(images/2k_venus_surface.jpg);
+        }
+
+        .content-earth {
+            background-image: linear-gradient(30deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.99), rgba(0, 0, 0, 1)), url(images/2k_earth.jpg);
+        }
+
+        .content-mars {
+            background-image: linear-gradient(30deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.99), rgba(0, 0, 0, 1)), url(images/2k_mars.jpg);
+        }
+
+        .content-jupiter {
+            background-image: linear-gradient(30deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.99), rgba(0, 0, 0, 1)), url(images/2k_jupiter.jpg);
+        }
+
+        .content-saturn {
+            background-image: linear-gradient(30deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.99), rgba(0, 0, 0, 1)), url(images/2k_saturn.jpg);
+        }
+
+        .content-uranus {
+            background-image: linear-gradient(30deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.99), rgba(0, 0, 0, 1)), url(images/2k_uranus.jpg);
+        }
+
+        .content-neptune {
+            background-image: linear-gradient(30deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.99), rgba(0, 0, 0, 1)), url(images/2k_neptune.jpg);
+        }
+
+        .text-solar {
+            margin: 0px 20px;
+        }
+
+        .text-solar p {
+            font-size: 16px;
+        }
+
+        .info-solar {
+            display: flex;
+            justify-content: left;
+            margin: 50px 0px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .info-solar div {
+            border: 0.1em solid white;
+            width: 220px;
+            padding: 10px;
+        }
+
+        .info-solar h6 {
+            font-family: prompt;
+            font-size: 16px;
             font-weight: 700;
         }
 
-        .box-4 h6 {
-            color: #af8650;
-            font-family: prompt;
-            font-size: 18px;
-        }
-
-        .box-4 p {
-            font-family: prompt;
-            font-size: 18px;
-            font-weight: 100;
-            margin: 80px 0px;
-        }
-
-        .container-4 a {
-            opacity: 0.7;
-            color: lightgrey;
+        .info-solar p {
             font-family: prompt;
             font-size: 16px;
         }
 
-        .container-4 a:hover {
-            color: lightgrey;
-            opacity: 0.5;
-        }
-
         .ref {
-            margin-top: 0px;
+            margin-top: 100px;
             padding: 100px;
         }
 
         .ref span {
             display: flex;
+            flex-wrap: wrap;
         }
 
         .ref h1 {
             font-family: prompt;
             font-weight: bold;
             font-size: 40px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .ref p {
             font-family: prompt;
-            font-size: 16px;
+            font-size: 18px;
         }
 
         .ref a {
             margin-left: 10px;
             color: #af8650;
-            font-size: 20px;
+            font-size: 16px;
         }
 
         footer {
@@ -647,11 +638,23 @@
             font-family: prompt;
         }
 
+        footer a {
+            opacity: 0.7;
+            color: #af8650;
+            font-family: prompt;
+            font-size: 16px;
+            margin-bottom: 50px;
+        }
+
+        footer a:hover {
+            color: lightgrey;
+            opacity: 0.5;
+        }
+
         /* ========================================
-           RESPONSIVE DESIGN - MEDIA QUERIES
+           RESPONSIVE DESIGN
            ======================================== */
 
-        /* Tablet - Large devices (1024px and below) */
         @media screen and (max-width: 1024px) {
             .logo-box {
                 width: 36px;
@@ -671,235 +674,167 @@
                 height: 36px;
             }
 
-            .box-1 {
-                margin: 100px 100px;
-            }
-
-            .box-1 h1 {
+            main h1 {
                 font-size: 80px;
             }
 
-            .astronaut {
-                width: 400px;
-                top: 320px;
-                right: 10%;
+            main h3 {
+                font-size: 22px;
             }
 
-            @keyframes ease-out {
-                from {
-                    right: 10%;
-                    top: 315px;
-                }
-                to {
-                    right: 12%;
-                    top: 325px;
-                }
-            }
-
-            .box-2 {
-                margin: 50px 50px 30px 50px;
-            }
-
-            .box-2 h1 {
-                font-size: 50px;
-            }
-
-            .box-2 p {
-                font-size: 16px;
-            }
-
-            .container-2 {
-                padding: 150px 50px;
-            }
-
-            .container-3 {
-                padding: 150px 50px;
-                height: auto;
-            }
-
-            .card-menu {
+            .sun model-viewer {
+                height: 350px;
                 width: 350px;
-                height: 450px;
-                margin: 0px 20px;
             }
 
-            .container-3 h1 {
-                font-size: 32px;
+            .jupiter model-viewer {
+                height: 200px;
+                width: 200px;
             }
 
-            .container-4 {
-                padding: 150px 50px;
-                height: auto;
+            .saturn model-viewer {
+                height: 250px;
+                width: 250px;
             }
 
-            .ref {
-                padding: 80px 50px;
+            .container-solar h1 {
+                font-size: 80px;
+            }
+
+            .card-solar model-viewer {
+                width: 500px !important;
+                height: 500px !important;
             }
         }
 
-        /* Tablet - Medium devices (768px and below) */
         @media screen and (max-width: 768px) {
-            .navbar {
-                padding: 0.5rem 0;
-            }
-
             main {
-                height: 700px;
+                height: auto;
+                min-height: 800px;
+                padding-bottom: 50px;
             }
 
-            .box-1 {
-                margin: 80px 30px;
+            main h1 {
+                font-size: 60px;
                 padding-top: 60px;
             }
 
-            .box-1 h1 {
-                font-size: 60px;
+            main h3 {
+                font-size: 20px;
+                margin-top: 30px;
+                animation: none; /* Tắt animation trên mobile để tăng hiệu suất */
             }
 
-            .box-1 p {
+            main p {
                 font-size: 14px;
+                padding: 0 30px;
             }
 
-            .astronaut {
-                width: 300px;
-                top: 380px;
-                right: 5%;
+            /* Ẩn các khối background planets trên mobile */
+            .content-sun,
+            .content-mercury,
+            .content-venus,
+            .content-earth,
+            .content-mars,
+            .content-jupiter,
+            .content-saturn,
+            .content-uranus,
+            .content-neptune {
+                display: none !important;
             }
 
-            @keyframes ease-out {
-                from {
-                    right: 5%;
-                    top: 375px;
-                }
-                to {
-                    right: 7%;
-                    top: 385px;
-                }
+            /* Giảm kích thước 3D models trên mobile */
+            .container-solarsystem {
+                padding: 20px;
+                gap: 10px;
             }
 
-            .container-second-main {
-                height: auto;
-                padding: 30px 20px;
+            .sun model-viewer {
+                height: 250px;
+                width: 250px;
             }
 
-            .box-age {
-                margin: 30px 0px 50px 0px;
+            .mercury model-viewer {
+                height: 40px;
+                width: 40px;
             }
 
-            .box-age-process {
+            .venus model-viewer,
+            .earth model-viewer {
+                height: 60px;
+                width: 60px;
+            }
+
+            .mars model-viewer {
+                height: 35px;
+                width: 35px;
+            }
+
+            .jupiter model-viewer {
+                height: 150px;
+                width: 150px;
+            }
+
+            .saturn model-viewer {
+                height: 180px;
+                width: 180px;
+            }
+
+            .uranus model-viewer,
+            .neptune model-viewer {
+                height: 80px;
+                width: 80px;
+            }
+
+            /* Tắt hover effects trên mobile */
+            .container-solarsystem model-viewer:hover {
+                transform: none;
+            }
+
+            .container-solar {
                 flex-direction: column;
-            }
-
-            .box-age-process > div {
-                margin: 10px 0px !important;
-                text-align: center !important;
-            }
-
-            .box-age-process .progress {
-                width: 90% !important;
-                margin-top: 20px;
-            }
-
-            .container-1 {
-                height: auto;
+                margin-top: 50px;
+                min-height: auto;
                 padding: 50px 20px;
             }
 
-            .container-1 h3 {
-                font-size: 24px;
-                padding: 0px 20px;
+            .container-solar h1 {
+                font-size: 50px;
             }
 
-            .box-2 {
+            .container-solar h3 {
+                font-size: 20px;
+                padding-top: 20px;
+            }
+
+            .container-solar p {
+                width: 100%;
+                font-size: 14px;
+            }
+
+            .card-solar {
                 flex-direction: column;
-                margin: 40px 20px;
             }
 
-            .box-2 > div {
-                margin: 20px 0px;
+            .card-solar model-viewer {
+                width: 300px !important;
+                height: 300px !important;
+                margin: 20px 0;
             }
 
-            .box-2 h1 {
-                font-size: 40px;
+            .text-solar {
+                margin: 0px;
             }
 
-            .box-2 p {
-                font-size: 15px;
-            }
-
-            .container-2 {
-                padding: 80px 30px;
-                height: auto;
+            .info-solar {
+                margin: 30px 0px;
                 justify-content: center;
             }
 
-            .box-3 h1 {
-                font-size: 30px;
-                margin: 0px 0px 30px 0px;
-            }
-
-            .box-3 h6 {
-                font-size: 20px;
-            }
-
-            .box-3 p {
-                font-size: 16px;
-            }
-
-            .container-3 {
-                flex-direction: column;
-                padding: 80px 20px;
-                height: auto;
-            }
-
-            .card-menu {
+            .info-solar div {
                 width: 100%;
-                max-width: 400px;
-                margin: 20px auto;
-                height: auto;
-                padding: 40px 20px;
-            }
-
-            .container-3 img {
-                margin: 30px 0px;
-            }
-
-            .container-3 h1 {
-                font-size: 28px;
-            }
-
-            .button-card {
-                top: 0px;
-                opacity: 1;
-                margin-top: 20px;
-                position: static;
-            }
-
-            .card-menu:hover {
-                transform: scale(1.02);
-            }
-
-            .card-menu:hover .card-images,
-            .card-menu:hover .card-text {
-                opacity: 1;
-            }
-
-            .container-4 {
-                padding: 80px 30px;
-                height: auto;
-            }
-
-            .box-4 h1 {
-                font-size: 32px;
-            }
-
-            .box-4 h6 {
-                font-size: 16px;
-            }
-
-            .box-4 p {
-                font-size: 16px;
-                margin: 40px 0px;
+                max-width: 300px;
+                margin-bottom: 10px;
             }
 
             .ref {
@@ -907,25 +842,24 @@
             }
 
             .ref h1 {
-                font-size: 28px;
+                font-size: 30px;
             }
 
-            .ref span {
-                flex-direction: column;
+            .ref p {
+                font-size: 14px;
             }
 
             .ref a {
-                margin-left: 0px;
+                font-size: 14px;
+                margin-left: 0;
                 margin-top: 5px;
             }
 
             footer {
                 height: 250px;
-                padding: 30px 20px;
             }
         }
 
-        /* Mobile - Small devices (480px and below) */
         @media screen and (max-width: 480px) {
             .logo-box {
                 width: 32px;
@@ -947,141 +881,97 @@
             }
 
             main {
-                height: 600px;
+                min-height: 700px;
             }
 
-            .box-1 {
-                margin: 50px 20px;
-            }
-
-            .box-1 h1 {
+            main h1 {
                 font-size: 45px;
+                padding-top: 40px;
             }
 
-            .box-1 p {
-                font-size: 12px;
-                margin-top: 15px;
-            }
-
-            .box-1 button {
-                margin: 30px 0px;
-                width: 100px;
-            }
-
-            .box-1 button a,
-            .box-1 button i {
-                font-size: 16px;
-            }
-
-            .astronaut {
-                width: 200px;
-                top: 430px;
-                right: 0%;
-            }
-
-            @keyframes ease-out {
-                from {
-                    right: 0%;
-                    top: 275px;
-                }
-                to {
-                    right: 2%;
-                    top: 305px;
-                }
-            }
-
-            .container-second-main {
-                padding: 20px 15px;
-            }
-
-            .box-age h3 {
-                font-size: 20px;
-            }
-
-            .box-age p {
-                font-size: 14px;
-            }
-
-            .container-1 h3 {
-                font-size: 20px;
-                padding: 0px 15px;
-            }
-
-            .box-2 {
-                margin: 30px 15px;
-            }
-
-            .box-2 h1 {
-                font-size: 35px;
-            }
-
-            .box-2 p {
-                font-size: 14px;
-            }
-
-            .container-2 {
-                padding: 50px 20px;
-            }
-
-            .box-3 h1 {
-                font-size: 24px;
-                margin: 0px 0px 20px 0px;
-            }
-
-            .box-3 h6 {
+            main h3 {
                 font-size: 18px;
+                margin-top: 20px;
             }
 
-            .box-3 p {
-                font-size: 14px;
-                margin: 15px 0px;
+            main p {
+                font-size: 12px;
+                padding: 0 20px;
             }
 
-            .container-3 {
-                padding: 50px 15px;
+            /* Giảm thêm kích thước cho màn hình nhỏ */
+            .sun model-viewer {
+                height: 180px;
+                width: 180px;
             }
 
-            .card-menu {
+            .mercury model-viewer {
+                height: 30px;
+                width: 30px;
+            }
+
+            .venus model-viewer,
+            .earth model-viewer {
+                height: 50px;
+                width: 50px;
+            }
+
+            .mars model-viewer {
+                height: 28px;
+                width: 28px;
+            }
+
+            .jupiter model-viewer {
+                height: 120px;
+                width: 120px;
+            }
+
+            .saturn model-viewer {
+                height: 140px;
+                width: 140px;
+            }
+
+            .uranus model-viewer,
+            .neptune model-viewer {
+                height: 65px;
+                width: 65px;
+            }
+
+            .container-solar {
                 padding: 30px 15px;
             }
 
-            .container-3 img {
-                width: 200px !important;
-                height: auto !important;
-                margin: 20px 0px;
+            .content-sun,
+            .content-mercury,
+            .content-venus,
+            .content-earth,
+            .content-mars,
+            .content-jupiter,
+            .content-saturn,
+            .content-uranus,
+            .content-neptune {
+                height: 300px;
             }
 
-            .container-3 h1 {
-                font-size: 24px;
+            .container-solar h1 {
+                font-size: 40px;
             }
 
-            .container-3 h5 {
-                font-size: 14px;
+            .container-solar h3 {
+                font-size: 18px;
             }
 
-            .container-3 p {
-                font-size: 14px;
+            .container-solar p {
+                font-size: 13px;
             }
 
-            .container-4 {
-                padding: 50px 20px;
+            .card-solar model-viewer {
+                width: 250px !important;
+                height: 250px !important;
             }
 
-            .box-4 {
-                margin: 30px 0px 50px 0px;
-            }
-
-            .box-4 h1 {
-                font-size: 26px;
-            }
-
-            .box-4 h6 {
-                font-size: 14px;
-            }
-
-            .box-4 p {
-                font-size: 14px;
-                margin: 30px 0px;
+            .info-solar div {
+                width: 100%;
             }
 
             .ref {
@@ -1089,15 +979,12 @@
             }
 
             .ref h1 {
-                font-size: 24px;
+                font-size: 26px;
             }
 
-            .ref p {
-                font-size: 14px;
-            }
-
+            .ref p,
             .ref a {
-                font-size: 16px;
+                font-size: 13px;
             }
 
             footer {
@@ -1106,80 +993,60 @@
 
             footer p {
                 font-size: 14px;
-                padding: 0px 20px;
+                padding: 0 20px;
             }
         }
 
-        /* Extra Small Mobile (360px and below) */
         @media screen and (max-width: 360px) {
             .offcanvas-end {
                 max-width: 100% !important;
             }
 
-            .box-1 h1 {
+            main h1 {
                 font-size: 38px;
             }
 
-            .box-1 p {
-                font-size: 11px;
-            }
-
-            .astronaut {
+            .sun model-viewer {
+                height: 150px;
                 width: 150px;
-                top: 480px;
             }
 
-            .container-3 img {
-                width: 150px !important;
+            .jupiter model-viewer {
+                height: 100px;
+                width: 100px;
             }
 
-            .box-2 h1 {
-                font-size: 30px;
+            .saturn model-viewer {
+                height: 120px;
+                width: 120px;
             }
 
-            .box-4 h1 {
-                font-size: 22px;
+            .container-solar h1 {
+                font-size: 35px;
+            }
+
+            .card-solar model-viewer {
+                width: 220px !important;
+                height: 220px !important;
+            }
+        }
+
+        /* Performance optimization for mobile */
+        @media (max-width: 768px) {
+            /* Disable auto-rotate on mobile for better performance */
+            model-viewer {
+                --poster-color: transparent;
             }
         }
     </style>
-    <style>
-        /* =========================
-   BACK TO TOP BUTTON
-   ========================= */
-#backToTop {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: none;
-    background: linear-gradient(135deg, var(--gold-light), var(--gold-color));
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(175, 134, 80, 0.4);
-    display: none;
-    z-index: 999;
-    transition: all 0.3s ease;
-}
-#backToTop i {
-    animation: sunRotate 6s linear infinite;
-}
+      <style>
+#backToTop { position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px; border-radius: 50%; border: none; background: linear-gradient(135deg,var(rgb(171, 93, 93)),var(rgb(222, 166, 63))); color: white; font-size: 18px; cursor: pointer; box-shadow: 0 4px 12px rgba(175,134,80,0.4); display: none; z-index: 999; transition: all 0.3s ease; }
 
-@keyframes sunRotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
+#backToTop i { animation: sunRotate 6s linear infinite; }
 
-#backToTop:hover {
-    transform: translateY(-5px) scale(1.05);
-    background: linear-gradient(135deg, var(--gold-color), var(--gold-dark));
-}
+@keyframes sunRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+#backToTop:hover { transform: translateY(-5px) scale(1.05); background: linear-gradient(135deg,var(rgb(212, 69, 69)),var(rgb(204, 168, 100))); }
 
     </style>
 </head>
@@ -1189,7 +1056,6 @@
     <nav class="navbar d-none d-md-block">
         <div class="container px-4">
             <div class="d-flex justify-content-between align-items-center w-100">
-                <!-- Logo -->
                 <div class="d-flex align-items-center">
                     <div class="logo-box">
                         <i class="fas fa-rocket"></i>
@@ -1197,13 +1063,12 @@
                     <span class="brand-text">THEDUNG</span>
                 </div>
 
-                <!-- Day Navigator -->
                 <div class="day-navigator">
                     <button class="nav-arrow">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <a href="index.html" class="day-btn active">TRANG CHỦ</a>
-                    <a href="courses.html" class="day-btn">KHÓA HỌC</a>
+                    <a href="index.html" class="day-btn">TRANG CHỦ</a>
+                    <a href="solar.html" class="day-btn active">HỆ MẶT TRỜI</a>
                     <a href="music.html" class="day-btn">ÂM NHẠC</a>
                     <a href="news.html" class="day-btn">TIN TỨC</a>
                     <a href="contact.html" class="day-btn">LIÊN HỆ</a>
@@ -1212,7 +1077,6 @@
                     </button>
                 </div>
 
-                <!-- Right Actions -->
                 <div class="d-flex align-items-center gap-2">
                     <button class="icon-btn">
                         <i class="fa-regular fa-comment"></i>
@@ -1233,7 +1097,6 @@
     <nav class="navbar d-md-none">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center w-100">
-                <!-- Logo -->
                 <div class="d-flex align-items-center">
                     <div class="logo-box">
                         <i class="fas fa-rocket"></i>
@@ -1241,7 +1104,6 @@
                     <span class="brand-text">THEDUNG</span>
                 </div>
 
-                <!-- Right Icons -->
                 <div class="d-flex align-items-center gap-1">
                     <button class="icon-btn">
                         <i class="fa-regular fa-comment"></i>
@@ -1265,8 +1127,8 @@
                 <i class="fas fa-chevron-left"></i>
             </button>
             <div class="d-inline-flex gap-1">
-                <a href="index.html" class="day-btn mobile-day-btn active">Trang chủ</a>
-                <a href="courses.html" class="day-btn mobile-day-btn">Khóa học</a>
+                <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
+                <a href="solar.html" class="day-btn mobile-day-btn active">Hệ mặt trời</a>
                 <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
                 <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
                 <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
@@ -1286,13 +1148,13 @@
         <div class="offcanvas-body">
             <div class="menu-section">
                 <div class="section-title">Navigation</div>
-                <a href="index.html" class="menu-item active">
+                <a href="index.html" class="menu-item">
                     <i class="fas fa-home"></i>
                     Trang chủ
                 </a>
-                <a href="courses.html" class="menu-item">
-                    <i class="fas fa-book"></i>
-                    Khóa học
+                <a href="solar.html" class="menu-item active">
+                    <i class="fas fa-sun"></i>
+                    Hệ mặt trời
                 </a>
                 <a href="music.html" class="menu-item">
                     <i class="fas fa-music"></i>
@@ -1312,212 +1174,470 @@
 
             <div class="menu-section">
                 <div class="section-title">Explore</div>
-                <a href="solar.html" class="menu-item">
+                <a href="#sun" class="menu-item">
                     <i class="fas fa-sun"></i>
-                    Trắc nghiệm
+                    Mặt trời
                 </a>
-                <a href="constellation.html" class="menu-item">
-                    <i class="fas fa-star"></i>
-                    Ôn tập
+                <a href="#mercury" class="menu-item">
+                    <i class="fas fa-circle"></i>
+                    Sao Thủy
                 </a>
-                <a href="exploration.html" class="menu-item">
-                    <i class="fas fa-satellite"></i>
-                    Thi thử
+                <a href="#venus" class="menu-item">
+                    <i class="fas fa-circle"></i>
+                    Sao Kim
                 </a>
-            </div>
-
-            <div class="menu-divider"></div>
-
-            <div class="menu-section">
-                <div class="section-title">Account</div>
-                <a href="login.html" class="menu-item">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Đăng nhập
+                <a href="#earth" class="menu-item">
+                    <i class="fas fa-globe"></i>
+                    Trái Đất
                 </a>
-                <a href="settings.html" class="menu-item">
-                    <i class="fas fa-cog"></i>
-                    Cài đặt
+                <a href="#mars" class="menu-item">
+                    <i class="fas fa-circle"></i>
+                    Sao Hỏa
+                </a>
+                <a href="#jupiter" class="menu-item">
+                    <i class="fas fa-circle"></i>
+                    Sao Mộc
+                </a>
+                <a href="#saturn" class="menu-item">
+                    <i class="fas fa-circle"></i>
+                    Sao Thổ
+                </a>
+                <a href="#uranus" class="menu-item">
+                    <i class="fas fa-circle"></i>
+                    Sao Thiên Vương
+                </a>
+                <a href="#neptune" class="menu-item">
+                    <i class="fas fa-circle"></i>
+                    Sao Hải Vương
                 </a>
             </div>
         </div>
     </div>
 
-  <main>
-    <div class="box-1">
-        <h1>THEDUNG</h1>
-        <h1 style="color: transparent;
-                -webkit-text-stroke-color: white;
-                -webkit-text-stroke-width: 1px;
-                font-weight: 500;">EDUCATION.</h1>
+    <main>
+        <h1>Website hỗ trợ học tập</h1>
         <p>
-            Nền tảng học tập & luyện thi trực tuyến<br>
-            Trắc nghiệm – ôn tập – thi thử theo chuyên đề<br>
-            Giúp bạn học đúng trọng tâm, thi đúng năng lực
-        </p>
-        <button>
-            <a href="solar.html">Bắt đầu</a>
-            <i class="bi bi-arrow-right-short"></i>
-        </button>
-    </div>
-    <img class="astronaut" src="images/as2.png" title="astronaut by pngwing">
-</main>
+        Khám phá không gian học tập trực quan và sinh động<br>
+        Kết hợp kiến thức – hình ảnh – mô hình 3D<br>
+        Giúp việc học trở nên dễ hiểu và ghi nhớ lâu hơn
+    </p>
 
-<section class="container-second-main">
-    <div class="box-age">
-        <h3>Hiệu quả học tập</h3>
-        <div class="box-age-process">
-            <div style="text-align: right;">
-                <p style="color: #af8650; font-family: prompt;">Số lượt làm bài</p>
-                <p style="color: #af8650; font-family: prompt;">Tỉ lệ hoàn thành</p>
+    <h3>Chọn nội dung bạn muốn học</h3>
+        <div class="container-solarsystem">
+            <a href="#sun" class="sun">
+                <model-viewer src="assets/Sun.glb" alt="Sun" auto-rotate camera-controls ar
+                    ios-src="assets/sun.glb" loading="lazy"></model-viewer>
+            </a>
+            <a href="#mercury" class="mercury">
+                <model-viewer src="assets/Mercury.glb" alt="Mercury" auto-rotate camera-controls ar
+                    ios-src="assets/Mercury.glb" loading="lazy"></model-viewer>
+            </a>
+            <a href="#venus" class="venus">
+                <model-viewer src="assets/Venus(surface).glb" alt="Venus" auto-rotate camera-controls ar
+                    ios-src="assets/Venus(surface).glb" loading="lazy"></model-viewer>
+            </a>
+            <a href="#earth" class="earth">
+                <model-viewer src="assets/Earth.glb" alt="Earth" auto-rotate camera-controls ar
+                    ios-src="assets/Earth.glb" loading="lazy"></model-viewer>
+            </a>
+            <a href="#mars" class="mars">
+                <model-viewer src="assets/Mars.glb" alt="Mars" auto-rotate camera-controls ar
+                    ios-src="assets/Mars.glb" loading="lazy"></model-viewer>
+            </a>
+            <a href="#jupiter" class="jupiter">
+                <model-viewer src="assets/Jupiter.glb" alt="Jupiter" auto-rotate camera-controls ar
+                    ios-src="assets/Jupiter.glb" loading="lazy"></model-viewer>
+            </a>
+            <a href="#saturn" class="saturn">
+                <model-viewer src="assets/Saturn.glb" alt="Saturn" auto-rotate camera-controls ar
+                    ios-src="assets/Saturn.glb" loading="lazy"></model-viewer>
+            </a>
+            <a href="#uranus" class="uranus">
+                <model-viewer src="assets/Uranus.glb" alt="Uranus" auto-rotate camera-controls ar
+                    ios-src="assets/Uranus.glb" loading="lazy"></model-viewer>
+            </a>
+            <a href="#neptune" class="neptune">
+                <model-viewer src="assets/Neptune.glb" alt="Neptune" auto-rotate camera-controls ar
+                    ios-src="assets/Neptune.glb" loading="lazy"></model-viewer>
+            </a>
+        </div>
+    </main>
+
+    <section class="container-solar" id="sun">
+        <div class="content-sun">
+            <p></p>
+        </div>
+        <div>
+            <div class="card-solar">
+                <div class="text-solar">
+                    <h3>ดวงอาทิตย์</h3>
+                    <h1>Sun</h1>
+                    <p>ดาวฤกษ์ที่อยู่ตรงศูนย์กลางของระบบสุริยะ
+                        มีขนาดเส้นผ่านศูนย์กลาง 1.4
+                        ล้านกิโลเมตร หรือ 109 เท่าของเส้นผ่านศูนย์กลางโลก
+                        ดวงอาทิตย์มีมวลมากกว่าโลก 333,000 เท่า
+                        แต่มีความหนาแน่นเพียง
+                        0.25 เท่าของโลก
+                        เนื่องจากมีองค์ประกอบเป็นไฮโดรเจน 74% ฮีเลียม 25%
+                        และธาตุชนิดอื่น 1% </p>
+                </div>
+                <model-viewer src="assets/Sun.glb" alt="Sun" auto-rotate camera-controls ar
+                    ios-src="assets/sun.glb"
+                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
             </div>
-            <div style="text-align: left; margin-left: 20px; margin-right: 50px;">
-                <p style="font-family: prompt;">Hơn 10.000+</p>
-                <p style="font-family: prompt;">Trên 85%</p>
-            </div>
-            <div class="progress" style="height: 5px; width: 70%">
-                <div class="progress-bar" role="progressbar" aria-label="Segment one"
-                     style="width: 85%; background-color: #af8650;"
-                     aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+            <div class="info-solar">
+                <div>
+                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
+                    <p>1.4 ล้านกิโลเมตร</p>
+                </div>
+                <div>
+                    <h6>มวล<br>(Mass)</h6>
+                    <p>1.9 ล้านกิโลกรัม</p>
+                </div>
+                <div>
+                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
+                    <p>0 ดวง</p>
                 </div>
             </div>
         </div>
-        <a href="#">Dữ liệu thống kê từ hệ thống học tập</a>
-    </div>
-</section>
-
-  <section class="container-1" title="Image by WikiImages - Pixabay">
-    <h3>Thống kê học tập nổi bật</h3>
-    <div class="box-2">
-        <div>
-            <h1>1.200+</h1>
-            <p>Bộ đề trắc nghiệm theo chương & chuyên đề</p>
-        </div>
-        <div>
-            <h1>15+</h1>
-            <p>Môn học và lĩnh vực luyện thi</p>
-        </div>
-        <div>
-            <h1>95%</h1>
-            <p>Người học cải thiện kết quả sau khi luyện tập</p>
-        </div>
-        <div>
-            <h1>24/7</h1>
-            <p>Học tập và làm bài mọi lúc, mọi nơi</p>
-        </div>
-    </div>
-    <a href="#">Dữ liệu thống kê từ hệ thống THEDUNG</a>
-</section>
-
-<section class="container-2" title="image by WikiImages on Pixabay ">
-    <div class="box-3">
-        <h6>Tại sao nên học và luyện thi trực tuyến?</h6>
-        <h1>Lợi ích khi học cùng THEDUNG</h1>
-        <p>☆ Hệ thống câu hỏi trắc nghiệm bám sát nội dung thi thật</p>
-        <p>☆ Tự động chấm điểm, hiển thị đáp án đúng – sai rõ ràng</p>
-        <p>☆ Random đề và đáp án giúp tránh học tủ, học vẹt</p>
-        <p style="margin-bottom: 50px;">
-            ☆ Thi lại không giới hạn để củng cố kiến thức và nâng cao điểm số
-        </p>
-        <a href="#">Cam kết chất lượng nội dung học tập</a>
-    </div>
-</section>
-
-
-   <section class="container-3" title="image by Gerd Altmann on Pixabay ">
-    <div class="card-menu">
-        <img class="card-images" src="images/saturn.png" title="image by pngwing"
-             width="300px" style="margin:70px 0px">
-        <div class="card-text">
-            <h1>Trắc nghiệm</h1>
-            <h5>Luyện thi</h5>
-            <p>
-                Làm bài trắc nghiệm theo từng chương<br>
-                Random câu hỏi – chấm điểm tự động<br>
-                Giúp bạn nắm chắc kiến thức
-            </p>
-        </div>
-        <button class="button-card"><a href="solar.html">Xem thêm</a></button>
-    </div>
-
-    <div class="card-menu">
-        <img class="card-images" src="images/starg.png" title="image by pngitem"
-             width="300px" height="180px" style="margin:50px 0px">
-        <div class="card-text">
-            <h1>Ôn tập</h1>
-            <h5>Kiến thức</h5>
-            <p>
-                Tổng hợp lý thuyết trọng tâm<br>
-                Phù hợp ôn thi giữa kỳ – cuối kỳ<br>
-                Học nhanh, nhớ lâu, dễ áp dụng
-            </p>
-        </div>
-        <button class="button-card"><a href="constellation.html">Xem thêm</a></button>
-    </div>
-
-    <div class="card-menu">
-        <img class="card-images" src="images/saturn.png" title="image by kindpng"
-             width="300px" height="180px"
-             style="filter: brightness(80%) grayscale(50%); margin:50px 0px">
-        <div class="card-text">
-            <h1>Thi thử</h1>
-            <h5>Đánh giá năng lực</h5>
-            <p>
-                Mô phỏng đề thi thật theo thời gian<br>
-                Hiển thị kết quả & đáp án chi tiết<br>
-                Giúp bạn tự tin trước kỳ thi chính thức
-            </p>
-        </div>
-        <button class="button-card"><a href="exploration.html">Xem thêm</a></button>
-    </div>
-</section>
-
-<section class="container-4" title="image by Tumisu on Pixabay ">
-    <div class="box-4">
-        <h6>Định hướng phát triển</h6>
-        <h1>Mục tiêu của THEDUNG</h1>
-        <p>
-            Xây dựng nền tảng học tập và luyện thi trực tuyến hiện đại<br>
-            Đơn giản – hiệu quả – dễ tiếp cận cho mọi đối tượng học tập<br>
-            Giúp người học chủ động kiểm tra và đánh giá kiến thức<br>
-            Từng bước cải thiện kết quả học tập một cách bền vững
-        </p>
-    </div>
-    <a href="#">Giới thiệu về định hướng phát triển</a>
-    <br>
-</section>
-
-
-    <section class="ref">
-        <h1>แหล่งที่มา</h1>
-        <span>
-            <p>รูปภาพประกอบบางส่วน :</p>
-            <a href="https://www.pngitem.com/">pngitem.com</a>
-        </span>
-        <span>
-            <p>รูปภาพประกอบบางส่วน :</p>
-            <a href="https://www.pngwing.com/">pngwing.com</a>
-        </span>
-        <span>
-            <p>รูปภาพประกอบบางส่วน :</p>
-            <a href="https://www.pngegg.com/th">pngegg.com</a>
-        </span>
-        <span>
-            <p>ภาพพื้นหลังบางส่วน :</p>
-            <a href="https://pixabay.com/th/">pixabay.com</a>
-        </span>
     </section>
 
-    <footer>
-        <p style="color: grey;">Designed & Built by Pannisa Samerjai</p>
-    </footer>
-    <!-- Back to Top Button -->
+    <section class="container-solar" id="mercury">
+        <div class="content-mercury">
+            <p></p>
+        </div>
+        <div>
+            <div class="card-solar">
+                <div class="text-solar">
+                    <h3>ดาวพุธ</h3>
+                    <h1>Mercury</h1>
+                    <p>ดาวเคราะห์ซึ่งอยู่ใกล้กับดวงอาทิตย์มากที่สุด เป็นดาวเคราะห์ขนาดเล็ก และไม่มีดวงจันทร์เป็นบริวาร
+                        โครงสร้างภายในของดาวพุธประกอบไปด้วยแกนเหล็กขนาดใหญ่มีรัศมีประมาณ 1,800 ถึง 1,900 กิโลเมตร
+                        ล้อมรอบด้วยชั้นที่เป็นซิลิเกต (ในทำนองเดียวกับที่แกนของโลกถูกห่อหุ้มด้วยแมนเทิลและเปลือก)
+                        ซึ่งหนาเพียง 500 ถึง 600 กิโลเมตร บางส่วนของแกนอาจจะยังหลอมละลายอยู่</p>
+                    <p>ดาวพุธไม่มีชั้นบรรยากาศห่อหุ้ม ดาวพุธอยู่ใกล้ดวงอาทิตย์มาก กลางวันจึงมีอุณหภูมิสูงถึง 430 °C
+                        แต่กลางคืนอุณหภูมิลดเหลือเพียง -180°C อุณหภูมิกลางวันกลางคืนแตกต่างกันถึง 610°C</p>
+                </div>
+                <model-viewer src="assets/Mercury.glb" alt="Mercury" auto-rotate camera-controls ar
+                    ios-src="assets/Mercury.glb"
+                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
+            </div>
+            <div class="info-solar">
+                <div>
+                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
+                    <p>4,880 กิโลเมตร</p>
+                </div>
+                <div>
+                    <h6>มวล<br>(Mass)</h6>
+                    <p>3.30E23 ล้านกิโลกรัม</p>
+                </div>
+                <div>
+                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
+                    <p>0 ดวง</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-solar" id="venus">
+        <div class="content-venus">
+            <p></p>
+        </div>
+        <div>
+            <div class="card-solar">
+                <div class="text-solar">
+                    <h3>ดาวศุกร์</h3>
+                    <h1>Venus</h1>
+                    <p>ดาวเคราะห์ที่มีขนาดใหญ่เป็นอันดับที่ 6 ไม่มีดวงจันทร์บริวาร<br>ดาวศุกร์มีลักษณะที่คล้ายคลึงกับโลก
+                        จนได้ชื่อว่าเป็นดาวเคราะห์ฝาแฝดกับโลกของเรา โครงสร้างภายในของดาวศุกร์ ประกอบด้วย
+                        แกนกลางที่เป็นเหล็กมีรัศมีประมาณ 3,000 กิโลเมตร ห่อหุ้มด้วยชั้นแมนเทิลที่มีความหนาประมาณ 3,000
+                        กิโลเมตร และเปลือกแข็งที่ประกอบด้วยหินซิลิเกต</p>
+                </div>
+                <model-viewer src="assets/Venus(surface).glb" alt="Venus" auto-rotate camera-controls ar
+                    ios-src="assets/Venus(surface).glb"
+                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
+            </div>
+            <div class="info-solar">
+                <div>
+                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
+                    <p>12,104 กิโลเมตร</p>
+                </div>
+                <div>
+                    <h6>มวล<br>(Mass)</h6>
+                    <p>4.87E24 ล้านกิโลกรัม</p>
+                </div>
+                <div>
+                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
+                    <p>0 ดวง</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-solar" id="earth">
+        <div class="content-earth">
+            <p></p>
+        </div>
+        <div>
+            <div class="card-solar">
+                <div class="text-solar">
+                    <h3>ดาวโลก</h3>
+                    <h1>Earth</h1>
+                    <p>ดาวเคราะห์ดวงเดียวในระบบสุริยะที่มีสภาวะแวดล้อมเอื้ออำนวยต่อการดำรงชีวิตของสิ่งมีชีวิต
+                        โลกอยู่ห่างจากดวงอาทิตย์เป็นลำดับที่ 3 และมีขนาดใหญ่เป็นอันดับที่ 5
+                        โลกมีสัณฐานเป็นทรงกลมแป้นมีรัศมีเฉลี่ย 6,371 กิโลเมตร</p>
+                    <p>โครงสร้างภายในของโลกประกอบไปด้วยแก่นชั้นในที่เป็นเหล็ก มีรัศมีประมาณ 1,200 กิโลเมตร
+                        ห่อหุ้มด้วยแก่นชั้นนอกที่เป็นของเหลว (Liquid) ประกอบด้วยเหล็กและนิเกิล มีความหนาประมาณ 2,200
+                        กิโลเมตร ถัดขึ้นมาเป็นชั้นแมนเทิลซึ่งเป็นของแข็งเนื้ออ่อนที่ยืดหยุ่นได้ (Plastic) ประกอบไปด้วย
+                        เหล็ก แมกนีเซียม ซิลิกอน และธาตุอื่นๆ มีความหนาประมาณ 3,000 กิโลเมตร เปลือกโลกเป็นของแข็ง
+                        (Solid) มีองค์ประกอบส่วนใหญ่เป็นเฟลด์สปาร์ และควอตช์ (ซิลิกอนไดออกไซด์)</p>
+                </div>
+                <model-viewer src="assets/Earth.glb" alt="Earth" auto-rotate camera-controls ar
+                    ios-src="assets/Earth.glb"
+                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
+            </div>
+            <div class="info-solar">
+                <div>
+                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
+                    <p>12,756 กิโลเมตร</p>
+                </div>
+                <div>
+                    <h6>มวล<br>(Mass)</h6>
+                    <p>5.97E24 ล้านกิโลกรัม</p>
+                </div>
+                <div>
+                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
+                    <p>1 ดวง</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-solar" id="mars">
+        <div class="content-mars">
+            <p></p>
+        </div>
+        <div>
+            <div class="card-solar">
+                <div class="text-solar">
+                    <h3>ดาวอังคาร</h3>
+                    <h1>Mars</h1>
+                    <p>ดาวเคราะห์ที่อยู่ห่างจากดวงอาทิตย์เป็นอันดับที่ 4 ในบรรดาดาวเคราะห์ทั้งหมด
+                        ดาวอังคารมีขนาดเส้นผ่านศูนย์กลางประมาณ 0.5 เท่าของโลก
+                        ดาวอังคารมีโครงสร้างภายในประกอบด้วยแก่นของแข็งมีรัศมีประมาณ 1,700 กิโลเมตร
+                        ห่อหุ้มด้วยชั้นแมนเทิลที่เป็นหินหนืดหนาประมาณ 1,600 กิโลเมตร และมีเปลือกแข็งเช่นเดียวกับโลก</p>
+                    <p>ดาวอังคารมีสีแดงเนื่องจากพื้นผิวประกอบด้วยออกไซด์ของเหล็ก (สนิมเหล็ก)
+                        พื้นผิวของดาวอังคารเต็มไปด้วยหุบเหวต่างๆ มากมาย หุบเหวขนาดใหญ่ชื่อ หุบเหวมาริเนอริส (Valles
+                        Marineris) มีความยาว 4,000 กิโลเมตร กว้าง 600 กิโลเมตร ลึก 8 กิโลเมตร
+                        นอกจากนี้ดาวอังคารยังมีภูเขาไฟที่สูงที่สุดในระบบสุริยะชื่อ ภูเขาไฟโอลิมปัส (Mount Olympus) สูง
+                        25 กิโลเมตร ฐานที่แผ่ออกไปมีรัศมี 300 กิโลเมตร</p>
+                </div>
+                <model-viewer src="assets/Mars.glb" alt="Mars" auto-rotate camera-controls ar
+                    ios-src="assets/Mars.glb"
+                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
+            </div>
+            <div class="info-solar">
+                <div>
+                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
+                    <p>6,794 กิโลเมตร</p>
+                </div>
+                <div>
+                    <h6>มวล<br>(Mass)</h6>
+                    <p>6.42E23 ล้านกิโลกรัม</p>
+                </div>
+                <div>
+                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
+                    <p>2 ดวง</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-solar" id="jupiter">
+        <div class="content-jupiter">
+            <p></p>
+        </div>
+        <div>
+            <div class="card-solar">
+                <div class="text-solar">
+                    <h3>ดาวพฤหัส</h3>
+                    <h1>Jupiter</h1>
+                    <p>วัตถุท้องฟ้าที่มีความสว่างมากเป็นอันดับที่ 4 รองจากดวงอาทิตย์ ดวงจันทร์ และดาวศุกร์
+                        และเป็นที่รู้จักกันมาตั้งแต่ยุคก่อนประวัติศาสตร์ ดาวพฤหัสบดีถูกสำรวจเป็นครั้งแรกโดยยานไพโอเนียร์
+                        10 ในปี พ.ศ.2516 ติดตามด้วย ไพโอเนียร์ 11, วอยเอเจอร์ 1, วอยเอเจอร์ 2, ยูลิซิส และกาลิเลโอ</p>
+                    <p>ดาวพฤหัสบดีเป็นดาวเคราะห์แก๊สซึ่งบรรยากาศหนาแน่น มีองค์ประกอบหลักเป็นไฮโดรเจน 90% และฮีเลียม 10%
+                        ปะปนด้วยมีเทน น้ำ และแอมโมเนียจำนวนเล็กน้อย
+                        ลึกลงไปด้านล่างเป็นแมนเทิลชั้นนอกซึ่งประกอบไปด้วยไฮโดรเจนและฮีเลียมเหลว
+                        และแมนเทิลชั้นในที่ประกอบไปด้วยไฮโดรเจนซึ่งมีสมบัติเป็นโลหะ และแก่นกลางที่เป็นหินแข็งมีขนาดเป็น
+                        2 เท่าของโลก</p>
+                </div>
+                <model-viewer src="assets/Jupiter.glb" alt="Jupiter" auto-rotate camera-controls ar
+                    ios-src="assets/Jupiter.glb"
+                    style="width: 600px; height: 600px; filter: saturate(150%);" loading="lazy"></model-viewer>
+            </div>
+            <div class="info-solar">
+                <div>
+                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
+                    <p>142,984 กิโลเมตร</p>
+                </div>
+                <div>
+                    <h6>มวล<br>(Mass)</h6>
+                    <p>1.90E27 ล้านกิโลกรัม</p>
+                </div>
+                <div>
+                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
+                    <p>39 ดวง</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-solar" id="saturn">
+        <div class="content-saturn">
+            <p></p>
+        </div>
+        <div>
+            <div class="card-solar">
+                <div class="text-solar">
+                    <h3>ดาวเสาร์</h3>
+                    <h1>Saturn</h1>
+                    <p>ดาวเคราะห์ที่รู้จักกันมาตั้งแต่ก่อนยุคประวัติศาสตร์
+                        กาลิเลโอสังเกตดาวเสาร์ด้วยกล้องโทรทรรศน์เป็นครั้งแรกเมื่อปี พ.ศ. 2153</p>
+                    <p>ดาวเสาร์ถูกสำรวจโดยยานไพโอเนียร์ 11 ในปี พ.ศ.2522 ตามด้วยยานวอยเอเจอร์ 1 ยานวอยเอเจอร์ 2
+                        และยานแคสสินีในปี พ.ศ.2547 บรรยากาศของดาวเสาร์เป็น ไฮโดรเจน 75% ฮีเลียม 25% ปะปนไปด้วยน้ำ มีเทน
+                        แอมโมเนีย จำนวนเล็กน้อย แถบสีบนดาวเสาร์เกิดขึ้นจากการหมุนรอบตัวเองเร็วมาก
+                        จนทำให้เกิดการหมุนวนของชั้นบรรยากาศที่มีอุณหภูมิแตกต่างกัน จึงปรากฏเป็นแถบเข้มและจางสลับกันไป
+                        โครงสร้างภายในของดาวเสาร์มีลักษณะคล้ายคลึงกับของดาวพฤหัสบดี มีแกนกลางที่เป็นหินแข็ง
+                        ห่อหุ้มด้วยแมนเทิลชั้นในที่เป็นโลหะไฮโดรเจน และแมนเทิลชั้นนอกที่เป็นไฮโดรเจนและฮีเลียมเหลว</p>
+                </div>
+                <model-viewer src="assets/Saturn.glb" alt="Saturn" auto-rotate camera-controls ar
+                    ios-src="assets/Saturn.glb"
+                    style="width: 600px; height: 600px; filter: saturate(150%); transform: rotate(-20deg);" loading="lazy"></model-viewer>
+            </div>
+            <div class="info-solar">
+                <div>
+                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
+                    <p>120,536 กิโลเมตร</p>
+                </div>
+                <div>
+                    <h6>มวล<br>(Mass)</h6>
+                    <p>5.69E25ล้านกิโลกรัม</p>
+                </div>
+                <div>
+                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
+                    <p>30 ดวง</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-solar" id="uranus">
+        <div class="content-uranus">
+            <p></p>
+        </div>
+        <div>
+            <div class="card-solar">
+                <div class="text-solar">
+                    <h3>ดาวยูเรนัส</h3>
+                    <h1>Uranus</h1>
+                    <p> ถูกค้นพบครั้งแรกโดย วิลเลี่ยม เฮอส์เชล ในปี พ.ศ.2534 สองร้อยปีต่อมา ยานวอยเอเจอร์ 2
+                        ทำการสำรวจดาวยูเรนัสในปี พ.ศ. 2529 พบว่า บรรยากาศของดาวยูเรนัสประกอบด้วยไฮโดรเจน 83%, ฮีเลียม
+                        15% และมีเทน 2% ดาวยูเรนัสมีสีฟ้าเนื่องจากแก๊สมีเทนดูดกลืนสีแดงและสะท้อนสีน้ำเงิน
+                        บรรยากาศมีลมพัดแรงมาก ลึกลงไปที่แก่นของดาวห่อหุ้มด้วยโลหะไฮโดรเจนเหลว</p>
+                    <p>ขณะที่ดาวเคราะห์ส่วนใหญ่มีแกนหมุนรอบตัวเองเกือบตั้งฉากกับระนาบสุริยวิถี
+                        แต่แกนของดาวยูเรนัสวางตัวเกือบขนานกับสุริยวิถี
+                        ดังนั้นอุณหภูมิบริเวณขั้วดาวจึงสูงกว่าบริเวณเส้นศูนย์สูตร
+                        ดาวยูเรนัสมีวงแหวนเช่นเดียวกับดาวเคราะห์ชั้นนอกดวงอื่นๆ วงแหวนของดาวยูเรนัสมีความสว่างไม่มาก
+                        เนื่องจากประกอบด้วยอนุภาคขนาดเล็ก มีขนาดตั้งแต่ฝุ่นผงจนถึง 10 เมตร
+                        ดาวยูเรนัสมีดวงจันทร์บริวารอย่างน้อย 27 ดวง ดวงจันทร์ขนาดใหญ่ที่มีรูปร่างเป็นทรงกลม ได้แก่
+                        มิรันดา แอเรียล อัมเบรียล ไททาเนีย และ โอเบรอน</p>
+                </div>
+                <model-viewer src="assets/Uranus.glb" alt="Uranus" auto-rotate camera-controls ar
+                    ios-src="assets/Uranus.glb"
+                    style="width: 600px; height: 600px; filter: saturate(150%); transform: rotate(-20deg);" loading="lazy"></model-viewer>
+            </div>
+            <div class="info-solar">
+                <div>
+                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
+                    <p>51,118 กิโลเมตร</p>
+                </div>
+                <div>
+                    <h6>มวล<br>(Mass)</h6>
+                    <p>8.86E25ล้านกิโลกรัม</p>
+                </div>
+                <div>
+                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
+                    <p>21 ดวง</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-solar" id="neptune">
+        <div class="content-neptune">
+            <p></p>
+        </div>
+        <div>
+            <div class="card-solar">
+                <div class="text-solar">
+                    <h3>ดาวเนปจูน</h3>
+                    <h1>Neptune</h1>
+                    <p> ถูกค้นพบเนื่องจากนักดาราศาสตร์พบว่า
+                        ตำแหน่งของดาวยูเรนัสในวงโคจรรอบดวงอาทิตย์ไม่ได้เป็นไปตามกฏของนิวตันจึงตั้งสมมติฐานว่า
+                        จะต้องมีดาวเคราะห์อีกดวงหนึ่งที่อยู่ไกลถัดออกไปมารบกวนวงโคจรของดาวยูเรนัส
+                        ในที่สุดดาวเนปจูนก็ถูกค้นพบโดย โจฮานน์ กัลเล ในปี พ.ศ.2389</p>
+                    <p>ดาวเนปจูนมีองค์ประกอบคล้ายคลึงกับดาวยูเรนัส คือ มีบรรยากาศเป็นไฮโดรเจนและฮีเลียม
+                        และมีมีเทนเจือปนอยู่จึงมีสีน้ำเงิน ดาวเนปจูนมีขนาดเล็กกว่าดาวยูเรนัสเล็กน้อย
+                        แต่มีความหนาแน่นมากกว่า โดยที่แก่นของดาวเนปจูนเป็นของแข็งมีขนาดใกล้เคียงกับโลกของเรา
+                        ในช่วงเวลาที่ยานวอยเอเจอร์ 2 เข้าใกล้ดาวเนปจูนได้ถ่ายภาพ จุดมืดใหญ่ (Great dark spot)
+                        ทางซีกใต้ของดาวมีขนาดใหญ่เกือบครึ่งหนึ่งของจุดแดงใหญ่บนดาวพฤหัสบดี
+                        (ประมาณเท่ากับเส้นผ่านศูนย์กลางของโลก)
+                        จุดมืดใหญ่นี้เป็นพายุหมุนเช่นเดียวกับจุดแดงใหญ่บนดาวพฤหัสบดี มีกระแสลมพัดแรงที่สุดในระบบสุริยะ
+                        ความเร็วลม 300 เมตร/วินาที หรือ 1,080 กิโลเมตรต่อชั่วโมง </p>
+                </div>
+                <model-viewer src="assets/Neptune.glb" alt="Neptune" auto-rotate camera-controls ar
+                    ios-src="assets/Neptune.glb"
+                    style="width: 600px; height: 600px; filter: saturate(150%); transform: rotate(-20deg);" loading="lazy"></model-viewer>
+            </div>
+            <div class="info-solar">
+                <div>
+                    <h6>เส้นผ่านศูนย์กลาง (Diameter)</h6>
+                    <p>49,528 กิโลเมตร</p>
+                </div>
+                <div>
+                    <h6>มวล<br>(Mass)</h6>
+                    <p>1.02E25ล้านกิโลกรัม</p>
+                </div>
+                <div>
+                    <h6>จำนวนดวงจันทร์บริวาณ (Satellite)</h6>
+                    <p>8 ดวง</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+  
+        <!-- Back to Top Button -->
 <button id="backToTop" title="Lên đầu trang">
     <i class="fas fa-sun"></i>
 
 </button>
-
-
     <script src="js/bootstrap.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+    <script>
+        // Disable auto-rotate on mobile for better performance
+        if (window.innerWidth <= 768) {
+            document.addEventListener('DOMContentLoaded', function() {
+                const modelViewers = document.querySelectorAll('model-viewer');
+                modelViewers.forEach(viewer => {
+                    viewer.removeAttribute('auto-rotate');
+                });
+            });
+        }
+    </script>
     <script>
     const backToTopBtn = document.getElementById("backToTop");
 
