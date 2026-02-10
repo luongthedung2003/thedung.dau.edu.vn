@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <title>THEDUNG - Khóa Học</title>
+    <title>THEDUNG - Trắc Nghiệm</title>
     <link rel="icon" href="images/logo.png">
 
     <style>
@@ -309,374 +309,224 @@
         }
 
         /* ========================================
-           COURSES SECTION
+           QUIZ STYLES
            ======================================== */
 
-        .courses-header {
+        .quiz-header {
             text-align: center;
-            margin-bottom: 60px;
-            padding: 0 20px;
+            margin-bottom: 3rem;
+            padding: 0 1rem;
         }
 
-        .courses-header h1 {
-            font-size: 3rem;
+        .quiz-header h1 {
+            font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #00e5ff 0%, #ff1744 100%);
+            background: linear-gradient(135deg, #00e5ff 0%, var(--gold-color) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 20px;
+            margin-bottom: 1rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
 
-        .courses-header p {
+        .quiz-header p {
             color: rgba(255, 255, 255, 0.7);
-            font-size: 1.1rem;
+            font-size: 1rem;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        .courses-container {
-            max-width: 1200px;
+        .quiz-container {
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 1rem;
         }
 
-        .course-card {
+        .question-card {
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 40px;
-            transition: all 0.4s ease;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .question-card:hover {
+            border-color: var(--gold-color);
+            box-shadow: 0 6px 30px rgba(81, 32, 187, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .question-header {
             display: flex;
-            align-items: center;
-            gap: 30px;
-            padding: 30px;
-            position: relative;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
             cursor: pointer;
         }
 
-        .course-card::before {
+        .question-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(81, 32, 187, 0.5);
+        }
+
+        .question-text {
+            flex: 1;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: white;
+            padding-top: 0.5rem;
+        }
+
+        .toggle-icon {
+            color: #9ca3af;
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-top: 0.5rem;
+        }
+
+        .toggle-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        .answers-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .answers-container.show {
+            max-height: 1000px;
+        }
+
+        .answer-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .answer-option::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-        }
-
-        .course-card:hover {
-            transform: translateY(-10px);
-            border-color: #00e5ff;
-            box-shadow: 0 20px 60px rgba(0, 229, 255, 0.3);
-        }
-
-        .course-card:hover::before {
-            opacity: 1;
-        }
-
-        .course-planet {
-            flex-shrink: 0;
-            width: 280px;
-            height: 280px;
-            position: relative;
-        }
-
-        .course-planet model-viewer {
-            width: 100%;
+            width: 0;
             height: 100%;
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.1), rgba(81, 32, 187, 0.1));
+            transition: width 0.3s ease;
         }
 
-        .course-content {
-            flex: 1;
+        .answer-option:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 229, 255, 0.5);
+            transform: translateX(5px);
+        }
+
+        .answer-option:hover::before {
+            width: 100%;
+        }
+
+        .radio-button {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            flex-shrink: 0;
             position: relative;
+            transition: all 0.3s ease;
+            margin-top: 0.125rem;
             z-index: 1;
         }
 
-        .course-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
+        .answer-option:hover .radio-button {
+            border-color: var(--gold-color);
         }
 
-        .course-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 10px;
+        .radio-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background: var(--gold-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s ease;
         }
 
-        .course-rating {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 204, 51, 0.2);
-            padding: 8px 16px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 204, 51, 0.4);
+        .answer-option.selected .radio-button {
+            border-color: var(--gold-color);
         }
 
-        .course-rating i {
-            color: #ffcc33;
-            font-size: 1.2rem;
+        .answer-option.selected .radio-button::after {
+            transform: translate(-50%, -50%) scale(1);
         }
 
-        .rating-number {
-            color: white;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .course-description {
-            color: rgba(255, 255, 255, 0.7);
+        .answer-label {
+            flex: 1;
+            font-size: 0.95rem;
             line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            z-index: 1;
         }
 
-        .course-tags {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .course-tag {
-            background: rgba(81, 32, 187, 0.3);
-            border: 1px solid rgba(81, 32, 187, 0.5);
-            padding: 8px 20px;
-            border-radius: 20px;
-            color: #00e5ff;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .course-tag:hover {
-            background: rgba(81, 32, 187, 0.5);
-            border-color: #00e5ff;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-        }
-
-        .course-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .course-date {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-        }
-
-        .course-date i {
-            color: #ff1744;
-            font-size: 1.1rem;
-        }
-
-        .course-date span {
-            font-weight: 600;
-        }
-
-        .view-more-btn {
-            background: linear-gradient(135deg, #ff1744 0%, #5120bb 100%);
-            border: none;
-            padding: 12px 35px;
-            border-radius: 25px;
-            color: white;
+        .answer-prefix {
             font-weight: 700;
-            font-size: 0.95rem;
+            color: white;
+            margin-right: 0.5rem;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #ff1744 0%, var(--gold-color) 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 2.5rem;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: block;
+            margin: 2rem auto 0;
             box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .view-more-btn:hover {
+        .submit-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
         }
 
-        /* ========================================
-           RESPONSIVE DESIGN
-           ======================================== */
-
-        @media (max-width: 1024px) {
-            .course-card {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .course-planet {
-                width: 220px;
-                height: 220px;
-            }
-
-            .course-header-row {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-
-            .course-tags {
-                justify-content: center;
-            }
-
-            .course-footer {
-                flex-direction: column;
-                gap: 20px;
-            }
+        .submit-button:active {
+            transform: translateY(-1px);
         }
 
-        @media (max-width: 768px) {
-            .courses-header h1 {
-                font-size: 2rem;
-            }
-
-            .courses-header p {
-                font-size: 0.95rem;
-            }
-
-            /* Mobile List Layout */
-            .course-card {
-                flex-direction: row;
-                align-items: center;
-                gap: 15px;
-                padding: 15px;
-                margin-bottom: 20px;
-                text-align: left;
-                border-radius: 16px;
-            }
-
-            .course-planet {
-                width: 80px;
-                height: 80px;
-                flex-shrink: 0;
-                border-radius: 12px;
-                overflow: hidden;
-                background: linear-gradient(135deg, rgba(81, 32, 187, 0.2), rgba(0, 229, 255, 0.2));
-                border: 2px solid rgba(0, 229, 255, 0.3);
-            }
-
-            .course-content {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-                min-width: 0;
-            }
-
-            .course-header-row {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 5px;
-                gap: 10px;
-            }
-
-            .course-title {
-                font-size: 1rem;
-                font-weight: 700;
-                margin-bottom: 0;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-            }
-
-            .course-rating {
-                padding: 4px 10px;
-                border-radius: 8px;
-                flex-shrink: 0;
-                display: none; /* Hide on mobile */
-            }
-
-            .course-description {
-                font-size: 0.8rem;
-                margin-bottom: 0;
-                color: rgba(255, 255, 255, 0.6);
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                line-height: 1.4;
-            }
-
-            .course-tags {
-                display: none; /* Hide tags on mobile */
-            }
-
-            .course-footer {
-                display: none; /* Hide footer on mobile */
-            }
-
-            /* Add arrow indicator */
-            .course-card::after {
-                content: '\f054';
-                font-family: 'Font Awesome 6 Free';
-                font-weight: 900;
-                color: rgba(255, 255, 255, 0.4);
-                font-size: 1.2rem;
-                margin-left: auto;
-                flex-shrink: 0;
-                transition: all 0.3s ease;
-            }
-
-            .course-card:hover::after {
-                color: #00e5ff;
-                transform: translateX(5px);
-            }
-
-            .view-more-btn {
-                display: none; /* Hide button on mobile, use card click instead */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .courses-header h1 {
-                font-size: 1.5rem;
-            }
-
-            .courses-header p {
-                font-size: 0.85rem;
-            }
-
-            .course-card {
-                padding: 12px;
-                gap: 12px;
-            }
-
-            .course-planet {
-                width: 70px;
-                height: 70px;
-            }
-
-            .course-title {
-                font-size: 0.9rem;
-            }
-
-            .course-description {
-                font-size: 0.75rem;
-            }
-
-            .course-card::after {
-                font-size: 1rem;
-            }
-        }
-
+        
         /* Footer styles */
         :root {
             --footer-primary-purple: #5120bb;
@@ -1226,6 +1076,97 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .quiz-header h1 {
+                font-size: 2rem;
+            }
+
+            .quiz-header p {
+                font-size: 0.9rem;
+            }
+
+            .question-card {
+                padding: 1.25rem;
+            }
+
+            .question-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .question-text {
+                font-size: 0.95rem;
+            }
+
+            .answer-option {
+                padding: 0.875rem 1rem;
+            }
+
+            .answer-label {
+                font-size: 0.9rem;
+            }
+
+            .submit-button {
+                padding: 0.875rem 2rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quiz-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .quiz-header p {
+                font-size: 0.85rem;
+            }
+
+            .question-card {
+                padding: 1rem;
+            }
+
+            .question-header {
+                gap: 0.75rem;
+            }
+
+            .question-number {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+
+            .question-text {
+                font-size: 0.875rem;
+            }
+
+            .answer-option {
+                padding: 0.75rem;
+                gap: 0.75rem;
+            }
+
+            .radio-button {
+                width: 20px;
+                height: 20px;
+            }
+
+            .radio-button::after {
+                width: 10px;
+                height: 10px;
+            }
+
+            .answer-label {
+                font-size: 0.85rem;
+            }
+
+            .submit-button {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.875rem;
+                width: 100%;
+            }
+        }
+
         @media (max-width: 1024px) {
             .thedung-footer-columns-grid {
                 grid-template-columns: 1fr 1fr 1fr;
@@ -1488,248 +1429,223 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Courses Header -->
-        <div class="courses-header" data-aos="fade-down">
-            <h1>KHÓA HỌC CỦA BẠN</h1>
-            <p>Khám phá vũ trụ kiến thức với các khóa học chất lượng cao</p>
+        <!-- Quiz Header -->
+        <div class="quiz-header" data-aos="fade-down">
+            <h1>DANH SÁCH CÂU HỎI</h1>
+            <p>Luyện tập và kiểm tra kiến thức với các bài trắc nghiệm chất lượng</p>
         </div>
 
-        <!-- Courses Container -->
-        <div class="courses-container">
-            <!-- Course 1 -->
-            <a href="lessons.html" class="course-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="course-planet">
-                    <model-viewer 
-                        interaction-prompt="none" 
-                        src="assets/Earth.glb" 
-                        alt="Earth" 
-                        auto-rotate 
-                        camera-controls 
-                        ar
-                        ios-src="assets/Earth.glb" 
-                        loading="lazy">
-                    </model-viewer>
+        <!-- Quiz Container -->
+        <div class="quiz-container">
+            <!-- Question 1 -->
+            <div class="question-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="question-header" onclick="toggleQuestion(1)">
+                    <div class="question-number">1</div>
+                    <div class="question-text">
+                        Theo tư tưởng Hồ Chí Minh, tính đại chúng của nền văn hóa được thể hiện ở chỗ:
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon" id="toggle-1"></i>
                 </div>
-                <div class="course-content">
-                    <div class="course-header-row">
-                        <h2 class="course-title">Nhập môn lập trình</h2>
-                        <div class="course-rating">
-                            <i class="fas fa-star"></i>
-                            <span class="rating-number">4.5</span>
+                <div class="answers-container" id="answers-1">
+                    <div class="answer-option" onclick="selectAnswer(1, 'C')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">C.</span>
+                            Đó là một nền văn hóa đa dạng cùng với sự đa dạng của các dân tộc anh em.
                         </div>
                     </div>
-                    <p class="course-description">
-                        Môn học giới thiệu tư duy lập trình và các kiến thức nền tảng về lập trình máy tính
-                    </p>
-                    <div class="course-tags">
-                        <span class="course-tag">Programming</span>
-                        <span class="course-tag">Beginner</span>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-date">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Start 20 July</span>
+                    <div class="answer-option" onclick="selectAnswer(1, 'B')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">B.</span>
+                            Đó là một nền văn hóa rộng lớn, phổ cập đến tất cả mọi người trong xã hội.
                         </div>
-                        <span class="view-more-btn">Xem thêm</span>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(1, 'D')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">D.</span>
+                            Nền văn hóa ấy vượt ra khỏi biên giới quốc gia, vươn tầm khu vực và thế giới.
+                        </div>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(1, 'A')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">A.</span>
+                            Nền văn hóa ấy phải phục vụ cho nhân dân và do nhân dân xây dựng nên.
+                        </div>
                     </div>
                 </div>
-            </a>
+            </div>
 
-            <!-- Course 2 -->
-            <a href="lessons.html" class="course-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="course-planet">
-                    <model-viewer 
-                        interaction-prompt="none" 
-                        src="assets/Mars.glb" 
-                        alt="Mars" 
-                        auto-rotate 
-                        camera-controls 
-                        ar
-                        ios-src="assets/Mars.glb" 
-                        loading="lazy">
-                    </model-viewer>
+            <!-- Question 2 -->
+            <div class="question-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="question-header" onclick="toggleQuestion(2)">
+                    <div class="question-number">2</div>
+                    <div class="question-text">
+                        Chọn đáp án KHÔNG đúng. Cống hiến của Hồ Chí Minh trong lĩnh vực văn hóa được thể hiện:
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon" id="toggle-2"></i>
                 </div>
-                <div class="course-content">
-                    <div class="course-header-row">
-                        <h2 class="course-title">Tin học cơ bản</h2>
-                        <div class="course-rating">
-                            <i class="fas fa-star"></i>
-                            <span class="rating-number">4.0</span>
+                <div class="answers-container" id="answers-2">
+                    <div class="answer-option" onclick="selectAnswer(2, 'C')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">C.</span>
+                            Sáng tạo văn hóa văn nghệ.
                         </div>
                     </div>
-                    <p class="course-description">
-                        Môn học giới thiệu kiến thức nền tảng về công nghệ thông tin và ứng dụng máy tính
-                    </p>
-                    <div class="course-tags">
-                        <span class="course-tag">IT Basics</span>
-                        <span class="course-tag">Computer</span>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-date">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Start 22 July</span>
+                    <div class="answer-option" onclick="selectAnswer(2, 'A')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">A.</span>
+                            Xây dựng con người mới.
                         </div>
-                        <span class="view-more-btn">Xem thêm</span>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(2, 'D')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">D.</span>
+                            Xác lập hệ thống quan điểm về văn hóa.
+                        </div>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(2, 'B')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">B.</span>
+                            Lãnh đạo cách mạng văn hóa.
+                        </div>
                     </div>
                 </div>
-            </a>
+            </div>
 
-            <!-- Course 3 -->
-            <a href="lessons.html" class="course-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="course-planet">
-                    <model-viewer 
-                        interaction-prompt="none" 
-                        src="assets/Jupiter.glb" 
-                        alt="Jupiter" 
-                        auto-rotate 
-                        camera-controls 
-                        ar
-                        ios-src="assets/Jupiter.glb" 
-                        loading="lazy">
-                    </model-viewer>
+            <!-- Question 3 -->
+            <div class="question-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="question-header" onclick="toggleQuestion(3)">
+                    <div class="question-number">3</div>
+                    <div class="question-text">
+                        Theo Hồ Chí Minh, để xây dựng nền văn hóa mới cần phải:
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon" id="toggle-3"></i>
                 </div>
-                <div class="course-content">
-                    <div class="course-header-row">
-                        <h2 class="course-title">Kiến trúc máy tính và nguyên lý hệ điều hành</h2>
-                        <div class="course-rating">
-                            <i class="fas fa-star"></i>
-                            <span class="rating-number">4.8</span>
+                <div class="answers-container" id="answers-3">
+                    <div class="answer-option" onclick="selectAnswer(3, 'A')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">A.</span>
+                            Kế thừa và phát huy những di sản văn hóa quý báu của dân tộc.
                         </div>
                     </div>
-                    <p class="course-description">
-                        Môn học tìm hiểu cấu trúc phần cứng máy tính và nguyên lý hoạt động của hệ điều hành
-                    </p>
-                    <div class="course-tags">
-                        <span class="course-tag">Hardware</span>
-                        <span class="course-tag">OS</span>
-                        <span class="course-tag">Advanced</span>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-date">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Start 25 July</span>
+                    <div class="answer-option" onclick="selectAnswer(3, 'B')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">B.</span>
+                            Tiếp thu có chọn lọc tinh hoa văn hóa nhân loại.
                         </div>
-                        <span class="view-more-btn">Xem thêm</span>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(3, 'C')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">C.</span>
+                            Xây dựng con người mới - con người xã hội chủ nghĩa.
+                        </div>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(3, 'D')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">D.</span>
+                            Tất cả các đáp án trên.
+                        </div>
                     </div>
                 </div>
-            </a>
+            </div>
 
-            <!-- Course 4 -->
-            <a href="lessons.html" class="course-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="course-planet">
-                    <model-viewer 
-                        interaction-prompt="none" 
-                        src="assets/Saturn.glb" 
-                        alt="Saturn" 
-                        auto-rotate 
-                        camera-controls 
-                        ar
-                        ios-src="assets/Saturn.glb" 
-                        loading="lazy">
-                    </model-viewer>
+            <!-- Question 4 -->
+            <div class="question-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="question-header" onclick="toggleQuestion(4)">
+                    <div class="question-number">4</div>
+                    <div class="question-text">
+                        Hồ Chí Minh cho rằng, cách mạng văn hóa cần thực hiện đồng thời ba nhiệm vụ. Đó là:
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon" id="toggle-4"></i>
                 </div>
-                <div class="course-content">
-                    <div class="course-header-row">
-                        <h2 class="course-title">Kinh tế số</h2>
-                        <div class="course-rating">
-                            <i class="fas fa-star"></i>
-                            <span class="rating-number">4.6</span>
+                <div class="answers-container" id="answers-4">
+                    <div class="answer-option" onclick="selectAnswer(4, 'A')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">A.</span>
+                            Xóa nạn mù chữ, phát triển giáo dục, xây dựng đạo đức mới.
                         </div>
                     </div>
-                    <p class="course-description">
-                        Môn học giới thiệu các mô hình kinh tế trong thời đại số và ứng dụng công nghệ
-                    </p>
-                    <div class="course-tags">
-                        <span class="course-tag">Economics</span>
-                        <span class="course-tag">Digital</span>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-date">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Start 28 July</span>
+                    <div class="answer-option" onclick="selectAnswer(4, 'B')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">B.</span>
+                            Phát triển văn hóa dân tộc, tiếp thu văn hóa thế giới, xây dựng đạo đức mới.
                         </div>
-                        <span class="view-more-btn">Xem thêm</span>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(4, 'C')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">C.</span>
+                            Phát triển kinh tế, xóa đói giảm nghèo, nâng cao đời sống văn hóa.
+                        </div>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(4, 'D')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">D.</span>
+                            Phát triển giáo dục, kế thừa văn hóa truyền thống, xây dựng con người mới.
+                        </div>
                     </div>
                 </div>
-            </a>
+            </div>
 
-            <!-- Course 5 -->
-            <a href="lessons.html" class="course-card" data-aos="fade-up" data-aos-delay="500">
-                <div class="course-planet">
-                    <model-viewer 
-                        interaction-prompt="none" 
-                        src="assets/Neptune.glb" 
-                        alt="Neptune" 
-                        auto-rotate 
-                        camera-controls 
-                        ar
-                        ios-src="assets/Neptune.glb" 
-                        loading="lazy">
-                    </model-viewer>
+            <!-- Question 5 -->
+            <div class="question-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="question-header" onclick="toggleQuestion(5)">
+                    <div class="question-number">5</div>
+                    <div class="question-text">
+                        Tư tưởng Hồ Chí Minh về đạo đức được thể hiện ở những nội dung nào sau đây?
+                    </div>
+                    <i class="fas fa-chevron-down toggle-icon" id="toggle-5"></i>
                 </div>
-                <div class="course-content">
-                    <div class="course-header-row">
-                        <h2 class="course-title">Triết học Mác - Lênin</h2>
-                        <div class="course-rating">
-                            <i class="fas fa-star"></i>
-                            <span class="rating-number">4.7</span>
+                <div class="answers-container" id="answers-5">
+                    <div class="answer-option" onclick="selectAnswer(5, 'A')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">A.</span>
+                            Bản chất giai cấp công nhân của đạo đức cách mạng.
                         </div>
                     </div>
-                    <p class="course-description">
-                        Môn học tìm hiểu hệ thống quan điểm triết học của chủ nghĩa Mác - Lênin
-                    </p>
-                    <div class="course-tags">
-                        <span class="course-tag">Philosophy</span>
-                        <span class="course-tag">Political Science</span>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-date">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Start 01 August</span>
+                    <div class="answer-option" onclick="selectAnswer(5, 'B')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">B.</span>
+                            Nội dung cơ bản của đạo đức cách mạng.
                         </div>
-                        <span class="view-more-btn">Xem thêm</span>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(5, 'C')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">C.</span>
+                            Phương pháp rèn luyện đạo đức cách mạng.
+                        </div>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(5, 'D')">
+                        <div class="radio-button"></div>
+                        <div class="answer-label">
+                            <span class="answer-prefix">D.</span>
+                            Tất cả các đáp án trên.
+                        </div>
                     </div>
                 </div>
-            </a>
+            </div>
 
-            <!-- Course 6 -->
-            <a href="lessons.html" class="course-card" data-aos="fade-up" data-aos-delay="600">
-                <div class="course-planet">
-                    <model-viewer 
-                        interaction-prompt="none" 
-                        src="assets/Uranus.glb" 
-                        alt="Uranus" 
-                        auto-rotate 
-                        camera-controls 
-                        ar
-                        ios-src="assets/Uranus.glb" 
-                        loading="lazy">
-                    </model-viewer>
-                </div>
-                <div class="course-content">
-                    <div class="course-header-row">
-                        <h2 class="course-title">Chủ nghĩa xã hội khoa học</h2>
-                        <div class="course-rating">
-                            <i class="fas fa-star"></i>
-                            <span class="rating-number">4.3</span>
-                        </div>
-                    </div>
-                    <p class="course-description">
-                        Môn học trình bày cơ sở lý luận về chủ nghĩa xã hội khoa học và thực tiễn Việt Nam
-                    </p>
-                    <div class="course-tags">
-                        <span class="course-tag">Political Science</span>
-                        <span class="course-tag">Theory</span>
-                    </div>
-                    <div class="course-footer">
-                        <div class="course-date">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Start 05 August</span>
-                        </div>
-                        <span class="view-more-btn">Xem thêm</span>
-                    </div>
-                </div>
-            </a>
+            <!-- Submit Button -->
+            <button class="submit-button" onclick="submitQuiz()">
+                <i class="fas fa-check-circle"></i> Nộp bài
+            </button>
         </div>
     </main>
 
@@ -1739,7 +1655,7 @@
             <div class="footer-newsletter-content-grid">
                 <h2 class="footer-newsletter-main-title">Subscribe</h2>
                 <p class="footer-newsletter-description-text">
-                    Đăng ký tài khoản để nhận thông báo khi có khóa học mới!
+                    Đăng ký để nhận thông báo khi có bài trắc nghiệm mới!
                 </p>
                 <form class="footer-newsletter-subscribe-form">
                     <input type="email" class="footer-newsletter-email-input" placeholder="Email của bạn..." required>
@@ -1873,10 +1789,52 @@
     </button>
 
     <script src="js/bootstrap.min.js"></script>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     
     <script>
+        // Toggle question answers
+        function toggleQuestion(questionNum) {
+            const answersContainer = document.getElementById(`answers-${questionNum}`);
+            const toggleIcon = document.getElementById(`toggle-${questionNum}`);
+            
+            answersContainer.classList.toggle('show');
+            toggleIcon.classList.toggle('rotated');
+        }
+
+        // Select answer
+        function selectAnswer(questionNum, answer) {
+            const questionCard = document.querySelectorAll('.question-card')[questionNum - 1];
+            const allOptions = questionCard.querySelectorAll('.answer-option');
+            
+            allOptions.forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            event.currentTarget.classList.add('selected');
+        }
+
+        // Submit quiz
+        function submitQuiz() {
+            const selectedAnswers = [];
+            const questionCards = document.querySelectorAll('.question-card');
+            
+            questionCards.forEach((card, index) => {
+                const selected = card.querySelector('.answer-option.selected');
+                if (selected) {
+                    const answerText = selected.querySelector('.answer-prefix').textContent;
+                    selectedAnswers.push(`Câu ${index + 1}: ${answerText}`);
+                }
+            });
+            
+            if (selectedAnswers.length === 0) {
+                alert('Vui lòng chọn ít nhất một câu trả lời!');
+                return;
+            }
+            
+            const result = `Bạn đã chọn:\n${selectedAnswers.join('\n')}`;
+            alert(result);
+        }
+
         // Back to top button
         const backToTopBtn = document.getElementById("backToTop");
 
@@ -1908,6 +1866,11 @@
             easing: 'ease-out-cubic',
             once: true,
             offset: 120
+        });
+
+        // Auto-expand first question on load
+        window.addEventListener('load', () => {
+            toggleQuestion(1);
         });
     </script>
 </body>
