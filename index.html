@@ -1786,6 +1786,59 @@
 }
 
     </style>
+
+    <style>
+        /* Ẩn toàn bộ MAIN trên điện thoại */
+@media (max-width: 768px) {
+    main {
+        display: none !important;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    main {
+        display: none !important;
+    }
+
+    .mobile-gif-section {
+        display: block;
+    }
+}
+/* =========================
+   MOBILE FULL SCREEN IMAGE
+   ========================= */
+
+.mobile-full-image {
+    display: none;
+}
+
+/* Khi là điện thoại */
+@media (max-width: 768px) {
+
+    main {
+        display: none !important;
+    }
+
+    .mobile-full-image {
+        display: block;
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    .mobile-full-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;   /* QUAN TRỌNG */
+    }
+}
+
+    </style>
 </head>
 
 <body>
@@ -1947,7 +2000,7 @@
         <p>
         Khám phá không gian học tập trực quan và sinh động<br>
         Kết hợp kiến thức – hình ảnh – mô hình 3D<br>
-        Giúp việc học trở nên dễ hiểu và ghi nhớ lâu hơn
+      
     </p>
 
     <h3>Chọn nội dung bạn muốn học</h3>
@@ -1990,6 +2043,13 @@
             </a>
         </div>
     </main>
+    <!-- Mobile GIF Section -->
+<section class="mobile-gif-section">
+    <img src="images/hero.gif" alt="Learning GIF">
+</section>
+
+
+
        <section class="container-solar" id="earth">
     <div class="content-earth">
         <p></p>
@@ -2007,12 +2067,7 @@
                     và bám sát nội dung học tập.
                 </p>
 
-                <p>
-                    Sau khi nộp bài, hệ thống sẽ tự động chấm điểm,
-                    hiển thị câu đúng – câu sai rõ ràng,
-                    giúp người học nhận ra điểm mạnh,
-                    điểm yếu và điều chỉnh phương pháp học kịp thời.
-                </p>
+               
             </div>
 
             <!-- Model minh họa -->
@@ -2060,12 +2115,7 @@
                     sinh động và dễ hiểu thông qua hình ảnh, mô hình 3D
                     và hệ thống bài tập tương tác.
                 </p>
-                <p>
-                    Website tập trung vào việc học chủ động,
-                    cho phép người học tự khám phá kiến thức,
-                    luyện tập không giới hạn và đánh giá năng lực
-                    thông qua các bài trắc nghiệm và mô phỏng.
-                </p>
+                
             </div>
 
             <!-- Mô hình Mặt Trời chỉ dùng làm hình minh họa -->
@@ -2116,12 +2166,7 @@
                     và nội dung trực quan.
                 </p>
 
-                <p>
-                    Người học có thể tự lựa chọn nội dung,
-                    học theo tốc độ cá nhân,
-                    làm bài luyện tập nhiều lần
-                    để hiểu sâu bản chất và ghi nhớ lâu hơn.
-                </p>
+              
             </div>
 
             <!-- Mô hình chỉ mang tính minh họa giao diện -->
@@ -2171,12 +2216,7 @@
                     bám sát chương trình học và nội dung thi thực tế.
                 </p>
 
-                <p>
-                    Nội dung được trình bày ngắn gọn, dễ hiểu,
-                    kết hợp hình ảnh, mô hình 3D và ví dụ minh họa,
-                    giúp người học tiếp cận kiến thức một cách trực quan
-                    và không bị quá tải.
-                </p>
+               
             </div>
 
             <!-- Model chỉ mang tính minh họa giao diện -->
@@ -2230,12 +2270,7 @@
                     và giới hạn thời gian làm bài.
                 </p>
 
-                <p>
-                    Người học có thể làm bài như trong phòng thi thật,
-                    rèn luyện tâm lý, kỹ năng quản lý thời gian
-                    và đánh giá chính xác năng lực của bản thân
-                    trước các kỳ thi quan trọng.
-                </p>
+             
             </div>
 
             <!-- Model minh họa -->
@@ -2284,12 +2319,7 @@
                     và bài thi thử.
                 </p>
 
-                <p>
-                    Thông qua các thống kê chi tiết như số câu đúng – sai,
-                    tỷ lệ hoàn thành và mức độ tiến bộ theo thời gian,
-                    người học có thể dễ dàng nhận ra điểm mạnh,
-                    điểm yếu và điều chỉnh phương pháp học phù hợp.
-                </p>
+               
             </div>
 
             <!-- Model minh họa -->
@@ -2339,13 +2369,7 @@
                     một cách có hệ thống.
                 </p>
 
-                <p>
-                    Mỗi lộ trình được thiết kế phù hợp với năng lực
-                    và mục tiêu của từng người học, kết hợp giữa
-                    lý thuyết – thực hành – kiểm tra đánh giá,
-                    đảm bảo quá trình học tập diễn ra liên tục
-                    và hiệu quả.
-                </p>
+               
             </div>
 
             <!-- Model minh họa -->
@@ -2396,12 +2420,7 @@
                     hình ảnh và nội dung tương tác.
                 </p>
 
-                <p>
-                    Hệ thống cho phép cá nhân hóa quá trình học tập,
-                    ghi nhận tiến độ, kết quả và đề xuất nội dung phù hợp
-                    với năng lực của từng người học, giúp nâng cao
-                    hiệu quả và trải nghiệm học tập.
-                </p>
+               
             </div>
 
             <model-viewer
@@ -2451,13 +2470,7 @@
                     bởi không gian hay thời gian.
                 </p>
 
-                <p>
-                    Trong tương lai, hệ thống sẽ được mở rộng với nhiều
-                    nội dung học tập hơn, tích hợp công nghệ mới,
-                    hỗ trợ định hướng học tập – nghề nghiệp
-                    và tạo ra một cộng đồng học tập sáng tạo,
-                    chủ động và bền vững.
-                </p>
+               
             </div>
 
             <model-viewer
