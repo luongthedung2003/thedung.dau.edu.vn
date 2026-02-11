@@ -402,16 +402,10 @@
         .toggle-icon.rotated {
             transform: rotate(180deg);
         }
+.answers-container {
+    display: block;
+}
 
-        .answers-container {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .answers-container.show {
-            max-height: 1000px;
-        }
 
         .answer-option {
             background: rgba(255, 255, 255, 0.03);
@@ -1273,6 +1267,71 @@
             }
         }
     </style>
+    <style>
+        .quiz-topbar {
+    position: sticky;
+    top: 63px; /* dưới navbar */
+    z-index: 999;
+    background: rgba(0,0,0,0.95);
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(0,229,255,0.3);
+    backdrop-filter: blur(10px);
+}
+
+.custom-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background: #111;
+    border-radius: 20px;
+    width: 400px;
+    padding: 25px;
+    border: 2px solid #ff1744;
+    box-shadow: 0 0 25px rgba(255,23,68,0.6);
+    animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity:0 }
+    to { transform: scale(1); opacity:1 }
+}
+
+.modal-title {
+    color: #ff1744;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.modal-content-text {
+    margin-bottom: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.missing-link{
+  color:#00e5ff;
+  cursor:pointer;
+  font-weight:bold;
+  margin:0 5px;
+}
+.missing-link:hover{
+  text-decoration:underline;
+}
+
+    </style>
 </head>
 
 <body>
@@ -1436,217 +1495,8 @@
         </div>
 
         <!-- Quiz Container -->
-        <div class="quiz-container">
-            <!-- Question 1 -->
-            <div class="question-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="question-header" onclick="toggleQuestion(1)">
-                    <div class="question-number">1</div>
-                    <div class="question-text">
-                        Theo tư tưởng Hồ Chí Minh, tính đại chúng của nền văn hóa được thể hiện ở chỗ:
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon" id="toggle-1"></i>
-                </div>
-                <div class="answers-container" id="answers-1">
-                    <div class="answer-option" onclick="selectAnswer(1, 'C')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">C.</span>
-                            Đó là một nền văn hóa đa dạng cùng với sự đa dạng của các dân tộc anh em.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(1, 'B')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">B.</span>
-                            Đó là một nền văn hóa rộng lớn, phổ cập đến tất cả mọi người trong xã hội.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(1, 'D')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">D.</span>
-                            Nền văn hóa ấy vượt ra khỏi biên giới quốc gia, vươn tầm khu vực và thế giới.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(1, 'A')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">A.</span>
-                            Nền văn hóa ấy phải phục vụ cho nhân dân và do nhân dân xây dựng nên.
-                        </div>
-                    </div>
-                </div>
-            </div>
+       <div class="quiz-container" id="quizContainer"></div>
 
-            <!-- Question 2 -->
-            <div class="question-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="question-header" onclick="toggleQuestion(2)">
-                    <div class="question-number">2</div>
-                    <div class="question-text">
-                        Chọn đáp án KHÔNG đúng. Cống hiến của Hồ Chí Minh trong lĩnh vực văn hóa được thể hiện:
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon" id="toggle-2"></i>
-                </div>
-                <div class="answers-container" id="answers-2">
-                    <div class="answer-option" onclick="selectAnswer(2, 'C')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">C.</span>
-                            Sáng tạo văn hóa văn nghệ.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(2, 'A')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">A.</span>
-                            Xây dựng con người mới.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(2, 'D')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">D.</span>
-                            Xác lập hệ thống quan điểm về văn hóa.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(2, 'B')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">B.</span>
-                            Lãnh đạo cách mạng văn hóa.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question 3 -->
-            <div class="question-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="question-header" onclick="toggleQuestion(3)">
-                    <div class="question-number">3</div>
-                    <div class="question-text">
-                        Theo Hồ Chí Minh, để xây dựng nền văn hóa mới cần phải:
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon" id="toggle-3"></i>
-                </div>
-                <div class="answers-container" id="answers-3">
-                    <div class="answer-option" onclick="selectAnswer(3, 'A')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">A.</span>
-                            Kế thừa và phát huy những di sản văn hóa quý báu của dân tộc.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(3, 'B')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">B.</span>
-                            Tiếp thu có chọn lọc tinh hoa văn hóa nhân loại.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(3, 'C')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">C.</span>
-                            Xây dựng con người mới - con người xã hội chủ nghĩa.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(3, 'D')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">D.</span>
-                            Tất cả các đáp án trên.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question 4 -->
-            <div class="question-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="question-header" onclick="toggleQuestion(4)">
-                    <div class="question-number">4</div>
-                    <div class="question-text">
-                        Hồ Chí Minh cho rằng, cách mạng văn hóa cần thực hiện đồng thời ba nhiệm vụ. Đó là:
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon" id="toggle-4"></i>
-                </div>
-                <div class="answers-container" id="answers-4">
-                    <div class="answer-option" onclick="selectAnswer(4, 'A')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">A.</span>
-                            Xóa nạn mù chữ, phát triển giáo dục, xây dựng đạo đức mới.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(4, 'B')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">B.</span>
-                            Phát triển văn hóa dân tộc, tiếp thu văn hóa thế giới, xây dựng đạo đức mới.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(4, 'C')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">C.</span>
-                            Phát triển kinh tế, xóa đói giảm nghèo, nâng cao đời sống văn hóa.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(4, 'D')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">D.</span>
-                            Phát triển giáo dục, kế thừa văn hóa truyền thống, xây dựng con người mới.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question 5 -->
-            <div class="question-card" data-aos="fade-up" data-aos-delay="500">
-                <div class="question-header" onclick="toggleQuestion(5)">
-                    <div class="question-number">5</div>
-                    <div class="question-text">
-                        Tư tưởng Hồ Chí Minh về đạo đức được thể hiện ở những nội dung nào sau đây?
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon" id="toggle-5"></i>
-                </div>
-                <div class="answers-container" id="answers-5">
-                    <div class="answer-option" onclick="selectAnswer(5, 'A')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">A.</span>
-                            Bản chất giai cấp công nhân của đạo đức cách mạng.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(5, 'B')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">B.</span>
-                            Nội dung cơ bản của đạo đức cách mạng.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(5, 'C')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">C.</span>
-                            Phương pháp rèn luyện đạo đức cách mạng.
-                        </div>
-                    </div>
-                    <div class="answer-option" onclick="selectAnswer(5, 'D')">
-                        <div class="radio-button"></div>
-                        <div class="answer-label">
-                            <span class="answer-prefix">D.</span>
-                            Tất cả các đáp án trên.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Submit Button -->
-            <button class="submit-button" onclick="submitQuiz()">
-                <i class="fas fa-check-circle"></i> Nộp bài
-            </button>
-        </div>
     </main>
 
     <!-- Newsletter Section -->
@@ -1777,6 +1627,29 @@
             </div>
         </div>
     </footer>
+<div id="warningModal" class="custom-modal" style="display:none;">
+    <div class="modal-box">
+        <div class="modal-title">⚠ Thông báo</div>
+        <div class="modal-content-text" id="modalMessage"></div>
+        <div class="modal-actions">
+            <button class="submit-button" onclick="closeModal()">Đóng</button>
+        </div>
+    </div>
+</div>
+<div id="exitModal" class="custom-modal" style="display:none;">
+  <div class="modal-box" style="border:2px solid #00e5ff;box-shadow:0 0 25px #00e5ff;">
+    <div class="modal-title" style="color:#00e5ff;">⚠ Xác nhận rời khỏi</div>
+    <div class="modal-content-text">
+      Bạn chưa nộp bài. Bạn có chắc muốn rời khỏi trang?
+    </div>
+    <div class="modal-actions">
+      <button class="submit-button" onclick="stayHere()">Ở lại</button>
+      <button class="submit-button" style="background:#ff1744"
+              onclick="leavePage()">Rời khỏi</button>
+    </div>
+  </div>
+</div>
+
 
     <!-- Back to Top Button -->
     <button id="backToTop" title="Lên đầu trang">
@@ -1792,48 +1665,8 @@
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     
     <script>
-        // Toggle question answers
-        function toggleQuestion(questionNum) {
-            const answersContainer = document.getElementById(`answers-${questionNum}`);
-            const toggleIcon = document.getElementById(`toggle-${questionNum}`);
-            
-            answersContainer.classList.toggle('show');
-            toggleIcon.classList.toggle('rotated');
-        }
+       
 
-        // Select answer
-        function selectAnswer(questionNum, answer) {
-            const questionCard = document.querySelectorAll('.question-card')[questionNum - 1];
-            const allOptions = questionCard.querySelectorAll('.answer-option');
-            
-            allOptions.forEach(option => {
-                option.classList.remove('selected');
-            });
-            
-            event.currentTarget.classList.add('selected');
-        }
-
-        // Submit quiz
-        function submitQuiz() {
-            const selectedAnswers = [];
-            const questionCards = document.querySelectorAll('.question-card');
-            
-            questionCards.forEach((card, index) => {
-                const selected = card.querySelector('.answer-option.selected');
-                if (selected) {
-                    const answerText = selected.querySelector('.answer-prefix').textContent;
-                    selectedAnswers.push(`Câu ${index + 1}: ${answerText}`);
-                }
-            });
-            
-            if (selectedAnswers.length === 0) {
-                alert('Vui lòng chọn ít nhất một câu trả lời!');
-                return;
-            }
-            
-            const result = `Bạn đã chọn:\n${selectedAnswers.join('\n')}`;
-            alert(result);
-        }
 
         // Back to top button
         const backToTopBtn = document.getElementById("backToTop");
@@ -1873,6 +1706,380 @@
             toggleQuestion(1);
         });
     </script>
+    <script>
+const params = new URLSearchParams(window.location.search);
+const file = params.get("file");
+const quizKey = "quizState_" + file;
+const quizContainer = document.getElementById("quizContainer");
+
+let quizData = [];
+let userAnswers = {};
+let timerInterval;
+let timeLeft = 2400; 
+
+// ========== UI HEADER (PROGRESS + TIMER) ==========
+function renderTopBar() {
+  return `
+  <div class="quiz-topbar">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div style="font-weight:bold;color:#00e5ff">
+        Tiến độ: <span id="progressText">0%</span>
+      </div>
+      <div style="font-weight:bold;color:#ff1744">
+        ⏳ <span id="timer">15:00</span>
+      </div>
+    </div>
+    <div style="height:8px;background:rgba(255,255,255,0.1);border-radius:6px;">
+      <div id="progressBar" style="
+        height:100%;
+        width:0%;
+        background:linear-gradient(90deg,#00e5ff,#ff1744);
+        border-radius:6px;
+        transition:0.3s;
+      "></div>
+    </div>
+  </div>
+  `;
+}
+
+
+// ========== LOAD QUIZ ==========
+if (!file) {
+  quizContainer.innerHTML = "<h3>Không tìm thấy bài quiz!</h3>";
+} else {
+  fetch(file + "?v=" + Date.now())
+    .then(res => res.json())
+    .then(data => {
+      quizData = shuffle(data);
+      renderQuiz();
+      startTimer();
+    })
+    .catch(() => {
+      quizContainer.innerHTML = "<h3>Lỗi tải dữ liệu!</h3>";
+    });
+}
+
+// ========== RANDOM ==========
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+// ========== RENDER ==========
+function renderQuiz() {
+  userAnswers = {};
+  quizContainer.innerHTML = renderTopBar() + quizData.map((q, index) => {
+
+    let answers = shuffle([
+      { key: "A", text: q.A },
+      { key: "B", text: q.B },
+      { key: "C", text: q.C },
+      { key: "D", text: q.D }
+    ]);
+
+    return `
+    <div class="question-card">
+      <div class="question-header">
+        <div class="question-number">${index + 1}</div>
+        <div class="question-text">${q.question}</div>
+      </div>
+
+      <div class="answers-container">
+        ${answers.map(ans => `
+          <div class="answer-option"
+               data-key="${ans.key}"
+               onclick="selectAnswer(${index}, '${ans.key}', this)">
+            <div class="radio-button"></div>
+            <div class="answer-label">
+              <span class="answer-prefix">${ans.key}.</span>
+              ${ans.text}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+    `;
+  }).join("") + `
+    <button class="submit-button" id="submitBtn" onclick="submitQuiz()">
+      Nộp bài
+    </button>
+  `;
+restoreState();
+updateProgress();
+
+
+}
+
+function restoreState(){
+const saved = localStorage.getItem(quizKey);
+  if(!saved) return;
+
+  userAnswers = JSON.parse(saved);
+
+  Object.keys(userAnswers).forEach(index => {
+
+    const options = document.querySelectorAll(".question-card")[index]
+      .querySelectorAll(".answer-option");
+
+    options.forEach(opt=>{
+      if(opt.getAttribute("data-key") === userAnswers[index]){
+        opt.classList.add("selected");
+      }
+    });
+  });
+
+  updateProgress();
+}
+
+
+// ========== SELECT ==========
+function selectAnswer(index, key, element) {
+  const options = element.parentElement.querySelectorAll(".answer-option");
+  options.forEach(opt => opt.classList.remove("selected"));
+  element.classList.add("selected");
+  userAnswers[index] = key;
+  updateProgress();
+ localStorage.setItem(quizKey, JSON.stringify(userAnswers));
+
+
+}
+
+// ========== PROGRESS ==========
+function updateProgress() {
+  const answered = Object.keys(userAnswers).length;
+  const percent = Math.round((answered / quizData.length) * 100);
+
+  document.getElementById("progressBar").style.width = percent + "%";
+  document.getElementById("progressText").innerText = percent + "%";
+}
+
+// ========== TIMER ==========
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timeLeft--;
+
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+
+    document.getElementById("timer").innerText =
+      `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      submitQuiz();
+    }
+  }, 1000);
+}
+
+// ========== SUBMIT ==========
+function submitQuiz() {
+quizSubmitted = true;
+
+  let unanswered = [];
+
+  quizData.forEach((q, index) => {
+    if (!userAnswers[index]) {
+      unanswered.push(index + 1);
+    }
+  });
+
+ if (unanswered.length > 0) {
+
+  unanswered.forEach(num => {
+    const card = document.querySelectorAll(".question-card")[num - 1];
+    card.style.border = "2px solid #ff1744";
+    card.style.boxShadow = "0 0 15px #ff1744";
+  });
+
+  document.getElementById("modalMessage").innerHTML =
+    `Vui lòng chọn đáp án cho các câu:<br>
+    ${unanswered.map(n =>
+      `<span class="missing-link" onclick="scrollToQuestion(${n})">${n}</span>`
+    ).join(", ")}`;
+
+  document.getElementById("warningModal").style.display = "flex";
+  return;
+}
+
+localStorage.removeItem(quizKey);
+
+  clearInterval(timerInterval);
+  // Ẩn nút nộp bài
+const submitBtn = document.getElementById("submitBtn");
+if (submitBtn) submitBtn.style.display = "none";
+
+document.querySelectorAll(".answer-option").forEach(opt => {
+  opt.style.pointerEvents = "none";
+  opt.style.opacity = "0.7";
+});
+
+
+  let score = 0;
+
+ quizData.forEach((q, index) => {
+
+  const options = document.querySelectorAll(".question-card")[index]
+    .querySelectorAll(".answer-option");
+
+  options.forEach(opt => {
+    const key = opt.getAttribute("data-key");
+    opt.onclick = null;
+
+    if (key === q.correct) {
+      opt.style.borderColor = "#00ff88";
+      opt.style.boxShadow = "0 0 10px #00ff88";
+    }
+
+    if (userAnswers[index] === key && key !== q.correct) {
+      opt.style.borderColor = "#ff1744";
+      opt.style.boxShadow = "0 0 10px #ff1744";
+    }
+  });
+
+  if (userAnswers[index] === q.correct) score++;
+});
+
+
+  const percent = Math.round((score / quizData.length) * 100);
+
+  showBadge(percent, score);
+}
+
+
+// ========== BADGE ==========
+function showBadge(percent, score) {
+
+  let badge = "";
+  let color = "";
+
+  if (percent >= 80) {
+    badge = "🏆 XUẤT SẮC";
+    color = "#00ffcc";
+  } else if (percent >= 50) {
+    badge = "🥈 KHÁ TỐT";
+    color = "#ffcc33";
+  } else {
+    badge = "💪 CỐ GẮNG";
+    color = "#ff1744";
+  }
+
+  quizContainer.innerHTML += `
+    <div style="
+      margin-top:40px;
+      padding:25px;
+      text-align:center;
+      border:2px solid ${color};
+      border-radius:16px;
+      box-shadow:0 0 20px ${color};
+    ">
+      <h2 style="color:${color}">${badge}</h2>
+      <p style="margin-top:10px">
+        Bạn đạt ${score}/${quizData.length} (${percent}%)
+      </p>
+      <button class="submit-button" onclick="retryQuiz()">
+        Thi lại
+      </button>
+    </div>
+  `;
+}
+
+function retryQuiz() {
+  clearInterval(timerInterval);
+
+  quizSubmitted = false;
+  localStorage.removeItem(quizKey);
+
+
+  timeLeft = 2400;
+  userAnswers = {};
+  quizData = shuffle(quizData);
+
+  renderQuiz();
+  startTimer();
+
+  window.scrollTo({
+    top: document.querySelector(".quiz-container").offsetTop - 80,
+    behavior: "smooth"
+  });
+}
+
+let quizSubmitted = false;
+
+window.addEventListener("beforeunload", function (e) {
+  if (!quizSubmitted && Object.keys(userAnswers).length > 0) {
+    e.preventDefault();
+    e.returnValue = "";
+  }
+});
+
+
+function closeModal() {
+  document.getElementById("warningModal").style.display = "none";
+}
+function scrollToQuestion(num){
+  closeModal();
+  const target = document.querySelectorAll(".question-card")[num - 1];
+  window.scrollTo({
+    top: target.offsetTop - 100,
+    behavior: "smooth"
+  });
+}
+
+
+let pendingLink = null;
+
+// Bắt tất cả link trong trang (an toàn)
+document.querySelectorAll("a").forEach(link => {
+
+  link.addEventListener("click", function(e) {
+
+    const href = this.getAttribute("href");
+
+    // ❌ Bỏ qua link rỗng hoặc #
+    if (!href || href === "#" || href.startsWith("javascript")) return;
+
+    if (!quizSubmitted && Object.keys(userAnswers).length > 0) {
+      e.preventDefault();
+      pendingLink = href;
+      document.getElementById("exitModal").style.display = "flex";
+    }
+  });
+
+});
+
+
+function stayHere() {
+  pendingLink = null;
+  document.getElementById("exitModal").style.display = "none";
+}
+
+function leavePage() {
+  quizSubmitted = true; // 🔥 cho phép rời khỏi
+  document.getElementById("exitModal").style.display = "none";
+
+  if (pendingLink) {
+    window.location.href = pendingLink;
+  }
+}
+
+
+window.addEventListener("popstate", function(e) {
+
+  if (quizSubmitted) return; // 🔥 nếu đã cho phép rời thì không chặn
+
+  if (Object.keys(userAnswers).length > 0) {
+    history.pushState(null, null, location.href);
+    document.getElementById("exitModal").style.display = "flex";
+  }
+});
+
+
+// kích hoạt state ban đầu
+history.pushState(null, null, location.href);
+
+
+</script>
+
+
 </body>
 
 </html>
