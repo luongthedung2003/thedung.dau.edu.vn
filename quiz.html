@@ -1,1725 +1,2013 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
     <title>THEDUNG - Trắc Nghiệm</title>
-    <link rel="icon" href="images/logo.png">
+    <link rel="icon" href="images/logo.png" />
 
     <style>
-        :root {
-            --gold-color: #5120bb;
-            --gold-light: #08179c;
-            --gold-dark: #1c1d7a;
-        }
+      :root {
+        --gold-color: #5120bb;
+        --gold-light: #08179c;
+        --gold-dark: #1c1d7a;
+      }
 
-        * {
-            font-family: 'Space Mono', monospace;
-            color: white;
-        }
+      * {
+        font-family: "Space Mono", monospace;
+        color: white;
+      }
 
-        a {
-            text-decoration: none;
-        }
+      a {
+        text-decoration: none;
+      }
 
-        body {
-            background-color: black;
-            margin: 0;
-            padding: 0;
-        }
+      body {
+        background-color: black;
+        margin: 0;
+        padding: 0;
+      }
 
-        /* ========================================
+      /* ========================================
            NAVIGATION STYLES
            ======================================== */
 
-        .navbar {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(175, 134, 80, 0.2);
-            padding: 0.75rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
-        }
+      .navbar {
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(175, 134, 80, 0.2);
+        padding: 0.75rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+      }
 
-        .logo-box {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--gold-light), var(--gold-color));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 6px rgba(175, 134, 80, 0.3);
-        }
+      .logo-box {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold-color)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(175, 134, 80, 0.3);
+      }
 
-        .logo-box i {
-            color: white;
-            font-size: 20px;
-        }
+      .logo-box i {
+        color: white;
+        font-size: 20px;
+      }
 
-        .brand-text {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: white;
-            margin-left: 0.75rem;
-            letter-spacing: 1px;
-        }
+      .brand-text {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: white;
+        margin-left: 0.75rem;
+        letter-spacing: 1px;
+      }
 
-        .day-navigator {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            border: 1px solid rgba(175, 134, 80, 0.2);
-        }
+      .day-navigator {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border: 1px solid rgba(175, 134, 80, 0.2);
+      }
 
-        .day-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #d1d5db;
-            transition: all 0.2s;
-            white-space: nowrap;
-            cursor: pointer;
-            position: relative;
-        }
+      .day-btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #d1d5db;
+        transition: all 0.2s;
+        white-space: nowrap;
+        cursor: pointer;
+        position: relative;
+      }
 
-        .day-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
+      .day-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
 
-        .day-btn::after {
-            content: "";
-            position: absolute;
-            left: 15%;
-            bottom: 2px;
-            width: 70%;
-            height: 2px;
-            border-radius: 2px;
-            background: linear-gradient(90deg, #00e5ff, #ff1744);
-            opacity: 0;
-            transform: scaleX(0);
-            transition: all 0.3s ease;
-        }
+      .day-btn::after {
+        content: "";
+        position: absolute;
+        left: 15%;
+        bottom: 2px;
+        width: 70%;
+        height: 2px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, #00e5ff, #ff1744);
+        opacity: 0;
+        transform: scaleX(0);
+        transition: all 0.3s ease;
+      }
 
-        .day-btn:hover::after {
-            opacity: 1;
-            transform: scaleX(1);
-            box-shadow: 0 0 6px #00e5ff, 0 0 12px #ff1744;
-        }
+      .day-btn:hover::after {
+        opacity: 1;
+        transform: scaleX(1);
+        box-shadow:
+          0 0 6px #00e5ff,
+          0 0 12px #ff1744;
+      }
 
-        .day-btn.active {
-            color: white;
-        }
+      .day-btn.active {
+        color: white;
+      }
 
-        .day-btn.active::after {
-            opacity: 1;
-            transform: scaleX(1);
-            background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
-            background-size: 200% 100%;
-            animation: glowMove 2s linear infinite;
-            box-shadow: 0 0 8px #00e5ff, 0 0 18px #ff1744;
-        }
+      .day-btn.active::after {
+        opacity: 1;
+        transform: scaleX(1);
+        background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
+        background-size: 200% 100%;
+        animation: glowMove 2s linear infinite;
+        box-shadow:
+          0 0 8px #00e5ff,
+          0 0 18px #ff1744;
+      }
 
-        @keyframes glowMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+      @keyframes glowMove {
+        0% {
+          background-position: 0% 50%;
         }
-
-        .nav-arrow {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            color: #9ca3af;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            cursor: pointer;
+        100% {
+          background-position: 200% 50%;
         }
+      }
 
-        .nav-arrow:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--gold-color);
-        }
+      .nav-arrow {
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
 
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            color: #d1d5db;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
+      .nav-arrow:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--gold-color);
+      }
 
-        .icon-btn:hover {
-            background: rgba(175, 134, 80, 0.2);
-            color: var(--gold-color);
-        }
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        color: #d1d5db;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
 
-        .notification-dot {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 8px;
-            height: 8px;
-            background: #ef4444;
-            border-radius: 50%;
-            border: 2px solid rgba(0, 0, 0, 0.95);
-        }
+      .icon-btn:hover {
+        background: rgba(175, 134, 80, 0.2);
+        color: var(--gold-color);
+      }
 
-        .mobile-day-nav {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 0.5rem;
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
-        }
+      .notification-dot {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        background: #ef4444;
+        border-radius: 50%;
+        border: 2px solid rgba(0, 0, 0, 0.95);
+      }
 
-        .mobile-day-nav::-webkit-scrollbar {
-            display: none;
-        }
+      .mobile-day-nav {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 0.5rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+      }
 
-        .mobile-day-btn {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.75rem;
-            display: inline-block;
-        }
+      .mobile-day-nav::-webkit-scrollbar {
+        display: none;
+      }
 
-        .offcanvas-end {
-            width: 100% !important;
-            max-width: 320px !important;
-            background: rgba(0, 0, 0, 0.98);
-            border-left: 1px solid rgba(175, 134, 80, 0.2);
-        }
+      .mobile-day-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        display: inline-block;
+      }
 
-        .offcanvas-header {
-            background: rgba(0, 0, 0, 0.95);
-            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
-            padding: 1rem 1.25rem;
-        }
+      .offcanvas-end {
+        width: 100% !important;
+        max-width: 320px !important;
+        background: rgba(0, 0, 0, 0.98);
+        border-left: 1px solid rgba(175, 134, 80, 0.2);
+      }
 
-        .offcanvas-title {
-            font-weight: 600;
-            font-size: 1rem;
-            margin: 0;
-            color: white;
-        }
+      .offcanvas-header {
+        background: rgba(0, 0, 0, 0.95);
+        border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+        padding: 1rem 1.25rem;
+      }
 
-        .offcanvas-header .btn-close {
-            opacity: 0.5;
-            font-size: 0.875rem;
-            filter: invert(1);
-        }
+      .offcanvas-title {
+        font-weight: 600;
+        font-size: 1rem;
+        margin: 0;
+        color: white;
+      }
 
-        .offcanvas-body {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
-            padding: 1rem;
-        }
+      .offcanvas-header .btn-close {
+        opacity: 0.5;
+        font-size: 0.875rem;
+        filter: invert(1);
+      }
 
-        .menu-section {
-            margin-bottom: 1.5rem;
-        }
+      .offcanvas-body {
+        background-image:
+          linear-gradient(
+            rgba(0, 0, 0, 0.95),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.95)
+          ),
+          url("images/2k_stars_milky_way.jpg");
+        padding: 1rem;
+      }
 
-        .section-title {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #9ca3af;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
-            padding: 0 0.5rem;
-        }
+      .menu-section {
+        margin-bottom: 1.5rem;
+      }
 
-        .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.625rem 0.75rem;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #d1d5db;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: 0.2s;
-            margin-bottom: 0.25rem;
-        }
+      .section-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+        padding: 0 0.5rem;
+      }
 
-        .menu-item:hover {
-            background: rgba(175, 134, 80, 0.2);
-            color: white;
-        }
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.625rem 0.75rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #d1d5db;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: 0.2s;
+        margin-bottom: 0.25rem;
+      }
 
-        .menu-item.active {
-            background: rgba(175, 134, 80, 0.3);
-            color: var(--gold-color);
-        }
+      .menu-item:hover {
+        background: rgba(175, 134, 80, 0.2);
+        color: white;
+      }
 
-        .menu-item i {
-            width: 20px;
-            font-size: 1rem;
-            color: #9ca3af;
-        }
+      .menu-item.active {
+        background: rgba(175, 134, 80, 0.3);
+        color: var(--gold-color);
+      }
 
-        .menu-item.active i {
-            color: var(--gold-color);
-        }
+      .menu-item i {
+        width: 20px;
+        font-size: 1rem;
+        color: #9ca3af;
+      }
 
-        .menu-divider {
-            margin: 1rem 0;
-            border: none;
-            height: 1px;
-            background: rgba(175, 134, 80, 0.2);
-        }
+      .menu-item.active i {
+        color: var(--gold-color);
+      }
 
-        /* ========================================
+      .menu-divider {
+        margin: 1rem 0;
+        border: none;
+        height: 1px;
+        background: rgba(175, 134, 80, 0.2);
+      }
+
+      /* ========================================
            MAIN CONTENT STYLES
            ======================================== */
 
-        main {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
-            min-height: 100vh;
-            background-size: cover;
-            background-position: center;
-            padding: 60px 0;
-        }
+      main {
+        background-image:
+          linear-gradient(
+            rgba(0, 0, 0, 0.95),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.95)
+          ),
+          url("images/2k_stars_milky_way.jpg");
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+        padding: 60px 0;
+      }
 
-        /* ========================================
+      /* ========================================
            QUIZ STYLES
            ======================================== */
 
-        .quiz-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 0 1rem;
-        }
+      .quiz-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 0 1rem;
+      }
 
+      .quiz-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #00e5ff 0%, var(--gold-color) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .quiz-header p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .quiz-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .question-card {
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .question-card:hover {
+        border-color: var(--gold-color);
+        box-shadow: 0 6px 30px rgba(81, 32, 187, 0.4);
+        transform: translateY(-2px);
+      }
+
+      .question-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        cursor: pointer;
+      }
+
+      .question-number {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold-color)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: white;
+        flex-shrink: 0;
+        box-shadow: 0 4px 15px rgba(81, 32, 187, 0.5);
+      }
+
+      .question-text {
+        flex: 1;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: white;
+        padding-top: 0.5rem;
+      }
+
+      .toggle-icon {
+        color: #9ca3af;
+        font-size: 1.25rem;
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+        margin-top: 0.5rem;
+      }
+
+      .toggle-icon.rotated {
+        transform: rotate(180deg);
+      }
+      .answers-container {
+        display: block;
+      }
+
+      .answer-option {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .answer-option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 229, 255, 0.1),
+          rgba(81, 32, 187, 0.1)
+        );
+        transition: width 0.3s ease;
+      }
+
+      .answer-option:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(0, 229, 255, 0.5);
+        transform: translateX(5px);
+      }
+
+      .answer-option:hover::before {
+        width: 100%;
+      }
+
+      .radio-button {
+        width: 24px;
+        height: 24px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        flex-shrink: 0;
+        position: relative;
+        transition: all 0.3s ease;
+        margin-top: 0.125rem;
+        z-index: 1;
+      }
+
+      .answer-option:hover .radio-button {
+        border-color: var(--gold-color);
+      }
+
+      .radio-button::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 12px;
+        height: 12px;
+        background: var(--gold-color);
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.3s ease;
+      }
+
+      .answer-option.selected .radio-button {
+        border-color: var(--gold-color);
+      }
+
+      .answer-option.selected .radio-button::after {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .answer-label {
+        flex: 1;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.9);
+        z-index: 1;
+      }
+
+      .answer-prefix {
+        font-weight: 700;
+        color: white;
+        margin-right: 0.5rem;
+      }
+
+      .submit-button {
+        background: linear-gradient(135deg, #ff1744 0%, var(--gold-color) 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 1rem 2.5rem;
+        color: white;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: block;
+        margin: 2rem auto 0;
+        box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .submit-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
+      }
+
+      .submit-button:active {
+        transform: translateY(-1px);
+      }
+
+      /* Footer styles */
+      :root {
+        --footer-primary-purple: #5120bb;
+        --footer-light-purple: #08179c;
+        --footer-dark-purple: #1c1d7a;
+        --footer-neon-cyan: #00e5ff;
+        --footer-neon-red: #ff1744;
+        --footer-neon-yellow: #ffcc33;
+      }
+
+      .footer-newsletter-wrapper {
+        background: linear-gradient(
+          135deg,
+          rgba(81, 32, 187, 0.1) 0%,
+          rgba(0, 0, 0, 0.95) 100%
+        );
+        padding: 3rem 0;
+        border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .footer-newsletter-wrapper::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+          radial-gradient(
+            circle at 20% 50%,
+            rgba(0, 229, 255, 0.05) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 50%,
+            rgba(255, 23, 68, 0.05) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+      }
+
+      .footer-newsletter-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .footer-newsletter-content-grid {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .footer-newsletter-main-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(
+          135deg,
+          var(--footer-neon-cyan) 0%,
+          var(--footer-primary-purple) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-family: "Space Mono", monospace;
+        color: white;
+      }
+
+      .footer-newsletter-description-text {
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.6;
+        font-size: 0.9rem;
+        font-family: "Space Mono", monospace;
+      }
+
+      .footer-newsletter-subscribe-form {
+        display: flex;
+        gap: 0.5rem;
+        max-width: 450px;
+      }
+
+      .footer-newsletter-email-input {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        border-radius: 8px;
+        color: white;
+        font-family: "Space Mono", monospace;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .footer-newsletter-email-input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      .footer-newsletter-email-input:focus {
+        outline: none;
+        border-color: var(--footer-neon-cyan);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+        background: rgba(0, 0, 0, 0.7);
+      }
+
+      .footer-newsletter-submit-button {
+        padding: 1rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--footer-neon-red) 0%,
+          var(--footer-primary-purple) 100%
+        );
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 60px;
+        box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+      }
+
+      .footer-newsletter-submit-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
+      }
+
+      .footer-newsletter-submit-button i {
+        font-size: 1.2rem;
+      }
+
+      .thedung-main-footer-wrapper {
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.95) 0%,
+          rgba(28, 29, 122, 0.1) 50%,
+          rgba(0, 0, 0, 0.95) 100%
+        );
+        padding: 4rem 0 2rem;
+        position: relative;
+      }
+
+      .thedung-main-footer-wrapper::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: radial-gradient(
+          circle at 2px 2px,
+          rgba(0, 229, 255, 0.1) 1px,
+          transparent 0
+        );
+        background-size: 40px 40px;
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      .thedung-footer-main-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .thedung-footer-columns-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
+        gap: 3rem;
+        margin-bottom: 3rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .thedung-footer-brand-section {
+        animation: thedungFooterFadeInUp 0.6s ease-out;
+      }
+
+      @keyframes thedungFooterFadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .thedung-footer-brand-logo-container {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(
+          135deg,
+          var(--footer-light-purple),
+          var(--footer-primary-purple)
+        );
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        box-shadow: 0 0 30px rgba(81, 32, 187, 0.5);
+        animation: thedungFooterLogoFloat 3s ease-in-out infinite;
+      }
+
+      @keyframes thedungFooterLogoFloat {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .thedung-footer-brand-logo-container i {
+        color: white;
+        font-size: 30px;
+      }
+
+      .thedung-footer-brand-name-text {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        letter-spacing: 3px;
+        color: white;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-brand-tagline-text {
+        color: var(--footer-neon-cyan);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-brand-divider-line {
+        height: 2px;
+        width: 80px;
+        background: linear-gradient(
+          90deg,
+          var(--footer-neon-cyan) 0%,
+          var(--footer-neon-red) 100%
+        );
+        margin: 1.5rem 0;
+        box-shadow: 0 0 10px var(--footer-neon-cyan);
+      }
+
+      .thedung-footer-brand-description-paragraph {
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        font-size: 0.85rem;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-social-icons-container {
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      .thedung-footer-social-icon-link {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+      }
+
+      .thedung-footer-social-icon-link::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          var(--footer-neon-cyan) 0%,
+          transparent 70%
+        );
+        transform: translate(-50%, -50%);
+        transition: all 0.4s ease;
+      }
+
+      .thedung-footer-social-icon-link:hover::before {
+        width: 100px;
+        height: 100px;
+      }
+
+      .thedung-footer-social-icon-link:hover {
+        transform: translateY(-5px);
+        border-color: var(--footer-neon-cyan);
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+      }
+
+      .thedung-footer-social-icon-link i {
+        position: relative;
+        z-index: 1;
+      }
+
+      .thedung-footer-content-column {
+        animation: thedungFooterFadeInUp 0.6s ease-out;
+        animation-fill-mode: both;
+      }
+
+      .thedung-footer-content-column:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .thedung-footer-content-column:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .thedung-footer-content-column:nth-child(4) {
+        animation-delay: 0.3s;
+      }
+      .thedung-footer-content-column:nth-child(5) {
+        animation-delay: 0.4s;
+      }
+
+      .thedung-footer-column-heading-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        padding-bottom: 0.75rem;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-column-heading-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--footer-neon-cyan),
+          var(--footer-neon-red)
+        );
+        box-shadow: 0 0 10px var(--footer-neon-cyan);
+      }
+
+      .thedung-footer-navigation-links-list {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+      }
+
+      .thedung-footer-navigation-links-list li {
+        margin-bottom: 0.75rem;
+      }
+
+      .thedung-footer-navigation-link-item {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        padding-left: 0;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-navigation-link-item::before {
+        content: "→";
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s ease;
+        color: var(--footer-neon-cyan);
+      }
+
+      .thedung-footer-navigation-link-item:hover {
+        color: white;
+        transform: translateX(10px);
+        text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+      }
+
+      .thedung-footer-navigation-link-item:hover::before {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .thedung-footer-contact-info-box {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        border: 1px solid rgba(0, 229, 255, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .thedung-footer-contact-info-box:hover {
+        background: rgba(0, 0, 0, 0.5);
+        border-color: var(--footer-neon-cyan);
+        transform: translateX(5px);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+      }
+
+      .thedung-footer-contact-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: linear-gradient(
+          135deg,
+          var(--footer-neon-cyan) 0%,
+          var(--footer-primary-purple) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        flex-shrink: 0;
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+      }
+
+      .thedung-footer-contact-text-wrapper {
+        flex: 1;
+      }
+
+      .thedung-footer-contact-label-text {
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.5);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.25rem;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-contact-value-text {
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 500;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-map-display-container {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        height: 180px;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+        margin-top: 1rem;
+      }
+
+      .thedung-footer-map-placeholder-area {
+        width: 100%;
+        height: 100%;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(81, 32, 187, 0.3) 0%,
+            rgba(0, 0, 0, 0.8) 100%
+          ),
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 229, 255, 0.05) 2px,
+            rgba(0, 229, 255, 0.05) 4px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 229, 255, 0.05) 2px,
+            rgba(0, 229, 255, 0.05) 4px
+          );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .thedung-footer-map-location-pin {
+        width: 50px;
+        height: 50px;
+        position: relative;
+      }
+
+      .thedung-footer-map-location-pin::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 30px;
+        height: 30px;
+        background: var(--footer-neon-red);
+        border-radius: 50% 50% 50% 0;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        box-shadow: 0 0 20px rgba(255, 23, 68, 0.8);
+        animation: thedungFooterMapPinBounce 2s ease-in-out infinite;
+      }
+
+      .thedung-footer-map-location-pin i {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 1rem;
+        z-index: 1;
+      }
+
+      @keyframes thedungFooterMapPinBounce {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) rotate(-45deg) translateY(0);
+        }
+        50% {
+          transform: translate(-50%, -50%) rotate(-45deg) translateY(-10px);
+        }
+      }
+
+      .thedung-footer-bottom-copyright-wrapper {
+        padding: 2rem 0;
+        border-top: 1px solid rgba(0, 229, 255, 0.2);
+        margin-top: 3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.8rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-bottom-links-list {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+      }
+
+      .thedung-footer-bottom-link-item {
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-bottom-link-item:hover {
+        color: var(--footer-neon-cyan);
+        text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+      }
+
+      #backToTop {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 56px;
+        height: 56px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: none;
+        z-index: 999;
+        padding: 0;
+      }
+
+      #backToTop .sun-ring {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: sunRotate 6s linear infinite;
+      }
+
+      #backToTop .sun-ring i {
+        font-size: 56px;
+        color: #ffcc33;
+        filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
+      }
+
+      #backToTop .arrow-up {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #backToTop .arrow-up i {
+        font-size: 18px;
+        color: white;
+        text-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        z-index: 2;
+      }
+
+      #backToTop:hover {
+        transform: translateY(-6px) scale(1.05);
+        transition: 0.3s ease;
+      }
+
+      @keyframes sunRotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
         .quiz-header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #00e5ff 0%, var(--gold-color) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+          font-size: 2rem;
         }
 
         .quiz-header p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .quiz-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 1rem;
+          font-size: 0.9rem;
         }
 
         .question-card {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .question-card:hover {
-            border-color: var(--gold-color);
-            box-shadow: 0 6px 30px rgba(81, 32, 187, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .question-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            cursor: pointer;
+          padding: 1.25rem;
         }
 
         .question-number {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--gold-light), var(--gold-color));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: white;
-            flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(81, 32, 187, 0.5);
+          width: 40px;
+          height: 40px;
+          font-size: 1rem;
         }
 
         .question-text {
-            flex: 1;
-            font-size: 1rem;
-            line-height: 1.6;
-            color: white;
-            padding-top: 0.5rem;
+          font-size: 0.95rem;
         }
-
-        .toggle-icon {
-            color: #9ca3af;
-            font-size: 1.25rem;
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-            margin-top: 0.5rem;
-        }
-
-        .toggle-icon.rotated {
-            transform: rotate(180deg);
-        }
-.answers-container {
-    display: block;
-}
-
 
         .answer-option {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1rem 1.25rem;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .answer-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(0, 229, 255, 0.1), rgba(81, 32, 187, 0.1));
-            transition: width 0.3s ease;
-        }
-
-        .answer-option:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(0, 229, 255, 0.5);
-            transform: translateX(5px);
-        }
-
-        .answer-option:hover::before {
-            width: 100%;
-        }
-
-        .radio-button {
-            width: 24px;
-            height: 24px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            flex-shrink: 0;
-            position: relative;
-            transition: all 0.3s ease;
-            margin-top: 0.125rem;
-            z-index: 1;
-        }
-
-        .answer-option:hover .radio-button {
-            border-color: var(--gold-color);
-        }
-
-        .radio-button::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 12px;
-            height: 12px;
-            background: var(--gold-color);
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.3s ease;
-        }
-
-        .answer-option.selected .radio-button {
-            border-color: var(--gold-color);
-        }
-
-        .answer-option.selected .radio-button::after {
-            transform: translate(-50%, -50%) scale(1);
+          padding: 0.875rem 1rem;
         }
 
         .answer-label {
-            flex: 1;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.9);
-            z-index: 1;
-        }
-
-        .answer-prefix {
-            font-weight: 700;
-            color: white;
-            margin-right: 0.5rem;
+          font-size: 0.9rem;
         }
 
         .submit-button {
-            background: linear-gradient(135deg, #ff1744 0%, var(--gold-color) 100%);
-            border: none;
-            border-radius: 12px;
-            padding: 1rem 2.5rem;
-            color: white;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: block;
-            margin: 2rem auto 0;
-            box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+          padding: 0.875rem 2rem;
+          font-size: 0.95rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .quiz-header h1 {
+          font-size: 1.5rem;
         }
 
-        .submit-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
+        .quiz-header p {
+          font-size: 0.85rem;
         }
 
-        .submit-button:active {
-            transform: translateY(-1px);
+        .question-card {
+          padding: 1rem;
         }
 
-        
-        /* Footer styles */
-        :root {
-            --footer-primary-purple: #5120bb;
-            --footer-light-purple: #08179c;
-            --footer-dark-purple: #1c1d7a;
-            --footer-neon-cyan: #00e5ff;
-            --footer-neon-red: #ff1744;
-            --footer-neon-yellow: #ffcc33;
+        .question-header {
+          gap: 0.75rem;
         }
 
-        .footer-newsletter-wrapper {
-            background: linear-gradient(135deg, rgba(81, 32, 187, 0.1) 0%, rgba(0, 0, 0, 0.95) 100%);
-            padding: 3rem 0;
-            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-            position: relative;
-            overflow: hidden;
+        .question-number {
+          width: 36px;
+          height: 36px;
+          font-size: 0.9rem;
         }
 
-        .footer-newsletter-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255, 23, 68, 0.05) 0%, transparent 50%);
-            pointer-events: none;
+        .question-text {
+          font-size: 0.875rem;
         }
 
-        .footer-newsletter-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
+        .answer-option {
+          padding: 0.75rem;
+          gap: 0.75rem;
         }
 
+        .radio-button {
+          width: 20px;
+          height: 20px;
+        }
+
+        .radio-button::after {
+          width: 10px;
+          height: 10px;
+        }
+
+        .answer-label {
+          font-size: 0.85rem;
+        }
+
+        .submit-button {
+          padding: 0.75rem 1.5rem;
+          font-size: 0.875rem;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .thedung-footer-columns-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 2.5rem;
+        }
+
+        .thedung-footer-content-column:nth-child(5) {
+          grid-column: 1 / -1;
+          max-width: 500px;
+        }
+      }
+
+      @media (max-width: 768px) {
         .footer-newsletter-content-grid {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .footer-newsletter-main-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--footer-neon-cyan) 0%, var(--footer-primary-purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: 'Space Mono', monospace;
-            color: white;
-        }
-
-        .footer-newsletter-description-text {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-            font-size: 0.9rem;
-            font-family: 'Space Mono', monospace;
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+          text-align: center;
         }
 
         .footer-newsletter-subscribe-form {
-            display: flex;
-            gap: 0.5rem;
-            max-width: 450px;
-        }
-
-        .footer-newsletter-email-input {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 8px;
-            color: white;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .footer-newsletter-email-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .footer-newsletter-email-input:focus {
-            outline: none;
-            border-color: var(--footer-neon-cyan);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        .footer-newsletter-submit-button {
-            padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, var(--footer-neon-red) 0%, var(--footer-primary-purple) 100%);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 60px;
-            box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
-        }
-
-        .footer-newsletter-submit-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
-        }
-
-        .footer-newsletter-submit-button i {
-            font-size: 1.2rem;
-        }
-
-        .thedung-main-footer-wrapper {
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(28, 29, 122, 0.1) 50%, rgba(0, 0, 0, 0.95) 100%);
-            padding: 4rem 0 2rem;
-            position: relative;
-        }
-
-        .thedung-main-footer-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: radial-gradient(circle at 2px 2px, rgba(0, 229, 255, 0.1) 1px, transparent 0);
-            background-size: 40px 40px;
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .thedung-footer-main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
+          max-width: 100%;
         }
 
         .thedung-footer-columns-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-            position: relative;
-            z-index: 1;
+          grid-template-columns: 1fr 1fr;
+          gap: 2rem;
         }
 
         .thedung-footer-brand-section {
-            animation: thedungFooterFadeInUp 0.6s ease-out;
+          grid-column: 1 / -1;
         }
 
-        @keyframes thedungFooterFadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .thedung-footer-brand-logo-container {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--footer-light-purple), var(--footer-primary-purple));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            box-shadow: 0 0 30px rgba(81, 32, 187, 0.5);
-            animation: thedungFooterLogoFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes thedungFooterLogoFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .thedung-footer-brand-logo-container i {
-            color: white;
-            font-size: 30px;
+        .thedung-footer-content-column:nth-child(5) {
+          grid-column: 1 / -1;
         }
 
         .thedung-footer-brand-name-text {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: 3px;
-            color: white;
-            font-family: 'Space Mono', monospace;
+          font-size: 1.75rem;
         }
 
-        .thedung-footer-brand-tagline-text {
-            color: var(--footer-neon-cyan);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-brand-divider-line {
-            height: 2px;
-            width: 80px;
-            background: linear-gradient(90deg, var(--footer-neon-cyan) 0%, var(--footer-neon-red) 100%);
-            margin: 1.5rem 0;
-            box-shadow: 0 0 10px var(--footer-neon-cyan);
-        }
-
-        .thedung-footer-brand-description-paragraph {
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            font-size: 0.85rem;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-social-icons-container {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .thedung-footer-social-icon-link {
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-        }
-
-        .thedung-footer-social-icon-link::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--footer-neon-cyan) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            transition: all 0.4s ease;
-        }
-
-        .thedung-footer-social-icon-link:hover::before {
-            width: 100px;
-            height: 100px;
-        }
-
-        .thedung-footer-social-icon-link:hover {
-            transform: translateY(-5px);
-            border-color: var(--footer-neon-cyan);
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
-        }
-
-        .thedung-footer-social-icon-link i {
-            position: relative;
-            z-index: 1;
-        }
-
-        .thedung-footer-content-column {
-            animation: thedungFooterFadeInUp 0.6s ease-out;
-            animation-fill-mode: both;
-        }
-
-        .thedung-footer-content-column:nth-child(2) { animation-delay: 0.1s; }
-        .thedung-footer-content-column:nth-child(3) { animation-delay: 0.2s; }
-        .thedung-footer-content-column:nth-child(4) { animation-delay: 0.3s; }
-        .thedung-footer-content-column:nth-child(5) { animation-delay: 0.4s; }
-
-        .thedung-footer-column-heading-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            padding-bottom: 0.75rem;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-column-heading-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--footer-neon-cyan), var(--footer-neon-red));
-            box-shadow: 0 0 10px var(--footer-neon-cyan);
-        }
-
-        .thedung-footer-navigation-links-list {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-        }
-
-        .thedung-footer-navigation-links-list li {
-            margin-bottom: 0.75rem;
-        }
-
-        .thedung-footer-navigation-link-item {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            position: relative;
-            padding-left: 0;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-navigation-link-item::before {
-            content: '→';
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s ease;
-            color: var(--footer-neon-cyan);
-        }
-
-        .thedung-footer-navigation-link-item:hover {
-            color: white;
-            transform: translateX(10px);
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
-        }
-
-        .thedung-footer-navigation-link-item:hover::before {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .thedung-footer-contact-info-box {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1.25rem;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .thedung-footer-contact-info-box:hover {
-            background: rgba(0, 0, 0, 0.5);
-            border-color: var(--footer-neon-cyan);
-            transform: translateX(5px);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
-        }
-
-        .thedung-footer-contact-icon-wrapper {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, var(--footer-neon-cyan) 0%, var(--footer-primary-purple) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            flex-shrink: 0;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-        }
-
-        .thedung-footer-contact-text-wrapper {
-            flex: 1;
-        }
-
-        .thedung-footer-contact-label-text {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.25rem;
-            font-weight: 700;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-contact-value-text {
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 500;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-map-display-container {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            height: 180px;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
-            margin-top: 1rem;
-        }
-
-        .thedung-footer-map-placeholder-area {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(81, 32, 187, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%), repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .thedung-footer-map-location-pin {
-            width: 50px;
-            height: 50px;
-            position: relative;
-        }
-
-        .thedung-footer-map-location-pin::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 30px;
-            height: 30px;
-            background: var(--footer-neon-red);
-            border-radius: 50% 50% 50% 0;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            box-shadow: 0 0 20px rgba(255, 23, 68, 0.8);
-            animation: thedungFooterMapPinBounce 2s ease-in-out infinite;
-        }
-
-        .thedung-footer-map-location-pin i {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 1rem;
-            z-index: 1;
-        }
-
-        @keyframes thedungFooterMapPinBounce {
-            0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) translateY(0); }
-            50% { transform: translate(-50%, -50%) rotate(-45deg) translateY(-10px); }
+        .footer-newsletter-main-title {
+          font-size: 2rem;
         }
 
         .thedung-footer-bottom-copyright-wrapper {
-            padding: 2rem 0;
-            border-top: 1px solid rgba(0, 229, 255, 0.2);
-            margin-top: 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.8rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-            font-family: 'Space Mono', monospace;
+          flex-direction: column;
+          text-align: center;
         }
 
         .thedung-footer-bottom-links-list {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
+          gap: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .footer-newsletter-container {
+          padding: 0 1rem;
         }
 
-        .thedung-footer-bottom-link-item {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-family: 'Space Mono', monospace;
+        .thedung-footer-main-container {
+          padding: 0 1rem;
         }
 
-        .thedung-footer-bottom-link-item:hover {
-            color: var(--footer-neon-cyan);
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        .footer-newsletter-wrapper {
+          padding: 2rem 0;
         }
 
-        #backToTop {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 56px;
-            height: 56px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            display: none;
-            z-index: 999;
-            padding: 0;
+        .thedung-main-footer-wrapper {
+          padding: 3rem 0 2rem;
         }
 
-        #backToTop .sun-ring {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: sunRotate 6s linear infinite;
+        .footer-newsletter-main-title {
+          font-size: 1.5rem;
         }
 
-        #backToTop .sun-ring i {
-            font-size: 56px;
-            color: #ffcc33;
-            filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
+        .footer-newsletter-subscribe-form {
+          flex-direction: column;
         }
 
-        #backToTop .arrow-up {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .footer-newsletter-submit-button {
+          width: 100%;
         }
 
-        #backToTop .arrow-up i {
-            font-size: 18px;
-            color: white;
-            text-shadow: 0 0 6px rgba(255,255,255,0.8);
-            z-index: 2;
+        .thedung-footer-brand-name-text {
+          font-size: 1.5rem;
         }
 
-        #backToTop:hover {
-            transform: translateY(-6px) scale(1.05);
-            transition: 0.3s ease;
+        .thedung-footer-social-icons-container {
+          justify-content: center;
         }
 
-        @keyframes sunRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .thedung-footer-bottom-links-list {
+          flex-direction: column;
+          gap: 0.5rem;
+          padding-left: 0;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .quiz-header h1 {
-                font-size: 2rem;
-            }
-
-            .quiz-header p {
-                font-size: 0.9rem;
-            }
-
-            .question-card {
-                padding: 1.25rem;
-            }
-
-            .question-number {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-
-            .question-text {
-                font-size: 0.95rem;
-            }
-
-            .answer-option {
-                padding: 0.875rem 1rem;
-            }
-
-            .answer-label {
-                font-size: 0.9rem;
-            }
-
-            .submit-button {
-                padding: 0.875rem 2rem;
-                font-size: 0.95rem;
-            }
+        .thedung-footer-brand-logo-container {
+          margin: 0 auto 1rem;
         }
 
-        @media (max-width: 480px) {
-            .quiz-header h1 {
-                font-size: 1.5rem;
-            }
-
-            .quiz-header p {
-                font-size: 0.85rem;
-            }
-
-            .question-card {
-                padding: 1rem;
-            }
-
-            .question-header {
-                gap: 0.75rem;
-            }
-
-            .question-number {
-                width: 36px;
-                height: 36px;
-                font-size: 0.9rem;
-            }
-
-            .question-text {
-                font-size: 0.875rem;
-            }
-
-            .answer-option {
-                padding: 0.75rem;
-                gap: 0.75rem;
-            }
-
-            .radio-button {
-                width: 20px;
-                height: 20px;
-            }
-
-            .radio-button::after {
-                width: 10px;
-                height: 10px;
-            }
-
-            .answer-label {
-                font-size: 0.85rem;
-            }
-
-            .submit-button {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.875rem;
-                width: 100%;
-            }
+        .thedung-footer-brand-divider-line {
+          margin: 1.5rem auto;
         }
-
-        @media (max-width: 1024px) {
-            .thedung-footer-columns-grid {
-                grid-template-columns: 1fr 1fr 1fr;
-                gap: 2.5rem;
-            }
-
-            .thedung-footer-content-column:nth-child(5) {
-                grid-column: 1 / -1;
-                max-width: 500px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .footer-newsletter-content-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                text-align: center;
-            }
-
-            .footer-newsletter-subscribe-form {
-                max-width: 100%;
-            }
-
-            .thedung-footer-columns-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
-
-            .thedung-footer-brand-section {
-                grid-column: 1 / -1;
-            }
-
-            .thedung-footer-content-column:nth-child(5) {
-                grid-column: 1 / -1;
-            }
-
-            .thedung-footer-brand-name-text {
-                font-size: 1.75rem;
-            }
-
-            .footer-newsletter-main-title {
-                font-size: 2rem;
-            }
-
-            .thedung-footer-bottom-copyright-wrapper {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .thedung-footer-bottom-links-list {
-                gap: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .footer-newsletter-container {
-                padding: 0 1rem;
-            }
-
-            .thedung-footer-main-container {
-                padding: 0 1rem;
-            }
-
-            .footer-newsletter-wrapper {
-                padding: 2rem 0;
-            }
-
-            .thedung-main-footer-wrapper {
-                padding: 3rem 0 2rem;
-            }
-
-            .footer-newsletter-main-title {
-                font-size: 1.5rem;
-            }
-
-            .footer-newsletter-subscribe-form {
-                flex-direction: column;
-            }
-
-            .footer-newsletter-submit-button {
-                width: 100%;
-            }
-
-            .thedung-footer-brand-name-text {
-                font-size: 1.5rem;
-            }
-
-            .thedung-footer-social-icons-container {
-                justify-content: center;
-            }
-
-            .thedung-footer-bottom-links-list {
-                flex-direction: column;
-                gap: 0.5rem;
-                padding-left: 0;
-            }
-
-            .thedung-footer-brand-logo-container {
-                margin: 0 auto 1rem;
-            }
-
-            .thedung-footer-brand-divider-line {
-                margin: 1.5rem auto;
-            }
-        }
+      }
     </style>
     <style>
-        .quiz-topbar {
-    position: sticky;
-    top: 63px; /* dưới navbar */
-    z-index: 999;
-    background: rgba(0,0,0,0.95);
-    padding: 20px;
-    border-radius: 16px;
-    margin-bottom: 30px;
-    border: 1px solid rgba(0,229,255,0.3);
-    backdrop-filter: blur(10px);
+      .quiz-topbar {
+        position: sticky;
+        top: 63px; /* dưới navbar */
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.95);
+        padding: 20px;
+        border-radius: 16px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        backdrop-filter: blur(10px);
+      }
+
+      .custom-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+
+      .modal-box {
+        background: #111;
+        border-radius: 20px;
+        width: 400px;
+        padding: 25px;
+        border: 2px solid #ff1744;
+        box-shadow: 0 0 25px rgba(255, 23, 68, 0.6);
+        animation: scaleIn 0.3s ease;
+      }
+
+      @keyframes scaleIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .modal-title {
+        color: #ff1744;
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      .modal-content-text {
+        margin-bottom: 20px;
+      }
+
+      .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+      .missing-link {
+        color: #00e5ff;
+        cursor: pointer;
+        font-weight: bold;
+        margin: 0 5px;
+      }
+      .missing-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+     <style>
+      .user-dropdown {
+  margin-left: 10px;
 }
 
-.custom-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+.user-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: 0.3s ease;
 }
 
-.modal-box {
-    background: #111;
-    border-radius: 20px;
-    width: 400px;
-    padding: 25px;
-    border: 2px solid #ff1744;
-    box-shadow: 0 0 25px rgba(255,23,68,0.6);
-    animation: scaleIn 0.3s ease;
+.user-btn:hover {
+  background: rgba(81, 32, 187, 0.2);
 }
 
-@keyframes scaleIn {
-    from { transform: scale(0.8); opacity:0 }
-    to { transform: scale(1); opacity:1 }
+.user-icon {
+  font-size: 16px;
 }
 
-.modal-title {
-    color: #ff1744;
-    font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 10px;
+.username-text {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #00e5ff;
 }
 
-.modal-content-text {
-    margin-bottom: 20px;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-.missing-link{
-  color:#00e5ff;
-  cursor:pointer;
-  font-weight:bold;
-  margin:0 5px;
-}
-.missing-link:hover{
-  text-decoration:underline;
+.user-menu {
+  border-radius: 12px;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
 }
 
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Desktop Navigation -->
     <nav class="navbar d-none d-md-block">
-        <div class="container px-4">
-            <div class="d-flex justify-content-between align-items-center w-100">
-                <div class="d-flex align-items-center">
-                    <div class="logo-box">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <span class="brand-text">THEDUNG</span>
-                </div>
-
-                <div class="day-navigator">
-                    <button class="nav-arrow">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <a href="index.html" class="day-btn">TRANG CHỦ</a>
-                    <a href="courses.html" class="day-btn active">KHÓA HỌC</a>
-                    <a href="music.html" class="day-btn">ÂM NHẠC</a>
-                    <a href="news.html" class="day-btn">TIN TỨC</a>
-                    <a href="contact.html" class="day-btn">LIÊN HỆ</a>
-                    <button class="nav-arrow">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-
-                <div class="d-flex align-items-center gap-2">
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-comment"></i>
-                    </button>
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-bell"></i>
-                        <span class="notification-dot"></span>
-                    </button>
-                    <a href="login.html" class="icon-btn">
-                        <i class="fa-regular fa-user"></i>
-                    </a>
-                </div>
+      <div class="container px-4">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div class="d-flex align-items-center">
+            <div class="logo-box">
+              <i class="fas fa-rocket"></i>
             </div>
+            <span class="brand-text">THEDUNG</span>
+          </div>
+
+          <div class="day-navigator">
+            <button class="nav-arrow">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <a href="index.html" class="day-btn">TRANG CHỦ</a>
+            <a href="courses.html" class="day-btn active">KHÓA HỌC</a>
+            <a href="music.html" class="day-btn">ÂM NHẠC</a>
+            <a href="news.html" class="day-btn">TIN TỨC</a>
+            <a href="contact.html" class="day-btn">LIÊN HỆ</a>
+            <button class="nav-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div class="d-flex align-items-center gap-2">
+            <button class="icon-btn">
+              <i class="fa-regular fa-comment"></i>
+            </button>
+            <button class="icon-btn">
+              <i class="fa-regular fa-bell"></i>
+              <span class="notification-dot"></span>
+            </button>
+             <div id="userAreaDesktop"></div>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- Mobile Navigation -->
     <nav class="navbar d-md-none">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center w-100">
-                <div class="d-flex align-items-center">
-                    <div class="logo-box">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <span class="brand-text">THEDUNG</span>
-                </div>
-
-                <div class="d-flex align-items-center gap-1">
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-comment"></i>
-                    </button>
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-bell"></i>
-                        <span class="notification-dot"></span>
-                    </button>
-                    <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div class="d-flex align-items-center">
+            <div class="logo-box">
+              <i class="fas fa-rocket"></i>
             </div>
+            <span class="brand-text">THEDUNG</span>
+          </div>
+
+          <div class="d-flex align-items-center gap-1">
+            <button class="icon-btn">
+              <i class="fa-regular fa-comment"></i>
+            </button>
+            <button class="icon-btn">
+              <i class="fa-regular fa-bell"></i>
+              <span class="notification-dot"></span>
+            </button>
+            <button
+              class="icon-btn"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#mobileMenu"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- Mobile Day Navigator -->
     <div class="mobile-day-nav d-md-none">
-        <div class="d-flex align-items-center gap-2">
-            <button class="nav-arrow">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <div class="d-inline-flex gap-1">
-                <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
-                <a href="courses.html" class="day-btn mobile-day-btn active">Khóa học</a>
-                <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
-                <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
-                <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
-            </div>
-            <button class="nav-arrow">
-                <i class="fas fa-chevron-right"></i>
-            </button>
+      <div class="d-flex align-items-center gap-2">
+        <button class="nav-arrow">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="d-inline-flex gap-1">
+          <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
+          <a href="courses.html" class="day-btn mobile-day-btn active"
+            >Khóa học</a
+          >
+          <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
+          <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
+          <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
         </div>
+        <button class="nav-arrow">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
     </div>
 
     <!-- Mobile Offcanvas Menu -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Menu</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="menu-section">
+          <div class="section-title">Navigation</div>
+          <a href="index.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            Trang chủ
+          </a>
+          <a href="courses.html" class="menu-item active">
+            <i class="fas fa-sun"></i>
+            Khóa học
+          </a>
+          <a href="music.html" class="menu-item">
+            <i class="fas fa-music"></i>
+            Âm nhạc
+          </a>
+          <a href="news.html" class="menu-item">
+            <i class="fas fa-newspaper"></i>
+            Tin tức
+          </a>
+          <a href="contact.html" class="menu-item">
+            <i class="fas fa-envelope"></i>
+            Liên hệ
+          </a>
         </div>
-        <div class="offcanvas-body">
-            <div class="menu-section">
-                <div class="section-title">Navigation</div>
-                <a href="index.html" class="menu-item">
-                    <i class="fas fa-home"></i>
-                    Trang chủ
-                </a>
-                <a href="courses.html" class="menu-item active">
-                    <i class="fas fa-sun"></i>
-                    Khóa học
-                </a>
-                <a href="music.html" class="menu-item">
-                    <i class="fas fa-music"></i>
-                    Âm nhạc
-                </a>
-                <a href="news.html" class="menu-item">
-                    <i class="fas fa-newspaper"></i>
-                    Tin tức
-                </a>
-                <a href="contact.html" class="menu-item">
-                    <i class="fas fa-envelope"></i>
-                    Liên hệ
-                </a>
-            </div>
 
-            <div class="menu-divider"></div>
+        <div class="menu-divider"></div>
 
-            <div class="menu-section">
-                <div class="section-title">Explore</div>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-sun"></i>
-                    Trắc nghiệm
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-circle"></i>
-                    Tài liệu
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-circle"></i>
-                    Thi thử
-                </a>
-            </div>
-            <div class="menu-divider"></div>
-
-            <div class="menu-section">
-                <div class="section-title">Account</div>
-                <a href="login.html" class="menu-item">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Đăng nhập
-                </a>
-                <a href="settings.html" class="menu-item">
-                    <i class="fas fa-cog"></i>
-                    Cài đặt
-                </a>
-            </div>
+        <div class="menu-section">
+          <div class="section-title">Explore</div>
+          <a href="#" class="menu-item">
+            <i class="fas fa-sun"></i>
+            Trắc nghiệm
+          </a>
+          <a href="#" class="menu-item">
+            <i class="fas fa-circle"></i>
+            Tài liệu
+          </a>
+          <a href="#" class="menu-item">
+            <i class="fas fa-circle"></i>
+            Thi thử
+          </a>
         </div>
+        <div class="menu-divider"></div>
+
+        <div class="menu-section">
+          <div class="section-title">Account</div>
+           <div id="userAreaMobile"></div>
+          <a href="settings.html" class="menu-item">
+            <i class="fas fa-cog"></i>
+            Cài đặt
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- Main Content -->
     <main>
-        <!-- Quiz Header -->
-        <div class="quiz-header" data-aos="fade-down">
-            <h1>DANH SÁCH CÂU HỎI</h1>
-            <p>Luyện tập và kiểm tra kiến thức với các bài trắc nghiệm chất lượng</p>
-        </div>
+      <!-- Quiz Header -->
+      <div class="quiz-header" data-aos="fade-down">
+        <h1>DANH SÁCH CÂU HỎI</h1>
+        <p>
+          Luyện tập và kiểm tra kiến thức với các bài trắc nghiệm chất lượng
+        </p>
+      </div>
 
-        <!-- Quiz Container -->
-       <div class="quiz-container" id="quizContainer"></div>
-
+      <!-- Quiz Container -->
+      <div class="quiz-container" id="quizContainer"></div>
     </main>
 
     <!-- Newsletter Section -->
     <section class="footer-newsletter-wrapper">
-        <div class="footer-newsletter-container">
-            <div class="footer-newsletter-content-grid">
-                <h2 class="footer-newsletter-main-title">Subscribe</h2>
-                <p class="footer-newsletter-description-text">
-                    Đăng ký để nhận thông báo khi có bài trắc nghiệm mới!
-                </p>
-                <form class="footer-newsletter-subscribe-form">
-                    <input type="email" class="footer-newsletter-email-input" placeholder="Email của bạn..." required>
-                    <button type="submit" class="footer-newsletter-submit-button">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
+      <div class="footer-newsletter-container">
+        <div class="footer-newsletter-content-grid">
+          <h2 class="footer-newsletter-main-title">Subscribe</h2>
+          <p class="footer-newsletter-description-text">
+            Đăng ký để nhận thông báo khi có bài trắc nghiệm mới!
+          </p>
+          <form class="footer-newsletter-subscribe-form">
+            <input
+              type="email"
+              class="footer-newsletter-email-input"
+              placeholder="Email của bạn..."
+              required
+            />
+            <button type="submit" class="footer-newsletter-submit-button">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
         </div>
+      </div>
     </section>
 
     <!-- Main Footer -->
     <footer class="thedung-main-footer-wrapper">
-        <div class="thedung-footer-main-container">
-            <div class="thedung-footer-columns-grid">
-                <!-- Brand Section -->
-                <div class="thedung-footer-brand-section thedung-footer-content-column">
-                    <div class="thedung-footer-brand-logo-container">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h1 class="thedung-footer-brand-name-text">THEDUNG</h1>
-                    <p class="thedung-footer-brand-tagline-text">Hỗ trợ học tập</p>
-                    <div class="thedung-footer-brand-divider-line"></div>
-                    <p class="thedung-footer-brand-description-paragraph">
-                        Liên hệ chúng tôi qua nền tảng mạng xã hội
-                    </p>
-                    <div class="thedung-footer-social-icons-container">
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
+      <div class="thedung-footer-main-container">
+        <div class="thedung-footer-columns-grid">
+          <!-- Brand Section -->
+          <div
+            class="thedung-footer-brand-section thedung-footer-content-column"
+          >
+            <div class="thedung-footer-brand-logo-container">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <h1 class="thedung-footer-brand-name-text">THEDUNG</h1>
+            <p class="thedung-footer-brand-tagline-text">Hỗ trợ học tập</p>
+            <div class="thedung-footer-brand-divider-line"></div>
+            <p class="thedung-footer-brand-description-paragraph">
+              Liên hệ chúng tôi qua nền tảng mạng xã hội
+            </p>
+            <div class="thedung-footer-social-icons-container">
+              <a
+                href="#"
+                class="thedung-footer-social-icon-link"
+                aria-label="Facebook"
+              >
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a
+                href="#"
+                class="thedung-footer-social-icon-link"
+                aria-label="Twitter"
+              >
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a
+                href="#"
+                class="thedung-footer-social-icon-link"
+                aria-label="LinkedIn"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a
+                href="#"
+                class="thedung-footer-social-icon-link"
+                aria-label="Instagram"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- About Column -->
+          <div class="thedung-footer-content-column">
+            <h3 class="thedung-footer-column-heading-title">About</h3>
+            <ul class="thedung-footer-navigation-links-list">
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Planning</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Research</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Consulting</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Analysis</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Menu Column -->
+          <div class="thedung-footer-content-column">
+            <h3 class="thedung-footer-column-heading-title">Menu</h3>
+            <ul class="thedung-footer-navigation-links-list">
+              <li>
+                <a href="index.html" class="thedung-footer-navigation-link-item"
+                  >Trang chủ</a
+                >
+              </li>
+              <li>
+                <a
+                  href="courses.html"
+                  class="thedung-footer-navigation-link-item"
+                  >Khóa học</a
+                >
+              </li>
+              <li>
+                <a href="music.html" class="thedung-footer-navigation-link-item"
+                  >Âm nhạc</a
+                >
+              </li>
+              <li>
+                <a href="news.html" class="thedung-footer-navigation-link-item"
+                  >Tin tức</a
+                >
+              </li>
+              <li>
+                <a
+                  href="contact.html"
+                  class="thedung-footer-navigation-link-item"
+                  >Liên hệ</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Services Column -->
+          <div class="thedung-footer-content-column">
+            <h3 class="thedung-footer-column-heading-title">Services</h3>
+            <ul class="thedung-footer-navigation-links-list">
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Trắc nghiệm</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Tài liệu</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Thi thử</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Học tập</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact Column -->
+          <div class="thedung-footer-content-column">
+            <h3 class="thedung-footer-column-heading-title">Contact</h3>
+
+            <div class="thedung-footer-contact-info-box">
+              <div class="thedung-footer-contact-icon-wrapper">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              <div class="thedung-footer-contact-text-wrapper">
+                <div class="thedung-footer-contact-label-text">Call</div>
+                <div class="thedung-footer-contact-value-text">
+                  +091 984 4429
                 </div>
-
-                <!-- About Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">About</h3>
-                    <ul class="thedung-footer-navigation-links-list">
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Planning</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Research</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Consulting</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Analysis</a></li>
-                    </ul>
-                </div>
-
-                <!-- Menu Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">Menu</h3>
-                    <ul class="thedung-footer-navigation-links-list">
-                        <li><a href="index.html" class="thedung-footer-navigation-link-item">Trang chủ</a></li>
-                        <li><a href="courses.html" class="thedung-footer-navigation-link-item">Khóa học</a></li>
-                        <li><a href="music.html" class="thedung-footer-navigation-link-item">Âm nhạc</a></li>
-                        <li><a href="news.html" class="thedung-footer-navigation-link-item">Tin tức</a></li>
-                        <li><a href="contact.html" class="thedung-footer-navigation-link-item">Liên hệ</a></li>
-                    </ul>
-                </div>
-
-                <!-- Services Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">Services</h3>
-                    <ul class="thedung-footer-navigation-links-list">
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Trắc nghiệm</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Tài liệu</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Thi thử</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Học tập</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">Contact</h3>
-                    
-                    <div class="thedung-footer-contact-info-box">
-                        <div class="thedung-footer-contact-icon-wrapper">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="thedung-footer-contact-text-wrapper">
-                            <div class="thedung-footer-contact-label-text">Call</div>
-                            <div class="thedung-footer-contact-value-text">+091 984 4429</div>
-                        </div>
-                    </div>
-
-                    <div class="thedung-footer-contact-info-box">
-                        <div class="thedung-footer-contact-icon-wrapper">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="thedung-footer-contact-text-wrapper">
-                            <div class="thedung-footer-contact-label-text">Email</div>
-                            <div class="thedung-footer-contact-value-text">luongthedung@gmail.com</div>
-                        </div>
-                    </div>
-
-                    <div class="thedung-footer-map-display-container">
-                        <div class="thedung-footer-map-placeholder-area">
-                            <div class="thedung-footer-map-location-pin">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
 
-            <!-- Bottom Footer -->
-            <div class="thedung-footer-bottom-copyright-wrapper">
-                <div>&copy; 2025 THEDUNG. All rights reserved.</div>
-                <ul class="thedung-footer-bottom-links-list">
-                    <li><a href="#" class="thedung-footer-bottom-link-item">Privacy Policy</a></li>
-                    <li><a href="#" class="thedung-footer-bottom-link-item">Our History</a></li>
-                    <li><a href="#" class="thedung-footer-bottom-link-item">What We Do</a></li>
-                </ul>
+            <div class="thedung-footer-contact-info-box">
+              <div class="thedung-footer-contact-icon-wrapper">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="thedung-footer-contact-text-wrapper">
+                <div class="thedung-footer-contact-label-text">Email</div>
+                <div class="thedung-footer-contact-value-text">
+                  luongthedung@gmail.com
+                </div>
+              </div>
             </div>
+
+            <div class="thedung-footer-map-display-container">
+              <div class="thedung-footer-map-placeholder-area">
+                <div class="thedung-footer-map-location-pin">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Bottom Footer -->
+        <div class="thedung-footer-bottom-copyright-wrapper">
+          <div>&copy; 2025 THEDUNG. All rights reserved.</div>
+          <ul class="thedung-footer-bottom-links-list">
+            <li>
+              <a href="#" class="thedung-footer-bottom-link-item"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" class="thedung-footer-bottom-link-item"
+                >Our History</a
+              >
+            </li>
+            <li>
+              <a href="#" class="thedung-footer-bottom-link-item">What We Do</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </footer>
-<div id="warningModal" class="custom-modal" style="display:none;">
-    <div class="modal-box">
+    <div id="warningModal" class="custom-modal" style="display: none">
+      <div class="modal-box">
         <div class="modal-title">⚠ Thông báo</div>
         <div class="modal-content-text" id="modalMessage"></div>
         <div class="modal-actions">
-            <button class="submit-button" onclick="closeModal()">Đóng</button>
+          <button class="submit-button" onclick="closeModal()">Đóng</button>
         </div>
+      </div>
     </div>
-</div>
-<div id="exitModal" class="custom-modal" style="display:none;">
-  <div class="modal-box" style="border:2px solid #00e5ff;box-shadow:0 0 25px #00e5ff;">
-    <div class="modal-title" style="color:#00e5ff;">⚠ Xác nhận rời khỏi</div>
-    <div class="modal-content-text">
-      Bạn chưa nộp bài. Bạn có chắc muốn rời khỏi trang?
+    <div id="exitModal" class="custom-modal" style="display: none">
+      <div
+        class="modal-box"
+        style="border: 2px solid #00e5ff; box-shadow: 0 0 25px #00e5ff"
+      >
+        <div class="modal-title" style="color: #00e5ff">
+          ⚠ Xác nhận rời khỏi
+        </div>
+        <div class="modal-content-text">
+          Bạn chưa nộp bài. Bạn có chắc muốn rời khỏi trang?
+        </div>
+        <div class="modal-actions">
+          <button class="submit-button" onclick="stayHere()">Ở lại</button>
+          <button
+            class="submit-button"
+            style="background: #ff1744"
+            onclick="leavePage()"
+          >
+            Rời khỏi
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="modal-actions">
-      <button class="submit-button" onclick="stayHere()">Ở lại</button>
-      <button class="submit-button" style="background:#ff1744"
-              onclick="leavePage()">Rời khỏi</button>
-    </div>
-  </div>
-</div>
-
 
     <!-- Back to Top Button -->
     <button id="backToTop" title="Lên đầu trang">
-        <span class="sun-ring">
-            <i class="fas fa-sun"></i>
-        </span>
-        <span class="arrow-up">
-            <i class="fas fa-chevron-up"></i>
-        </span>
+      <span class="sun-ring">
+        <i class="fas fa-sun"></i>
+      </span>
+      <span class="arrow-up">
+        <i class="fas fa-chevron-up"></i>
+      </span>
     </button>
 
     <script src="js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    
+
     <script>
-       
+      // Back to top button
+      const backToTopBtn = document.getElementById("backToTop");
 
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.style.display = "flex";
+        } else {
+          backToTopBtn.style.display = "none";
+        }
+      });
 
-        // Back to top button
-        const backToTopBtn = document.getElementById("backToTop");
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
 
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.style.display = "flex";
-            } else {
-                backToTopBtn.style.display = "none";
-            }
+      // Newsletter form submission
+      document
+        .querySelector(".footer-newsletter-subscribe-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          alert("Cảm ơn bạn đã đăng ký!");
+          this.reset();
         });
 
-        backToTopBtn.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
+      // Initialize AOS
+      AOS.init({
+        duration: 900,
+        easing: "ease-out-cubic",
+        once: true,
+        offset: 120,
+      });
 
-        // Newsletter form submission
-        document.querySelector('.footer-newsletter-subscribe-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Cảm ơn bạn đã đăng ký!');
-            this.reset();
-        });
-
-        // Initialize AOS
-        AOS.init({
-            duration: 900,
-            easing: 'ease-out-cubic',
-            once: true,
-            offset: 120
-        });
-
-        // Auto-expand first question on load
-        window.addEventListener('load', () => {
-            toggleQuestion(1);
-        });
+      // Auto-expand first question on load
+      window.addEventListener("load", () => {
+        toggleQuestion(1);
+      });
     </script>
     <script>
-const params = new URLSearchParams(window.location.search);
-const file = params.get("file");
-const quizKey = "quizState_" + file;
-const quizContainer = document.getElementById("quizContainer");
+        // Kiểm tra login
+const currentUser = localStorage.getItem("currentUser");
 
-let quizData = [];
-let userAnswers = {};
-let timerInterval;
-let timeLeft = 2400; 
+if (!currentUser) {
+  localStorage.setItem("redirectAfterLogin", window.location.href);
+  window.location.href = "login.html";
+}
 
-// ========== UI HEADER (PROGRESS + TIMER) ==========
-function renderTopBar() {
-  return `
+      const params = new URLSearchParams(window.location.search);
+      const file = params.get("file");
+      const quizKey = "quizState_" + file;
+      const quizContainer = document.getElementById("quizContainer");
+
+      let quizData = [];
+      let userAnswers = {};
+      let timerInterval;
+      let timeLeft = 2400;
+
+      // ========== UI HEADER (PROGRESS + TIMER) ==========
+      function renderTopBar() {
+        return `
   <div class="quiz-topbar">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <div style="font-weight:bold;color:#00e5ff">
@@ -1740,43 +2028,73 @@ function renderTopBar() {
     </div>
   </div>
   `;
-}
+      }
 
+      // ========== LOAD QUIZ ==========
+      if (!file) {
+        quizContainer.innerHTML = "<h3>Không tìm thấy bài quiz!</h3>";
+      } else {
+        fetch(file + "?v=" + Date.now())
+          .then((res) => res.json())
+          .then((data) => {
+            const savedOrder = localStorage.getItem(quizKey + "_order");
 
-// ========== LOAD QUIZ ==========
-if (!file) {
-  quizContainer.innerHTML = "<h3>Không tìm thấy bài quiz!</h3>";
-} else {
-  fetch(file + "?v=" + Date.now())
-    .then(res => res.json())
-    .then(data => {
-      quizData = shuffle(data);
-      renderQuiz();
-      startTimer();
-    })
-    .catch(() => {
-      quizContainer.innerHTML = "<h3>Lỗi tải dữ liệu!</h3>";
-    });
-}
+            if (savedOrder) {
+              // Nếu đang làm dở → dùng thứ tự cũ
+              quizData = JSON.parse(savedOrder);
+            } else {
+              // Nếu chưa làm → shuffle
+              quizData = shuffle(data);
+              localStorage.setItem(
+                quizKey + "_order",
+                JSON.stringify(quizData),
+              );
+            }
 
-// ========== RANDOM ==========
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
+            renderQuiz();
+            startTimer();
+          })
 
-// ========== RENDER ==========
-function renderQuiz() {
-  userAnswers = {};
-  quizContainer.innerHTML = renderTopBar() + quizData.map((q, index) => {
+          .catch(() => {
+            quizContainer.innerHTML = "<h3>Lỗi tải dữ liệu!</h3>";
+          });
+      }
 
-    let answers = shuffle([
-      { key: "A", text: q.A },
-      { key: "B", text: q.B },
-      { key: "C", text: q.C },
-      { key: "D", text: q.D }
-    ]);
+      // ========== RANDOM ==========
+      function shuffle(array) {
+        return array.sort(() => Math.random() - 0.5);
+      }
 
-    return `
+      // ========== RENDER ==========
+      function renderQuiz() {
+        userAnswers = {};
+        quizContainer.innerHTML =
+          renderTopBar() +
+          quizData
+            .map((q, index) => {
+              let savedAnswersOrder = localStorage.getItem(
+                quizKey + "_answers_" + index,
+              );
+
+              let answers;
+
+              if (savedAnswersOrder) {
+                answers = JSON.parse(savedAnswersOrder);
+              } else {
+                answers = shuffle([
+                  { key: "A", text: q.A },
+                  { key: "B", text: q.B },
+                  { key: "C", text: q.C },
+                  { key: "D", text: q.D },
+                ]);
+
+                localStorage.setItem(
+                  quizKey + "_answers_" + index,
+                  JSON.stringify(answers),
+                );
+              }
+
+              return `
     <div class="question-card">
       <div class="question-header">
         <div class="question-number">${index + 1}</div>
@@ -1784,7 +2102,9 @@ function renderQuiz() {
       </div>
 
       <div class="answers-container">
-        ${answers.map(ans => `
+        ${answers
+          .map(
+            (ans) => `
           <div class="answer-option"
                data-key="${ans.key}"
                onclick="selectAnswer(${index}, '${ans.key}', this)">
@@ -1794,175 +2114,177 @@ function renderQuiz() {
               ${ans.text}
             </div>
           </div>
-        `).join("")}
+        `,
+          )
+          .join("")}
       </div>
     </div>
     `;
-  }).join("") + `
+            })
+            .join("") +
+          `
     <button class="submit-button" id="submitBtn" onclick="submitQuiz()">
       Nộp bài
     </button>
   `;
-restoreState();
-updateProgress();
-
-
-}
-
-function restoreState(){
-const saved = localStorage.getItem(quizKey);
-  if(!saved) return;
-
-  userAnswers = JSON.parse(saved);
-
-  Object.keys(userAnswers).forEach(index => {
-
-    const options = document.querySelectorAll(".question-card")[index]
-      .querySelectorAll(".answer-option");
-
-    options.forEach(opt=>{
-      if(opt.getAttribute("data-key") === userAnswers[index]){
-        opt.classList.add("selected");
+        restoreState();
+        updateProgress();
       }
-    });
-  });
 
-  updateProgress();
-}
+      function restoreState() {
+        const saved = localStorage.getItem(quizKey);
+        if (!saved) return;
 
+        userAnswers = JSON.parse(saved);
 
-// ========== SELECT ==========
-function selectAnswer(index, key, element) {
-  const options = element.parentElement.querySelectorAll(".answer-option");
-  options.forEach(opt => opt.classList.remove("selected"));
-  element.classList.add("selected");
-  userAnswers[index] = key;
-  updateProgress();
- localStorage.setItem(quizKey, JSON.stringify(userAnswers));
+        Object.keys(userAnswers).forEach((index) => {
+          const options = document
+            .querySelectorAll(".question-card")
+            [index].querySelectorAll(".answer-option");
 
+          options.forEach((opt) => {
+            if (opt.getAttribute("data-key") === userAnswers[index]) {
+              opt.classList.add("selected");
+            }
+          });
+        });
 
-}
+        updateProgress();
+      }
 
-// ========== PROGRESS ==========
-function updateProgress() {
-  const answered = Object.keys(userAnswers).length;
-  const percent = Math.round((answered / quizData.length) * 100);
+      // ========== SELECT ==========
+      function selectAnswer(index, key, element) {
+        const options =
+          element.parentElement.querySelectorAll(".answer-option");
+        options.forEach((opt) => opt.classList.remove("selected"));
+        element.classList.add("selected");
+        userAnswers[index] = key;
+        updateProgress();
+        localStorage.setItem(quizKey, JSON.stringify(userAnswers));
+      }
 
-  document.getElementById("progressBar").style.width = percent + "%";
-  document.getElementById("progressText").innerText = percent + "%";
-}
+      // ========== PROGRESS ==========
+      function updateProgress() {
+        const answered = Object.keys(userAnswers).length;
+        const percent = Math.round((answered / quizData.length) * 100);
 
-// ========== TIMER ==========
-function startTimer() {
-  timerInterval = setInterval(() => {
-    timeLeft--;
+        document.getElementById("progressBar").style.width = percent + "%";
+        document.getElementById("progressText").innerText = percent + "%";
+      }
 
-    let minutes = Math.floor(timeLeft / 60);
-    let seconds = timeLeft % 60;
+      // ========== TIMER ==========
+      function startTimer() {
+        timerInterval = setInterval(() => {
+          timeLeft--;
 
-    document.getElementById("timer").innerText =
-      `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+          let minutes = Math.floor(timeLeft / 60);
+          let seconds = timeLeft % 60;
 
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      submitQuiz();
-    }
-  }, 1000);
-}
+          document.getElementById("timer").innerText =
+            `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
-// ========== SUBMIT ==========
-function submitQuiz() {
-quizSubmitted = true;
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            submitQuiz();
+          }
+        }, 1000);
+      }
 
-  let unanswered = [];
+      // ========== SUBMIT ==========
+      function submitQuiz() {
+        quizSubmitted = true;
 
-  quizData.forEach((q, index) => {
-    if (!userAnswers[index]) {
-      unanswered.push(index + 1);
-    }
-  });
+        let unanswered = [];
 
- if (unanswered.length > 0) {
+        quizData.forEach((q, index) => {
+          if (!userAnswers[index]) {
+            unanswered.push(index + 1);
+          }
+        });
 
-  unanswered.forEach(num => {
-    const card = document.querySelectorAll(".question-card")[num - 1];
-    card.style.border = "2px solid #ff1744";
-    card.style.boxShadow = "0 0 15px #ff1744";
-  });
+        if (unanswered.length > 0) {
+          unanswered.forEach((num) => {
+            const card = document.querySelectorAll(".question-card")[num - 1];
+            card.style.border = "2px solid #ff1744";
+            card.style.boxShadow = "0 0 15px #ff1744";
+          });
 
-  document.getElementById("modalMessage").innerHTML =
-    `Vui lòng chọn đáp án cho các câu:<br>
-    ${unanswered.map(n =>
-      `<span class="missing-link" onclick="scrollToQuestion(${n})">${n}</span>`
-    ).join(", ")}`;
+          document.getElementById("modalMessage").innerHTML =
+            `Vui lòng chọn đáp án cho các câu:<br>
+    ${unanswered
+      .map(
+        (n) =>
+          `<span class="missing-link" onclick="scrollToQuestion(${n})">${n}</span>`,
+      )
+      .join(", ")}`;
 
-  document.getElementById("warningModal").style.display = "flex";
-  return;
-}
+          document.getElementById("warningModal").style.display = "flex";
+          return;
+        }
 
-localStorage.removeItem(quizKey);
+        localStorage.removeItem(quizKey);
+        localStorage.removeItem(quizKey + "_order");
+        quizData.forEach((_, index) => {
+          localStorage.removeItem(quizKey + "_answers_" + index);
+        });
 
-  clearInterval(timerInterval);
-  // Ẩn nút nộp bài
-const submitBtn = document.getElementById("submitBtn");
-if (submitBtn) submitBtn.style.display = "none";
+        clearInterval(timerInterval);
+        // Ẩn nút nộp bài
+        const submitBtn = document.getElementById("submitBtn");
+        if (submitBtn) submitBtn.style.display = "none";
 
-document.querySelectorAll(".answer-option").forEach(opt => {
-  opt.style.pointerEvents = "none";
-  opt.style.opacity = "0.7";
-});
+        document.querySelectorAll(".answer-option").forEach((opt) => {
+          opt.style.pointerEvents = "none";
+          opt.style.opacity = "0.7";
+        });
 
+        let score = 0;
 
-  let score = 0;
+        quizData.forEach((q, index) => {
+          const options = document
+            .querySelectorAll(".question-card")
+            [index].querySelectorAll(".answer-option");
 
- quizData.forEach((q, index) => {
+          options.forEach((opt) => {
+            const key = opt.getAttribute("data-key");
+            opt.onclick = null;
 
-  const options = document.querySelectorAll(".question-card")[index]
-    .querySelectorAll(".answer-option");
+            if (key === q.correct) {
+              opt.style.borderColor = "#00ff88";
+              opt.style.boxShadow = "0 0 10px #00ff88";
+            }
 
-  options.forEach(opt => {
-    const key = opt.getAttribute("data-key");
-    opt.onclick = null;
+            if (userAnswers[index] === key && key !== q.correct) {
+              opt.style.borderColor = "#ff1744";
+              opt.style.boxShadow = "0 0 10px #ff1744";
+            }
+          });
 
-    if (key === q.correct) {
-      opt.style.borderColor = "#00ff88";
-      opt.style.boxShadow = "0 0 10px #00ff88";
-    }
+          if (userAnswers[index] === q.correct) score++;
+        });
 
-    if (userAnswers[index] === key && key !== q.correct) {
-      opt.style.borderColor = "#ff1744";
-      opt.style.boxShadow = "0 0 10px #ff1744";
-    }
-  });
+        const percent = Math.round((score / quizData.length) * 100);
 
-  if (userAnswers[index] === q.correct) score++;
-});
+        showBadge(percent, score);
+      }
 
+      // ========== BADGE ==========
+      function showBadge(percent, score) {
+        let badge = "";
+        let color = "";
 
-  const percent = Math.round((score / quizData.length) * 100);
+        if (percent >= 80) {
+          badge = "🏆 XUẤT SẮC";
+          color = "#00ffcc";
+        } else if (percent >= 50) {
+          badge = "🥈 KHÁ TỐT";
+          color = "#ffcc33";
+        } else {
+          badge = "💪 CỐ GẮNG";
+          color = "#ff1744";
+        }
 
-  showBadge(percent, score);
-}
-
-
-// ========== BADGE ==========
-function showBadge(percent, score) {
-
-  let badge = "";
-  let color = "";
-
-  if (percent >= 80) {
-    badge = "🏆 XUẤT SẮC";
-    color = "#00ffcc";
-  } else if (percent >= 50) {
-    badge = "🥈 KHÁ TỐT";
-    color = "#ffcc33";
-  } else {
-    badge = "💪 CỐ GẮNG";
-    color = "#ff1744";
-  }
-
-  quizContainer.innerHTML += `
+        quizContainer.innerHTML += `
     <div style="
       margin-top:40px;
       padding:25px;
@@ -1980,106 +2302,171 @@ function showBadge(percent, score) {
       </button>
     </div>
   `;
-}
+      }
 
-function retryQuiz() {
-  clearInterval(timerInterval);
+      function retryQuiz() {
+        clearInterval(timerInterval);
 
-  quizSubmitted = false;
-  localStorage.removeItem(quizKey);
+        quizSubmitted = false;
+        localStorage.removeItem(quizKey);
+        localStorage.removeItem(quizKey + "_order");
+        quizData.forEach((_, index) => {
+          localStorage.removeItem(quizKey + "_answers_" + index);
+        });
+
+        timeLeft = 2400;
+        userAnswers = {};
+        quizData = shuffle(quizData);
+
+        renderQuiz();
+        startTimer();
+
+        window.scrollTo({
+          top: document.querySelector(".quiz-container").offsetTop - 80,
+          behavior: "smooth",
+        });
+      }
+
+      let quizSubmitted = false;
+
+      window.addEventListener("beforeunload", function (e) {
+        if (!quizSubmitted && Object.keys(userAnswers).length > 0) {
+          e.preventDefault();
+          e.returnValue = "";
+        }
+      });
+
+      function closeModal() {
+        document.getElementById("warningModal").style.display = "none";
+      }
+      function scrollToQuestion(num) {
+        closeModal();
+        const target = document.querySelectorAll(".question-card")[num - 1];
+        window.scrollTo({
+          top: target.offsetTop - 100,
+          behavior: "smooth",
+        });
+      }
+
+      let pendingLink = null;
+
+      // Bắt tất cả link trong trang (an toàn)
+      document.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          const href = this.getAttribute("href");
+
+          // ❌ Bỏ qua link rỗng hoặc #
+          if (!href || href === "#" || href.startsWith("javascript")) return;
+
+          if (!quizSubmitted && Object.keys(userAnswers).length > 0) {
+            e.preventDefault();
+            pendingLink = href;
+            document.getElementById("exitModal").style.display = "flex";
+          }
+        });
+      });
+
+      function stayHere() {
+        pendingLink = null;
+        document.getElementById("exitModal").style.display = "none";
+      }
+
+      function leavePage() {
+        quizSubmitted = true; // 🔥 cho phép rời khỏi
+        document.getElementById("exitModal").style.display = "none";
+
+        if (pendingLink) {
+          window.location.href = pendingLink;
+        }
+      }
+
+      window.addEventListener("popstate", function (e) {
+        if (quizSubmitted) return; // 🔥 nếu đã cho phép rời thì không chặn
+
+        if (Object.keys(userAnswers).length > 0) {
+          history.pushState(null, null, location.href);
+          document.getElementById("exitModal").style.display = "flex";
+        }
+      });
+
+      // kích hoạt state ban đầu
+      history.pushState(null, null, location.href);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // ===== HANDLE LOGIN STATUS =====
+function updateUserUI() {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+
+  const desktopArea = document.getElementById("userAreaDesktop");
+  const mobileArea = document.getElementById("userAreaMobile");
+
+  if (!desktopArea || !mobileArea) return;
+
+  if (user) {
+    
+    // Desktop
+ desktopArea.innerHTML = `
+  <div class="dropdown user-dropdown">
+    <button class="btn user-btn dropdown-toggle"
+            data-bs-toggle="dropdown"
+            data-bs-auto-close="true">
+      <i class="fa-solid fa-user user-icon"></i>
+      <span class="username-text">${user.username.toUpperCase()}</span>
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark user-menu">
+      <li>
+        <button class="dropdown-item text-danger" onclick="logout()">
+          <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+        </button>
+      </li>
+    </ul>
+  </div>
+`;
 
 
-  timeLeft = 2400;
-  userAnswers = {};
-  quizData = shuffle(quizData);
 
-  renderQuiz();
-  startTimer();
+    // Mobile
+    mobileArea.innerHTML = `
+      <div class="menu-item">
+        <i class="fas fa-user"></i>
+        ${user.username}
+      </div>
+      <div class="menu-item text-danger" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        Đăng xuất
+      </div>
+    `;
+  } else {
+    // Desktop
+    desktopArea.innerHTML = `
+      <a href="login.html" class="icon-btn">
+        <i class="fa-regular fa-user"></i>
+      </a>
+    `;
 
-  window.scrollTo({
-    top: document.querySelector(".quiz-container").offsetTop - 80,
-    behavior: "smooth"
-  });
-}
-
-let quizSubmitted = false;
-
-window.addEventListener("beforeunload", function (e) {
-  if (!quizSubmitted && Object.keys(userAnswers).length > 0) {
-    e.preventDefault();
-    e.returnValue = "";
+    // Mobile
+    mobileArea.innerHTML = `
+      <a href="login.html" class="menu-item">
+        <i class="fas fa-sign-in-alt"></i>
+        Đăng nhập
+      </a>
+    `;
   }
-});
-
-
-function closeModal() {
-  document.getElementById("warningModal").style.display = "none";
-}
-function scrollToQuestion(num){
-  closeModal();
-  const target = document.querySelectorAll(".question-card")[num - 1];
-  window.scrollTo({
-    top: target.offsetTop - 100,
-    behavior: "smooth"
-  });
 }
 
-
-let pendingLink = null;
-
-// Bắt tất cả link trong trang (an toàn)
-document.querySelectorAll("a").forEach(link => {
-
-  link.addEventListener("click", function(e) {
-
-    const href = this.getAttribute("href");
-
-    // ❌ Bỏ qua link rỗng hoặc #
-    if (!href || href === "#" || href.startsWith("javascript")) return;
-
-    if (!quizSubmitted && Object.keys(userAnswers).length > 0) {
-      e.preventDefault();
-      pendingLink = href;
-      document.getElementById("exitModal").style.display = "flex";
-    }
-  });
-
-});
-
-
-function stayHere() {
-  pendingLink = null;
-  document.getElementById("exitModal").style.display = "none";
+// ===== LOGOUT =====
+function logout() {
+  localStorage.removeItem("currentUser");
+  window.location.reload();
 }
 
-function leavePage() {
-  quizSubmitted = true; // 🔥 cho phép rời khỏi
-  document.getElementById("exitModal").style.display = "none";
+// Run when page loads
+document.addEventListener("DOMContentLoaded", updateUserUI);
 
-  if (pendingLink) {
-    window.location.href = pendingLink;
-  }
-}
-
-
-window.addEventListener("popstate", function(e) {
-
-  if (quizSubmitted) return; // 🔥 nếu đã cho phép rời thì không chặn
-
-  if (Object.keys(userAnswers).length > 0) {
-    history.pushState(null, null, location.href);
-    document.getElementById("exitModal").style.display = "flex";
-  }
-});
-
-
-// kích hoạt state ban đầu
-history.pushState(null, null, location.href);
-
-
-</script>
-
-
-</body>
-
+    </script>
+  </body>
 </html>

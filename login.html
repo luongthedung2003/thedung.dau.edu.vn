@@ -1,0 +1,1368 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <title>THEDUNG - Đăng nhập</title>
+    <link rel="icon" href="images/logo.png" />
+
+    <style>
+      :root {
+        --gold-color: #5120bb;
+        --gold-light: #08179c;
+        --gold-dark: #1c1d7a;
+        --spotify-green: #1db954;
+        --spotify-green-hover: #1ed760;
+        --dark-bg: #121212;
+        --dark-surface: #1a1a1a;
+        --dark-elevated: #282828;
+        --text-primary: #ffffff;
+        --text-secondary: #b3b3b3;
+      }
+
+      * {
+        font-family: "Space Mono", monospace;
+        color: white;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      body {
+        background-color: black;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* ========================================
+           NAVIGATION STYLES
+           ======================================== */
+
+      .navbar {
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(175, 134, 80, 0.2);
+        padding: 0.75rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+      }
+
+      .logo-box {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold-color)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(175, 134, 80, 0.3);
+      }
+
+      .logo-box i {
+        color: white;
+        font-size: 20px;
+      }
+
+      .brand-text {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: white;
+        margin-left: 0.75rem;
+        letter-spacing: 1px;
+      }
+
+      .day-navigator {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border: 1px solid rgba(175, 134, 80, 0.2);
+      }
+
+      .day-btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #d1d5db;
+        transition: all 0.2s;
+        white-space: nowrap;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .day-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      .day-btn::after {
+        content: "";
+        position: absolute;
+        left: 15%;
+        bottom: 2px;
+        width: 70%;
+        height: 2px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, #00e5ff, #ff1744);
+        opacity: 0;
+        transform: scaleX(0);
+        transition: all 0.3s ease;
+      }
+
+      .day-btn:hover::after {
+        opacity: 1;
+        transform: scaleX(1);
+        box-shadow:
+          0 0 6px #00e5ff,
+          0 0 12px #ff1744;
+      }
+
+      .day-btn.active {
+        color: white;
+      }
+
+      .day-btn.active::after {
+        opacity: 1;
+        transform: scaleX(1);
+        background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
+        background-size: 200% 100%;
+        animation: glowMove 2s linear infinite;
+        box-shadow:
+          0 0 8px #00e5ff,
+          0 0 18px #ff1744;
+      }
+
+      @keyframes glowMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 200% 50%;
+        }
+      }
+
+      .nav-arrow {
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+
+      .nav-arrow:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--gold-color);
+      }
+
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        color: #d1d5db;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+
+      .icon-btn:hover {
+        background: rgba(175, 134, 80, 0.2);
+        color: var(--gold-color);
+      }
+
+      .notification-dot {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        background: #ef4444;
+        border-radius: 50%;
+        border: 2px solid rgba(0, 0, 0, 0.95);
+      }
+
+      .mobile-day-nav {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 0.5rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+      }
+
+      .mobile-day-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .mobile-day-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        display: inline-block;
+      }
+
+      .offcanvas-end {
+        width: 100% !important;
+        max-width: 320px !important;
+        background: rgba(0, 0, 0, 0.98);
+        border-left: 1px solid rgba(175, 134, 80, 0.2);
+      }
+
+      .offcanvas-header {
+        background: rgba(0, 0, 0, 0.95);
+        border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+        padding: 1rem 1.25rem;
+      }
+
+      .offcanvas-title {
+        font-weight: 600;
+        font-size: 1rem;
+        margin: 0;
+        color: white;
+      }
+
+      .offcanvas-header .btn-close {
+        opacity: 0.5;
+        font-size: 0.875rem;
+        filter: invert(1);
+      }
+
+      .offcanvas-body {
+        background-image:
+          linear-gradient(
+            rgba(0, 0, 0, 0.95),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.95)
+          ),
+          url("images/2k_stars_milky_way.jpg");
+        padding: 1rem;
+      }
+
+      .menu-section {
+        margin-bottom: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+        padding: 0 0.5rem;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.625rem 0.75rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #d1d5db;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: 0.2s;
+        margin-bottom: 0.25rem;
+      }
+
+      .menu-item:hover {
+        background: rgba(175, 134, 80, 0.2);
+        color: white;
+      }
+
+      .menu-item.active {
+        background: rgba(175, 134, 80, 0.3);
+        color: var(--gold-color);
+      }
+
+      .menu-item i {
+        width: 20px;
+        font-size: 1rem;
+        color: #9ca3af;
+      }
+
+      .menu-item.active i {
+        color: var(--gold-color);
+      }
+
+      .menu-divider {
+        margin: 1rem 0;
+        border: none;
+        height: 1px;
+        background: rgba(175, 134, 80, 0.2);
+      }
+
+      /* ========================================
+           AUTH SECTION STYLES
+           ======================================== */
+
+      main {
+        background-image:
+          linear-gradient(
+            rgba(0, 0, 0, 0.95),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.95)
+          ),
+          url("images/2k_stars_milky_way.jpg");
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+        padding: 60px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .auth-container {
+        width: 100%;
+        max-width: 450px;
+        padding: 20px;
+        margin: 0 auto;
+      }
+
+      .auth-wrapper {
+        position: relative;
+        width: 100%;
+        perspective: 1000px;
+      }
+
+      .auth-card {
+        background: rgba(26, 26, 26, 0.98);
+        border-radius: 24px;
+        padding: 48px 40px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .auth-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--spotify-green),
+          var(--gold-color),
+          var(--spotify-green)
+        );
+        background-size: 200% 100%;
+        animation: gradientMove 3s linear infinite;
+      }
+
+      @keyframes gradientMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 200% 50%;
+        }
+      }
+
+      .auth-logo {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .auth-logo-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold-color)
+        );
+        border-radius: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 16px rgba(81, 32, 187, 0.4);
+      }
+
+      .auth-logo-icon i {
+        font-size: 28px;
+        color: white;
+      }
+
+      .auth-title {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+        letter-spacing: 1px;
+      }
+
+      .auth-subtitle {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 32px;
+      }
+
+      .auth-subtitle a {
+        color: var(--spotify-green);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .auth-subtitle a:hover {
+        color: var(--spotify-green-hover);
+        text-decoration: underline;
+      }
+
+      .auth-form {
+        width: 100%;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+        position: relative;
+      }
+
+      .form-label {
+        display: block;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 14px 16px;
+        background: rgba(40, 40, 40, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        outline: none;
+      }
+
+      .form-input::placeholder {
+        color: rgba(179, 179, 179, 0.6);
+      }
+
+      .form-input:focus {
+        background: rgba(40, 40, 40, 1);
+        border-color: var(--spotify-green);
+        box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.1);
+      }
+
+      .form-input:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .password-wrapper {
+        position: relative;
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.2s;
+      }
+
+      .password-toggle:hover {
+        color: var(--text-primary);
+      }
+
+      .form-link {
+        display: block;
+        text-align: right;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-top: -8px;
+        margin-bottom: 24px;
+        transition: color 0.2s;
+      }
+
+      .form-link:hover {
+        color: var(--spotify-green);
+      }
+
+      .auth-button {
+        width: 100%;
+        padding: 16px;
+        background: var(--spotify-green);
+        border: none;
+        border-radius: 500px;
+        color: white;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        box-shadow: 0 4px 16px rgba(29, 185, 84, 0.3);
+      }
+
+      .auth-button:hover {
+        background: var(--spotify-green-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(29, 185, 84, 0.4);
+      }
+
+      .auth-button:active {
+        transform: translateY(0);
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 24px 0;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .divider span {
+        padding: 0 16px;
+      }
+
+      .social-buttons {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .social-btn {
+        flex: 1;
+        padding: 14px;
+        background: rgba(40, 40, 40, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-weight: 500;
+      }
+
+      .social-btn:hover {
+        background: rgba(40, 40, 40, 1);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .social-btn i {
+        font-size: 1.25rem;
+      }
+
+      .social-btn.google i {
+        background: linear-gradient(
+          to right,
+          #4285f4,
+          #ea4335,
+          #fbbc05,
+          #34a853
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .social-btn.apple i {
+        color: #ffffff;
+      }
+
+      .auth-footer {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-top: 24px;
+      }
+
+      .auth-footer button {
+        background: none;
+        border: none;
+        color: var(--spotify-green);
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0;
+        text-decoration: underline;
+        transition: color 0.2s;
+      }
+
+      .auth-footer button:hover {
+        color: var(--spotify-green-hover);
+      }
+
+      /* Form transition animations */
+      .form-fade-enter {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .form-fade-enter-active {
+        opacity: 1;
+        transform: translateY(0);
+        transition: all 0.4s ease;
+      }
+
+      .form-fade-exit {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .form-fade-exit-active {
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.4s ease;
+      }
+
+      .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .checkbox-input {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: var(--spotify-green);
+      }
+
+      .checkbox-label {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .auth-card {
+          padding: 32px 24px;
+          border-radius: 20px;
+        }
+
+        .auth-title {
+          font-size: 1.75rem;
+        }
+
+        .auth-container {
+          padding: 16px;
+        }
+
+        main {
+          padding: 40px 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .auth-card {
+          padding: 28px 20px;
+        }
+
+        .auth-title {
+          font-size: 1.5rem;
+        }
+
+        .social-buttons {
+          flex-direction: column;
+        }
+
+        .social-btn {
+          width: 100%;
+        }
+
+        .form-input {
+          padding: 12px 14px;
+        }
+
+        .auth-button {
+          padding: 14px;
+        }
+      }
+
+      /* Hidden class for form switching */
+      .hidden {
+        display: none !important;
+      }
+
+      /* Animation classes */
+      .fade-in {
+        animation: fadeIn 0.4s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+    <style>
+      .user-dropdown {
+        margin-left: 10px;
+      }
+
+      .user-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        transition: 0.3s ease;
+      }
+
+      .user-btn:hover {
+        background: rgba(81, 32, 187, 0.2);
+      }
+
+      .user-icon {
+        font-size: 16px;
+      }
+
+      .username-text {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: #00e5ff;
+      }
+
+      .user-menu {
+        border-radius: 12px;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Desktop Navigation -->
+    <nav class="navbar d-none d-md-block">
+      <div class="container px-4">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div class="d-flex align-items-center">
+            <div class="logo-box">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <span class="brand-text">THEDUNG</span>
+          </div>
+
+          <div class="day-navigator">
+            <button class="nav-arrow">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <a href="index.html" class="day-btn">TRANG CHỦ</a>
+            <a href="courses.html" class="day-btn">KHÓA HỌC</a>
+            <a href="music.html" class="day-btn">ÂM NHẠC</a>
+            <a href="news.html" class="day-btn">TIN TỨC</a>
+            <a href="contact.html" class="day-btn">LIÊN HỆ</a>
+            <button class="nav-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div class="d-flex align-items-center gap-2">
+            <button class="icon-btn">
+              <i class="fa-regular fa-comment"></i>
+            </button>
+            <button class="icon-btn">
+              <i class="fa-regular fa-bell"></i>
+              <span class="notification-dot"></span>
+            </button>
+            <div id="userAreaDesktop"></div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <nav class="navbar d-md-none">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div class="d-flex align-items-center">
+            <div class="logo-box">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <span class="brand-text">THEDUNG</span>
+          </div>
+
+          <div class="d-flex align-items-center gap-1">
+            <button class="icon-btn">
+              <i class="fa-regular fa-comment"></i>
+            </button>
+            <button class="icon-btn">
+              <i class="fa-regular fa-bell"></i>
+              <span class="notification-dot"></span>
+            </button>
+            <button
+              class="icon-btn"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#mobileMenu"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Day Navigator -->
+    <div class="mobile-day-nav d-md-none">
+      <div class="d-flex align-items-center gap-2">
+        <button class="nav-arrow">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="d-inline-flex gap-1">
+          <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
+          <a href="courses.html" class="day-btn mobile-day-btn">Khóa học</a>
+          <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
+          <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
+          <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
+        </div>
+        <button class="nav-arrow">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Offcanvas Menu -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="menu-section">
+          <div class="section-title">Navigation</div>
+          <a href="index.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            Trang chủ
+          </a>
+          <a href="courses.html" class="menu-item">
+            <i class="fas fa-sun"></i>
+            Khóa học
+          </a>
+          <a href="music.html" class="menu-item">
+            <i class="fas fa-music"></i>
+            Âm nhạc
+          </a>
+          <a href="news.html" class="menu-item">
+            <i class="fas fa-newspaper"></i>
+            Tin tức
+          </a>
+          <a href="contact.html" class="menu-item">
+            <i class="fas fa-envelope"></i>
+            Liên hệ
+          </a>
+        </div>
+
+        <div class="menu-divider"></div>
+
+        <div class="menu-section">
+          <div class="section-title">Explore</div>
+          <a href="#" class="menu-item">
+            <i class="fas fa-sun"></i>
+            Trắc nghiệm
+          </a>
+          <a href="#" class="menu-item">
+            <i class="fas fa-circle"></i>
+            Tài liệu
+          </a>
+          <a href="#" class="menu-item">
+            <i class="fas fa-circle"></i>
+            Thi thử
+          </a>
+        </div>
+        <div class="menu-divider"></div>
+
+        <div class="menu-section">
+          <div class="section-title">Account</div>
+          <div id="userAreaMobile"></div>
+          <a href="settings.html" class="menu-item">
+            <i class="fas fa-cog"></i>
+            Cài đặt
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+      <div class="auth-container">
+        <div class="auth-wrapper">
+          <!-- Login Form -->
+          <div id="loginForm" class="auth-card fade-in">
+            <div class="auth-logo">
+              <div class="auth-logo-icon">
+                <i class="fas fa-rocket"></i>
+              </div>
+            </div>
+
+            <h1 class="auth-title">Sign In</h1>
+            <p class="auth-subtitle">
+              If You Need Any Support <a href="#">Click Here</a>
+            </p>
+
+            <form class="auth-form" onsubmit="return handleLogin(event);">
+              <div class="form-group">
+                <label class="form-label">Email hoặc Tên đăng nhập</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="Enter Username Or Email"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Mật khẩu</label>
+                <div class="password-wrapper">
+                  <input
+                    type="password"
+                    id="loginPassword"
+                    class="form-input"
+                    placeholder="Password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    onclick="togglePassword('loginPassword')"
+                  >
+                    <i class="far fa-eye" id="loginPasswordIcon"></i>
+                  </button>
+                </div>
+              </div>
+
+              <a href="#" class="form-link">Recovery Password</a>
+
+              <button type="submit" class="auth-button">Sign In</button>
+            </form>
+
+            <div class="divider">
+              <span>Or</span>
+            </div>
+
+            <div class="social-buttons">
+              <button class="social-btn google">
+                <i class="fab fa-google"></i>
+              </button>
+              <button class="social-btn apple">
+                <i class="fab fa-apple"></i>
+              </button>
+            </div>
+
+            <div class="auth-footer">
+              Not A Member?
+              <button onclick="switchToRegister()">Register Now</button>
+            </div>
+          </div>
+
+          <!-- Register Form -->
+          <div id="registerForm" class="auth-card hidden">
+            <div class="auth-logo">
+              <div class="auth-logo-icon">
+                <i class="fas fa-rocket"></i>
+              </div>
+            </div>
+
+            <h1 class="auth-title">Register</h1>
+            <p class="auth-subtitle">Create your account to get started</p>
+
+            <form class="auth-form" onsubmit="return handleRegister(event);">
+              <div class="form-group">
+                <label class="form-label">Họ và tên</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="Enter Full Name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-input"
+                  placeholder="Enter Email Address"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Tên đăng nhập</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="Enter Username"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Mật khẩu</label>
+                <div class="password-wrapper">
+                  <input
+                    type="password"
+                    id="registerPassword"
+                    class="form-input"
+                    placeholder="Create Password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    onclick="togglePassword('registerPassword')"
+                  >
+                    <i class="far fa-eye" id="registerPasswordIcon"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Xác nhận mật khẩu</label>
+                <div class="password-wrapper">
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    class="form-input"
+                    placeholder="Confirm Password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    onclick="togglePassword('confirmPassword')"
+                  >
+                    <i class="far fa-eye" id="confirmPasswordIcon"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  class="checkbox-input"
+                  required
+                />
+                <label for="terms" class="checkbox-label">
+                  I agree to the Terms and Conditions
+                </label>
+              </div>
+
+              <button type="submit" class="auth-button">Register</button>
+            </form>
+
+            <div class="divider">
+              <span>Or</span>
+            </div>
+
+            <div class="social-buttons">
+              <button class="social-btn google">
+                <i class="fab fa-google"></i>
+              </button>
+              <button class="social-btn apple">
+                <i class="fab fa-apple"></i>
+              </button>
+            </div>
+
+            <div class="auth-footer">
+              Already Have An Account?
+              <button onclick="switchToLogin()">Sign In</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+      // Form switching functionality
+      function switchToRegister() {
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+
+        loginForm.classList.remove("fade-in");
+        loginForm.classList.add("hidden");
+
+        setTimeout(() => {
+          registerForm.classList.remove("hidden");
+          registerForm.classList.add("fade-in");
+        }, 100);
+      }
+
+      function switchToLogin() {
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+
+        registerForm.classList.remove("fade-in");
+        registerForm.classList.add("hidden");
+
+        setTimeout(() => {
+          loginForm.classList.remove("hidden");
+          loginForm.classList.add("fade-in");
+        }, 100);
+      }
+
+      // Password toggle functionality
+      function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(inputId + "Icon");
+
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+        } else {
+          input.type = "password";
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+        }
+      }
+
+      // Form submission handlers
+      function handleLogin(event) {
+        event.preventDefault();
+        // Add your login logic here
+        alert("Đăng nhập thành công!");
+        return false;
+      }
+
+      function handleRegister(event) {
+        event.preventDefault();
+
+        const password = document.getElementById("registerPassword").value;
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+
+        if (password !== confirmPassword) {
+          alert("Mật khẩu xác nhận không khớp!");
+          return false;
+        }
+
+        // Add your register logic here
+        alert("Đăng ký thành công!");
+        return false;
+      }
+
+      // Initialize AOS
+      AOS.init({
+        duration: 900,
+        easing: "ease-out-cubic",
+        once: true,
+        offset: 120,
+      });
+
+      // Add smooth scroll behavior
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+    </script>
+    <script>
+      // ===== FAKE DATABASE =====
+      const users = [
+        {
+          username: "Thế Dũng",
+          email: "thedung@gmail.com",
+          password: "123456",
+        },
+        {
+          username: "Xuân Mai",
+          email: "xuanmai@gmail.com",
+          password: "123456",
+        },
+      ];
+
+      // ===== LOGIN HANDLER =====
+      function handleLogin(event) {
+        event.preventDefault();
+
+        const input = document.querySelector(
+          '#loginForm input[type="text"]',
+        ).value;
+        const password = document.getElementById("loginPassword").value;
+
+        const user = users.find(
+          (u) =>
+            (u.username === input || u.email === input) &&
+            u.password === password,
+        );
+
+        if (!user) {
+          alert("Sai tài khoản hoặc mật khẩu!");
+          return false;
+        }
+
+        // Lưu trạng thái đăng nhập
+        localStorage.setItem("currentUser", JSON.stringify(user));
+
+        // Nếu có bài muốn thi trước đó
+        const redirectQuiz = localStorage.getItem("redirectAfterLogin");
+
+        if (redirectQuiz) {
+          localStorage.removeItem("redirectAfterLogin");
+          window.location.href = redirectQuiz;
+        } else {
+          window.location.href = "index.html";
+        }
+
+        return false;
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // ===== HANDLE LOGIN STATUS =====
+      function updateUserUI() {
+        const user = JSON.parse(localStorage.getItem("currentUser"));
+
+        const desktopArea = document.getElementById("userAreaDesktop");
+        const mobileArea = document.getElementById("userAreaMobile");
+
+        if (!desktopArea || !mobileArea) return;
+
+        if (user) {
+          // Desktop
+          desktopArea.innerHTML = `
+  <div class="dropdown user-dropdown">
+    <button class="btn user-btn dropdown-toggle"
+            data-bs-toggle="dropdown"
+            data-bs-auto-close="true">
+      <i class="fa-solid fa-user user-icon"></i>
+      <span class="username-text">${user.username.toUpperCase()}</span>
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark user-menu">
+      <li>
+        <button class="dropdown-item text-danger" onclick="logout()">
+          <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+        </button>
+      </li>
+    </ul>
+  </div>
+`;
+
+          // Mobile
+          mobileArea.innerHTML = `
+      <div class="menu-item">
+        <i class="fas fa-user"></i>
+        ${user.username}
+      </div>
+      <div class="menu-item text-danger" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        Đăng xuất
+      </div>
+    `;
+        } else {
+          // Desktop
+          desktopArea.innerHTML = `
+      <a href="login.html" class="icon-btn">
+        <i class="fa-regular fa-user"></i>
+      </a>
+    `;
+
+          // Mobile
+          mobileArea.innerHTML = `
+      <a href="login.html" class="menu-item">
+        <i class="fas fa-sign-in-alt"></i>
+        Đăng nhập
+      </a>
+    `;
+        }
+      }
+
+      // ===== LOGOUT =====
+      function logout() {
+        localStorage.removeItem("currentUser");
+        window.location.reload();
+      }
+
+      // Run when page loads
+      document.addEventListener("DOMContentLoaded", updateUserUI);
+    </script>
+  </body>
+</html>
