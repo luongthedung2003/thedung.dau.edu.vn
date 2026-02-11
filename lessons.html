@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
@@ -363,6 +363,7 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .lesson-card::before {
@@ -533,6 +534,8 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+            display: block;
+            text-align: center;
         }
 
         .lesson-action-btn:hover {
@@ -545,31 +548,52 @@
         }
 
         /* Special card styles for different types */
-        .lesson-card.type-quiz {
-            border-color: rgba(255, 204, 51, 0.3);
+        .lesson-card.type-pink {
+            border-color: rgba(236, 72, 153, 0.3);
         }
 
-        .lesson-card.type-quiz:hover {
-            border-color: #ffcc33;
-            box-shadow: 0 15px 40px rgba(255, 204, 51, 0.3);
+        .lesson-card.type-pink:hover {
+            border-color: #ec4899;
+            box-shadow: 0 15px 40px rgba(236, 72, 153, 0.3);
         }
 
-        .lesson-card.type-practice {
-            border-color: rgba(0, 229, 255, 0.3);
+        .lesson-card.type-orange {
+            border-color: rgba(249, 115, 22, 0.3);
         }
 
-        .lesson-card.type-practice:hover {
-            border-color: #00e5ff;
-            box-shadow: 0 15px 40px rgba(0, 229, 255, 0.3);
+        .lesson-card.type-orange:hover {
+            border-color: #f97316;
+            box-shadow: 0 15px 40px rgba(249, 115, 22, 0.3);
         }
 
-        .lesson-card.type-exam {
-            border-color: rgba(255, 23, 68, 0.3);
+        .lesson-card.type-green {
+            border-color: rgba(34, 197, 94, 0.3);
         }
 
-        .lesson-card.type-exam:hover {
-            border-color: #ff1744;
-            box-shadow: 0 15px 40px rgba(255, 23, 68, 0.3);
+        .lesson-card.type-green:hover {
+            border-color: #22c55e;
+            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.3);
+        }
+
+        /* Price section */
+        .lesson-price-section {
+            margin-bottom: 20px;
+        }
+
+        .price-original {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: line-through;
+            margin-bottom: 5px;
+        }
+
+        .price-free {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Mini chart visualization */
@@ -596,6 +620,80 @@
 
         .lesson-card:hover .chart-bar {
             background: rgba(0, 229, 255, 0.5);
+        }
+
+        /* Mobile specific styles */
+        @media (max-width: 768px) {
+            .lessons-header h1 {
+                font-size: 2rem;
+            }
+
+            .lessons-header p {
+                font-size: 0.95rem;
+            }
+
+            .lessons-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .lesson-card {
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .lesson-card-header {
+                margin-bottom: 15px;
+            }
+
+            .lesson-planet-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .lesson-title {
+                font-size: 1.1rem;
+            }
+
+            .lesson-sub-stat {
+                font-size: 0.8rem;
+            }
+
+            .lesson-price-section {
+                margin-bottom: 15px;
+            }
+
+            .price-original {
+                font-size: 1.1rem;
+            }
+
+            .price-free {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lessons-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .lesson-card {
+                padding: 15px;
+            }
+
+            .lesson-planet-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .lesson-title {
+                font-size: 1rem;
+            }
+
+            .mini-chart {
+                height: 50px;
+            }
         }
 
         /* Footer styles */
@@ -1147,44 +1245,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .lessons-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .lesson-main-stat {
-                font-size: 1.75rem;
-            }
-
-            .lesson-details {
-                gap: 15px;
-            }
-
-            .lessons-header h1 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .lesson-card {
-                padding: 20px;
-            }
-
-            .lesson-main-stat {
-                font-size: 1.5rem;
-            }
-
-            .mini-chart {
-                height: 50px;
-            }
-
-            .lessons-header h1 {
-                font-size: 1.5rem;
-            }
-        }
-
         @media (max-width: 1024px) {
             .thedung-footer-columns-grid {
                 grid-template-columns: 1fr 1fr 1fr;
@@ -1449,16 +1509,16 @@
     <main>
         <!-- Lessons Header -->
         <div class="lessons-header" data-aos="fade-down">
-            <h1>DANH SÁCH TRẮC NGHIỆM</h1>
-            <p>Luyện tập và kiểm tra kiến thức với các bài trắc nghiệm chất lượng</p>
+            <h1>TƯ TƯỞNG HỒ CHÍ MINH</h1>
+            <p>50 câu trắc nghiệm về tư tưởng Hồ Chí Minh</p>
         </div>
 
         <!-- Lessons Container -->
         <div class="lessons-container">
             <div class="lessons-grid">
                 
-                <!-- Lesson Card 1: Toán Học -->
-                <div class="lesson-card type-quiz" data-aos="fade-up" data-aos-delay="100">
+                <!-- Lesson Card 1 -->
+                <a href="quiz.html" class="lesson-card type-pink" data-aos="fade-up" data-aos-delay="100">
                     <div class="lesson-card-header">
                         <div class="lesson-icon-wrapper">
                             <div class="lesson-planet-icon">
@@ -1471,44 +1531,22 @@
                                     loading="lazy">
                                 </model-viewer>
                             </div>
-                            <h3 class="lesson-title">Toán Học</h3>
-                        </div>
-                        <button class="lesson-back-btn">
-                            Quiz <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <div class="lesson-stats">
-                        <div class="lesson-main-stat">45 câu</div>
-                        <div class="lesson-sub-stat">Đã hoàn thành: 32/45</div>
-                    </div>
-
-                    <div class="lesson-progress">
-                        <div class="progress-bar-container">
-                            <div class="progress-bar-fill" style="width: 71%"></div>
-                        </div>
-                        <div class="progress-labels">
-                            <span>71% hoàn thành</span>
-                            <span>13 câu còn lại</span>
+                            <h3 class="lesson-title">TTHCM Phần 1</h3>
                         </div>
                     </div>
 
-                    <div class="lesson-details">
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Thời gian</span>
-                            <span class="detail-value">45 phút</span>
-                        </div>
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Độ khó</span>
-                            <span class="detail-badge">Trung bình</span>
-                        </div>
+                    <div class="lesson-sub-stat">50 câu trắc nghiệm từ câu 1-50</div>
+
+                    <div class="lesson-price-section">
+                        <div class="price-original">245.517 đ</div>
+                        <div class="price-free">FREE</div>
                     </div>
 
-                    <a href="quiz.html" class="lesson-action-btn">Thi ngay</a>
-                </div>
+                    <div class="lesson-action-btn">Thi ngay</div>
+                </a>
 
-                <!-- Lesson Card 2: Vật Lý -->
-                <div class="lesson-card type-practice" data-aos="fade-up" data-aos-delay="200">
+                <!-- Lesson Card 2 -->
+                <a href="quiz.html" class="lesson-card type-orange" data-aos="fade-up" data-aos-delay="200">
                     <div class="lesson-card-header">
                         <div class="lesson-icon-wrapper">
                             <div class="lesson-planet-icon">
@@ -1521,44 +1559,22 @@
                                     loading="lazy">
                                 </model-viewer>
                             </div>
-                            <h3 class="lesson-title">Vật Lý</h3>
-                        </div>
-                        <button class="lesson-back-btn">
-                            Practice <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <div class="lesson-stats">
-                        <div class="lesson-main-stat">1,248 điểm</div>
-                        <div class="lesson-sub-stat">Điểm cao nhất</div>
-                    </div>
-
-                    <div class="mini-chart">
-                        <div class="chart-bar" style="height: 30%"></div>
-                        <div class="chart-bar" style="height: 45%"></div>
-                        <div class="chart-bar" style="height: 60%"></div>
-                        <div class="chart-bar highlight" style="height: 85%"></div>
-                        <div class="chart-bar" style="height: 70%"></div>
-                        <div class="chart-bar" style="height: 55%"></div>
-                        <div class="chart-bar" style="height: 40%"></div>
-                    </div>
-
-                    <div class="lesson-details">
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Câu hỏi</span>
-                            <span class="detail-value">50 câu</span>
-                        </div>
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Độ khó</span>
-                            <span class="detail-badge">Khó</span>
+                            <h3 class="lesson-title">TTHCM Phần 2</h3>
                         </div>
                     </div>
 
-                    <a href="quiz.html" class="lesson-action-btn">Thi ngay</a>
-                </div>
+                    <div class="lesson-sub-stat">50 câu trắc nghiệm từ câu 51-100</div>
 
-                <!-- Lesson Card 3: Hóa Học -->
-                <div class="lesson-card type-exam" data-aos="fade-up" data-aos-delay="300">
+                    <div class="lesson-price-section">
+                        <div class="price-original">83.476 đ</div>
+                        <div class="price-free">FREE</div>
+                    </div>
+
+                    <div class="lesson-action-btn">Thi ngay</div>
+                </a>
+
+                <!-- Lesson Card 3 -->
+                <a href="quiz.html" class="lesson-card type-green" data-aos="fade-up" data-aos-delay="300">
                     <div class="lesson-card-header">
                         <div class="lesson-icon-wrapper">
                             <div class="lesson-planet-icon">
@@ -1571,44 +1587,22 @@
                                     loading="lazy">
                                 </model-viewer>
                             </div>
-                            <h3 class="lesson-title">Hóa Học</h3>
-                        </div>
-                        <button class="lesson-back-btn">
-                            Exam <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <div class="lesson-stats">
-                        <div class="lesson-main-stat">38h 48m</div>
-                        <div class="lesson-sub-stat">Tổng thời gian luyện tập</div>
-                    </div>
-
-                    <div class="lesson-progress">
-                        <div class="progress-bar-container">
-                            <div class="progress-bar-fill" style="width: 55%"></div>
-                        </div>
-                        <div class="progress-labels">
-                            <span>55% hoàn thành</span>
-                            <span>28/50 câu</span>
+                            <h3 class="lesson-title">TTHCM Phần 3</h3>
                         </div>
                     </div>
 
-                    <div class="lesson-details">
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Lần thi</span>
-                            <span class="detail-value">3 lần</span>
-                        </div>
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Điểm TB</span>
-                            <span class="detail-value">7.5/10</span>
-                        </div>
+                    <div class="lesson-sub-stat">50 câu trắc nghiệm từ câu 101-150</div>
+
+                    <div class="lesson-price-section">
+                        <div class="price-original">98.438 đ</div>
+                        <div class="price-free">FREE</div>
                     </div>
 
-                    <a href="quiz.html" class="lesson-action-btn">Thi ngay</a>
-                </div>
+                    <div class="lesson-action-btn">Thi ngay</div>
+                </a>
 
-                <!-- Lesson Card 4: Sinh Học -->
-                <div class="lesson-card type-quiz" data-aos="fade-up" data-aos-delay="400">
+                <!-- Lesson Card 4 -->
+                <a href="quiz.html" class="lesson-card type-pink" data-aos="fade-up" data-aos-delay="400">
                     <div class="lesson-card-header">
                         <div class="lesson-icon-wrapper">
                             <div class="lesson-planet-icon">
@@ -1621,44 +1615,22 @@
                                     loading="lazy">
                                 </model-viewer>
                             </div>
-                            <h3 class="lesson-title">Sinh Học</h3>
-                        </div>
-                        <button class="lesson-back-btn">
-                            Quiz <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <div class="lesson-stats">
-                        <div class="lesson-main-stat">40 câu</div>
-                        <div class="lesson-sub-stat">Chưa bắt đầu</div>
-                    </div>
-
-                    <div class="lesson-progress">
-                        <div class="progress-bar-container">
-                            <div class="progress-bar-fill" style="width: 0%"></div>
-                        </div>
-                        <div class="progress-labels">
-                            <span>0% hoàn thành</span>
-                            <span>40 câu</span>
+                            <h3 class="lesson-title">TTHCM Phần 4</h3>
                         </div>
                     </div>
 
-                    <div class="lesson-details">
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Thời gian</span>
-                            <span class="detail-value">40 phút</span>
-                        </div>
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Độ khó</span>
-                            <span class="detail-badge">Dễ</span>
-                        </div>
+                    <div class="lesson-sub-stat">50 câu trắc nghiệm từ câu 151-200</div>
+
+                    <div class="lesson-price-section">
+                        <div class="price-original">156.892 đ</div>
+                        <div class="price-free">FREE</div>
                     </div>
 
-                    <a href="quiz.html" class="lesson-action-btn">Thi ngay</a>
-                </div>
+                    <div class="lesson-action-btn">Thi ngay</div>
+                </a>
 
-                <!-- Lesson Card 5: Tiếng Anh -->
-                <div class="lesson-card type-practice" data-aos="fade-up" data-aos-delay="500">
+                <!-- Lesson Card 5 -->
+                <a href="quiz.html" class="lesson-card type-orange" data-aos="fade-up" data-aos-delay="500">
                     <div class="lesson-card-header">
                         <div class="lesson-icon-wrapper">
                             <div class="lesson-planet-icon">
@@ -1671,44 +1643,22 @@
                                     loading="lazy">
                                 </model-viewer>
                             </div>
-                            <h3 class="lesson-title">Tiếng Anh</h3>
-                        </div>
-                        <button class="lesson-back-btn">
-                            Practice <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <div class="lesson-stats">
-                        <div class="lesson-main-stat">70.00 điểm</div>
-                        <div class="lesson-sub-stat">Điểm trung bình</div>
-                    </div>
-
-                    <div class="mini-chart">
-                        <div class="chart-bar" style="height: 50%"></div>
-                        <div class="chart-bar" style="height: 60%"></div>
-                        <div class="chart-bar" style="height: 70%"></div>
-                        <div class="chart-bar" style="height: 65%"></div>
-                        <div class="chart-bar highlight" style="height: 90%"></div>
-                        <div class="chart-bar" style="height: 75%"></div>
-                        <div class="chart-bar" style="height: 80%"></div>
-                    </div>
-
-                    <div class="lesson-details">
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Câu hỏi</span>
-                            <span class="detail-value">60 câu</span>
-                        </div>
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Trạng thái</span>
-                            <span class="detail-badge">Ổn định</span>
+                            <h3 class="lesson-title">TTHCM Phần 5</h3>
                         </div>
                     </div>
 
-                    <a href="quiz.html" class="lesson-action-btn">Thi ngay</a>
-                </div>
+                    <div class="lesson-sub-stat">50 câu trắc nghiệm từ câu 201-250</div>
 
-                <!-- Lesson Card 6: Lịch Sử -->
-                <div class="lesson-card type-exam" data-aos="fade-up" data-aos-delay="600">
+                    <div class="lesson-price-section">
+                        <div class="price-original">122.764 đ</div>
+                        <div class="price-free">FREE</div>
+                    </div>
+
+                    <div class="lesson-action-btn">Thi ngay</div>
+                </a>
+
+                <!-- Lesson Card 6 -->
+                <a href="quiz.html" class="lesson-card type-green" data-aos="fade-up" data-aos-delay="600">
                     <div class="lesson-card-header">
                         <div class="lesson-icon-wrapper">
                             <div class="lesson-planet-icon">
@@ -1721,41 +1671,19 @@
                                     loading="lazy">
                                 </model-viewer>
                             </div>
-                            <h3 class="lesson-title">Lịch Sử</h3>
-                        </div>
-                        <button class="lesson-back-btn">
-                            Exam <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <div class="lesson-stats">
-                        <div class="lesson-main-stat">08:45 - 10:00</div>
-                        <div class="lesson-sub-stat">Thời gian thi</div>
-                    </div>
-
-                    <div class="lesson-progress">
-                        <div class="progress-bar-container">
-                            <div class="progress-bar-fill" style="width: 100%"></div>
-                        </div>
-                        <div class="progress-labels">
-                            <span>Đã hoàn thành</span>
-                            <span>35/35 câu</span>
+                            <h3 class="lesson-title">TTHCM Phần 6</h3>
                         </div>
                     </div>
 
-                    <div class="lesson-details">
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Kết quả</span>
-                            <span class="detail-value">8.5/10</span>
-                        </div>
-                        <div class="lesson-detail-item">
-                            <span class="detail-label">Xếp hạng</span>
-                            <span class="detail-badge">Giỏi</span>
-                        </div>
+                    <div class="lesson-sub-stat">50 câu trắc nghiệm từ câu 251-300</div>
+
+                    <div class="lesson-price-section">
+                        <div class="price-original">189.325 đ</div>
+                        <div class="price-free">FREE</div>
                     </div>
 
-                    <a href="quiz.html" class="lesson-action-btn">Xem lại</a>
-                </div>
+                    <div class="lesson-action-btn">Thi ngay</div>
+                </a>
 
             </div>
         </div>
