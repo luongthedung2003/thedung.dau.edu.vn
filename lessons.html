@@ -1387,6 +1387,91 @@
 }
 
     </style>
+    <style>
+        /* ===== LOGIN MODAL MODERN ===== */
+
+.login-modal {
+    font-size: 0.85rem;
+  border-radius: 20px;
+  border-color: red;
+  background: #ffffff;
+  color: #c90d0d;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+  overflow: hidden;
+              background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.95)), url(images/2k_stars.jpg);
+
+}
+
+.login-modal-body {
+  padding: 40px 30px;
+}
+
+.login-modal-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px;
+  background: #db171b;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-modal-icon i {
+  font-size: 30px;
+  color: white;
+}
+
+.login-modal-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.login-modal-text {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.login-modal-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.btn-cancel {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #90db9b;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-cancel:hover {
+  background: #d4d4d4;
+}
+
+.btn-login {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #e61010;
+  color: white;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-login:hover {
+  background: #115e59;
+  transform: translateY(-2px);
+}
+
+    </style>
 </head>
 
 <body>
@@ -1681,31 +1766,36 @@
 <!-- Login Required Modal -->
 <div class="modal fade" id="loginRequiredModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-dark text-white border border-info">
+    <div class="modal-content login-modal">
 
-      <div class="modal-header border-bottom border-secondary">
-        <h5 class="modal-title">
-          <i class="fas fa-lock me-2 text-warning"></i>
-          Yêu cầu đăng nhập
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-      </div>
+      <div class="login-modal-body text-center">
 
-      <div class="modal-body text-center">
-        <p class="mb-0">
-          Vui lòng đăng nhập để thi
+        <div class="login-modal-icon">
+          <i class="fas fa-lock"></i>
+        </div>
+
+        <h3 class="login-modal-title">
+          Vui lòng đăng nhập
+        </h3>
+
+        <p class="login-modal-text">
+          Bạn cần đăng nhập để bắt đầu làm bài thi.
         </p>
-      </div>
 
-      <div class="modal-footer border-top border-secondary">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Hủy
-        </button>
+        <div class="login-modal-actions">
+          <button type="button"
+                  class="btn-cancel"
+                  data-bs-dismiss="modal">
+            Hủy
+          </button>
 
-        <button type="button" class="btn btn-info"
-          onclick="window.location.href='login.html'">
-          Đăng nhập
-        </button>
+          <button type="button"
+                  class="btn-login"
+                  onclick="window.location.href='login.html'">
+            Đăng nhập
+          </button>
+        </div>
+
       </div>
 
     </div>
