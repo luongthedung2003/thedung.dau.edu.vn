@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <title>THEDUNG - Tin Tức</title>
+    <link rel="icon" href="images/logo.png">
+
+    <style>
+        :root {
+            --gold-color: #5120bb;
+            --gold-light: #08179c;
+            --gold-dark: #1c1d7a;
+            --footer-primary-purple: #5120bb;
+            --footer-light-purple: #08179c;
+            --footer-dark-purple: #1c1d7a;
+            --footer-neon-cyan: #00e5ff;
+            --footer-neon-red: #ff1744;
+            --footer-neon-yellow: #ffcc33;
+            --cyan: #00e5ff;
+            --red: #ff1744;
+            --yellow: #ffcc33;
+        }
+
+        * { font-family: 'DM Sans', sans-serif; color: white; box-sizing: border-box; }
+
+        a { text-decoration: none; color: inherit; }
+
+        body { background-color: black; margin: 0; padding: 0; }
+
+        /* ── NAV ── */
+        .navbar {
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(175,134,80,0.2);
+            padding: 0.75rem 0;
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(175,134,80,0.2);
+        }
+        .logo-box {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-color));
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 6px rgba(175,134,80,0.3);
+        }
+        .logo-box i { color: white; font-size: 20px; }
+        .brand-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.25rem; font-weight: 600; color: white; margin-left: 0.75rem; letter-spacing: 1px;
+        }
+        .day-navigator {
+            background: rgba(255,255,255,0.05); border-radius: 12px; padding: 0.5rem;
+            display: flex; align-items: center; gap: 1rem; border: 1px solid rgba(175,134,80,0.2);
+        }
+        .day-btn {
+            font-family: 'Space Mono', monospace;
+            padding: 0.5rem 1rem; border: none; background: transparent; border-radius: 8px;
+            font-size: 0.875rem; font-weight: 500; color: #d1d5db;
+            transition: all 0.2s; white-space: nowrap; cursor: pointer; position: relative;
+        }
+        .day-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+        .day-btn::after {
+            content: ""; position: absolute; left: 15%; bottom: 2px; width: 70%; height: 2px;
+            border-radius: 2px; background: linear-gradient(90deg,#00e5ff,#ff1744);
+            opacity: 0; transform: scaleX(0); transition: all 0.3s ease;
+        }
+        .day-btn:hover::after { opacity: 1; transform: scaleX(1); box-shadow: 0 0 6px #00e5ff,0 0 12px #ff1744; }
+        .day-btn.active { color: white; }
+        .day-btn.active::after {
+            opacity: 1; transform: scaleX(1);
+            background: linear-gradient(90deg,#00e5ff,#ff1744,#00e5ff); background-size: 200% 100%;
+            animation: glowMove 2s linear infinite; box-shadow: 0 0 8px #00e5ff,0 0 18px #ff1744;
+        }
+        @keyframes glowMove { 0%{background-position:0% 50%}100%{background-position:200% 50%} }
+        .nav-arrow {
+            width: 32px; height: 32px; border: none; background: transparent; border-radius: 8px;
+            color: #9ca3af; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; cursor: pointer;
+        }
+        .nav-arrow:hover { background: rgba(255,255,255,0.1); color: var(--gold-color); }
+        .icon-btn {
+            width: 40px; height: 40px; border: none; background: transparent; border-radius: 8px;
+            color: #d1d5db; display: flex; align-items: center; justify-content: center;
+            position: relative; transition: all 0.2s; cursor: pointer;
+        }
+        .icon-btn:hover { background: rgba(175,134,80,0.2); color: var(--gold-color); }
+        .notification-dot {
+            position: absolute; top: 8px; right: 8px; width: 8px; height: 8px;
+            background: #ef4444; border-radius: 50%; border: 2px solid rgba(0,0,0,0.95);
+        }
+        .mobile-day-nav {
+            background: rgba(0,0,0,0.9); padding: 0.5rem; overflow-x: auto;
+            white-space: nowrap; -webkit-overflow-scrolling: touch;
+            border-bottom: 1px solid rgba(175,134,80,0.2);
+        }
+        .mobile-day-nav::-webkit-scrollbar { display: none; }
+        .mobile-day-btn { padding: 0.5rem 0.75rem; font-size: 0.75rem; display: inline-block; }
+        .offcanvas-end {
+            width: 100%!important; max-width: 320px!important;
+            background: rgba(0,0,0,0.98); border-left: 1px solid rgba(175,134,80,0.2);
+        }
+        .offcanvas-header { background: rgba(0,0,0,0.95); border-bottom: 1px solid rgba(175,134,80,0.2); padding: 1rem 1.25rem; }
+        .offcanvas-title { font-family:'Space Mono',monospace; font-weight:600; font-size:1rem; margin:0; color:white; }
+        .offcanvas-header .btn-close { opacity:0.5; font-size:0.875rem; filter:invert(1); }
+        .offcanvas-body {
+            background-image: linear-gradient(rgba(0,0,0,0.95),rgba(0,0,0,0.2),rgba(0,0,0,0.2),rgba(0,0,0,0.95)),
+                              url("images/2k_stars_milky_way.jpg");
+            padding: 1rem;
+        }
+        .menu-section { margin-bottom: 1.5rem; }
+        .section-title {
+            font-family:'Space Mono',monospace; font-size:0.75rem; font-weight:600; color:#9ca3af;
+            text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem; padding:0 0.5rem;
+        }
+        .menu-item {
+            display:flex; align-items:center; gap:0.75rem; padding:0.625rem 0.75rem; border-radius:8px;
+            color:#d1d5db; font-size:0.875rem; font-weight:500; transition:0.2s; margin-bottom:0.25rem;
+        }
+        .menu-item:hover { background:rgba(175,134,80,0.2); color:white; }
+        .menu-item.active { background:rgba(175,134,80,0.3); color:var(--gold-color); }
+        .menu-item i { width:20px; font-size:1rem; color:#9ca3af; }
+        .menu-item.active i { color:var(--gold-color); }
+        .menu-divider { margin:1rem 0; border:none; height:1px; background:rgba(175,134,80,0.2); }
+
+        /* ── MAIN ── */
+        main {
+            background-image: linear-gradient(rgba(0,0,0,0.95),rgba(0,0,0,0.1),rgba(0,0,0,0.1),rgba(0,0,0,0.95)),
+                              url("images/2k_stars_milky_way.jpg");
+            min-height: 100vh;
+            background-size: cover; background-position: center;
+            padding: 50px 0 80px;
+        }
+
+        .news-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ── PAGE HEADER ── */
+        .news-page-header {
+            text-align: center; margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 30px;
+            position: relative;
+        }
+        .news-page-header::after {
+            content:''; position:absolute; bottom:-1px; left:50%; transform:translateX(-50%);
+            width:100px; height:2px;
+            background:linear-gradient(90deg,var(--cyan),var(--red));
+            box-shadow:0 0 12px var(--cyan);
+        }
+        .news-eyebrow {
+            font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:4px;
+            text-transform:uppercase; color:var(--cyan); margin-bottom:14px; opacity:0.85;
+        }
+        .news-page-title {
+            font-family:'Playfair Display',serif;
+            font-size: clamp(2rem,4.5vw,3.5rem); font-weight:900; line-height:1.1;
+            background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.65) 100%);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+            margin-bottom:12px;
+        }
+        .news-page-sub { font-size:0.9rem; color:rgba(255,255,255,0.45); letter-spacing:0.5px; }
+
+        /* ── CATEGORY CHIPS ── */
+        .category-bar {
+            display:flex; gap:8px; justify-content:center; flex-wrap:wrap;
+            margin-bottom:50px; padding:0 16px;
+        }
+        .cat-chip {
+            padding:5px 16px; border-radius:20px;
+            font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:1px; text-transform:uppercase;
+            cursor:pointer; transition:all 0.3s;
+            border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.6);
+        }
+        .cat-chip:hover, .cat-chip.active {
+            background:var(--cyan); border-color:var(--cyan); color:#000;
+            box-shadow:0 0 16px rgba(0,229,255,0.45);
+        }
+
+        /* ── SECTION DIVIDER ── */
+        .section-divider {
+            display:flex; align-items:center; justify-content:space-between;
+            padding: 18px 0 20px; margin-bottom:0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .section-divider-left { display:flex; align-items:center; gap:12px; }
+        .section-divider-bar {
+            width:3px; height:22px; border-radius:2px;
+            background:linear-gradient(180deg,var(--cyan),var(--red));
+            box-shadow:0 0 8px var(--cyan);
+        }
+        .section-divider-name {
+            font-family:'Space Mono',monospace; font-size:0.7rem; font-weight:700;
+            letter-spacing:3px; text-transform:uppercase; color:white;
+        }
+        .view-all {
+            font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:1px;
+            text-transform:uppercase; color:var(--cyan);
+            display:flex; align-items:center; gap:6px; cursor:pointer; transition:all 0.3s;
+        }
+        .view-all:hover { gap:10px; text-shadow:0 0 10px var(--cyan); }
+        .view-all i { font-size:0.6rem; }
+
+        /* ────────────────────────────────────
+           HERO BLOCK  (3-col like reference)
+        ──────────────────────────────────── */
+        .hero-block {
+            display: grid;
+            grid-template-columns: 220px 1fr 260px;
+            gap: 0;
+            margin-bottom: 0;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        /* Left column — 2 small cards stacked */
+        .hero-col-left {
+            display: flex; flex-direction: column;
+            border-right: 1px solid rgba(255,255,255,0.07);
+        }
+        .hero-small-card {
+            flex: 1; padding: 20px 18px;
+            display: flex; flex-direction: column; gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            cursor: pointer; transition: background 0.3s;
+        }
+        .hero-small-card:last-child { border-bottom: none; }
+        .hero-small-card:hover { background: rgba(255,255,255,0.04); }
+        .hsc-img {
+            width: 100%; aspect-ratio: 4/3; border-radius: 10px; overflow: hidden;
+            background: linear-gradient(135deg,rgba(81,32,187,0.6),rgba(0,229,255,0.2));
+            display:flex; align-items:center; justify-content:center; font-size:2.2rem;
+            position:relative;
+        }
+        .hsc-img::after {
+            content:''; position:absolute; inset:0;
+            background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(255,23,68,0.06));
+        }
+        .hsc-tag {
+            font-family:'Space Mono',monospace; font-size:0.58rem; letter-spacing:2px;
+            text-transform:uppercase; color:var(--cyan);
+        }
+        .hsc-tag.red { color:var(--red); }
+        .hsc-tag.yellow { color:var(--yellow); }
+        .hsc-title {
+            font-family:'Playfair Display',serif; font-size:0.88rem; font-weight:700;
+            line-height:1.35; color:white;
+        }
+        .hsc-date { font-family:'Space Mono',monospace; font-size:0.6rem; color:rgba(255,255,255,0.35); }
+
+        /* Center — featured big card */
+        .hero-col-center { position:relative; min-height:520px; cursor:pointer; }
+        .hero-featured-bg {
+            position:absolute; inset:0;
+            background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,0.97) 100%),
+                        linear-gradient(135deg,rgba(0,20,80,0.75),rgba(81,32,187,0.5),rgba(0,0,0,0.2));
+            display:flex; align-items:center; justify-content:center; font-size:8rem; opacity:0.3;
+        }
+        .hero-featured-body {
+            position:absolute; bottom:0; left:0; right:0; padding:32px 28px;
+        }
+        .hf-category {
+            font-family:'Space Mono',monospace; font-size:0.6rem; letter-spacing:3px;
+            text-transform:uppercase; color:var(--cyan); margin-bottom:10px;
+        }
+        .hf-title {
+            font-family:'Playfair Display',serif;
+            font-size:clamp(1.3rem,2.2vw,1.9rem); font-weight:900; line-height:1.2;
+            color:white; margin-bottom:12px;
+        }
+        .hf-excerpt {
+            font-size:0.82rem; color:rgba(255,255,255,0.6); line-height:1.65; margin-bottom:16px;
+            display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+        }
+        .hf-meta {
+            display:flex; align-items:center; gap:12px;
+            font-family:'Space Mono',monospace; font-size:0.62rem; color:rgba(255,255,255,0.38);
+        }
+        .hf-meta b { color:rgba(255,255,255,0.7); font-weight:500; }
+        .hf-read-btn {
+            display:inline-flex; align-items:center; gap:8px; margin-top:16px;
+            background:linear-gradient(135deg,var(--red),var(--gold-color));
+            padding:9px 22px; border-radius:20px; border:none; cursor:pointer;
+            font-family:'Space Mono',monospace; font-size:0.68rem; font-weight:700;
+            letter-spacing:1px; text-transform:uppercase; color:white;
+            box-shadow:0 0 20px rgba(255,23,68,0.35); transition:all 0.3s;
+        }
+        .hf-read-btn:hover { transform:translateY(-2px); box-shadow:0 0 30px rgba(255,23,68,0.55); }
+
+        /* Right — "Latest" list */
+        .hero-col-right {
+            border-left: 1px solid rgba(255,255,255,0.07);
+            display: flex; flex-direction: column;
+        }
+        .latest-header {
+            font-family:'Space Mono',monospace; font-size:0.6rem; letter-spacing:3px;
+            text-transform:uppercase; color:rgba(255,255,255,0.35);
+            padding:18px 18px 14px; border-bottom:1px solid rgba(255,255,255,0.07);
+        }
+        .latest-item {
+            display:flex; gap:12px; align-items:flex-start; padding:14px 18px;
+            border-bottom:1px solid rgba(255,255,255,0.05);
+            cursor:pointer; transition:background 0.3s;
+        }
+        .latest-item:last-child { border-bottom:none; }
+        .latest-item:hover { background:rgba(255,255,255,0.04); }
+        .li-img {
+            width:58px; height:58px; border-radius:8px; flex-shrink:0;
+            background:linear-gradient(135deg,rgba(81,32,187,0.55),rgba(0,229,255,0.15));
+            display:flex; align-items:center; justify-content:center; font-size:1.3rem;
+        }
+        .li-title { font-size:0.8rem; font-weight:600; line-height:1.3; margin-bottom:5px; color:rgba(255,255,255,0.88); }
+        .li-date { font-family:'Space Mono',monospace; font-size:0.58rem; color:rgba(255,255,255,0.3); }
+
+        /* ── 4-COLUMN GRID ── */
+        .four-grid {
+            display:grid; grid-template-columns:repeat(4,1fr); gap:18px;
+            margin-top:18px; margin-bottom:0;
+        }
+        .three-grid {
+            display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
+            margin-top:18px; margin-bottom:0;
+        }
+        .two-one-grid {
+            display:grid; grid-template-columns:1fr 1fr 1fr 280px; gap:18px;
+            margin-top:18px; margin-bottom:0;
+        }
+
+        .news-card {
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.07);
+            border-radius:14px; overflow:hidden; cursor:pointer;
+            transition:transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+            display:flex; flex-direction:column;
+        }
+        .news-card:hover {
+            transform:translateY(-6px);
+            border-color:rgba(0,229,255,0.3);
+            box-shadow:0 16px 40px rgba(0,229,255,0.14);
+        }
+        .nc-img {
+            aspect-ratio:16/10; position:relative; overflow:hidden;
+            display:flex; align-items:center; justify-content:center; font-size:2.6rem;
+        }
+        .nc-img::after {
+            content:''; position:absolute; inset:0;
+            background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,0.55) 100%);
+        }
+        .bg-1 { background:linear-gradient(135deg,rgba(81,32,187,0.7),rgba(8,23,156,0.4)); }
+        .bg-2 { background:linear-gradient(135deg,rgba(255,23,68,0.4),rgba(81,32,187,0.6)); }
+        .bg-3 { background:linear-gradient(135deg,rgba(0,229,255,0.25),rgba(0,0,0,0.6)); }
+        .bg-4 { background:linear-gradient(135deg,rgba(255,204,51,0.3),rgba(81,32,187,0.5)); }
+        .bg-5 { background:linear-gradient(135deg,rgba(0,230,118,0.3),rgba(8,23,156,0.6)); }
+        .bg-6 { background:linear-gradient(135deg,rgba(255,87,34,0.3),rgba(0,0,0,0.6)); }
+
+        .nc-body { padding:16px; flex:1; display:flex; flex-direction:column; gap:8px; }
+        .nc-tag {
+            font-family:'Space Mono',monospace; font-size:0.58rem; letter-spacing:2px;
+            text-transform:uppercase; color:var(--cyan);
+        }
+        .nc-tag.red { color:var(--red); }
+        .nc-tag.yellow { color:var(--yellow); }
+        .nc-tag.green { color:#00e676; }
+        .nc-title {
+            font-family:'Playfair Display',serif; font-size:0.9rem; font-weight:700;
+            line-height:1.35; color:white; flex:1;
+        }
+        .nc-excerpt { font-size:0.76rem; color:rgba(255,255,255,0.5); line-height:1.6; }
+        .nc-footer {
+            padding:10px 16px; border-top:1px solid rgba(255,255,255,0.06);
+            font-family:'Space Mono',monospace; font-size:0.6rem; color:rgba(255,255,255,0.28);
+            display:flex; justify-content:space-between; align-items:center;
+        }
+
+        /* ── SIDEBAR WIDGET ── */
+        .sidebar-widget {
+            background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);
+            border-radius:14px; padding:18px; display:flex; flex-direction:column;
+        }
+        .sw-title {
+            font-family:'Space Mono',monospace; font-size:0.6rem; letter-spacing:3px;
+            text-transform:uppercase; color:var(--cyan); padding-bottom:14px;
+            border-bottom:1px solid rgba(0,229,255,0.2); margin-bottom:4px;
+        }
+        .trend-item {
+            display:flex; gap:10px; align-items:flex-start; padding:11px 0;
+            border-bottom:1px solid rgba(255,255,255,0.05); cursor:pointer; transition:all 0.3s;
+        }
+        .trend-item:last-child { border-bottom:none; }
+        .trend-item:hover { padding-left:6px; }
+        .trend-num {
+            font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:900;
+            line-height:1; color:rgba(255,255,255,0.08); flex-shrink:0; width:26px;
+        }
+        .trend-cat { font-family:'Space Mono',monospace; font-size:0.55rem; letter-spacing:2px; text-transform:uppercase; color:var(--cyan); margin-bottom:3px; }
+        .trend-title { font-size:0.78rem; font-weight:600; line-height:1.3; color:rgba(255,255,255,0.82); }
+
+        /* Mb spacer between sections */
+        .section-gap { margin-bottom: 50px; }
+
+        /* ── FOOTER ── */
+        .footer-newsletter-wrapper {
+            background:linear-gradient(135deg,rgba(81,32,187,0.1) 0%,rgba(0,0,0,0.95) 100%);
+            padding:3rem 0; border-bottom:1px solid rgba(0,229,255,0.2); position:relative; overflow:hidden;
+        }
+        .footer-newsletter-wrapper::before {
+            content:''; position:absolute; inset:0;
+            background:radial-gradient(circle at 20% 50%,rgba(0,229,255,0.05) 0%,transparent 50%),
+                        radial-gradient(circle at 80% 50%,rgba(255,23,68,0.05) 0%,transparent 50%);
+            pointer-events:none;
+        }
+        .footer-newsletter-container { max-width:1200px; margin:0 auto; padding:0 2rem; position:relative; z-index:1; }
+        .footer-newsletter-content-grid { display:grid; grid-template-columns:auto 1fr auto; gap:2rem; align-items:center; }
+        .footer-newsletter-main-title {
+            font-family:'Space Mono',monospace; font-size:2.5rem; font-weight:700;
+            background:linear-gradient(135deg,#00e5ff 0%,#5120bb 100%);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+            text-transform:uppercase; letter-spacing:2px;
+        }
+        .footer-newsletter-description-text { font-family:'Space Mono',monospace; color:rgba(255,255,255,0.7); line-height:1.6; font-size:0.9rem; }
+        .footer-newsletter-subscribe-form { display:flex; gap:0.5rem; max-width:450px; }
+        .footer-newsletter-email-input {
+            flex:1; padding:1rem 1.5rem; background:rgba(0,0,0,0.5);
+            border:1px solid rgba(0,229,255,0.3); border-radius:8px; color:white;
+            font-family:'Space Mono',monospace; font-size:0.9rem; transition:all 0.3s;
+        }
+        .footer-newsletter-email-input::placeholder { color:rgba(255,255,255,0.4); }
+        .footer-newsletter-email-input:focus { outline:none; border-color:#00e5ff; box-shadow:0 0 15px rgba(0,229,255,0.3); background:rgba(0,0,0,0.7); }
+        .footer-newsletter-submit-button {
+            padding:1rem 1.5rem; background:linear-gradient(135deg,#ff1744 0%,#5120bb 100%);
+            border:none; border-radius:8px; color:white; font-weight:700; cursor:pointer;
+            transition:all 0.3s; display:flex; align-items:center; justify-content:center;
+            min-width:60px; box-shadow:0 0 20px rgba(255,23,68,0.4);
+        }
+        .footer-newsletter-submit-button:hover { transform:translateY(-2px); box-shadow:0 0 30px rgba(255,23,68,0.6); }
+        .thedung-main-footer-wrapper {
+            background:linear-gradient(180deg,rgba(0,0,0,0.95) 0%,rgba(28,29,122,0.1) 50%,rgba(0,0,0,0.95) 100%);
+            padding:4rem 0 2rem; position:relative;
+        }
+        .thedung-main-footer-wrapper::before {
+            content:''; position:absolute; inset:0;
+            background-image:radial-gradient(circle at 2px 2px,rgba(0,229,255,0.1) 1px,transparent 0);
+            background-size:40px 40px; opacity:0.3; pointer-events:none;
+        }
+        .thedung-footer-main-container { max-width:1200px; margin:0 auto; padding:0 2rem; position:relative; z-index:1; }
+        .thedung-footer-columns-grid { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr 1.2fr; gap:3rem; margin-bottom:3rem; }
+        .thedung-footer-brand-section { animation:fadeInUp 0.6s ease-out; }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+        .thedung-footer-brand-logo-container {
+            width:60px; height:60px; background:linear-gradient(135deg,#08179c,#5120bb);
+            border-radius:15px; display:flex; align-items:center; justify-content:center;
+            margin-bottom:1rem; box-shadow:0 0 30px rgba(81,32,187,0.5);
+            animation:logoFloat 3s ease-in-out infinite;
+        }
+        @keyframes logoFloat { 0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)} }
+        .thedung-footer-brand-logo-container i { font-size:30px; }
+        .thedung-footer-brand-name-text { font-family:'Space Mono',monospace; font-size:2rem; font-weight:700; margin-bottom:0.5rem; letter-spacing:3px; }
+        .thedung-footer-brand-tagline-text { color:#00e5ff; font-family:'Space Mono',monospace; font-size:0.85rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:1.5rem; font-weight:700; }
+        .thedung-footer-brand-divider-line { height:2px; width:80px; background:linear-gradient(90deg,#00e5ff,#ff1744); margin:1.5rem 0; box-shadow:0 0 10px #00e5ff; }
+        .thedung-footer-brand-description-paragraph { font-family:'Space Mono',monospace; color:rgba(255,255,255,0.6); line-height:1.8; margin-bottom:2rem; font-size:0.85rem; }
+        .thedung-footer-social-icons-container { display:flex; gap:0.75rem; }
+        .thedung-footer-social-icon-link {
+            width:45px; height:45px; border-radius:10px; background:rgba(0,0,0,0.5);
+            border:1px solid rgba(0,229,255,0.3); display:flex; align-items:center; justify-content:center;
+            transition:all 0.3s; cursor:pointer; position:relative; overflow:hidden;
+        }
+        .thedung-footer-social-icon-link:hover { transform:translateY(-5px); border-color:#00e5ff; box-shadow:0 0 20px rgba(0,229,255,0.5); }
+        .thedung-footer-content-column { animation:fadeInUp 0.6s ease-out; animation-fill-mode:both; }
+        .thedung-footer-content-column:nth-child(2){animation-delay:0.1s}
+        .thedung-footer-content-column:nth-child(3){animation-delay:0.2s}
+        .thedung-footer-content-column:nth-child(4){animation-delay:0.3s}
+        .thedung-footer-content-column:nth-child(5){animation-delay:0.4s}
+        .thedung-footer-column-heading-title {
+            font-family:'Space Mono',monospace; font-size:1.1rem; font-weight:700; margin-bottom:1.5rem;
+            text-transform:uppercase; letter-spacing:1px; position:relative; padding-bottom:0.75rem;
+        }
+        .thedung-footer-column-heading-title::after {
+            content:''; position:absolute; bottom:0; left:0; width:40px; height:2px;
+            background:linear-gradient(90deg,#00e5ff,#ff1744); box-shadow:0 0 10px #00e5ff;
+        }
+        .thedung-footer-navigation-links-list { list-style:none; padding-left:0; margin:0; }
+        .thedung-footer-navigation-links-list li { margin-bottom:0.75rem; }
+        .thedung-footer-navigation-link-item {
+            font-family:'Space Mono',monospace; color:rgba(255,255,255,0.6); font-size:0.85rem;
+            transition:all 0.3s; display:inline-flex; align-items:center; gap:0.5rem;
+        }
+        .thedung-footer-navigation-link-item:hover { color:white; transform:translateX(10px); text-shadow:0 0 10px rgba(0,229,255,0.5); }
+        .thedung-footer-contact-info-box {
+            display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.25rem; padding:1rem;
+            background:rgba(0,0,0,0.3); border-radius:10px; border:1px solid rgba(0,229,255,0.2); transition:all 0.3s;
+        }
+        .thedung-footer-contact-info-box:hover { border-color:#00e5ff; transform:translateX(5px); box-shadow:0 0 15px rgba(0,229,255,0.2); }
+        .thedung-footer-contact-icon-wrapper { width:40px; height:40px; border-radius:8px; background:linear-gradient(135deg,#00e5ff,#5120bb); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 0 15px rgba(0,229,255,0.3); }
+        .thedung-footer-contact-label-text { font-family:'Space Mono',monospace; font-size:0.7rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.25rem; font-weight:700; }
+        .thedung-footer-contact-value-text { font-family:'Space Mono',monospace; color:white; font-size:0.85rem; font-weight:500; }
+        .thedung-footer-map-display-container { position:relative; border-radius:12px; overflow:hidden; height:150px; border:1px solid rgba(0,229,255,0.3); box-shadow:0 0 20px rgba(0,229,255,0.2); margin-top:1rem; }
+        .thedung-footer-map-placeholder-area { width:100%; height:100%; background:linear-gradient(135deg,rgba(81,32,187,0.3),rgba(0,0,0,0.8)),repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,229,255,0.05) 2px,rgba(0,229,255,0.05) 4px),repeating-linear-gradient(90deg,transparent,transparent 2px,rgba(0,229,255,0.05) 2px,rgba(0,229,255,0.05) 4px); display:flex; align-items:center; justify-content:center; position:relative; }
+        .thedung-footer-map-location-pin { width:50px; height:50px; position:relative; }
+        .thedung-footer-map-location-pin::before { content:''; position:absolute; top:50%; left:50%; width:30px; height:30px; background:#ff1744; border-radius:50% 50% 50% 0; transform:translate(-50%,-50%) rotate(-45deg); box-shadow:0 0 20px rgba(255,23,68,0.8); animation:pinBounce 2s ease-in-out infinite; }
+        .thedung-footer-map-location-pin i { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:1rem; z-index:1; }
+        @keyframes pinBounce { 0%,100%{transform:translate(-50%,-50%) rotate(-45deg) translateY(0)}50%{transform:translate(-50%,-50%) rotate(-45deg) translateY(-10px)} }
+        .thedung-footer-bottom-copyright-wrapper {
+            padding:2rem 0; border-top:1px solid rgba(0,229,255,0.2); margin-top:3rem;
+            display:flex; justify-content:space-between; align-items:center;
+            color:rgba(255,255,255,0.5); font-family:'Space Mono',monospace; font-size:0.8rem; flex-wrap:wrap; gap:1rem;
+        }
+        .thedung-footer-bottom-links-list { display:flex; gap:2rem; list-style:none; padding-left:0; margin:0; }
+        .thedung-footer-bottom-link-item { font-family:'Space Mono',monospace; color:rgba(255,255,255,0.5); transition:all 0.3s; }
+        .thedung-footer-bottom-link-item:hover { color:#00e5ff; text-shadow:0 0 10px rgba(0,229,255,0.5); }
+
+        /* ── BACK TO TOP ── */
+        #backToTop { position:fixed; bottom:30px; right:30px; width:56px; height:56px; background:transparent; border:none; cursor:pointer; display:none; z-index:999; padding:0; }
+        #backToTop .sun-ring { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; animation:sunRotate 6s linear infinite; }
+        #backToTop .sun-ring i { font-size:56px; color:#ffcc33; filter:drop-shadow(0 0 6px rgba(255,204,51,0.8)); }
+        #backToTop .arrow-up { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+        #backToTop .arrow-up i { font-size:18px; color:white; text-shadow:0 0 6px rgba(255,255,255,0.8); z-index:2; }
+        #backToTop:hover { transform:translateY(-6px) scale(1.05); transition:0.3s ease; }
+        @keyframes sunRotate { from{transform:rotate(0)}to{transform:rotate(360deg)} }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width:1100px) {
+            .hero-block { grid-template-columns:1fr 1fr; }
+            .hero-col-right { display:none; }
+            .two-one-grid { grid-template-columns:1fr 1fr 1fr; }
+            .two-one-grid .sidebar-widget { display:none; }
+            .thedung-footer-columns-grid { grid-template-columns:1fr 1fr 1fr; gap:2.5rem; }
+            .thedung-footer-content-column:nth-child(5){ grid-column:1/-1; max-width:500px; }
+        }
+        @media (max-width:768px) {
+            .hero-block { grid-template-columns:1fr; }
+            .hero-col-left { flex-direction:row; overflow-x:auto; border-right:none; border-bottom:1px solid rgba(255,255,255,0.07); }
+            .hero-small-card { min-width:220px; border-bottom:none; border-right:1px solid rgba(255,255,255,0.07); }
+            .hero-col-center { min-height:320px; }
+            .four-grid { grid-template-columns:1fr 1fr; }
+            .three-grid { grid-template-columns:1fr 1fr; }
+            .two-one-grid { grid-template-columns:1fr 1fr; }
+            .footer-newsletter-content-grid { grid-template-columns:1fr; gap:1.5rem; text-align:center; }
+            .footer-newsletter-subscribe-form { max-width:100%; }
+            .thedung-footer-columns-grid { grid-template-columns:1fr 1fr; gap:2rem; }
+            .thedung-footer-brand-section { grid-column:1/-1; }
+            .thedung-footer-content-column:nth-child(5){ grid-column:1/-1; }
+            .thedung-footer-bottom-copyright-wrapper { flex-direction:column; text-align:center; }
+            .thedung-footer-bottom-links-list { gap:1rem; }
+        }
+        @media (max-width:520px) {
+            .four-grid { grid-template-columns:1fr; }
+            .three-grid { grid-template-columns:1fr; }
+            .two-one-grid { grid-template-columns:1fr; }
+            .hero-col-left { flex-direction:column; }
+            .hero-small-card { min-width:unset; border-right:none; border-bottom:1px solid rgba(255,255,255,0.07); }
+            .cat-chip { font-size:0.6rem; padding:4px 11px; }
+            .news-page-title { font-size:1.8rem; }
+            .footer-newsletter-main-title { font-size:1.8rem; }
+            .footer-newsletter-subscribe-form { flex-direction:column; }
+            .footer-newsletter-submit-button { width:100%; }
+            .thedung-footer-brand-name-text { font-size:1.5rem; }
+            .thedung-footer-social-icons-container { justify-content:center; }
+            .thedung-footer-bottom-links-list { flex-direction:column; gap:0.5rem; }
+            .thedung-footer-brand-logo-container { margin:0 auto 1rem; }
+            .thedung-footer-brand-divider-line { margin:1.5rem auto; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Desktop Nav -->
+<nav class="navbar d-none d-md-block">
+    <div class="container px-4">
+        <div class="d-flex justify-content-between align-items-center w-100">
+            <div class="d-flex align-items-center">
+                <div class="logo-box"><i class="fas fa-rocket"></i></div>
+                <span class="brand-text">THEDUNG</span>
+            </div>
+            <div class="day-navigator">
+                <button class="nav-arrow"><i class="fas fa-chevron-left"></i></button>
+                <a href="index.html" class="day-btn">TRANG CHỦ</a>
+                <a href="courses.html" class="day-btn">KHÓA HỌC</a>
+                 <a href="netflix.html" class="day-btn">NETFLIX</a>
+                <a href="music.html" class="day-btn">ÂM NHẠC</a>
+                <a href="news.html" class="day-btn active">TIN TỨC</a>
+                <a href="contact.html" class="day-btn">LIÊN HỆ</a>
+                <button class="nav-arrow"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <button class="icon-btn"><i class="fa-regular fa-comment"></i></button>
+                <button class="icon-btn"><i class="fa-regular fa-bell"></i><span class="notification-dot"></span></button>
+                <a href="login.html" class="icon-btn"><i class="fa-regular fa-user"></i></a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Nav -->
+<nav class="navbar d-md-none">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center w-100">
+            <div class="d-flex align-items-center">
+                <div class="logo-box"><i class="fas fa-rocket"></i></div>
+                <span class="brand-text">THEDUNG</span>
+            </div>
+            <div class="d-flex align-items-center gap-1">
+                <button class="icon-btn"><i class="fa-regular fa-comment"></i></button>
+                <button class="icon-btn"><i class="fa-regular fa-bell"></i><span class="notification-dot"></span></button>
+                <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="mobile-day-nav d-md-none">
+    <div class="d-flex align-items-center gap-2">
+        <button class="nav-arrow"><i class="fas fa-chevron-left"></i></button>
+        <div class="d-inline-flex gap-1">
+            <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
+            <a href="courses.html" class="day-btn mobile-day-btn">Khóa học</a>
+            <a href="netflix.html" class="day-btn mobile-day-btn">Netflix</a>
+            <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
+            <a href="news.html" class="day-btn mobile-day-btn active">Tin tức</a>
+            <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
+        </div>
+        <button class="nav-arrow"><i class="fas fa-chevron-right"></i></button>
+    </div>
+</div>
+
+<!-- Offcanvas -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="menu-section">
+            <div class="section-title">Navigation</div>
+            <a href="index.html" class="menu-item"><i class="fas fa-home"></i>Trang chủ</a>
+            <a href="courses.html" class="menu-item"><i class="fas fa-sun"></i>Khóa học</a>
+             <a href="netflix.html" class="menu-item"><i class="fas fa-sun"></i>Netflix</a>
+            <a href="music.html" class="menu-item"><i class="fas fa-music"></i>Âm nhạc</a>
+            <a href="news.html" class="menu-item active"><i class="fas fa-newspaper"></i>Tin tức</a>
+            <a href="contact.html" class="menu-item"><i class="fas fa-envelope"></i>Liên hệ</a>
+        </div>
+        <div class="menu-divider"></div>
+        <div class="menu-section">
+            <div class="section-title">Explore</div>
+            <a href="#" class="menu-item"><i class="fas fa-sun"></i>Trắc nghiệm</a>
+            <a href="#" class="menu-item"><i class="fas fa-circle"></i>Tài liệu</a>
+            <a href="#" class="menu-item"><i class="fas fa-circle"></i>Thi thử</a>
+        </div>
+        <div class="menu-divider"></div>
+        <div class="menu-section">
+            <div class="section-title">Account</div>
+            <a href="login.html" class="menu-item"><i class="fas fa-sign-in-alt"></i>Đăng nhập</a>
+            <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i>Cài đặt</a>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main>
+<div class="news-container">
+
+    <!-- Page Header -->
+    <div class="news-page-header" data-aos="fade-down">
+        <div class="news-eyebrow">ĐH Kiến Trúc Đà Nẵng · Cổng Thông Tin Học Tập</div>
+        <h1 class="news-page-title">Tin Tức & Sự Kiện</h1>
+        <p class="news-page-sub">Cập nhật tin tức mới nhất từ Trường Đại học Kiến trúc Đà Nẵng</p>
+    </div>
+
+    <!-- Category chips -->
+    <div class="category-bar" data-aos="fade-up" data-aos-delay="80">
+        <span class="cat-chip active" data-cat="all">Tất cả</span>
+        <span class="cat-chip" data-cat="tuyen-sinh">Tuyển sinh</span>
+        <span class="cat-chip" data-cat="hoc-thuat">Học thuật</span>
+        <span class="cat-chip" data-cat="su-kien">Sự kiện</span>
+        <span class="cat-chip" data-cat="nghien-cuu">Nghiên cứu</span>
+        <span class="cat-chip" data-cat="sinh-vien">Sinh viên</span>
+        <span class="cat-chip" data-cat="hop-tac">Hợp tác</span>
+        <span class="cat-chip" data-cat="thong-bao">Thông báo</span>
+    </div>
+
+    <!-- ═══ HERO BLOCK ═══ -->
+    <div data-aos="fade-up" data-aos-delay="120" class="section-gap">
+        <div class="hero-block">
+
+            <!-- Left: 2 small cards -->
+            <div class="hero-col-left">
+                <div class="hero-small-card">
+                    <div class="hsc-img">🏛️</div>
+                    <span class="hsc-tag">Học thuật</span>
+                    <div class="hsc-title">Hội thảo Đồ án Quy hoạch đô thị quốc gia 2025 tại UDAC</div>
+                    <div class="hsc-date">08 tháng 1, 2025</div>
+                </div>
+                <div class="hero-small-card">
+                    <div class="hsc-img">📐</div>
+                    <span class="hsc-tag red">Nghiên cứu · Thiết kế</span>
+                    <div class="hsc-title">Sinh viên đoạt giải nhất thiết kế kiến trúc xanh ASEAN</div>
+                    <div class="hsc-date">08 tháng 1, 2025</div>
+                </div>
+            </div>
+
+            <!-- Center: Featured -->
+            <div class="hero-col-center">
+                <div class="hero-featured-bg">🏗️</div>
+                <div class="hero-featured-body">
+                    <div class="hf-category">✦ Tin nổi bật · Tuyển sinh 2025</div>
+                    <h2 class="hf-title">Trường ĐH Kiến Trúc Đà Nẵng công bố 1.200 chỉ tiêu tuyển sinh năm học 2025–2026</h2>
+                    <p class="hf-excerpt">Nhà trường chính thức mở 8 ngành đào tạo với điểm sàn dự kiến tăng 0.5–1 điểm so với năm ngoái. Ngành Kiến trúc và Quy hoạch đô thị tiếp tục dẫn đầu về số lượng đăng ký, phản ánh nhu cầu nguồn nhân lực chất lượng cao trong lĩnh vực xây dựng đô thị Đà Nẵng và khu vực miền Trung.</p>
+                    <div class="hf-meta">
+                        <i class="far fa-calendar-alt"></i>
+                        <b>08 tháng 1, 2025</b>
+                        &nbsp;·&nbsp; Ban Tuyển Sinh
+                        &nbsp;·&nbsp; 5 phút đọc
+                    </div>
+                    <a href="#" class="hf-read-btn">Đọc ngay <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Right: Latest list -->
+            <div class="hero-col-right">
+                <div class="latest-header">Mới nhất</div>
+                <div class="latest-item">
+                    <div class="li-img">🎓</div>
+                    <div>
+                        <div class="li-title">Lễ tốt nghiệp khoá 2021–2025 dự kiến tháng 6/2025</div>
+                        <div class="li-date">08 tháng 1, 2025</div>
+                    </div>
+                </div>
+                <div class="latest-item">
+                    <div class="li-img">🤝</div>
+                    <div>
+                        <div class="li-title">Ký kết hợp tác với Đại học Kiến trúc Tokyo, Nhật Bản</div>
+                        <div class="li-date">08 tháng 1, 2025</div>
+                    </div>
+                </div>
+                <div class="latest-item">
+                    <div class="li-img">🏆</div>
+                    <div>
+                        <div class="li-title">Đội thi UDAC top 3 cuộc thi thiết kế toàn quốc 2024</div>
+                        <div class="li-date">08 tháng 1, 2025</div>
+                    </div>
+                </div>
+                <div class="latest-item">
+                    <div class="li-img">📚</div>
+                    <div>
+                        <div class="li-title">Thư viện số mở rộng thêm 5.000 đầu sách kiến trúc mới</div>
+                        <div class="li-date">08 tháng 1, 2025</div>
+                    </div>
+                </div>
+                <div class="latest-item">
+                    <div class="li-img">🌏</div>
+                    <div>
+                        <div class="li-title">Chương trình trao đổi sinh viên ASEAN 2025 mở đăng ký</div>
+                        <div class="li-date">08 tháng 1, 2025</div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /hero-block -->
+    </div>
+
+    <!-- ═══ SECTION: HỌC THUẬT ═══ -->
+    <div data-aos="fade-right" data-aos-delay="80">
+        <div class="section-divider">
+            <div class="section-divider-left">
+                <div class="section-divider-bar"></div>
+                <span class="section-divider-name">Học Thuật &amp; Nghiên Cứu</span>
+            </div>
+            <a href="#" class="view-all">Xem tất cả <i class="fas fa-chevron-right"></i></a>
+        </div>
+    </div>
+
+    <div class="four-grid section-gap" data-aos="fade-up" data-aos-delay="120">
+        <div class="news-card">
+            <div class="nc-img bg-1">🏛️</div>
+            <div class="nc-body">
+                <span class="nc-tag">Học thuật</span>
+                <div class="nc-title">Hội nghị KH Kiến trúc – Xây dựng UDAC 2025 thu hút 200 tham luận</div>
+                <p class="nc-excerpt">Sự kiện thường niên quy tụ nhà khoa học, giảng viên và sinh viên từ khắp cả nước với chủ đề "Kiến trúc bền vững trong kỷ nguyên số".</p>
+            </div>
+            <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Ban KH&amp;CN</span></div>
+        </div>
+        <div class="news-card">
+            <div class="nc-img bg-2">📏</div>
+            <div class="nc-body">
+                <span class="nc-tag red">Nghiên cứu</span>
+                <div class="nc-title">Mô hình nhà ở thích ứng khí hậu miền Trung — đề tài cấp Nhà nước</div>
+                <p class="nc-excerpt">GS.TS Nguyễn Thanh Hà và cộng sự công bố công trình nghiên cứu thiết kế nhà ở chịu bão lũ vùng duyên hải Trung Bộ.</p>
+            </div>
+            <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Phòng NCKH</span></div>
+        </div>
+        <div class="news-card">
+            <div class="nc-img bg-5">🌿</div>
+            <div class="nc-body">
+                <span class="nc-tag green">Triển lãm</span>
+                <div class="nc-title">60 đồ án Kiến trúc Xanh sinh viên năm 4 trưng bày tại sảnh chính</div>
+                <p class="nc-excerpt">Triển lãm mở cửa 5 ngày liên tiếp miễn phí cho công chúng, ghi nhận mức độ quan tâm cao từ các doanh nghiệp trong ngành.</p>
+            </div>
+            <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Khoa Kiến Trúc</span></div>
+        </div>
+        <div class="news-card">
+            <div class="nc-img bg-4">📋</div>
+            <div class="nc-body">
+                <span class="nc-tag yellow">Thông báo</span>
+                <div class="nc-title">Lịch thi kết thúc học kỳ II năm học 2024–2025 chính thức ban hành</div>
+                <p class="nc-excerpt">Phòng Đào tạo thông báo lịch thi chính thức, sinh viên kiểm tra thông tin và phòng thi qua cổng đào tạo nhà trường.</p>
+            </div>
+            <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Phòng Đào Tạo</span></div>
+        </div>
+    </div>
+
+    <!-- ═══ SECTION: HOẠT ĐỘNG SINH VIÊN ═══ -->
+    <div data-aos="fade-right" data-aos-delay="80">
+        <div class="section-divider">
+            <div class="section-divider-left">
+                <div class="section-divider-bar"></div>
+                <span class="section-divider-name">Hoạt Động Sinh Viên</span>
+            </div>
+            <a href="#" class="view-all">Xem tất cả <i class="fas fa-chevron-right"></i></a>
+        </div>
+    </div>
+
+    <div class="two-one-grid section-gap" data-aos="fade-up" data-aos-delay="120">
+        <div class="news-card">
+            <div class="nc-img bg-2">🎨</div>
+            <div class="nc-body">
+                <span class="nc-tag red">Sinh viên</span>
+                <div class="nc-title">CLB Kiến trúc UDAC đoạt giải nhất thiết kế toàn quốc lần thứ 12</div>
+                <p class="nc-excerpt">Đội 4 thành viên vượt 120 đội thi với đề tài "Trung tâm văn hoá bền vững ven biển Đà Nẵng", gây ấn tượng mạnh với BGK.</p>
+            </div>
+            <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Đoàn Thanh Niên</span></div>
+        </div>
+        <div class="news-card">
+            <div class="nc-img bg-3">🎓</div>
+            <div class="nc-body">
+                <span class="nc-tag">Học bổng</span>
+                <div class="nc-title">45 sinh viên đạt GPA 3.6+ nhận học bổng khuyến khích học kỳ I</div>
+                <p class="nc-excerpt">Nhà trường công bố danh sách và trao học bổng toàn phần, bán phần cho sinh viên xuất sắc toàn khoá học kỳ vừa qua.</p>
+            </div>
+            <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Phòng CTCT</span></div>
+        </div>
+        <div class="news-card">
+            <div class="nc-img bg-5">🌍</div>
+            <div class="nc-body">
+                <span class="nc-tag green">Quốc tế</span>
+                <div class="nc-title">15 sinh viên xuất sắc được chọn thực tập hè 2025 tại Hàn Quốc</div>
+                <p class="nc-excerpt">Chương trình hợp tác với Seoul National University tài trợ toàn bộ chi phí cho sinh viên đủ tiêu chuẩn xét chọn.</p>
+            </div>
+            <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Phòng HTQT</span></div>
+        </div>
+
+        <!-- Sidebar trending -->
+        <div class="sidebar-widget" data-aos="fade-left">
+            <div class="sw-title">🔥 Đọc nhiều nhất</div>
+            <div class="trend-item">
+                <div class="trend-num">01</div>
+                <div>
+                    <div class="trend-cat">Tuyển sinh</div>
+                    <div class="trend-title">Điểm chuẩn 2025 dự kiến tăng 0.5–1 điểm</div>
+                </div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-num">02</div>
+                <div>
+                    <div class="trend-cat">Học bổng</div>
+                    <div class="trend-title">Học bổng Chính phủ Nhật Bản MEXT mở hồ sơ</div>
+                </div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-num">03</div>
+                <div>
+                    <div class="trend-cat">Sự kiện</div>
+                    <div class="trend-title">Ngày hội việc làm Kiến trúc – Xây dựng 2025</div>
+                </div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-num">04</div>
+                <div>
+                    <div class="trend-cat">Thông báo</div>
+                    <div class="trend-title">Đăng ký học phần học kỳ 2 năm học 2024–2025</div>
+                </div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-num">05</div>
+                <div>
+                    <div class="trend-cat">Nghiên cứu</div>
+                    <div class="trend-title">Hội thảo quy hoạch đô thị ven biển Đà Nẵng</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ SECTION: HỢP TÁC & PHÁT TRIỂN ═══ -->
+    <div data-aos="fade-right" data-aos-delay="80">
+        <div class="section-divider">
+            <div class="section-divider-left">
+                <div class="section-divider-bar"></div>
+                <span class="section-divider-name">Hợp Tác &amp; Phát Triển</span>
+            </div>
+            <a href="#" class="view-all">Xem tất cả <i class="fas fa-chevron-right"></i></a>
+        </div>
+    </div>
+
+    <div class="three-grid section-gap" data-aos="fade-up" data-aos-delay="120">
+        <div class="news-card">
+            <div class="nc-img bg-4">🤝</div>
+            <div class="nc-body">
+                <span class="nc-tag yellow">Hợp tác</span>
+                <div class="nc-title">UDAC ký MOU đào tạo & tuyển dụng với 3 tập đoàn xây dựng miền Trung</div>
+                <p class="nc-excerpt">Đất Xanh Miền Trung, Coteccons và Trung Nam Group chính thức cam kết ưu tiên tuyển dụng sinh viên tốt nghiệp loại giỏi.</p>
+            </div>
+            <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Phòng QHDN</span></div>
+        </div>
+        <div class="news-card">
+            <div class="nc-img bg-3">🌏</div>
+            <div class="nc-body">
+                <span class="nc-tag">Quốc tế</span>
+                <div class="nc-title">Phái đoàn 8 giáo sư NUS Singapore thăm và thảo luận chương trình song bằng</div>
+                <p class="nc-excerpt">Hai bên bàn thảo lộ trình triển khai chương trình đào tạo kép từ năm học 2026–2027 với các ngành chủ chốt.</p>
+            </div>
+            <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Phòng HTQT</span></div>
+        </div>
+        <div class="news-card">
+            <div class="nc-img bg-6">🏙️</div>
+            <div class="nc-body">
+                <span class="nc-tag green">Cộng đồng</span>
+                <div class="nc-title">120 sinh viên tình nguyện cải tạo 5 công viên trong dự án "Đà Nẵng Xanh"</div>
+                <p class="nc-excerpt">Phối hợp với UBND quận Hải Châu, các sinh viên kiến trúc trực tiếp thiết kế và triển khai không gian công cộng thân thiện.</p>
+            </div>
+            <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Đoàn Thanh Niên</span></div>
+        </div>
+    </div>
+
+</div><!-- /news-container -->
+</main>
+
+<!-- Newsletter -->
+<section class="footer-newsletter-wrapper">
+    <div class="footer-newsletter-container">
+        <div class="footer-newsletter-content-grid">
+            <h2 class="footer-newsletter-main-title">Subscribe</h2>
+            <p class="footer-newsletter-description-text">Đăng ký nhận tin tức &amp; sự kiện mới nhất từ UDAC!</p>
+            <form class="footer-newsletter-subscribe-form">
+                <input type="email" class="footer-newsletter-email-input" placeholder="Email của bạn..." required>
+                <button type="submit" class="footer-newsletter-submit-button"><i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="thedung-main-footer-wrapper">
+    <div class="thedung-footer-main-container">
+        <div class="thedung-footer-columns-grid">
+            <div class="thedung-footer-brand-section thedung-footer-content-column">
+                <div class="thedung-footer-brand-logo-container"><i class="fas fa-rocket"></i></div>
+                <h1 class="thedung-footer-brand-name-text">THEDUNG</h1>
+                <p class="thedung-footer-brand-tagline-text">Hỗ trợ học tập</p>
+                <div class="thedung-footer-brand-divider-line"></div>
+                <p class="thedung-footer-brand-description-paragraph">Liên hệ chúng tôi qua nền tảng mạng xã hội</p>
+                <div class="thedung-footer-social-icons-container">
+                    <a href="#" class="thedung-footer-social-icon-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="thedung-footer-social-icon-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="thedung-footer-social-icon-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="thedung-footer-social-icon-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="thedung-footer-content-column">
+                <h3 class="thedung-footer-column-heading-title">About</h3>
+                <ul class="thedung-footer-navigation-links-list">
+                    <li><a href="#" class="thedung-footer-navigation-link-item">Giới thiệu</a></li>
+                    <li><a href="#" class="thedung-footer-navigation-link-item">Lịch sử</a></li>
+                    <li><a href="#" class="thedung-footer-navigation-link-item">Sứ mệnh</a></li>
+                    <li><a href="#" class="thedung-footer-navigation-link-item">Đội ngũ</a></li>
+                </ul>
+            </div>
+            <div class="thedung-footer-content-column">
+                <h3 class="thedung-footer-column-heading-title">Menu</h3>
+                <ul class="thedung-footer-navigation-links-list">
+                    <li><a href="index.html" class="thedung-footer-navigation-link-item">Trang chủ</a></li>
+                    <li><a href="courses.html" class="thedung-footer-navigation-link-item">Khóa học</a></li>
+                    <li><a href="music.html" class="thedung-footer-navigation-link-item">Âm nhạc</a></li>
+                    <li><a href="news.html" class="thedung-footer-navigation-link-item">Tin tức</a></li>
+                    <li><a href="contact.html" class="thedung-footer-navigation-link-item">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="thedung-footer-content-column">
+                <h3 class="thedung-footer-column-heading-title">Services</h3>
+                <ul class="thedung-footer-navigation-links-list">
+                    <li><a href="#" class="thedung-footer-navigation-link-item">Trắc nghiệm</a></li>
+                    <li><a href="#" class="thedung-footer-navigation-link-item">Tài liệu</a></li>
+                    <li><a href="#" class="thedung-footer-navigation-link-item">Thi thử</a></li>
+                    <li><a href="#" class="thedung-footer-navigation-link-item">Học tập</a></li>
+                </ul>
+            </div>
+            <div class="thedung-footer-content-column">
+                <h3 class="thedung-footer-column-heading-title">Contact</h3>
+                <div class="thedung-footer-contact-info-box">
+                    <div class="thedung-footer-contact-icon-wrapper"><i class="fas fa-phone-alt"></i></div>
+                    <div>
+                        <div class="thedung-footer-contact-label-text">Call</div>
+                        <div class="thedung-footer-contact-value-text">+091 984 4429</div>
+                    </div>
+                </div>
+                <div class="thedung-footer-contact-info-box">
+                    <div class="thedung-footer-contact-icon-wrapper"><i class="fas fa-envelope"></i></div>
+                    <div>
+                        <div class="thedung-footer-contact-label-text">Email</div>
+                        <div class="thedung-footer-contact-value-text">luongthedung@gmail.com</div>
+                    </div>
+                </div>
+                <div class="thedung-footer-map-display-container">
+                    <div class="thedung-footer-map-placeholder-area">
+                        <div class="thedung-footer-map-location-pin"><i class="fas fa-map-marker-alt"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="thedung-footer-bottom-copyright-wrapper">
+            <div>&copy; 2025 THEDUNG. All rights reserved.</div>
+            <ul class="thedung-footer-bottom-links-list">
+                <li><a href="#" class="thedung-footer-bottom-link-item">Privacy Policy</a></li>
+                <li><a href="#" class="thedung-footer-bottom-link-item">Our History</a></li>
+                <li><a href="#" class="thedung-footer-bottom-link-item">What We Do</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<button id="backToTop" title="Lên đầu trang">
+    <span class="sun-ring"><i class="fas fa-sun"></i></span>
+    <span class="arrow-up"><i class="fas fa-chevron-up"></i></span>
+</button>
+
+<script src="js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 850, easing: 'ease-out-cubic', once: true, offset: 80 });
+
+    // Back to top
+    const btn = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => btn.style.display = window.scrollY > 300 ? "flex" : "none");
+    btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+    // Category chips
+    document.querySelectorAll('.cat-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+        });
+    });
+
+    // Newsletter
+    document.querySelector('.footer-newsletter-subscribe-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Cảm ơn bạn đã đăng ký!');
+        this.reset();
+    });
+</script>
+</body>
+</html>

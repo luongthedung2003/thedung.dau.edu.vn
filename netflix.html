@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <title>THEDUNG</title>
+    <title>THEDUNG - Netflix Style</title>
     <link rel="icon" href="images/logo.png">
 
     <style>
-        
-
         :root {
             --gold-color: #5120bb;
             --gold-light: #08179c;
             --gold-dark: #1c1d7a;
+            --netflix-red: #E50914;
         }
 
         * {
@@ -105,79 +104,43 @@
             color: white;
         }
 
-.day-btn {
-    position: relative;
-    background: transparent;
-    color: #d1d5db;
-}
+        .day-btn::after {
+            content: "";
+            position: absolute;
+            left: 15%;
+            bottom: 2px;
+            width: 70%;
+            height: 2px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #00e5ff, #ff1744);
+            opacity: 0;
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+        }
 
-/* Hover: hiện gạch phát sáng */
-.day-btn::after {
-    content: "";
-    position: absolute;
-    left: 15%;
-    bottom: 2px;
-    width: 70%;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #00e5ff, #ff1744);
-    opacity: 0;
-    transform: scaleX(0);
-    transition: all 0.3s ease;
-}
+        .day-btn:hover::after {
+            opacity: 1;
+            transform: scaleX(1);
+            box-shadow: 0 0 6px #00e5ff, 0 0 12px #ff1744;
+        }
 
-/* Hover effect */
-.day-btn:hover::after {
-    opacity: 1;
-    transform: scaleX(1);
-    box-shadow:
-        0 0 6px #00e5ff,
-        0 0 12px #ff1744;
-}
+        .day-btn.active {
+            color: white;
+        }
 
-/* Active: luôn hiện + mạnh hơn */
-.day-btn.active {
-    color: white;
-}
+        .day-btn.active::after {
+            opacity: 1;
+            transform: scaleX(1);
+            background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
+            background-size: 200% 100%;
+            animation: glowMove 2s linear infinite;
+            box-shadow: 0 0 8px #00e5ff, 0 0 18px #ff1744;
+        }
 
-.day-btn.active::after {
-    opacity: 1;
-    transform: scaleX(1);
-    background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
-    background-size: 200% 100%;
-    animation: glowMove 2s linear infinite;
-    box-shadow:
-        0 0 8px #00e5ff,
-        0 0 18px #ff1744;
-}
-
-/* Animation chạy ánh sáng */
-@keyframes glowMove {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
-}
-
-
-.day-btn.active {
-    background: transparent;
-    color: white;
-    box-shadow: none;
-}
-
-.day-btn.active::after {
-    content: "";
-    position: absolute;
-    left: 15%;
-    bottom: 0px;
-    width: 70%;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #00e5ff, #ff1744);
-    box-shadow: 
-        0 0 6px #00e5ff,
-        0 0 12px #ff1744;
-}
-
+        @keyframes glowMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
 
         .nav-arrow {
             width: 32px;
@@ -340,93 +303,419 @@
 
         main {
             background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
-            height: 1200px;
+            min-height: 100vh;
             background-size: cover;
             background-position: center;
+            padding-bottom: 60px;
         }
 
-       
-
-
-       
-       
-
-       
-
-       
-
-
-        
-
-      
-        /* ========================================
-           RESPONSIVE DESIGN
-           ======================================== */
-
-        @media screen and (max-width: 1024px) {
-            .logo-box {
-                width: 36px;
-                height: 36px;
-            }
-
-            .logo-box i {
-                font-size: 18px;
-            }
-
-            .brand-text {
-                font-size: 1.125rem;
-            }
-
-            .icon-btn {
-                width: 36px;
-                height: 36px;
-            }
-
-            
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px 60px;
+            overflow: hidden;
         }
 
-       
-        @media screen and (max-width: 480px) {
-            .logo-box {
-                width: 32px;
-                height: 32px;
-            }
-
-            .logo-box i {
-                font-size: 16px;
-            }
-
-            .brand-text {
-                font-size: 1rem;
-            }
-
-            .icon-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 0.875rem;
-            }
-
-            main {
-                min-height: 700px;
-            }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8)), 
+                        linear-gradient(to right, rgba(0,0,0,0.9), transparent 70%);
+            z-index: 1;
         }
 
-        @media screen and (max-width: 360px) {
-            .offcanvas-end {
-                max-width: 100% !important;
-            }
+        .hero-banner img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
         }
 
-        /* Performance optimization for mobile */
-        @media (max-width: 768px) {
-            /* Disable auto-rotate on mobile for better performance */
-            model-viewer {
-                --poster-color: transparent;
-            }
+        .hero-content {
+            max-width: 500px;
+            z-index: 10;
         }
-    </style>
 
- <style>
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .hero-rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 15px;
+        }
+
+        .hero-rating i {
+            color: #ffd700;
+            font-size: 0.9rem;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 10px 0 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #ddd;
+            margin-bottom: 25px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-watch {
+            background: var(--netflix-red);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-watch:hover {
+            background: #c40812;
+            transform: scale(1.05);
+        }
+
+        .btn-addlist {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-addlist:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: white;
+        }
+
+        /* Slider Indicators */
+        .hero-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .indicator {
+            width: 60px;
+            height: 3px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .indicator.active {
+            background: white;
+        }
+
+        /* Category Tabs */
+        .category-section {
+            padding: 40px 60px 30px;
+        }
+
+        .category-tabs {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .category-tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .category-tabs::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+        }
+
+        .tab-icon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .category-tab {
+            padding: 8px 18px;
+            background: rgba(229, 9, 20, 0.9);
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: white;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .category-tab:hover {
+            background: #c40812;
+            transform: scale(1.05);
+        }
+
+        .category-tab.inactive {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.7);
+        }
+
+        .category-tab.inactive:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+            color: white;
+        }
+
+        /* Movie Grid */
+        .movies-row {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .movies-scroll {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 15px;
+        }
+
+        .movies-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .movies-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+        }
+
+        .movie-card {
+            min-width: 180px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 260px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .movie-card:hover .movie-poster img {
+            transform: scale(1.1);
+        }
+
+        .movie-info {
+            padding: 10px 5px;
+        }
+
+        .movie-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .movie-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        .movie-year {
+            color: #999;
+        }
+
+        .movie-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .movie-rating i {
+            color: #ffd700;
+            font-size: 0.7rem;
+        }
+
+        .movie-views {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title-large {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-filter {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            background: rgba(229, 9, 20, 0.9);
+            border: none;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: #c40812;
+        }
+
+        .filter-btn.outline {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .rating-bar i {
+            color: #ffd700;
+            font-size: 1.1rem;
+        }
+
+        .rating-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .rating-progress {
+            flex: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .rating-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 3px;
+        }
+
+        /* Scroll Arrows */
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0,0,0,0.7);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+            display: none;
+        }
+
+        .scroll-arrow:hover {
+            background: rgba(0,0,0,0.9);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .scroll-arrow.left {
+            left: -25px;
+        }
+
+        .scroll-arrow.right {
+            right: -25px;
+        }
+
+        .movies-row:hover .scroll-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Footer styles */
         :root {
             --footer-primary-purple: #5120bb;
             --footer-light-purple: #08179c;
@@ -436,9 +725,6 @@
             --footer-neon-yellow: #ffcc33;
         }
 
-        /* ========================================
-           NEWSLETTER SECTION - FOOTER
-           ======================================== */
         .footer-newsletter-wrapper {
             background: linear-gradient(135deg, rgba(81, 32, 187, 0.1) 0%, rgba(0, 0, 0, 0.95) 100%);
             padding: 3rem 0;
@@ -454,9 +740,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(255, 23, 68, 0.05) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255, 23, 68, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -549,9 +833,6 @@
             font-size: 1.2rem;
         }
 
-        /* ========================================
-           MAIN FOOTER WRAPPER
-           ======================================== */
         .thedung-main-footer-wrapper {
             background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(28, 29, 122, 0.1) 50%, rgba(0, 0, 0, 0.95) 100%);
             padding: 4rem 0 2rem;
@@ -565,8 +846,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: 
-                radial-gradient(circle at 2px 2px, rgba(0, 229, 255, 0.1) 1px, transparent 0);
+            background-image: radial-gradient(circle at 2px 2px, rgba(0, 229, 255, 0.1) 1px, transparent 0);
             background-size: 40px 40px;
             opacity: 0.3;
             pointer-events: none;
@@ -589,9 +869,6 @@
             z-index: 1;
         }
 
-        /* ========================================
-           FOOTER BRAND SECTION
-           ======================================== */
         .thedung-footer-brand-section {
             animation: thedungFooterFadeInUp 0.6s ease-out;
         }
@@ -716,9 +993,6 @@
             z-index: 1;
         }
 
-        /* ========================================
-           FOOTER CONTENT COLUMNS
-           ======================================== */
         .thedung-footer-content-column {
             animation: thedungFooterFadeInUp 0.6s ease-out;
             animation-fill-mode: both;
@@ -794,9 +1068,6 @@
             transform: translateX(0);
         }
 
-        /* ========================================
-           FOOTER CONTACT INFORMATION
-           ======================================== */
         .thedung-footer-contact-info-box {
             display: flex;
             align-items: flex-start;
@@ -850,9 +1121,6 @@
             font-family: 'Space Mono', monospace;
         }
 
-        /* ========================================
-           FOOTER MAP SECTION
-           ======================================== */
         .thedung-footer-map-display-container {
             position: relative;
             border-radius: 12px;
@@ -866,10 +1134,7 @@
         .thedung-footer-map-placeholder-area {
             width: 100%;
             height: 100%;
-            background: 
-                linear-gradient(135deg, rgba(81, 32, 187, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%),
-                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px),
-                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px);
+            background: linear-gradient(135deg, rgba(81, 32, 187, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%), repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -911,62 +1176,6 @@
             50% { transform: translate(-50%, -50%) rotate(-45deg) translateY(-10px); }
         }
 
-        /* ========================================
-           FOOTER THANK YOU BANNER
-           ======================================== */
-        .thedung-footer-thankyou-banner-wrapper {
-            margin-top: 3rem;
-            padding: 2rem;
-            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1) 0%, rgba(255, 23, 68, 0.1) 100%);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .thedung-footer-thankyou-banner-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.2), transparent);
-            animation: thedungFooterThankYouShine 3s ease-in-out infinite;
-        }
-
-        @keyframes thedungFooterThankYouShine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .thedung-footer-thankyou-banner-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 12px;
-            padding: 2px;
-            background: linear-gradient(135deg, var(--footer-neon-cyan), var(--footer-neon-red));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-
-        .thedung-footer-thankyou-message-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            position: relative;
-            z-index: 1;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Space Mono', monospace;
-        }
-
-        /* ========================================
-           FOOTER BOTTOM COPYRIGHT SECTION
-           ======================================== */
         .thedung-footer-bottom-copyright-wrapper {
             padding: 2rem 0;
             border-top: 1px solid rgba(0, 229, 255, 0.2);
@@ -1001,9 +1210,91 @@
             text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         }
 
-        /* ========================================
-           RESPONSIVE DESIGN - TABLET
-           ======================================== */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: none;
+            z-index: 999;
+            padding: 0;
+        }
+
+        #backToTop .sun-ring {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: sunRotate 6s linear infinite;
+        }
+
+        #backToTop .sun-ring i {
+            font-size: 56px;
+            color: #ffcc33;
+            filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
+        }
+
+        #backToTop .arrow-up {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #backToTop .arrow-up i {
+            font-size: 18px;
+            color: white;
+            text-shadow: 0 0 6px rgba(255,255,255,0.8);
+            z-index: 2;
+        }
+
+        #backToTop:hover {
+            transform: translateY(-6px) scale(1.05);
+            transition: 0.3s ease;
+        }
+
+        @keyframes sunRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-banner {
+                height: 400px;
+                padding: 30px 20px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .category-section {
+                padding: 30px 20px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-watch, .btn-addlist {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         @media (max-width: 1024px) {
             .thedung-footer-columns-grid {
                 grid-template-columns: 1fr 1fr 1fr;
@@ -1016,9 +1307,6 @@
             }
         }
 
-        /* ========================================
-           RESPONSIVE DESIGN - MOBILE LANDSCAPE
-           ======================================== */
         @media (max-width: 768px) {
             .footer-newsletter-content-grid {
                 grid-template-columns: 1fr;
@@ -1061,9 +1349,6 @@
             }
         }
 
-        /* ========================================
-           RESPONSIVE DESIGN - MOBILE PORTRAIT
-           ======================================== */
         @media (max-width: 480px) {
             .footer-newsletter-container {
                 padding: 0 1rem;
@@ -1093,21 +1378,8 @@
                 width: 100%;
             }
 
-            .thedung-footer-columns-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
-
-            .thedung-footer-brand-section {
-                grid-column: 1 / -1;
-            }
-
             .thedung-footer-brand-name-text {
                 font-size: 1.5rem;
-            }
-
-            .thedung-footer-thankyou-message-text {
-                font-size: 1.1rem;
             }
 
             .thedung-footer-social-icons-container {
@@ -1128,126 +1400,6 @@
                 margin: 1.5rem auto;
             }
         }
-
-        /* ========================================
-           RESPONSIVE DESIGN - EXTRA SMALL
-           ======================================== */
-        @media (max-width: 360px) {
-            .footer-newsletter-main-title {
-                font-size: 1.25rem;
-            }
-
-            .thedung-footer-brand-name-text {
-                font-size: 1.25rem;
-            }
-
-            .thedung-footer-contact-info-box {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-        }
-    </style>
-
-      <style>
-#backToTop {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 56px;
-    height: 56px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: none;
-    z-index: 999;
-    padding: 0;
-}
-
-/* Vòng mặt trời bên ngoài */
-#backToTop .sun-ring {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: sunRotate 6s linear infinite;
-}
-
-#backToTop .sun-ring i {
-    font-size: 56px;
-    color: #ffcc33;
-    filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
-}
-
-/* Mũi tên bên trong */
-#backToTop .arrow-up {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#backToTop .arrow-up i {
-    font-size: 18px;
-    color: white;
-    text-shadow: 0 0 6px rgba(255,255,255,0.8);
-    z-index: 2;
-}
-
-/* Hover nhẹ */
-#backToTop:hover {
-    transform: translateY(-6px) scale(1.05);
-    transition: 0.3s ease;
-}
-
-/* Animation xoay mặt trời */
-@keyframes sunRotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-    </style>
-      <style>
-      .user-dropdown {
-  margin-left: 10px;
-}
-
-.user-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  transition: 0.3s ease;
-}
-
-.user-btn:hover {
-  background: rgba(81, 32, 187, 0.2);
-}
-
-.user-icon {
-  font-size: 16px;
-}
-
-.username-text {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: #00e5ff;
-}
-
-.user-menu {
-  border-radius: 12px;
-  border: 1px solid rgba(0, 229, 255, 0.3);
-  box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
-}
-
     </style>
 </head>
 
@@ -1267,10 +1419,10 @@
                     <button class="nav-arrow">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <a href="index.html" class="day-btn ">TRANG CHỦ</a>
+                    <a href="index.html" class="day-btn">TRANG CHỦ</a>
                     <a href="courses.html" class="day-btn">KHÓA HỌC</a>
-                     <a href="netflix.html" class="day-btn">NETFLIX</a>
-                    <a href="music.html" class="day-btn active">ÂM NHẠC</a>
+                    <a href="courses.html" class="day-btn active">NETFLIX</a>
+                    <a href="music.html" class="day-btn">ÂM NHẠC</a>
                     <a href="news.html" class="day-btn">TIN TỨC</a>
                     <a href="contact.html" class="day-btn">LIÊN HỆ</a>
                     <button class="nav-arrow">
@@ -1286,7 +1438,9 @@
                         <i class="fa-regular fa-bell"></i>
                         <span class="notification-dot"></span>
                     </button>
-                     <div id="userAreaDesktop"></div>
+                    <a href="login.html" class="icon-btn">
+                        <i class="fa-regular fa-user"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1326,11 +1480,11 @@
                 <i class="fas fa-chevron-left"></i>
             </button>
             <div class="d-inline-flex gap-1">
-                <a href="index.html" class="day-btn mobile-day-btn ">Trang chủ</a>
-                <a href="courses.html" class="day-btn mobile-day-btn ">Khóa học</a>
-                 <a href="netflix.html" class="day-btn mobile-day-btn ">Netflix</a>
-                <a href="music.html" class="day-btn mobile-day-btn active">Âm nhạc</a>
-                <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
+                <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
+                <a href="courses.html" class="day-btn mobile-day-btn">Khóa học</a>
+                 <a href="netflix.html" class="day-btn mobile-day-btn">Netflix</a>
+                <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
+                <a href="news.html" class="day-btn mobile-day-btn ">Tin tức</a>
                 <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
             </div>
             <button class="nav-arrow">
@@ -1348,25 +1502,25 @@
         <div class="offcanvas-body">
             <div class="menu-section">
                 <div class="section-title">Navigation</div>
-                <a href="index.html" class="menu-item ">
+                <a href="index.html" class="menu-item">
                     <i class="fas fa-home"></i>
                     Trang chủ
                 </a>
-                <a href="courses.html" class="menu-item ">
+                <a href="courses.html" class="menu-item">
                     <i class="fas fa-sun"></i>
                     Khóa học
                 </a>
-                 <a href="netflix.html" class="menu-item ">
-                    <i class="fas fa-sun"></i>
+                <a href="netflix.html" class="menu-item active">
+                    <i class="fas fa-film"></i>
                     Netflix
                 </a>
-                <a href="music.html" class="menu-item active">
+                <a href="music.html" class="menu-item">
                     <i class="fas fa-music"></i>
                     Âm nhạc
                 </a>
-                <a href="news.html" class="menu-item">
-                    <i class="fas fa-newspaper"></i>
-                    Tin tức
+                <a href="news.html" class="menu-item ">
+                    <i class="fas fa-film"></i>
+                    Tin Tức
                 </a>
                 <a href="contact.html" class="menu-item">
                     <i class="fas fa-envelope"></i>
@@ -1379,24 +1533,26 @@
             <div class="menu-section">
                 <div class="section-title">Explore</div>
                 <a href="#" class="menu-item">
-                    <i class="fas fa-sun"></i>
-                    Trắc nghiệm
+                    <i class="fas fa-fire"></i>
+                    Trending
                 </a>
                 <a href="#" class="menu-item">
-                    <i class="fas fa-circle"></i>
-                    Tài liệu
+                    <i class="fas fa-star"></i>
+                    Popular
                 </a>
                 <a href="#" class="menu-item">
-                    <i class="fas fa-circle"></i>
-                    Thi thử
+                    <i class="fas fa-plus"></i>
+                    Recently Added
                 </a>
-                
             </div>
             <div class="menu-divider"></div>
 
             <div class="menu-section">
                 <div class="section-title">Account</div>
-                 <div id="userAreaMobile"></div>
+                <a href="login.html" class="menu-item">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Đăng nhập
+                </a>
                 <a href="settings.html" class="menu-item">
                     <i class="fas fa-cog"></i>
                     Cài đặt
@@ -1405,63 +1561,315 @@
         </div>
     </div>
 
+    <!-- Main Content -->
     <main>
-       <div class="container">
-         <h3 style="margin: 50px 0;">Âm nhạc đang chờ Admin phát triển sau...</h3>
-        <div class="container-solarsystem">
-            <a href="#sun" class="sun">
-                <model-viewer interaction-prompt="none" src="assets/Sun.glb" alt="Sun" auto-rotate camera-controls ar
-                    ios-src="assets/sun.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#mercury" class="mercury">
-                <model-viewer interaction-prompt="none" src="assets/Mercury.glb" alt="Mercury" auto-rotate camera-controls ar
-                    ios-src="assets/Mercury.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#venus" class="venus">
-                <model-viewer interaction-prompt="none" src="assets/Venus(surface).glb" alt="Venus" auto-rotate camera-controls ar
-                    ios-src="assets/Venus(surface).glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#earth" class="earth">
-                <model-viewer interaction-prompt="none" src="assets/Earth.glb" alt="Earth" auto-rotate camera-controls ar
-                    ios-src="assets/Earth.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#mars" class="mars">
-                <model-viewer interaction-prompt="none" src="assets/Mars.glb" alt="Mars" auto-rotate camera-controls ar
-                    ios-src="assets/Mars.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#jupiter" class="jupiter">
-                <model-viewer interaction-prompt="none" src="assets/Jupiter.glb" alt="Jupiter" auto-rotate camera-controls ar
-                    ios-src="assets/Jupiter.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#saturn" class="saturn">
-                <model-viewer interaction-prompt="none" src="assets/Saturn.glb" alt="Saturn" auto-rotate camera-controls ar
-                    ios-src="assets/Saturn.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#uranus" class="uranus">
-                <model-viewer interaction-prompt="none" src="assets/Uranus.glb" alt="Uranus" auto-rotate camera-controls ar
-                    ios-src="assets/Uranus.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#neptune" class="neptune">
-                <model-viewer interaction-prompt="none" src="assets/Neptune.glb" alt="Neptune" auto-rotate camera-controls ar
-                    ios-src="assets/Neptune.glb" loading="lazy"></model-viewer>
-            </a>
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <img src="https://i.pinimg.com/1200x/c8/54/cc/c854ccce48c3dbbeb16a834046bce01c.jpg" alt="Save Me">
+            <div class="hero-content" data-aos="fade-right">
+                <div class="hero-badge">
+                    SEASON 1 • 16 EPISODE
+                    <span class="hero-rating">
+                        <i class="fas fa-star"></i> 9.1
+                    </span>
+                    <span style="margin-left: 10px; color: #999;">2017 • Exciting story • 2 season</span>
+                </div>
+                <h1 class="hero-title">SAVE ME</h1>
+                <p class="hero-description">
+                    Series adapted from the webcomic entitled Out of the World by writer Jo Geum-san.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn-watch">
+                        <i class="fas fa-play"></i> WATCH
+                    </button>
+                    <button class="btn-addlist">
+                        <i class="fas fa-plus"></i> ADD LIST
+                    </button>
+                </div>
+            </div>
+            <div class="hero-indicators">
+                <div class="indicator active"></div>
+                <div class="indicator"></div>
+                <div class="indicator"></div>
+            </div>
         </div>
-       </div>
 
-   
+        <!-- Category Section -->
+        <div class="category-section">
+            <!-- Trends Now Section -->
+            <div class="category-tabs">
+                <div class="tab-icon">
+                    <i class="fas fa-fire"></i> Trends Now
+                </div>
+                <div style="flex: 1;"></div>
+                <button class="category-tab inactive"><i class="fas fa-fire"></i> Popular</button>
+                <button class="category-tab inactive"><i class="fas fa-star"></i> Premium</button>
+                <button class="category-tab inactive"><i class="fas fa-plus"></i> Recently Added</button>
+            </div>
+
+            <!-- Genre Tabs -->
+            <div class="category-tabs" style="margin-bottom: 35px;">
+                <button class="category-tab">Action</button>
+                <button class="category-tab inactive">Adventure</button>
+                <button class="category-tab inactive">Biography</button>
+                <button class="category-tab">Crime</button>
+                <button class="category-tab inactive">Comedy</button>
+                <button class="category-tab inactive">Documentary</button>
+                <button class="category-tab">Drama</button>
+                <button class="category-tab inactive">Fantasy</button>
+            </div>
+
+            <!-- Movies Row 1 -->
+            <div class="movies-row" data-aos="fade-up">
+                <button class="scroll-arrow left"><i class="fas fa-chevron-left"></i></button>
+                <div class="movies-scroll">
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/736x/32/76/b6/3276b664e109298b97dc56968cea5072.jpg" alt="Vincenzo">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">Vincenzo</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2021</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 8.4</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 8.4</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/1200x/e5/05/95/e50595e412a899990f02410fd05290f6.jpg" alt="Tomorrow">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">Tomorrow</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2022</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 7.6</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 7.6</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/736x/23/fe/af/23feaf305e780d7874f58feed45469d8.jpg" alt="Sweet Home">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">Sweet Home</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2020</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 7.3</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 7.3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/1200x/7e/3a/ac/7e3aacec211687ff9c356dd106e70a1d.jpg" alt="Flower Of Evil">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">Flower Of Evil</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2020</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 8.6</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 8.6</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/1200x/56/dd/f8/56ddf80d61ec9ac141238b440f40ff6e.jpg" alt="Lawless Lawyer">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">Lawless Lawyer</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2018</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 8.8</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 8.8</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/1200x/c8/76/44/c8764425cce51976eef509f2e9d10038.jpg" alt="My Name">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">My Name</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2021</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 7.9</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 7.9</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/1200x/08/1c/53/081c53ad5f971436902a4a225cb14935.jpg" alt="Kingdom">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">Kingdom</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2019</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 8.3</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 8.3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="scroll-arrow right"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <!-- Movies Section Header -->
+            <div class="section-header" style="margin-top: 50px;" data-aos="fade-up">
+                <div class="section-title-large">
+                    <i class="fas fa-film"></i> Movies
+                </div>
+                <div class="section-filter">
+                    <button class="filter-btn">Latest</button>
+                    <button class="filter-btn outline">Year <i class="fas fa-chevron-down"></i></button>
+                    <button class="filter-btn outline">A-Z <i class="fas fa-chevron-down"></i></button>
+                </div>
+            </div>
+
+            <!-- Rating Bar -->
+            <div class="rating-bar" data-aos="fade-up">
+                <i class="fas fa-star"></i>
+                <span class="rating-value">6.3</span>
+                <div class="rating-progress">
+                    <div class="rating-fill" style="width: 63%"></div>
+                </div>
+            </div>
+
+            <!-- Genre Tabs 2 -->
+            <div class="category-tabs" style="margin: 25px 0 35px;" data-aos="fade-up">
+                <button class="category-tab">Action</button>
+                <button class="category-tab inactive">Adventure</button>
+                <button class="category-tab inactive">Biography</button>
+                <button class="category-tab">Crime</button>
+                <button class="category-tab inactive">Comedy</button>
+                <button class="category-tab inactive">Documentary</button>
+                <button class="category-tab">Drama</button>
+            </div>
+
+            <!-- Movies Row 2 -->
+            <div class="movies-row" data-aos="fade-up">
+                <button class="scroll-arrow left"><i class="fas fa-chevron-left"></i></button>
+                <div class="movies-scroll">
+                    <div class="movie-card">
+                       <div class="movie-poster">
+                            <img src="https://i.pinimg.com/736x/05/23/9c/05239c46d7417441d5d2f777929c2ce8.jpg" alt="The Call">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">One Ordinary Day</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2021</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 8.4</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 8.4</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/736x/8d/e9/85/8de985fef18ab2e8f64f210cd61df0b1.jpg" alt="The Call">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">The Call</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2020</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 7.1</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 7.1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/736x/c8/e6/4b/c8e64b8d519207eed269cec297a4cc20.jpg" alt="The Witch">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">The Witch</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2021</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 8.4</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 8.4</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/736x/39/f0/cb/39f0cb3cd145bf32b330f5e14a9f4218.jpg" alt="Midnight">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">Midnight</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2021</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 6.4</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 6.4</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/1200x/b9/ee/66/b9ee660f0144deaefd7b3614e9d0e067.jpg" alt="#Alive">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">#Alive</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2020</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 6.3</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 6.3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/1200x/6e/90/90/6e909026637faec140123e244892d002.jpg" alt="Steel Rain">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">Steel Rain</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2017</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 7.1</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 7.1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-card">
+                        <div class="movie-poster">
+                            <img src="https://i.pinimg.com/1200x/cf/41/f8/cf41f89b434e68864d0e3360d87d1cbf.jp" alt="Squid Game">
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">Squid Game</div>
+                            <div class="movie-meta">
+                                <span class="movie-year">2021</span>
+                                <span class="movie-views"><i class="fas fa-eye"></i> 9.2</span>
+                                <span class="movie-rating"><i class="fas fa-star"></i> 9.2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="scroll-arrow right"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
     </main>
- 
 
-
-
-
- <!-- Newsletter Section -->
+    <!-- Newsletter Section -->
     <section class="footer-newsletter-wrapper">
         <div class="footer-newsletter-container">
             <div class="footer-newsletter-content-grid">
                 <h2 class="footer-newsletter-main-title">Subscribe</h2>
                 <p class="footer-newsletter-description-text">
-                     Đăng ký tài khoản để nhận thông báo khi có khóa học mới!
+                    Đăng ký để nhận thông báo khi có phim mới!
                 </p>
                 <form class="footer-newsletter-subscribe-form">
                     <input type="email" class="footer-newsletter-email-input" placeholder="Email của bạn..." required>
@@ -1483,7 +1891,7 @@
                         <i class="fas fa-rocket"></i>
                     </div>
                     <h1 class="thedung-footer-brand-name-text">THEDUNG</h1>
-                    <p class="thedung-footer-brand-tagline-text">Hỗ trợ học tập</p>
+                    <p class="thedung-footer-brand-tagline-text">Streaming Platform</p>
                     <div class="thedung-footer-brand-divider-line"></div>
                     <p class="thedung-footer-brand-description-paragraph">
                         Liên hệ chúng tôi qua nền tảng mạng xã hội
@@ -1522,7 +1930,7 @@
                         <li><a href="index.html" class="thedung-footer-navigation-link-item">Trang chủ</a></li>
                         <li><a href="courses.html" class="thedung-footer-navigation-link-item">Khóa học</a></li>
                         <li><a href="music.html" class="thedung-footer-navigation-link-item">Âm nhạc</a></li>
-                        <li><a href="news.html" class="thedung-footer-navigation-link-item">Tin tức</a></li>
+                        <li><a href="netflix.html" class="thedung-footer-navigation-link-item">Phim</a></li>
                         <li><a href="contact.html" class="thedung-footer-navigation-link-item">Liên hệ</a></li>
                     </ul>
                 </div>
@@ -1531,10 +1939,10 @@
                 <div class="thedung-footer-content-column">
                     <h3 class="thedung-footer-column-heading-title">Services</h3>
                     <ul class="thedung-footer-navigation-links-list">
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Trắc nghiệm</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Tài liệu</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Thi thử</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Học tập</a></li>
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Movies</a></li>
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Series</a></li>
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Documentaries</a></li>
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Originals</a></li>
                     </ul>
                 </div>
 
@@ -1558,7 +1966,7 @@
                         </div>
                         <div class="thedung-footer-contact-text-wrapper">
                             <div class="thedung-footer-contact-label-text">Email</div>
-                            <div class="thedung-footer-contact-value-text">luongthedung@gmail.com</div>
+                            <div class="thedung-footer-contact-value-text"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="214d544e4f4655494445544f4661464c40484d0f424e4c">[email&#160;protected]</a></div>
                         </div>
                     </div>
 
@@ -1572,7 +1980,6 @@
                 </div>
             </div>
 
-        
             <!-- Bottom Footer -->
             <div class="thedung-footer-bottom-copyright-wrapper">
                 <div>&copy; 2025 THEDUNG. All rights reserved.</div>
@@ -1585,219 +1992,67 @@
         </div>
     </footer>
 
-  
-     <button id="backToTop" title="Lên đầu trang">
-    <span class="sun-ring">
-        <i class="fas fa-sun"></i>
-    </span>
-    <span class="arrow-up">
-        <i class="fas fa-chevron-up"></i>
-    </span>
-</button>
+    <!-- Back to Top Button -->
+    <button id="backToTop" title="Lên đầu trang">
+        <span class="sun-ring">
+            <i class="fas fa-sun"></i>
+        </span>
+        <span class="arrow-up">
+            <i class="fas fa-chevron-up"></i>
+        </span>
+    </button>
 
-    <script src="js/bootstrap.min.js"></script>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-<!-- 
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    
     <script>
-        if (window.innerWidth <= 768) {
-            document.addEventListener('DOMContentLoaded', function() {
-                const modelViewers = document.querySelectorAll('model-viewer');
-                modelViewers.forEach(viewer => {
-                    viewer.removeAttribute('auto-rotate');
-                });
-            });
-        }
-    </script> -->
-<script>
-const text = "Hỗ trợ học tập";
-const typingElement = document.getElementById("typingText");
-const sound = document.getElementById("typeSound");
+        // Back to top button
+        const backToTopBtn = document.getElementById("backToTop");
 
-/* ===== DANH SÁCH MÀU ===== */
-const colors = [
-    "#ffffff",   // trắng
-    "#00e5ff",   // xanh cyan
-    "#ff1744",   // đỏ neon
-    "#ffcc33",   // vàng
-    "#7c4dff",   // tím
-    "#00e676"    // xanh lá
-];
-
-let colorIndex = 0;
-
-let index = 1;        // bắt đầu từ chữ H
-let isDeleting = false;
-let lastSoundTime = 0;
-
-const TYPE_SPEED = 120;
-const DELETE_SPEED = 80;
-const PAUSE_AFTER_TYPE = 1200;
-const PAUSE_AFTER_DELETE = 600;
-const SOUND_GAP = 90;
-
-function playSoundSafe() {
-    const now = Date.now();
-    if (now - lastSoundTime > SOUND_GAP) {
-        sound.currentTime = 0;
-        sound.play().catch(() => {});
-        lastSoundTime = now;
-    }
-}
-
-function changeColor() {
-    colorIndex = (colorIndex + 1) % colors.length;
-    typingElement.style.color = colors[colorIndex];
-}
-
-function typeLoop() {
-    if (!isDeleting) {
-        // Gõ chữ
-        typingElement.textContent = text.substring(0, index);
-        playSoundSafe();
-        index++;
-
-        if (index > text.length) {
-            // Gõ xong → đổi màu
-            changeColor();
-            setTimeout(() => isDeleting = true, PAUSE_AFTER_TYPE);
-        }
-    } else {
-        // Xóa chữ nhưng KHÔNG xóa chữ H
-        if (index > 1) {
-            typingElement.textContent = text.substring(0, index);
-            playSoundSafe();
-            index--;
-        } else {
-            // Dừng ở chữ H
-            setTimeout(() => isDeleting = false, PAUSE_AFTER_DELETE);
-        }
-    }
-
-    setTimeout(
-        typeLoop,
-        isDeleting ? DELETE_SPEED : TYPE_SPEED
-    );
-}
-
-// Khởi tạo ban đầu
-typingElement.textContent = "H";
-typingElement.style.color = colors[0];
-typeLoop();
-</script>
-
-
-
-    <script>
-    const backToTopBtn = document.getElementById("backToTop");
-
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-            backToTopBtn.style.display = "flex";
-        } else {
-            backToTopBtn.style.display = "none";
-        }
-    });
-
-    backToTopBtn.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = "flex";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
         });
-    });
-</script>
- <script>
+
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
         // Newsletter form submission
-        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+        document.querySelector('.footer-newsletter-subscribe-form').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('Cảm ơn bạn đã đăng ký!');
             this.reset();
         });
+
+        // Initialize AOS
+        AOS.init({
+            duration: 900,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 120
+        });
+
+          // Movie scroll arrows
+        document.querySelectorAll('.scroll-arrow').forEach(arrow => {
+            arrow.addEventListener('click', function() {
+                const scrollContainer = this.parentElement.querySelector('.movies-scroll');
+                const scrollAmount = 400;
+                
+                if (this.classList.contains('left')) {
+                    scrollContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                } else {
+                    scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            });
+        });
     </script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 900,        // thời gian animation
-    easing: 'ease-out-cubic',
-    once: true,           // chỉ chạy 1 lần
-    offset: 120           // khoảng cách trigger
-  });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-      // ===== HANDLE LOGIN STATUS =====
-function updateUserUI() {
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-
-  const desktopArea = document.getElementById("userAreaDesktop");
-  const mobileArea = document.getElementById("userAreaMobile");
-
-  if (!desktopArea || !mobileArea) return;
-
-  if (user) {
-    
-    // Desktop
- desktopArea.innerHTML = `
-  <div class="dropdown user-dropdown">
-    <button class="btn user-btn dropdown-toggle"
-            data-bs-toggle="dropdown"
-            data-bs-auto-close="true">
-      <i class="fa-solid fa-user user-icon"></i>
-      <span class="username-text">${user.username.toUpperCase()}</span>
-    </button>
-
-    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark user-menu">
-      <li>
-        <button class="dropdown-item text-danger" onclick="logout()">
-          <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
-        </button>
-      </li>
-    </ul>
-  </div>
-`;
-
-
-
-    // Mobile
-    mobileArea.innerHTML = `
-      <div class="menu-item">
-        <i class="fas fa-user"></i>
-        ${user.username}
-      </div>
-      <div class="menu-item text-danger" onclick="logout()">
-        <i class="fas fa-sign-out-alt"></i>
-        Đăng xuất
-      </div>
-    `;
-  } else {
-    // Desktop
-    desktopArea.innerHTML = `
-      <a href="login.html" class="icon-btn">
-        <i class="fa-regular fa-user"></i>
-      </a>
-    `;
-
-    // Mobile
-    mobileArea.innerHTML = `
-      <a href="login.html" class="menu-item">
-        <i class="fas fa-sign-in-alt"></i>
-        Đăng nhập
-      </a>
-    `;
-  }
-}
-
-// ===== LOGOUT =====
-function logout() {
-  localStorage.removeItem("currentUser");
-  window.location.reload();
-}
-
-// Run when page loads
-document.addEventListener("DOMContentLoaded", updateUserUI);
-
-    </script>
-
 </body>
 
 </html>
