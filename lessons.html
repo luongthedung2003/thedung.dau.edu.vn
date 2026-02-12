@@ -1472,6 +1472,45 @@
 }
 
     </style>
+    <style>
+        /* ===== NO LESSON IMAGE ===== */
+
+.no-lesson-wrapper {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.no-lesson-wrapper img {
+    max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain; /* QUAN TRỌNG */
+        display: block;
+  animation: floatImage 3s ease-in-out infinite;
+}
+
+@keyframes floatImage {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+.offline-wrapper {
+  text-align: center;
+  margin-top: 40px;
+}
+
+#dinoCanvas {
+  background: transparent;
+  width: 100%;
+  max-width: 800px;
+  display: block;
+  margin: auto;
+}
+
+
+
+
+    </style>
 </head>
 
 <body>
@@ -1774,7 +1813,7 @@
           <i class="fas fa-lock"></i>
         </div>
 
-        <h3 class="login-modal-title">
+        <h3 style="color: white;" class="login-modal-title">
           Vui lòng đăng nhập
         </h3>
 
@@ -1961,11 +2000,43 @@ const subjects = {
 <script>
     const params = new URLSearchParams(window.location.search);
 const subjectKey = params.get("subject");
-
 if (!subjects[subjectKey]) {
-  document.getElementById("subjectTitle").innerText = "Không tìm thấy môn học";
-  document.getElementById("subjectDesc").innerText = "";
-} else {
+
+  document.getElementById("subjectTitle").innerText =
+    "Chưa có phần thi trắc nghiệm";
+
+  document.getElementById("subjectDesc").innerText =
+    "Vui lòng chờ admin cập nhật!";
+
+document.getElementById("lessonsGrid").innerHTML = `
+  <div class="offline-wrapper">
+      <canvas id="dinoCanvas"></canvas>
+      <br><br>
+      <button id="gameBtn"
+        style="padding:10px 25px;
+               background:#5120bb;
+               color:white;
+               border:none;
+               border-radius:8px;">
+  START
+</button>
+<button id="soundBtn"
+  style="padding:8px 15px;
+         background:#00e5ff;
+         color:black;
+         border:none;
+         border-radius:8px;
+         margin-left:10px;">
+  🔊 ON
+</button>
+
+
+  </div>
+`;
+
+
+
+}  else {
 
   const subject = subjects[subjectKey];
 
@@ -2112,6 +2183,258 @@ function logout() {
 document.addEventListener("DOMContentLoaded", updateUserUI);
 
     </script>
+<script>
+function startDinoGame() {
+  const canvas = document.getElementById("dinoCanvas");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 200;
+const groundY = 180;
+
+ let dino = {
+    x: 50,
+    y: groundY - 50,
+
+    width: 50,
+    height: 50,
+    dy: 0,
+    gravity: 0.6,
+    jumpPower: -12,
+    grounded: true
+  };
+
+  let cactus = {
+    x: canvas.width,
+    y: 0,  
+    width: 40,
+    height: 50,
+    speed: 6
+  };
+
+  let score = 0;
+  let gameOver = false;
+let gameStarted = false;
+let animationId = null;
+const bgMusic = new Audio("audio/game.mp3");
+bgMusic.loop = true;
+bgMusic.volume = 1
+
+const jumpSound = new Audio("audio/jump.mp3");
+const hitSound = new Audio("audio/hit.mp3");
+
+let soundOn = true;
+
+
+  const dinoImg = new Image();
+  dinoImg.src = "images/dino.png";
+
+  const cactusImg = new Image();
+  cactusImg.src = "images/cactus.png";
+
+ function jump() {
+  if (dino.grounded && !gameOver) {
+    dino.dy = dino.jumpPower;
+    dino.grounded = false;
+    if (soundOn) jumpSound.play();
+  }
+}
+
+function drawScene() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Ground
+  ctx.strokeStyle = "#fff";
+  ctx.beginPath();
+  ctx.moveTo(0, groundY);
+  ctx.lineTo(canvas.width, groundY);
+  ctx.stroke();
+
+  cactus.y = groundY - cactus.height;
+
+  ctx.drawImage(dinoImg, dino.x, groundY - dino.height, dino.width, dino.height);
+  ctx.drawImage(cactusImg, cactus.x, cactus.y, cactus.width, cactus.height);
+
+  ctx.fillStyle = "#00e5ff";
+  ctx.font = "20px Space Mono";
+  ctx.fillText("Press START to play", canvas.width / 2 - 120, 100);
+}
+
+  function update() {
+  
+
+  if (!gameStarted && !gameOver) {
+  drawScene();
+  return;
+}
+
+if (gameOver) return;
+
+cactus.y = groundY - cactus.height;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+   // Ground line
+ctx.strokeStyle = "#fff";
+ctx.beginPath();
+ctx.moveTo(0, groundY);
+ctx.lineTo(canvas.width, groundY);
+ctx.stroke();
+
+// Fix cactus position
+
+
+    // Dino physics
+    dino.y += dino.dy;
+    dino.dy += dino.gravity;
+
+   if (dino.y + dino.height >= groundY) {
+  dino.y = groundY - dino.height;
+  dino.grounded = true;
+  dino.dy = 0;
+}
+
+
+    // Move cactus
+    cactus.x -= cactus.speed;
+    if (cactus.x < -40) {
+      cactus.x = canvas.width;
+      score++;
+    }
+
+    // Collision
+    if (
+      dino.x < cactus.x + cactus.width &&
+      dino.x + dino.width > cactus.x &&
+      dino.y < cactus.y + cactus.height &&
+      dino.y + dino.height > cactus.y
+    ) {
+      gameOver = true;
+      if (soundOn) hitSound.play();
+bgMusic.pause();
+      showGameOver();
+    }
+
+    // Draw
+    ctx.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
+    ctx.drawImage(cactusImg, cactus.x, cactus.y, cactus.width, cactus.height);
+
+    ctx.fillStyle = "#00e5ff";
+    ctx.font = "20px Space Mono";
+    ctx.fillText("Score: " + score, canvas.width - 120, 30);
+
+  animationId = requestAnimationFrame(update);
+
+  }
+
+  function showGameOver() {
+    ctx.fillStyle = "red";
+    ctx.font = "30px Space Mono";
+    ctx.fillText("GAME OVER", canvas.width / 2 - 100, 90);
+
+   const btn = document.getElementById("gameBtn");
+btn.innerText = "RESTART";
+btn.style.display = "inline-block";
+gameStarted = false;
+
+  }
+
+ 
+
+  // Controls PC
+  window.addEventListener("keydown", e => {
+    if (e.code === "Space") jump();
+  });
+
+  // Controls Mobile
+  canvas.addEventListener("touchstart", jump);
+
+const gameBtn = document.getElementById("gameBtn");
+
+gameBtn.onclick = function() {
+
+  if (!gameStarted && !gameOver) {
+    // START
+    gameStarted = true;
+    gameBtn.innerText = "STOP";
+if (soundOn) {
+  bgMusic.currentTime = 0;
+  bgMusic.play()
+    .then(() => {
+      console.log("Music started");
+    })
+    .catch(err => {
+      console.log("Music blocked:", err);
+    });
+}
+
+    update();
+  }
+
+  else if (gameStarted) {
+    // STOP
+    gameStarted = false;
+    cancelAnimationFrame(animationId);
+    gameBtn.innerText = "START";
+  }
+
+  else if (gameOver) {
+
+  dino.y = groundY - dino.height;
+  dino.dy = 0;
+  cactus.x = canvas.width;
+  score = 0;
+  gameOver = false;
+  gameStarted = true;
+  gameBtn.innerText = "STOP";
+
+  if (soundOn) {
+    bgMusic.currentTime = 0;
+    bgMusic.play().catch(()=>{});
+  }
+
+  update(); // 👈 THÊM DÒNG NÀY
+}
+
+
+};
+const soundBtn = document.getElementById("soundBtn");
+
+soundBtn.onclick = function() {
+  soundOn = !soundOn;
+
+  if (soundOn) {
+    bgMusic.play();
+    soundBtn.innerText = "🔊 ON";
+  } else {
+    bgMusic.pause();
+    soundBtn.innerText = "🔇 OFF";
+  }
+};
+
+let imagesLoaded = 0;
+
+function checkImagesLoaded() {
+  imagesLoaded++;
+  if (imagesLoaded === 2) {
+    drawScene();
+  }
+}
+
+dinoImg.onload = checkImagesLoaded;
+cactusImg.onload = checkImagesLoaded;
+
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(startDinoGame, 200);
+});
+</script>
+
+
+
 </body>
 
 </html>
