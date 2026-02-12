@@ -624,7 +624,7 @@
 
         /* Mobile specific styles */
         @media (max-width: 768px) {
-            .lessons-header h1 {
+            /* .lessons-header h1 {
                 font-size: 2rem;
             }
 
@@ -635,9 +635,9 @@
             .lessons-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
-            }
+            } */
 
-            .lesson-card {
+            /* .lesson-card {
                 padding: 20px;
                 display: flex;
                 flex-direction: column;
@@ -650,9 +650,9 @@
             .lesson-planet-icon {
                 width: 60px;
                 height: 60px;
-            }
+            } */
 
-            .lesson-title {
+            /* .lesson-title {
                 font-size: 1.1rem;
             }
 
@@ -662,15 +662,15 @@
 
             .lesson-price-section {
                 margin-bottom: 15px;
-            }
+            } */
 
-            .price-original {
+            /* .price-original {
                 font-size: 1.1rem;
             }
 
             .price-free {
                 font-size: 1.5rem;
-            }
+            } */
         }
 
         @media (max-width: 480px) {
@@ -1496,7 +1496,7 @@
 }
 .offline-wrapper {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 43px;
 }
 
 #dinoCanvas {
@@ -1508,6 +1508,116 @@
 }
 
 
+
+
+    </style>
+    <style>
+ @media (max-width: 768px) {
+
+  .lessons-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .lesson-card {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    /* background: #f3f4f6; */
+                background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
+
+    color:#ffffff;
+  }
+
+  /* ===== BLOCK TRÁI MÀU ===== */
+  .lesson-card.type-pink .lesson-card-header {
+    background: linear-gradient(135deg,#ec4899,#be185d);
+  }
+
+  .lesson-card.type-orange .lesson-card-header {
+    background: linear-gradient(135deg,#f97316,#ea580c);
+  }
+
+  .lesson-card.type-green .lesson-card-header {
+    background: linear-gradient(135deg,#22c55e,#15803d);
+  }
+
+  .lesson-card-header {
+    width: 90px;
+    height: 100%;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+
+  .lesson-planet-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .lesson-title {
+    display: none;
+  }
+
+  /* ===== PHẦN GIỮA ===== */
+  .lesson-sub-stat,
+  .lesson-price-section {
+    color: #ffffff;
+  }
+
+  .lesson-sub-stat {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+
+  .lesson-price-section {
+    margin-bottom: 0;
+  }
+
+  .price-original {
+    font-size: 0.9rem;
+    color: #ffffff;
+  }
+
+  .price-free {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  /* Gom thông tin giữa lại */
+  .lesson-card > .lesson-sub-stat,
+  .lesson-card > .lesson-price-section {
+    padding: 12px 10px;
+  }
+
+  /* Wrap phần info */
+  .lesson-card {
+    display: flex;
+  }
+
+  .lesson-card > .lesson-sub-stat {
+    flex: 1;
+  }
+
+  .lesson-card > .lesson-price-section {
+    flex: 1;
+  }
+
+  /* ===== NÚT ===== */
+  .lesson-action-btn {
+    margin-right: 12px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    width: auto;
+    white-space: nowrap;
+  }
+
+}
 
 
     </style>
@@ -2050,38 +2160,50 @@ function renderLessons(lessonArray) {
   const grid = document.getElementById("lessonsGrid");
 
   grid.innerHTML = lessonArray.map(ls => `
-    <a href="#" 
-   onclick="handleLessonClick(event, 'quiz.html?file=${ls.file}')"
-       class="lesson-card ${ls.type}" 
-       data-aos="fade-up" 
-       data-aos-delay="${ls.delay}">
+  <a href="#"
+     onclick="handleLessonClick(event, 'quiz.html?file=${ls.file}')"
+     class="lesson-card ${ls.type}"
+     data-aos="fade-up"
+     data-aos-delay="${ls.delay}">
 
-      <div class="lesson-card-header">
-        <div class="lesson-icon-wrapper">
-          <div class="lesson-planet-icon">
-            <model-viewer 
-                interaction-prompt="none" 
-                src="${ls.model}" 
-                auto-rotate 
-                camera-controls 
-                loading="lazy">
-            </model-viewer>
-          </div>
-          <h3 class="lesson-title">${ls.title}</h3>
-        </div>
+    <div class="lesson-card-header">
+      <div class="lesson-planet-icon">
+        <model-viewer 
+            interaction-prompt="none"
+            src="${ls.model}"
+            auto-rotate
+            camera-controls
+            loading="lazy">
+        </model-viewer>
+      </div>
+    </div>
+
+    <div style="flex:1; padding:15px;">
+      <div style="font-weight:600; margin-bottom:4px; color:#ffffff;">
+        ${ls.title}
       </div>
 
-      <div class="lesson-sub-stat">${ls.desc}</div>
-
-      <div class="lesson-price-section">
-        <div class="price-original">${(Math.random()*200+80).toFixed(3)} đ</div>
-        <div class="price-free">FREE</div>
+      <div style="font-size:0.85rem; color:#6b7280; margin-bottom:6px;">
+        ${ls.desc}
       </div>
 
+      <div>
+        <span style="text-decoration:line-through; color:#9ca3af; font-size:0.9rem;">
+          ${(Math.random()*10+10).toFixed(3)} đ
+        </span>
+        <span style="margin-left:8px; font-weight:700; color:#22c55e;">
+          FREE
+        </span>
+      </div>
+    </div>
+
+    <div style="padding-right:15px;">
       <div class="lesson-action-btn">Thi ngay</div>
+    </div>
 
-    </a>
-  `).join("");
+  </a>
+`).join("");
+
 
   AOS.refresh();
 }
@@ -2206,13 +2328,15 @@ const groundY = 180;
     grounded: true
   };
 
-  let cactus = {
-    x: canvas.width,
-    y: 0,  
-    width: 40,
-    height: 50,
-    speed: 6
-  };
+//   let cactus = {
+//     x: canvas.width,
+//     y: 0,  
+//     width: 40,
+//     height: 50,
+//     speed: 6
+//   };
+let cactusArray = [];
+const cactusCount = 5;
 
   let score = 0;
   let gameOver = false;
@@ -2230,9 +2354,50 @@ let soundOn = true;
 
   const dinoImg = new Image();
   dinoImg.src = "images/dino.png";
+const cactusImages = [];
 
-  const cactusImg = new Image();
-  cactusImg.src = "images/cactus.png";
+for (let i = 1; i <= 5; i++) {
+  const img = new Image();
+  img.src = `images/cactus${i}.png`;
+  cactusImages.push(img);
+}
+
+const cloudImg = new Image();
+cloudImg.src = "images/cloud.png";
+
+let clouds = [];
+function spawnCactus() {
+  cactusArray = [];
+
+  for (let i = 0; i < cactusCount; i++) {
+    cactusArray.push({
+      x: canvas.width + i * 250,
+      width: 40,
+      height: 50,
+      speed: 6,
+      img: cactusImages[i % cactusImages.length] // mỗi cây 1 ảnh
+    });
+  }
+}
+
+function spawnClouds() {
+  clouds = [];
+
+  for (let i = 0; i < 4; i++) {
+    clouds.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * 60 + 20,
+      width: 80,
+      height: 80,
+      speed: 1
+    });
+  }
+}
+
+spawnCactus();
+spawnClouds();
+
+
 
  function jump() {
   if (dino.grounded && !gameOver) {
@@ -2252,55 +2417,115 @@ function drawScene() {
   ctx.lineTo(canvas.width, groundY);
   ctx.stroke();
 
-  cactus.y = groundY - cactus.height;
+  // Draw clouds
+  clouds.forEach(cloud => {
+    ctx.drawImage(cloudImg, cloud.x, cloud.y, cloud.width, cloud.height);
+  });
 
-  ctx.drawImage(dinoImg, dino.x, groundY - dino.height, dino.width, dino.height);
-  ctx.drawImage(cactusImg, cactus.x, cactus.y, cactus.width, cactus.height);
+  // Draw cactus
+  cactusArray.forEach(cactus => {
+    const cactusY = groundY - cactus.height;
+    ctx.drawImage(cactus.img, cactus.x, cactusY, cactus.width, cactus.height);
+
+  });
+
+  ctx.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
 
   ctx.fillStyle = "#00e5ff";
   ctx.font = "20px Space Mono";
-  ctx.fillText("Press START to play", canvas.width / 2 - 120, 100);
+  ctx.fillText("Nhấn START để chơi", canvas.width / 2 - 120, 100);
 }
 
-  function update() {
+//   function update() {
   
 
-  if (!gameStarted && !gameOver) {
-  drawScene();
-  return;
-}
+//   if (!gameStarted && !gameOver) {
+//   drawScene();
+//   return;
+// }
 
-if (gameOver) return;
+// if (gameOver) return;
 
-cactus.y = groundY - cactus.height;
+// cactus.y = groundY - cactus.height;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
    // Ground line
-ctx.strokeStyle = "#fff";
-ctx.beginPath();
-ctx.moveTo(0, groundY);
-ctx.lineTo(canvas.width, groundY);
-ctx.stroke();
+// ctx.strokeStyle = "#fff";
+// ctx.beginPath();
+// ctx.moveTo(0, groundY);
+// ctx.lineTo(canvas.width, groundY);
+// ctx.stroke();
 
 // Fix cactus position
 
 
     // Dino physics
-    dino.y += dino.dy;
-    dino.dy += dino.gravity;
+//     dino.y += dino.dy;
+//     dino.dy += dino.gravity;
 
-   if (dino.y + dino.height >= groundY) {
-  dino.y = groundY - dino.height;
-  dino.grounded = true;
-  dino.dy = 0;
-}
+//    if (dino.y + dino.height >= groundY) {
+//   dino.y = groundY - dino.height;
+//   dino.grounded = true;
+//   dino.dy = 0;
+// }
 
 
-    // Move cactus
+//     cactus.x -= cactus.speed;
+
+//     ctx.fillStyle = "#00e5ff";
+//     ctx.font = "20px Space Mono";
+//     ctx.fillText("Score: " + score, canvas.width - 120, 30);
+
+//   animationId = requestAnimationFrame(update);
+
+//   }
+
+function update() {
+
+  if (!gameStarted && !gameOver) {
+    drawScene();
+    return;
+  }
+
+  if (gameOver) return;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // ===== Ground =====
+  ctx.strokeStyle = "#fff";
+  ctx.beginPath();
+  ctx.moveTo(0, groundY);
+  ctx.lineTo(canvas.width, groundY);
+  ctx.stroke();
+
+  // ===== Clouds =====
+  clouds.forEach(cloud => {
+    cloud.x -= cloud.speed;
+    if (cloud.x < -cloud.width) {
+      cloud.x = canvas.width;
+    }
+    ctx.drawImage(cloudImg, cloud.x, cloud.y, cloud.width, cloud.height);
+  });
+
+  // ===== Dino physics =====
+  dino.y += dino.dy;
+  dino.dy += dino.gravity;
+
+  if (dino.y + dino.height >= groundY) {
+    dino.y = groundY - dino.height;
+    dino.dy = 0;
+    dino.grounded = true;
+  }
+
+  // ===== Cactus =====
+  cactusArray.forEach(cactus => {
+
     cactus.x -= cactus.speed;
-    if (cactus.x < -40) {
-      cactus.x = canvas.width;
+    const cactusY = groundY - cactus.height;
+
+    if (cactus.x < -cactus.width) {
+      cactus.x = canvas.width + Math.random() * 200;
       score++;
     }
 
@@ -2308,26 +2533,28 @@ ctx.stroke();
     if (
       dino.x < cactus.x + cactus.width &&
       dino.x + dino.width > cactus.x &&
-      dino.y < cactus.y + cactus.height &&
-      dino.y + dino.height > cactus.y
+      dino.y < cactusY + cactus.height &&
+      dino.y + dino.height > cactusY
     ) {
       gameOver = true;
       if (soundOn) hitSound.play();
-bgMusic.pause();
+      bgMusic.pause();
       showGameOver();
     }
 
-    // Draw
-    ctx.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
-    ctx.drawImage(cactusImg, cactus.x, cactus.y, cactus.width, cactus.height);
+    ctx.drawImage(cactus.img, cactus.x, cactusY, cactus.width, cactus.height);
 
-    ctx.fillStyle = "#00e5ff";
-    ctx.font = "20px Space Mono";
-    ctx.fillText("Score: " + score, canvas.width - 120, 30);
+  });
+
+  ctx.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
+
+  ctx.fillStyle = "#00e5ff";
+  ctx.font = "20px Space Mono";
+  ctx.fillText("Score: " + score, canvas.width - 120, 30);
 
   animationId = requestAnimationFrame(update);
+}
 
-  }
 
   function showGameOver() {
     ctx.fillStyle = "red";
@@ -2384,7 +2611,10 @@ if (soundOn) {
 
   dino.y = groundY - dino.height;
   dino.dy = 0;
-  cactus.x = canvas.width;
+//   cactus.x = canvas.width;
+spawnCactus();
+spawnClouds();
+
   score = 0;
   gameOver = false;
   gameStarted = true;
@@ -2418,13 +2648,19 @@ let imagesLoaded = 0;
 
 function checkImagesLoaded() {
   imagesLoaded++;
-  if (imagesLoaded === 2) {
+  if (imagesLoaded === 7) {
     drawScene();
   }
 }
 
 dinoImg.onload = checkImagesLoaded;
-cactusImg.onload = checkImagesLoaded;
+cloudImg.onload = checkImagesLoaded;
+
+cactusImages.forEach(img => {
+  img.onload = checkImagesLoaded;
+});
+
+
 
 }
 
