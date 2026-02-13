@@ -1,2058 +1,2528 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
     <title>THEDUNG - Netflix Style</title>
-    <link rel="icon" href="images/logo.png">
+    <link rel="icon" href="images/logo.png" />
 
     <style>
-        :root {
-            --gold-color: #5120bb;
-            --gold-light: #08179c;
-            --gold-dark: #1c1d7a;
-            --netflix-red: #E50914;
-        }
+      :root {
+        --gold-color: #5120bb;
+        --gold-light: #08179c;
+        --gold-dark: #1c1d7a;
+        --netflix-red: #e50914;
+      }
 
-        * {
-            font-family: 'Space Mono', monospace;
-            color: white;
-        }
+      * {
+        font-family: "Space Mono", monospace;
+        color: white;
+      }
 
-        a {
-            text-decoration: none;
-        }
+      a {
+        text-decoration: none;
+      }
 
-        body {
-            background-color: black;
-            margin: 0;
-            padding: 0;
-        }
+      body {
+        background-color: black;
+        margin: 0;
+        padding: 0;
+      }
 
-        /* ========================================
+      /* ========================================
            NAVIGATION STYLES
            ======================================== */
 
-        .navbar {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(175, 134, 80, 0.2);
-            padding: 0.75rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
-        }
+      .navbar {
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(175, 134, 80, 0.2);
+        padding: 0.75rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+      }
 
-        .logo-box {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--gold-light), var(--gold-color));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 6px rgba(175, 134, 80, 0.3);
-        }
+      .logo-box {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold-color)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(175, 134, 80, 0.3);
+      }
 
-        .logo-box i {
-            color: white;
-            font-size: 20px;
-        }
+      .logo-box i {
+        color: white;
+        font-size: 20px;
+      }
 
-        .brand-text {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: white;
-            margin-left: 0.75rem;
-            letter-spacing: 1px;
-        }
+      .brand-text {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: white;
+        margin-left: 0.75rem;
+        letter-spacing: 1px;
+      }
 
-        .day-navigator {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            border: 1px solid rgba(175, 134, 80, 0.2);
-        }
+      .day-navigator {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border: 1px solid rgba(175, 134, 80, 0.2);
+      }
 
-        .day-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #d1d5db;
-            transition: all 0.2s;
-            white-space: nowrap;
-            cursor: pointer;
-            position: relative;
-        }
+      .day-btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #d1d5db;
+        transition: all 0.2s;
+        white-space: nowrap;
+        cursor: pointer;
+        position: relative;
+      }
 
-        .day-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
+      .day-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
 
-        .day-btn::after {
-            content: "";
-            position: absolute;
-            left: 15%;
-            bottom: 2px;
-            width: 70%;
-            height: 2px;
-            border-radius: 2px;
-            background: linear-gradient(90deg, #00e5ff, #ff1744);
-            opacity: 0;
-            transform: scaleX(0);
-            transition: all 0.3s ease;
-        }
+      .day-btn::after {
+        content: "";
+        position: absolute;
+        left: 15%;
+        bottom: 2px;
+        width: 70%;
+        height: 2px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, #00e5ff, #ff1744);
+        opacity: 0;
+        transform: scaleX(0);
+        transition: all 0.3s ease;
+      }
 
-        .day-btn:hover::after {
-            opacity: 1;
-            transform: scaleX(1);
-            box-shadow: 0 0 6px #00e5ff, 0 0 12px #ff1744;
-        }
+      .day-btn:hover::after {
+        opacity: 1;
+        transform: scaleX(1);
+        box-shadow:
+          0 0 6px #00e5ff,
+          0 0 12px #ff1744;
+      }
 
-        .day-btn.active {
-            color: white;
-        }
+      .day-btn.active {
+        color: white;
+      }
 
-        .day-btn.active::after {
-            opacity: 1;
-            transform: scaleX(1);
-            background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
-            background-size: 200% 100%;
-            animation: glowMove 2s linear infinite;
-            box-shadow: 0 0 8px #00e5ff, 0 0 18px #ff1744;
-        }
+      .day-btn.active::after {
+        opacity: 1;
+        transform: scaleX(1);
+        background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
+        background-size: 200% 100%;
+        animation: glowMove 2s linear infinite;
+        box-shadow:
+          0 0 8px #00e5ff,
+          0 0 18px #ff1744;
+      }
 
-        @keyframes glowMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+      @keyframes glowMove {
+        0% {
+          background-position: 0% 50%;
         }
-
-        .nav-arrow {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            color: #9ca3af;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            cursor: pointer;
+        100% {
+          background-position: 200% 50%;
         }
+      }
 
-        .nav-arrow:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--gold-color);
-        }
+      .nav-arrow {
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
 
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            color: #d1d5db;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
+      .nav-arrow:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--gold-color);
+      }
 
-        .icon-btn:hover {
-            background: rgba(175, 134, 80, 0.2);
-            color: var(--gold-color);
-        }
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        color: #d1d5db;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
 
-        .notification-dot {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 8px;
-            height: 8px;
-            background: #ef4444;
-            border-radius: 50%;
-            border: 2px solid rgba(0, 0, 0, 0.95);
-        }
+      .icon-btn:hover {
+        background: rgba(175, 134, 80, 0.2);
+        color: var(--gold-color);
+      }
 
-        .mobile-day-nav {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 0.5rem;
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
-        }
+      .notification-dot {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        background: #ef4444;
+        border-radius: 50%;
+        border: 2px solid rgba(0, 0, 0, 0.95);
+      }
 
-        .mobile-day-nav::-webkit-scrollbar {
-            display: none;
-        }
+      .mobile-day-nav {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 0.5rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+      }
 
-        .mobile-day-btn {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.75rem;
-            display: inline-block;
-        }
+      .mobile-day-nav::-webkit-scrollbar {
+        display: none;
+      }
 
-        .offcanvas-end {
-            width: 100% !important;
-            max-width: 320px !important;
-            background: rgba(0, 0, 0, 0.98);
-            border-left: 1px solid rgba(175, 134, 80, 0.2);
-        }
+      .mobile-day-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        display: inline-block;
+      }
 
-        .offcanvas-header {
-            background: rgba(0, 0, 0, 0.95);
-            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
-            padding: 1rem 1.25rem;
-        }
+      .offcanvas-end {
+        width: 100% !important;
+        max-width: 320px !important;
+        background: rgba(0, 0, 0, 0.98);
+        border-left: 1px solid rgba(175, 134, 80, 0.2);
+      }
 
-        .offcanvas-title {
-            font-weight: 600;
-            font-size: 1rem;
-            margin: 0;
-            color: white;
-        }
+      .offcanvas-header {
+        background: rgba(0, 0, 0, 0.95);
+        border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+        padding: 1rem 1.25rem;
+      }
 
-        .offcanvas-header .btn-close {
-            opacity: 0.5;
-            font-size: 0.875rem;
-            filter: invert(1);
-        }
+      .offcanvas-title {
+        font-weight: 600;
+        font-size: 1rem;
+        margin: 0;
+        color: white;
+      }
 
-        .offcanvas-body {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
-            padding: 1rem;
-        }
+      .offcanvas-header .btn-close {
+        opacity: 0.5;
+        font-size: 0.875rem;
+        filter: invert(1);
+      }
 
-        .menu-section {
-            margin-bottom: 1.5rem;
-        }
+      .offcanvas-body {
+        background-image:
+          linear-gradient(
+            rgba(0, 0, 0, 0.95),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.95)
+          ),
+          url("images/2k_stars_milky_way.jpg");
+        padding: 1rem;
+      }
 
-        .section-title {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #9ca3af;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
-            padding: 0 0.5rem;
-        }
+      .menu-section {
+        margin-bottom: 1.5rem;
+      }
 
-        .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.625rem 0.75rem;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #d1d5db;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: 0.2s;
-            margin-bottom: 0.25rem;
-        }
+      .section-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+        padding: 0 0.5rem;
+      }
 
-        .menu-item:hover {
-            background: rgba(175, 134, 80, 0.2);
-            color: white;
-        }
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.625rem 0.75rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #d1d5db;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: 0.2s;
+        margin-bottom: 0.25rem;
+      }
 
-        .menu-item.active {
-            background: rgba(175, 134, 80, 0.3);
-            color: var(--gold-color);
-        }
+      .menu-item:hover {
+        background: rgba(175, 134, 80, 0.2);
+        color: white;
+      }
 
-        .menu-item i {
-            width: 20px;
-            font-size: 1rem;
-            color: #9ca3af;
-        }
+      .menu-item.active {
+        background: rgba(175, 134, 80, 0.3);
+        color: var(--gold-color);
+      }
 
-        .menu-item.active i {
-            color: var(--gold-color);
-        }
+      .menu-item i {
+        width: 20px;
+        font-size: 1rem;
+        color: #9ca3af;
+      }
 
-        .menu-divider {
-            margin: 1rem 0;
-            border: none;
-            height: 1px;
-            background: rgba(175, 134, 80, 0.2);
-        }
+      .menu-item.active i {
+        color: var(--gold-color);
+      }
 
-        /* ========================================
+      .menu-divider {
+        margin: 1rem 0;
+        border: none;
+        height: 1px;
+        background: rgba(175, 134, 80, 0.2);
+      }
+
+      /* ========================================
            MAIN CONTENT STYLES
            ======================================== */
 
-        main {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
-            min-height: 100vh;
-            background-size: cover;
-            background-position: center;
-            padding-bottom: 60px;
-        }
+      main {
+        background-image:
+          linear-gradient(
+            rgba(0, 0, 0, 0.95),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.95)
+          ),
+          url("images/2k_stars_milky_way.jpg");
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+        padding-bottom: 60px;
+      }
 
-        /* Hero Banner */
+      /* Hero Banner */
+      .hero-banner {
+        position: relative;
+        height: 500px;
+        display: flex;
+        align-items: flex-end;
+        padding: 40px 60px;
+        overflow: hidden;
+      }
+
+      .hero-banner::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+          linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8)),
+          linear-gradient(to right, rgba(0, 0, 0, 0.9), transparent 70%);
+        z-index: 1;
+      }
+
+      .hero-banner img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+      }
+
+      .hero-content {
+        max-width: 500px;
+        z-index: 10;
+      }
+
+      .hero-badge {
+        display: inline-block;
+        font-size: 0.75rem;
+        color: #999;
+        margin-bottom: 10px;
+      }
+
+      .hero-rating {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-left: 15px;
+      }
+
+      .hero-rating i {
+        color: #ffd700;
+        font-size: 0.9rem;
+      }
+
+      .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin: 10px 0 15px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .hero-description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #ddd;
+        margin-bottom: 25px;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 12px;
+      }
+
+      .btn-watch {
+        background: var(--netflix-red);
+        border: none;
+        padding: 12px 30px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+      }
+
+      .btn-watch:hover {
+        background: #c40812;
+        transform: scale(1.05);
+      }
+
+      .btn-addlist {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        padding: 12px 30px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+      }
+
+      .btn-addlist:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: white;
+      }
+
+      /* Slider Indicators */
+      .hero-indicators {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+      }
+
+      .indicator {
+        width: 60px;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .indicator.active {
+        background: white;
+      }
+
+      /* Category Tabs */
+      .category-section {
+        padding: 40px 60px 30px;
+      }
+
+      .category-tabs {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 30px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+      }
+
+      .category-tabs::-webkit-scrollbar {
+        height: 4px;
+      }
+
+      .category-tabs::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+      }
+
+      .tab-icon {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: white;
+      }
+
+      .category-tab {
+        padding: 8px 18px;
+        background: rgba(229, 9, 20, 0.9);
+        border: none;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: white;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.3s;
+      }
+
+      .category-tab:hover {
+        background: #c40812;
+        transform: scale(1.05);
+      }
+
+      .category-tab.inactive {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .category-tab.inactive:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: white;
+        color: white;
+      }
+
+      /* Movie Grid */
+      .movies-row {
+        position: relative;
+        margin-bottom: 40px;
+      }
+
+      .movies-scroll {
+        display: flex;
+        gap: 15px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        padding-bottom: 15px;
+      }
+
+      .movies-scroll::-webkit-scrollbar {
+        height: 6px;
+      }
+
+      .movies-scroll::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+      }
+
+      .movie-card {
+        min-width: 180px;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .movie-card:hover {
+        transform: scale(1.05);
+        z-index: 10;
+      }
+
+      .movie-poster {
+        width: 100%;
+        height: 260px;
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .movie-poster img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+      }
+
+      .movie-card:hover .movie-poster img {
+        transform: scale(1.1);
+      }
+
+      .movie-info {
+        padding: 10px 5px;
+      }
+
+      .movie-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .movie-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.75rem;
+        color: #999;
+      }
+
+      .movie-year {
+        color: #999;
+      }
+
+      .movie-rating {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .movie-rating i {
+        color: #ffd700;
+        font-size: 0.7rem;
+      }
+
+      .movie-views {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      /* Section Header */
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .section-title-large {
+        font-size: 1.3rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .section-filter {
+        display: flex;
+        gap: 10px;
+      }
+
+      .filter-btn {
+        padding: 6px 14px;
+        background: rgba(229, 9, 20, 0.9);
+        border: none;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .filter-btn:hover {
+        background: #c40812;
+      }
+
+      .filter-btn.outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .rating-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .rating-bar i {
+        color: #ffd700;
+        font-size: 1.1rem;
+      }
+
+      .rating-value {
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+
+      .rating-progress {
+        flex: 1;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+
+      .rating-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #ffd700 0%, #ffed4e 100%);
+        border-radius: 3px;
+      }
+
+      /* Scroll Arrows */
+      .scroll-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        background: rgba(0, 0, 0, 0.7);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s;
+        display: none;
+      }
+
+      .scroll-arrow:hover {
+        background: rgba(0, 0, 0, 0.9);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .scroll-arrow.left {
+        left: -25px;
+      }
+
+      .scroll-arrow.right {
+        right: -25px;
+      }
+
+      .movies-row:hover .scroll-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Footer styles */
+      :root {
+        --footer-primary-purple: #5120bb;
+        --footer-light-purple: #08179c;
+        --footer-dark-purple: #1c1d7a;
+        --footer-neon-cyan: #00e5ff;
+        --footer-neon-red: #ff1744;
+        --footer-neon-yellow: #ffcc33;
+      }
+
+      .footer-newsletter-wrapper {
+        background: linear-gradient(
+          135deg,
+          rgba(81, 32, 187, 0.1) 0%,
+          rgba(0, 0, 0, 0.95) 100%
+        );
+        padding: 3rem 0;
+        border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .footer-newsletter-wrapper::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+          radial-gradient(
+            circle at 20% 50%,
+            rgba(0, 229, 255, 0.05) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 50%,
+            rgba(255, 23, 68, 0.05) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+      }
+
+      .footer-newsletter-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .footer-newsletter-content-grid {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .footer-newsletter-main-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(
+          135deg,
+          var(--footer-neon-cyan) 0%,
+          var(--footer-primary-purple) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-family: "Space Mono", monospace;
+        color: white;
+      }
+
+      .footer-newsletter-description-text {
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.6;
+        font-size: 0.9rem;
+        font-family: "Space Mono", monospace;
+      }
+
+      .footer-newsletter-subscribe-form {
+        display: flex;
+        gap: 0.5rem;
+        max-width: 450px;
+      }
+
+      .footer-newsletter-email-input {
+        flex: 1;
+        padding: 1rem 1.5rem;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        border-radius: 8px;
+        color: white;
+        font-family: "Space Mono", monospace;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .footer-newsletter-email-input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      .footer-newsletter-email-input:focus {
+        outline: none;
+        border-color: var(--footer-neon-cyan);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+        background: rgba(0, 0, 0, 0.7);
+      }
+
+      .footer-newsletter-submit-button {
+        padding: 1rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--footer-neon-red) 0%,
+          var(--footer-primary-purple) 100%
+        );
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 60px;
+        box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+      }
+
+      .footer-newsletter-submit-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
+      }
+
+      .footer-newsletter-submit-button i {
+        font-size: 1.2rem;
+      }
+
+      .thedung-main-footer-wrapper {
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.95) 0%,
+          rgba(28, 29, 122, 0.1) 50%,
+          rgba(0, 0, 0, 0.95) 100%
+        );
+        padding: 4rem 0 2rem;
+        position: relative;
+      }
+
+      .thedung-main-footer-wrapper::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: radial-gradient(
+          circle at 2px 2px,
+          rgba(0, 229, 255, 0.1) 1px,
+          transparent 0
+        );
+        background-size: 40px 40px;
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      .thedung-footer-main-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .thedung-footer-columns-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
+        gap: 3rem;
+        margin-bottom: 3rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .thedung-footer-brand-section {
+        animation: thedungFooterFadeInUp 0.6s ease-out;
+      }
+
+      @keyframes thedungFooterFadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .thedung-footer-brand-logo-container {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(
+          135deg,
+          var(--footer-light-purple),
+          var(--footer-primary-purple)
+        );
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        box-shadow: 0 0 30px rgba(81, 32, 187, 0.5);
+        animation: thedungFooterLogoFloat 3s ease-in-out infinite;
+      }
+
+      @keyframes thedungFooterLogoFloat {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .thedung-footer-brand-logo-container i {
+        color: white;
+        font-size: 30px;
+      }
+
+      .thedung-footer-brand-name-text {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        letter-spacing: 3px;
+        color: white;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-brand-tagline-text {
+        color: var(--footer-neon-cyan);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-brand-divider-line {
+        height: 2px;
+        width: 80px;
+        background: linear-gradient(
+          90deg,
+          var(--footer-neon-cyan) 0%,
+          var(--footer-neon-red) 100%
+        );
+        margin: 1.5rem 0;
+        box-shadow: 0 0 10px var(--footer-neon-cyan);
+      }
+
+      .thedung-footer-brand-description-paragraph {
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        font-size: 0.85rem;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-social-icons-container {
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      .thedung-footer-social-icon-link {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+      }
+
+      .thedung-footer-social-icon-link::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          var(--footer-neon-cyan) 0%,
+          transparent 70%
+        );
+        transform: translate(-50%, -50%);
+        transition: all 0.4s ease;
+      }
+
+      .thedung-footer-social-icon-link:hover::before {
+        width: 100px;
+        height: 100px;
+      }
+
+      .thedung-footer-social-icon-link:hover {
+        transform: translateY(-5px);
+        border-color: var(--footer-neon-cyan);
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+      }
+
+      .thedung-footer-social-icon-link i {
+        position: relative;
+        z-index: 1;
+      }
+
+      .thedung-footer-content-column {
+        animation: thedungFooterFadeInUp 0.6s ease-out;
+        animation-fill-mode: both;
+      }
+
+      .thedung-footer-content-column:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .thedung-footer-content-column:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .thedung-footer-content-column:nth-child(4) {
+        animation-delay: 0.3s;
+      }
+      .thedung-footer-content-column:nth-child(5) {
+        animation-delay: 0.4s;
+      }
+
+      .thedung-footer-column-heading-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        padding-bottom: 0.75rem;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-column-heading-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--footer-neon-cyan),
+          var(--footer-neon-red)
+        );
+        box-shadow: 0 0 10px var(--footer-neon-cyan);
+      }
+
+      .thedung-footer-navigation-links-list {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+      }
+
+      .thedung-footer-navigation-links-list li {
+        margin-bottom: 0.75rem;
+      }
+
+      .thedung-footer-navigation-link-item {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        padding-left: 0;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-navigation-link-item::before {
+        content: "→";
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s ease;
+        color: var(--footer-neon-cyan);
+      }
+
+      .thedung-footer-navigation-link-item:hover {
+        color: white;
+        transform: translateX(10px);
+        text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+      }
+
+      .thedung-footer-navigation-link-item:hover::before {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .thedung-footer-contact-info-box {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        border: 1px solid rgba(0, 229, 255, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .thedung-footer-contact-info-box:hover {
+        background: rgba(0, 0, 0, 0.5);
+        border-color: var(--footer-neon-cyan);
+        transform: translateX(5px);
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+      }
+
+      .thedung-footer-contact-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: linear-gradient(
+          135deg,
+          var(--footer-neon-cyan) 0%,
+          var(--footer-primary-purple) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        flex-shrink: 0;
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+      }
+
+      .thedung-footer-contact-text-wrapper {
+        flex: 1;
+      }
+
+      .thedung-footer-contact-label-text {
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.5);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.25rem;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-contact-value-text {
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 500;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-map-display-container {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        height: 180px;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+        margin-top: 1rem;
+      }
+
+      .thedung-footer-map-placeholder-area {
+        width: 100%;
+        height: 100%;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(81, 32, 187, 0.3) 0%,
+            rgba(0, 0, 0, 0.8) 100%
+          ),
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 229, 255, 0.05) 2px,
+            rgba(0, 229, 255, 0.05) 4px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 229, 255, 0.05) 2px,
+            rgba(0, 229, 255, 0.05) 4px
+          );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .thedung-footer-map-location-pin {
+        width: 50px;
+        height: 50px;
+        position: relative;
+      }
+
+      .thedung-footer-map-location-pin::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 30px;
+        height: 30px;
+        background: var(--footer-neon-red);
+        border-radius: 50% 50% 50% 0;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        box-shadow: 0 0 20px rgba(255, 23, 68, 0.8);
+        animation: thedungFooterMapPinBounce 2s ease-in-out infinite;
+      }
+
+      .thedung-footer-map-location-pin i {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 1rem;
+        z-index: 1;
+      }
+
+      @keyframes thedungFooterMapPinBounce {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) rotate(-45deg) translateY(0);
+        }
+        50% {
+          transform: translate(-50%, -50%) rotate(-45deg) translateY(-10px);
+        }
+      }
+
+      .thedung-footer-bottom-copyright-wrapper {
+        padding: 2rem 0;
+        border-top: 1px solid rgba(0, 229, 255, 0.2);
+        margin-top: 3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.8rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-bottom-links-list {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+      }
+
+      .thedung-footer-bottom-link-item {
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-family: "Space Mono", monospace;
+      }
+
+      .thedung-footer-bottom-link-item:hover {
+        color: var(--footer-neon-cyan);
+        text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+      }
+
+      #backToTop {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 56px;
+        height: 56px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: none;
+        z-index: 999;
+        padding: 0;
+      }
+
+      #backToTop .sun-ring {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: sunRotate 6s linear infinite;
+      }
+
+      #backToTop .sun-ring i {
+        font-size: 56px;
+        color: #ffcc33;
+        filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
+      }
+
+      #backToTop .arrow-up {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #backToTop .arrow-up i {
+        font-size: 18px;
+        color: white;
+        text-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        z-index: 2;
+      }
+
+      #backToTop:hover {
+        transform: translateY(-6px) scale(1.05);
+        transition: 0.3s ease;
+      }
+
+      @keyframes sunRotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
         .hero-banner {
-            position: relative;
-            height: 500px;
-            display: flex;
-            align-items: flex-end;
-            padding: 40px 60px;
-            overflow: hidden;
-        }
-
-        .hero-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8)), 
-                        linear-gradient(to right, rgba(0,0,0,0.9), transparent 70%);
-            z-index: 1;
-        }
-
-        .hero-banner img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-        }
-
-        .hero-content {
-            max-width: 500px;
-            z-index: 10;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            font-size: 0.75rem;
-            color: #999;
-            margin-bottom: 10px;
-        }
-
-        .hero-rating {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            margin-left: 15px;
-        }
-
-        .hero-rating i {
-            color: #ffd700;
-            font-size: 0.9rem;
+          height: 400px;
+          padding: 30px 20px;
         }
 
         .hero-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin: 10px 0 15px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+          font-size: 2rem;
         }
 
-        .hero-description {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #ddd;
-            margin-bottom: 25px;
+        .category-section {
+          padding: 30px 20px;
+        }
+
+        .section-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
         }
 
         .hero-buttons {
-            display: flex;
-            gap: 12px;
+          flex-direction: column;
         }
 
-        .btn-watch {
-            background: var(--netflix-red);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-        }
-
-        .btn-watch:hover {
-            background: #c40812;
-            transform: scale(1.05);
-        }
-
+        .btn-watch,
         .btn-addlist {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.4);
-            padding: 12px 30px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .thedung-footer-columns-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 2.5rem;
         }
 
-        .btn-addlist:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: white;
+        .thedung-footer-content-column:nth-child(5) {
+          grid-column: 1 / -1;
+          max-width: 500px;
         }
+      }
 
-        /* Slider Indicators */
-        .hero-indicators {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 10;
-        }
-
-        .indicator {
-            width: 60px;
-            height: 3px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 2px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .indicator.active {
-            background: white;
-        }
-
-        /* Category Tabs */
-        .category-section {
-            padding: 40px 60px 30px;
-        }
-
-        .category-tabs {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        .category-tabs::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .category-tabs::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.3);
-            border-radius: 2px;
-        }
-
-        .tab-icon {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .category-tab {
-            padding: 8px 18px;
-            background: rgba(229, 9, 20, 0.9);
-            border: none;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: white;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.3s;
-        }
-
-        .category-tab:hover {
-            background: #c40812;
-            transform: scale(1.05);
-        }
-
-        .category-tab.inactive {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
-            color: rgba(255,255,255,0.7);
-        }
-
-        .category-tab.inactive:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: white;
-            color: white;
-        }
-
-        /* Movie Grid */
-        .movies-row {
-            position: relative;
-            margin-bottom: 40px;
-        }
-
-        .movies-scroll {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            padding-bottom: 15px;
-        }
-
-        .movies-scroll::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .movies-scroll::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.3);
-            border-radius: 3px;
-        }
-
-        .movie-card {
-            min-width: 180px;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .movie-card:hover {
-            transform: scale(1.05);
-            z-index: 10;
-        }
-
-        .movie-poster {
-            width: 100%;
-            height: 260px;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .movie-poster img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .movie-card:hover .movie-poster img {
-            transform: scale(1.1);
-        }
-
-        .movie-info {
-            padding: 10px 5px;
-        }
-
-        .movie-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .movie-meta {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.75rem;
-            color: #999;
-        }
-
-        .movie-year {
-            color: #999;
-        }
-
-        .movie-rating {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .movie-rating i {
-            color: #ffd700;
-            font-size: 0.7rem;
-        }
-
-        .movie-views {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        /* Section Header */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .section-title-large {
-            font-size: 1.3rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-filter {
-            display: flex;
-            gap: 10px;
-        }
-
-        .filter-btn {
-            padding: 6px 14px;
-            background: rgba(229, 9, 20, 0.9);
-            border: none;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .filter-btn:hover {
-            background: #c40812;
-        }
-
-        .filter-btn.outline {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .rating-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .rating-bar i {
-            color: #ffd700;
-            font-size: 1.1rem;
-        }
-
-        .rating-value {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        .rating-progress {
-            flex: 1;
-            height: 6px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .rating-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ffd700 0%, #ffed4e 100%);
-            border-radius: 3px;
-        }
-
-        /* Scroll Arrows */
-        .scroll-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(0,0,0,0.7);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s;
-            display: none;
-        }
-
-        .scroll-arrow:hover {
-            background: rgba(0,0,0,0.9);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .scroll-arrow.left {
-            left: -25px;
-        }
-
-        .scroll-arrow.right {
-            right: -25px;
-        }
-
-        .movies-row:hover .scroll-arrow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Footer styles */
-        :root {
-            --footer-primary-purple: #5120bb;
-            --footer-light-purple: #08179c;
-            --footer-dark-purple: #1c1d7a;
-            --footer-neon-cyan: #00e5ff;
-            --footer-neon-red: #ff1744;
-            --footer-neon-yellow: #ffcc33;
-        }
-
-        .footer-newsletter-wrapper {
-            background: linear-gradient(135deg, rgba(81, 32, 187, 0.1) 0%, rgba(0, 0, 0, 0.95) 100%);
-            padding: 3rem 0;
-            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer-newsletter-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255, 23, 68, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .footer-newsletter-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
+      @media (max-width: 768px) {
         .footer-newsletter-content-grid {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .footer-newsletter-main-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--footer-neon-cyan) 0%, var(--footer-primary-purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: 'Space Mono', monospace;
-            color: white;
-        }
-
-        .footer-newsletter-description-text {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-            font-size: 0.9rem;
-            font-family: 'Space Mono', monospace;
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+          text-align: center;
         }
 
         .footer-newsletter-subscribe-form {
-            display: flex;
-            gap: 0.5rem;
-            max-width: 450px;
-        }
-
-        .footer-newsletter-email-input {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 8px;
-            color: white;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .footer-newsletter-email-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .footer-newsletter-email-input:focus {
-            outline: none;
-            border-color: var(--footer-neon-cyan);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        .footer-newsletter-submit-button {
-            padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, var(--footer-neon-red) 0%, var(--footer-primary-purple) 100%);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 60px;
-            box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
-        }
-
-        .footer-newsletter-submit-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
-        }
-
-        .footer-newsletter-submit-button i {
-            font-size: 1.2rem;
-        }
-
-        .thedung-main-footer-wrapper {
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(28, 29, 122, 0.1) 50%, rgba(0, 0, 0, 0.95) 100%);
-            padding: 4rem 0 2rem;
-            position: relative;
-        }
-
-        .thedung-main-footer-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: radial-gradient(circle at 2px 2px, rgba(0, 229, 255, 0.1) 1px, transparent 0);
-            background-size: 40px 40px;
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .thedung-footer-main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
+          max-width: 100%;
         }
 
         .thedung-footer-columns-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-            position: relative;
-            z-index: 1;
+          grid-template-columns: 1fr 1fr;
+          gap: 2rem;
         }
 
         .thedung-footer-brand-section {
-            animation: thedungFooterFadeInUp 0.6s ease-out;
+          grid-column: 1 / -1;
         }
 
-        @keyframes thedungFooterFadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .thedung-footer-brand-logo-container {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--footer-light-purple), var(--footer-primary-purple));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            box-shadow: 0 0 30px rgba(81, 32, 187, 0.5);
-            animation: thedungFooterLogoFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes thedungFooterLogoFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .thedung-footer-brand-logo-container i {
-            color: white;
-            font-size: 30px;
+        .thedung-footer-content-column:nth-child(5) {
+          grid-column: 1 / -1;
         }
 
         .thedung-footer-brand-name-text {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: 3px;
-            color: white;
-            font-family: 'Space Mono', monospace;
+          font-size: 1.75rem;
         }
 
-        .thedung-footer-brand-tagline-text {
-            color: var(--footer-neon-cyan);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-brand-divider-line {
-            height: 2px;
-            width: 80px;
-            background: linear-gradient(90deg, var(--footer-neon-cyan) 0%, var(--footer-neon-red) 100%);
-            margin: 1.5rem 0;
-            box-shadow: 0 0 10px var(--footer-neon-cyan);
-        }
-
-        .thedung-footer-brand-description-paragraph {
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            font-size: 0.85rem;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-social-icons-container {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .thedung-footer-social-icon-link {
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-        }
-
-        .thedung-footer-social-icon-link::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--footer-neon-cyan) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            transition: all 0.4s ease;
-        }
-
-        .thedung-footer-social-icon-link:hover::before {
-            width: 100px;
-            height: 100px;
-        }
-
-        .thedung-footer-social-icon-link:hover {
-            transform: translateY(-5px);
-            border-color: var(--footer-neon-cyan);
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
-        }
-
-        .thedung-footer-social-icon-link i {
-            position: relative;
-            z-index: 1;
-        }
-
-        .thedung-footer-content-column {
-            animation: thedungFooterFadeInUp 0.6s ease-out;
-            animation-fill-mode: both;
-        }
-
-        .thedung-footer-content-column:nth-child(2) { animation-delay: 0.1s; }
-        .thedung-footer-content-column:nth-child(3) { animation-delay: 0.2s; }
-        .thedung-footer-content-column:nth-child(4) { animation-delay: 0.3s; }
-        .thedung-footer-content-column:nth-child(5) { animation-delay: 0.4s; }
-
-        .thedung-footer-column-heading-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            padding-bottom: 0.75rem;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-column-heading-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--footer-neon-cyan), var(--footer-neon-red));
-            box-shadow: 0 0 10px var(--footer-neon-cyan);
-        }
-
-        .thedung-footer-navigation-links-list {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-        }
-
-        .thedung-footer-navigation-links-list li {
-            margin-bottom: 0.75rem;
-        }
-
-        .thedung-footer-navigation-link-item {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            position: relative;
-            padding-left: 0;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-navigation-link-item::before {
-            content: '→';
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s ease;
-            color: var(--footer-neon-cyan);
-        }
-
-        .thedung-footer-navigation-link-item:hover {
-            color: white;
-            transform: translateX(10px);
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
-        }
-
-        .thedung-footer-navigation-link-item:hover::before {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .thedung-footer-contact-info-box {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1.25rem;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .thedung-footer-contact-info-box:hover {
-            background: rgba(0, 0, 0, 0.5);
-            border-color: var(--footer-neon-cyan);
-            transform: translateX(5px);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
-        }
-
-        .thedung-footer-contact-icon-wrapper {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, var(--footer-neon-cyan) 0%, var(--footer-primary-purple) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            flex-shrink: 0;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-        }
-
-        .thedung-footer-contact-text-wrapper {
-            flex: 1;
-        }
-
-        .thedung-footer-contact-label-text {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.25rem;
-            font-weight: 700;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-contact-value-text {
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 500;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-map-display-container {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            height: 180px;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
-            margin-top: 1rem;
-        }
-
-        .thedung-footer-map-placeholder-area {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(81, 32, 187, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%), repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .thedung-footer-map-location-pin {
-            width: 50px;
-            height: 50px;
-            position: relative;
-        }
-
-        .thedung-footer-map-location-pin::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 30px;
-            height: 30px;
-            background: var(--footer-neon-red);
-            border-radius: 50% 50% 50% 0;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            box-shadow: 0 0 20px rgba(255, 23, 68, 0.8);
-            animation: thedungFooterMapPinBounce 2s ease-in-out infinite;
-        }
-
-        .thedung-footer-map-location-pin i {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 1rem;
-            z-index: 1;
-        }
-
-        @keyframes thedungFooterMapPinBounce {
-            0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) translateY(0); }
-            50% { transform: translate(-50%, -50%) rotate(-45deg) translateY(-10px); }
+        .footer-newsletter-main-title {
+          font-size: 2rem;
         }
 
         .thedung-footer-bottom-copyright-wrapper {
-            padding: 2rem 0;
-            border-top: 1px solid rgba(0, 229, 255, 0.2);
-            margin-top: 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.8rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-            font-family: 'Space Mono', monospace;
+          flex-direction: column;
+          text-align: center;
         }
 
         .thedung-footer-bottom-links-list {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
+          gap: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .footer-newsletter-container {
+          padding: 0 1rem;
         }
 
-        .thedung-footer-bottom-link-item {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-family: 'Space Mono', monospace;
+        .thedung-footer-main-container {
+          padding: 0 1rem;
         }
 
-        .thedung-footer-bottom-link-item:hover {
-            color: var(--footer-neon-cyan);
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        .footer-newsletter-wrapper {
+          padding: 2rem 0;
         }
 
-        #backToTop {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 56px;
-            height: 56px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            display: none;
-            z-index: 999;
-            padding: 0;
+        .thedung-main-footer-wrapper {
+          padding: 3rem 0 2rem;
         }
 
-        #backToTop .sun-ring {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: sunRotate 6s linear infinite;
+        .footer-newsletter-main-title {
+          font-size: 1.5rem;
         }
 
-        #backToTop .sun-ring i {
-            font-size: 56px;
-            color: #ffcc33;
-            filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
+        .footer-newsletter-subscribe-form {
+          flex-direction: column;
         }
 
-        #backToTop .arrow-up {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .footer-newsletter-submit-button {
+          width: 100%;
         }
 
-        #backToTop .arrow-up i {
-            font-size: 18px;
-            color: white;
-            text-shadow: 0 0 6px rgba(255,255,255,0.8);
-            z-index: 2;
+        .thedung-footer-brand-name-text {
+          font-size: 1.5rem;
         }
 
-        #backToTop:hover {
-            transform: translateY(-6px) scale(1.05);
-            transition: 0.3s ease;
+        .thedung-footer-social-icons-container {
+          justify-content: center;
         }
 
-        @keyframes sunRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .thedung-footer-bottom-links-list {
+          flex-direction: column;
+          gap: 0.5rem;
+          padding-left: 0;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-banner {
-                height: 400px;
-                padding: 30px 20px;
-            }
-
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .category-section {
-                padding: 30px 20px;
-            }
-
-            .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-
-            .btn-watch, .btn-addlist {
-                width: 100%;
-                justify-content: center;
-            }
+        .thedung-footer-brand-logo-container {
+          margin: 0 auto 1rem;
         }
 
-        @media (max-width: 1024px) {
-            .thedung-footer-columns-grid {
-                grid-template-columns: 1fr 1fr 1fr;
-                gap: 2.5rem;
-            }
-
-            .thedung-footer-content-column:nth-child(5) {
-                grid-column: 1 / -1;
-                max-width: 500px;
-            }
+        .thedung-footer-brand-divider-line {
+          margin: 1.5rem auto;
         }
-
-        @media (max-width: 768px) {
-            .footer-newsletter-content-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                text-align: center;
-            }
-
-            .footer-newsletter-subscribe-form {
-                max-width: 100%;
-            }
-
-            .thedung-footer-columns-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
-
-            .thedung-footer-brand-section {
-                grid-column: 1 / -1;
-            }
-
-            .thedung-footer-content-column:nth-child(5) {
-                grid-column: 1 / -1;
-            }
-
-            .thedung-footer-brand-name-text {
-                font-size: 1.75rem;
-            }
-
-            .footer-newsletter-main-title {
-                font-size: 2rem;
-            }
-
-            .thedung-footer-bottom-copyright-wrapper {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .thedung-footer-bottom-links-list {
-                gap: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .footer-newsletter-container {
-                padding: 0 1rem;
-            }
-
-            .thedung-footer-main-container {
-                padding: 0 1rem;
-            }
-
-            .footer-newsletter-wrapper {
-                padding: 2rem 0;
-            }
-
-            .thedung-main-footer-wrapper {
-                padding: 3rem 0 2rem;
-            }
-
-            .footer-newsletter-main-title {
-                font-size: 1.5rem;
-            }
-
-            .footer-newsletter-subscribe-form {
-                flex-direction: column;
-            }
-
-            .footer-newsletter-submit-button {
-                width: 100%;
-            }
-
-            .thedung-footer-brand-name-text {
-                font-size: 1.5rem;
-            }
-
-            .thedung-footer-social-icons-container {
-                justify-content: center;
-            }
-
-            .thedung-footer-bottom-links-list {
-                flex-direction: column;
-                gap: 0.5rem;
-                padding-left: 0;
-            }
-
-            .thedung-footer-brand-logo-container {
-                margin: 0 auto 1rem;
-            }
-
-            .thedung-footer-brand-divider-line {
-                margin: 1.5rem auto;
-            }
-        }
+      }
     </style>
-</head>
+    <style>
+      .user-dropdown {
+        margin-left: 10px;
+      }
 
-<body>
+      .user-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        transition: 0.3s ease;
+      }
+
+      .user-btn:hover {
+        background: rgba(81, 32, 187, 0.2);
+      }
+
+      .user-icon {
+        font-size: 16px;
+      }
+
+      .username-text {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: #00e5ff;
+      }
+
+      .user-menu {
+        border-radius: 12px;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
+      }
+    </style>
+  </head>
+
+  <body>
     <!-- Desktop Navigation -->
     <nav class="navbar d-none d-md-block">
-        <div class="container px-4">
-            <div class="d-flex justify-content-between align-items-center w-100">
-                <div class="d-flex align-items-center">
-                    <div class="logo-box">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <span class="brand-text">THEDUNG</span>
-                </div>
-
-                <div class="day-navigator">
-                    <button class="nav-arrow">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <a href="index.html" class="day-btn">TRANG CHỦ</a>
-                    <a href="courses.html" class="day-btn">KHÓA HỌC</a>
-                    <a href="courses.html" class="day-btn active">NETFLIX</a>
-                    <a href="music.html" class="day-btn">ÂM NHẠC</a>
-                    <a href="news.html" class="day-btn">TIN TỨC</a>
-                    <a href="contact.html" class="day-btn">LIÊN HỆ</a>
-                    <button class="nav-arrow">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-
-                <div class="d-flex align-items-center gap-2">
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-comment"></i>
-                    </button>
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-bell"></i>
-                        <span class="notification-dot"></span>
-                    </button>
-                    <a href="login.html" class="icon-btn">
-                        <i class="fa-regular fa-user"></i>
-                    </a>
-                </div>
+      <div class="container px-4">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div class="d-flex align-items-center">
+            <div class="logo-box">
+              <i class="fas fa-rocket"></i>
             </div>
+            <span class="brand-text">THEDUNG</span>
+          </div>
+
+          <div class="day-navigator">
+            <button class="nav-arrow">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <a href="index.html" class="day-btn">TRANG CHỦ</a>
+            <a href="courses.html" class="day-btn">KHÓA HỌC</a>
+            <a href="courses.html" class="day-btn active">NETFLIX</a>
+            <a href="music.html" class="day-btn">ÂM NHẠC</a>
+            <a href="news.html" class="day-btn">TIN TỨC</a>
+            <a href="contact.html" class="day-btn">LIÊN HỆ</a>
+            <button class="nav-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div class="d-flex align-items-center gap-2">
+            <button class="icon-btn">
+              <i class="fa-regular fa-comment"></i>
+            </button>
+            <button class="icon-btn">
+              <i class="fa-regular fa-bell"></i>
+              <span class="notification-dot"></span>
+            </button>
+            <div id="userAreaDesktop"></div>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- Mobile Navigation -->
     <nav class="navbar d-md-none">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center w-100">
-                <div class="d-flex align-items-center">
-                    <div class="logo-box">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <span class="brand-text">THEDUNG</span>
-                </div>
-
-                <div class="d-flex align-items-center gap-1">
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-comment"></i>
-                    </button>
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-bell"></i>
-                        <span class="notification-dot"></span>
-                    </button>
-                    <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div class="d-flex align-items-center">
+            <div class="logo-box">
+              <i class="fas fa-rocket"></i>
             </div>
+            <span class="brand-text">THEDUNG</span>
+          </div>
+
+          <div class="d-flex align-items-center gap-1">
+            <button class="icon-btn">
+              <i class="fa-regular fa-comment"></i>
+            </button>
+            <button class="icon-btn">
+              <i class="fa-regular fa-bell"></i>
+              <span class="notification-dot"></span>
+            </button>
+            <button
+              class="icon-btn"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#mobileMenu"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- Mobile Day Navigator -->
     <div class="mobile-day-nav d-md-none">
-        <div class="d-flex align-items-center gap-2">
-            <button class="nav-arrow">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <div class="d-inline-flex gap-1">
-                <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
-                <a href="courses.html" class="day-btn mobile-day-btn">Khóa học</a>
-                 <a href="netflix.html" class="day-btn mobile-day-btn">Netflix</a>
-                <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
-                <a href="news.html" class="day-btn mobile-day-btn ">Tin tức</a>
-                <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
-            </div>
-            <button class="nav-arrow">
-                <i class="fas fa-chevron-right"></i>
-            </button>
+      <div class="d-flex align-items-center gap-2">
+        <button class="nav-arrow">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="d-inline-flex gap-1">
+          <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
+          <a href="courses.html" class="day-btn mobile-day-btn">Khóa học</a>
+          <a href="netflix.html" class="day-btn mobile-day-btn active"
+            >Netflix</a
+          >
+          <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
+          <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
+          <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
         </div>
+        <button class="nav-arrow">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
     </div>
 
     <!-- Mobile Offcanvas Menu -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Menu</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="menu-section">
+          <div class="section-title">Navigation</div>
+          <a href="index.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            Trang chủ
+          </a>
+          <a href="courses.html" class="menu-item">
+            <i class="fas fa-sun"></i>
+            Khóa học
+          </a>
+          <a href="netflix.html" class="menu-item active">
+            <i class="fas fa-film"></i>
+            Netflix
+          </a>
+          <a href="music.html" class="menu-item">
+            <i class="fas fa-music"></i>
+            Âm nhạc
+          </a>
+          <a href="news.html" class="menu-item">
+            <i class="fas fa-film"></i>
+            Tin Tức
+          </a>
+          <a href="contact.html" class="menu-item">
+            <i class="fas fa-envelope"></i>
+            Liên hệ
+          </a>
         </div>
-        <div class="offcanvas-body">
-            <div class="menu-section">
-                <div class="section-title">Navigation</div>
-                <a href="index.html" class="menu-item">
-                    <i class="fas fa-home"></i>
-                    Trang chủ
-                </a>
-                <a href="courses.html" class="menu-item">
-                    <i class="fas fa-sun"></i>
-                    Khóa học
-                </a>
-                <a href="netflix.html" class="menu-item active">
-                    <i class="fas fa-film"></i>
-                    Netflix
-                </a>
-                <a href="music.html" class="menu-item">
-                    <i class="fas fa-music"></i>
-                    Âm nhạc
-                </a>
-                <a href="news.html" class="menu-item ">
-                    <i class="fas fa-film"></i>
-                    Tin Tức
-                </a>
-                <a href="contact.html" class="menu-item">
-                    <i class="fas fa-envelope"></i>
-                    Liên hệ
-                </a>
-            </div>
 
-            <div class="menu-divider"></div>
+        <div class="menu-divider"></div>
 
-            <div class="menu-section">
-                <div class="section-title">Explore</div>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-fire"></i>
-                    Trending
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-star"></i>
-                    Popular
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-plus"></i>
-                    Recently Added
-                </a>
-            </div>
-            <div class="menu-divider"></div>
-
-            <div class="menu-section">
-                <div class="section-title">Account</div>
-                <a href="login.html" class="menu-item">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Đăng nhập
-                </a>
-                <a href="settings.html" class="menu-item">
-                    <i class="fas fa-cog"></i>
-                    Cài đặt
-                </a>
-            </div>
+        <div class="menu-section">
+          <div class="section-title">Explore</div>
+          <a href="#" class="menu-item">
+            <i class="fas fa-fire"></i>
+            Trending
+          </a>
+          <a href="#" class="menu-item">
+            <i class="fas fa-star"></i>
+            Popular
+          </a>
+          <a href="#" class="menu-item">
+            <i class="fas fa-plus"></i>
+            Recently Added
+          </a>
         </div>
+        <div class="menu-divider"></div>
+
+        <div class="menu-section">
+          <div class="section-title">Account</div>
+          <div id="userAreaMobile"></div>
+          <a href="settings.html" class="menu-item">
+            <i class="fas fa-cog"></i>
+            Cài đặt
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- Main Content -->
     <main>
-        <!-- Hero Banner -->
-        <div class="hero-banner">
-            <img src="https://i.pinimg.com/1200x/c8/54/cc/c854ccce48c3dbbeb16a834046bce01c.jpg" alt="Save Me">
-            <div class="hero-content" data-aos="fade-right">
-                <div class="hero-badge">
-                    SEASON 1 • 16 EPISODE
-                    <span class="hero-rating">
-                        <i class="fas fa-star"></i> 9.1
-                    </span>
-                    <span style="margin-left: 10px; color: #999;">2017 • Exciting story • 2 season</span>
-                </div>
-                <h1 class="hero-title">SAVE ME</h1>
-                <p class="hero-description">
-                    Series adapted from the webcomic entitled Out of the World by writer Jo Geum-san.
-                </p>
-                <div class="hero-buttons">
-                    <button class="btn-watch">
-                        <i class="fas fa-play"></i> WATCH
-                    </button>
-                    <button class="btn-addlist">
-                        <i class="fas fa-plus"></i> ADD LIST
-                    </button>
-                </div>
-            </div>
-            <div class="hero-indicators">
-                <div class="indicator active"></div>
-                <div class="indicator"></div>
-                <div class="indicator"></div>
-            </div>
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <img
+          src="https://i.pinimg.com/1200x/c8/54/cc/c854ccce48c3dbbeb16a834046bce01c.jpg"
+          alt="Save Me"
+        />
+        <div class="hero-content" data-aos="fade-right">
+          <div class="hero-badge">
+            SEASON 1 • 16 EPISODE
+            <span class="hero-rating"> <i class="fas fa-star"></i> 9.1 </span>
+            <span style="margin-left: 10px; color: #999"
+              >2017 • Exciting story • 2 season</span
+            >
+          </div>
+          <h1 class="hero-title">SAVE ME</h1>
+          <p class="hero-description">
+            Series adapted from the webcomic entitled Out of the World by writer
+            Jo Geum-san.
+          </p>
+          <div class="hero-buttons">
+            <button class="btn-watch"><i class="fas fa-play"></i> WATCH</button>
+            <button class="btn-addlist">
+              <i class="fas fa-plus"></i> ADD LIST
+            </button>
+          </div>
+        </div>
+        <div class="hero-indicators">
+          <div class="indicator active"></div>
+          <div class="indicator"></div>
+          <div class="indicator"></div>
+        </div>
+      </div>
+
+      <!-- Category Section -->
+      <div class="category-section">
+        <!-- Trends Now Section -->
+        <div class="category-tabs">
+          <div class="tab-icon"><i class="fas fa-fire"></i> Trends Now</div>
+          <div style="flex: 1"></div>
+          <button class="category-tab inactive">
+            <i class="fas fa-fire"></i> Popular
+          </button>
+          <button class="category-tab inactive">
+            <i class="fas fa-star"></i> Premium
+          </button>
+          <button class="category-tab inactive">
+            <i class="fas fa-plus"></i> Recently Added
+          </button>
         </div>
 
-        <!-- Category Section -->
-        <div class="category-section">
-            <!-- Trends Now Section -->
-            <div class="category-tabs">
-                <div class="tab-icon">
-                    <i class="fas fa-fire"></i> Trends Now
-                </div>
-                <div style="flex: 1;"></div>
-                <button class="category-tab inactive"><i class="fas fa-fire"></i> Popular</button>
-                <button class="category-tab inactive"><i class="fas fa-star"></i> Premium</button>
-                <button class="category-tab inactive"><i class="fas fa-plus"></i> Recently Added</button>
-            </div>
-
-            <!-- Genre Tabs -->
-            <div class="category-tabs" style="margin-bottom: 35px;">
-                <button class="category-tab">Action</button>
-                <button class="category-tab inactive">Adventure</button>
-                <button class="category-tab inactive">Biography</button>
-                <button class="category-tab">Crime</button>
-                <button class="category-tab inactive">Comedy</button>
-                <button class="category-tab inactive">Documentary</button>
-                <button class="category-tab">Drama</button>
-                <button class="category-tab inactive">Fantasy</button>
-            </div>
-
-            <!-- Movies Row 1 -->
-            <div class="movies-row" data-aos="fade-up">
-                <button class="scroll-arrow left"><i class="fas fa-chevron-left"></i></button>
-                <div class="movies-scroll">
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/736x/32/76/b6/3276b664e109298b97dc56968cea5072.jpg" alt="Vincenzo">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">Vincenzo</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2021</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 8.4</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 8.4</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/1200x/e5/05/95/e50595e412a899990f02410fd05290f6.jpg" alt="Tomorrow">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">Tomorrow</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2022</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 7.6</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 7.6</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/736x/23/fe/af/23feaf305e780d7874f58feed45469d8.jpg" alt="Sweet Home">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">Sweet Home</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2020</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 7.3</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 7.3</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/1200x/7e/3a/ac/7e3aacec211687ff9c356dd106e70a1d.jpg" alt="Flower Of Evil">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">Flower Of Evil</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2020</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 8.6</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 8.6</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/1200x/56/dd/f8/56ddf80d61ec9ac141238b440f40ff6e.jpg" alt="Lawless Lawyer">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">Lawless Lawyer</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2018</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 8.8</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 8.8</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/1200x/c8/76/44/c8764425cce51976eef509f2e9d10038.jpg" alt="My Name">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">My Name</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2021</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 7.9</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 7.9</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/1200x/08/1c/53/081c53ad5f971436902a4a225cb14935.jpg" alt="Kingdom">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">Kingdom</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2019</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 8.3</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 8.3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="scroll-arrow right"><i class="fas fa-chevron-right"></i></button>
-            </div>
-
-            <!-- Movies Section Header -->
-            <div class="section-header" style="margin-top: 50px;" data-aos="fade-up">
-                <div class="section-title-large">
-                    <i class="fas fa-film"></i> Movies
-                </div>
-                <div class="section-filter">
-                    <button class="filter-btn">Latest</button>
-                    <button class="filter-btn outline">Year <i class="fas fa-chevron-down"></i></button>
-                    <button class="filter-btn outline">A-Z <i class="fas fa-chevron-down"></i></button>
-                </div>
-            </div>
-
-            <!-- Rating Bar -->
-            <div class="rating-bar" data-aos="fade-up">
-                <i class="fas fa-star"></i>
-                <span class="rating-value">6.3</span>
-                <div class="rating-progress">
-                    <div class="rating-fill" style="width: 63%"></div>
-                </div>
-            </div>
-
-            <!-- Genre Tabs 2 -->
-            <div class="category-tabs" style="margin: 25px 0 35px;" data-aos="fade-up">
-                <button class="category-tab">Action</button>
-                <button class="category-tab inactive">Adventure</button>
-                <button class="category-tab inactive">Biography</button>
-                <button class="category-tab">Crime</button>
-                <button class="category-tab inactive">Comedy</button>
-                <button class="category-tab inactive">Documentary</button>
-                <button class="category-tab">Drama</button>
-            </div>
-
-            <!-- Movies Row 2 -->
-            <div class="movies-row" data-aos="fade-up">
-                <button class="scroll-arrow left"><i class="fas fa-chevron-left"></i></button>
-                <div class="movies-scroll">
-                    <div class="movie-card">
-                       <div class="movie-poster">
-                            <img src="https://i.pinimg.com/736x/05/23/9c/05239c46d7417441d5d2f777929c2ce8.jpg" alt="The Call">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">One Ordinary Day</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2021</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 8.4</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 8.4</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/736x/8d/e9/85/8de985fef18ab2e8f64f210cd61df0b1.jpg" alt="The Call">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">The Call</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2020</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 7.1</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 7.1</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/736x/c8/e6/4b/c8e64b8d519207eed269cec297a4cc20.jpg" alt="The Witch">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">The Witch</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2021</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 8.4</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 8.4</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/736x/39/f0/cb/39f0cb3cd145bf32b330f5e14a9f4218.jpg" alt="Midnight">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">Midnight</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2021</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 6.4</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 6.4</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/1200x/b9/ee/66/b9ee660f0144deaefd7b3614e9d0e067.jpg" alt="#Alive">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">#Alive</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2020</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 6.3</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 6.3</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/1200x/6e/90/90/6e909026637faec140123e244892d002.jpg" alt="Steel Rain">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">Steel Rain</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2017</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 7.1</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 7.1</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="movie-card">
-                        <div class="movie-poster">
-                            <img src="https://i.pinimg.com/1200x/cf/41/f8/cf41f89b434e68864d0e3360d87d1cbf.jp" alt="Squid Game">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">Squid Game</div>
-                            <div class="movie-meta">
-                                <span class="movie-year">2021</span>
-                                <span class="movie-views"><i class="fas fa-eye"></i> 9.2</span>
-                                <span class="movie-rating"><i class="fas fa-star"></i> 9.2</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="scroll-arrow right"><i class="fas fa-chevron-right"></i></button>
-            </div>
+        <!-- Genre Tabs -->
+        <div class="category-tabs" style="margin-bottom: 35px">
+          <button class="category-tab">Action</button>
+          <button class="category-tab inactive">Adventure</button>
+          <button class="category-tab inactive">Biography</button>
+          <button class="category-tab">Crime</button>
+          <button class="category-tab inactive">Comedy</button>
+          <button class="category-tab inactive">Documentary</button>
+          <button class="category-tab">Drama</button>
+          <button class="category-tab inactive">Fantasy</button>
         </div>
+
+        <!-- Movies Row 1 -->
+        <div class="movies-row" data-aos="fade-up">
+          <button class="scroll-arrow left">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="movies-scroll">
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/736x/32/76/b6/3276b664e109298b97dc56968cea5072.jpg"
+                  alt="Vincenzo"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">Vincenzo</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2021</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 8.4</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 8.4</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/736x/20/4f/56/204f56dbb47b2f2486c6fcdd7cfed76d.jpg"
+                  alt="Tomorrow"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">Tomorrow</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2022</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 7.6</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 7.6</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/736x/23/fe/af/23feaf305e780d7874f58feed45469d8.jpg"
+                  alt="Sweet Home"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">Sweet Home</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2020</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 7.3</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 7.3</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/1200x/7e/3a/ac/7e3aacec211687ff9c356dd106e70a1d.jpg"
+                  alt="Flower Of Evil"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">Flower Of Evil</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2020</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 8.6</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 8.6</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/1200x/56/dd/f8/56ddf80d61ec9ac141238b440f40ff6e.jpg"
+                  alt="Lawless Lawyer"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">Lawless Lawyer</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2018</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 8.8</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 8.8</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/1200x/c8/76/44/c8764425cce51976eef509f2e9d10038.jpg"
+                  alt="My Name"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">My Name</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2021</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 7.9</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 7.9</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/1200x/08/1c/53/081c53ad5f971436902a4a225cb14935.jpg"
+                  alt="Kingdom"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">Kingdom</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2019</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 8.3</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 8.3</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="scroll-arrow right">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+
+        <!-- Movies Section Header -->
+        <div class="section-header" style="margin-top: 50px" data-aos="fade-up">
+          <div class="section-title-large">
+            <i class="fas fa-film"></i> Movies
+          </div>
+          <div class="section-filter">
+            <button class="filter-btn">Latest</button>
+            <button class="filter-btn outline">
+              Year <i class="fas fa-chevron-down"></i>
+            </button>
+            <button class="filter-btn outline">
+              A-Z <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Rating Bar -->
+        <div class="rating-bar" data-aos="fade-up">
+          <i class="fas fa-star"></i>
+          <span class="rating-value">6.3</span>
+          <div class="rating-progress">
+            <div class="rating-fill" style="width: 63%"></div>
+          </div>
+        </div>
+
+        <!-- Genre Tabs 2 -->
+        <div
+          class="category-tabs"
+          style="margin: 25px 0 35px"
+          data-aos="fade-up"
+        >
+          <button class="category-tab">Action</button>
+          <button class="category-tab inactive">Adventure</button>
+          <button class="category-tab inactive">Biography</button>
+          <button class="category-tab">Crime</button>
+          <button class="category-tab inactive">Comedy</button>
+          <button class="category-tab inactive">Documentary</button>
+          <button class="category-tab">Drama</button>
+        </div>
+
+        <!-- Movies Row 2 -->
+        <div class="movies-row" data-aos="fade-up">
+          <button class="scroll-arrow left">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="movies-scroll">
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/1200x/13/c2/e1/13c2e1e86785b5902d2bbdb5d3bda3d5.jpg"
+                  alt="The Call"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">One Ordinary Day</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2021</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 8.4</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 8.4</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/736x/18/36/c4/1836c4791ba54e04431c95491835cfd2.jpg"
+                  alt="The Call"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">The Call</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2020</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 7.1</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 7.1</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/736x/c8/e6/4b/c8e64b8d519207eed269cec297a4cc20.jpg"
+                  alt="The Witch"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">The Witch</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2021</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 8.4</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 8.4</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/736x/39/f0/cb/39f0cb3cd145bf32b330f5e14a9f4218.jpg"
+                  alt="Midnight"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">Midnight</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2021</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 6.4</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 6.4</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/1200x/b9/ee/66/b9ee660f0144deaefd7b3614e9d0e067.jpg"
+                  alt="#Alive"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">#Alive</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2020</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 6.3</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 6.3</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/1200x/6e/90/90/6e909026637faec140123e244892d002.jpg"
+                  alt="Steel Rain"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">Steel Rain</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2017</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 7.1</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 7.1</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="movie-card">
+              <div class="movie-poster">
+                <img
+                  src="https://i.pinimg.com/1200x/cf/41/f8/cf41f89b434e68864d0e3360d87d1cbf.jpg"
+                  alt="Squid Game"
+                />
+              </div>
+              <div class="movie-info">
+                <div class="movie-title">Squid Game</div>
+                <div class="movie-meta">
+                  <span class="movie-year">2021</span>
+                  <span class="movie-views"
+                    ><i class="fas fa-eye"></i> 9.2</span
+                  >
+                  <span class="movie-rating"
+                    ><i class="fas fa-star"></i> 9.2</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="scroll-arrow right">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
     </main>
 
     <!-- Newsletter Section -->
     <section class="footer-newsletter-wrapper">
-        <div class="footer-newsletter-container">
-            <div class="footer-newsletter-content-grid">
-                <h2 class="footer-newsletter-main-title">Subscribe</h2>
-                <p class="footer-newsletter-description-text">
-                    Đăng ký để nhận thông báo khi có phim mới!
-                </p>
-                <form class="footer-newsletter-subscribe-form">
-                    <input type="email" class="footer-newsletter-email-input" placeholder="Email của bạn..." required>
-                    <button type="submit" class="footer-newsletter-submit-button">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
+      <div class="footer-newsletter-container">
+        <div class="footer-newsletter-content-grid">
+          <h2 class="footer-newsletter-main-title">Subscribe</h2>
+          <p class="footer-newsletter-description-text">
+            Đăng ký để nhận thông báo khi có phim mới!
+          </p>
+          <form class="footer-newsletter-subscribe-form">
+            <input
+              type="email"
+              class="footer-newsletter-email-input"
+              placeholder="Email của bạn..."
+              required
+            />
+            <button type="submit" class="footer-newsletter-submit-button">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
         </div>
+      </div>
     </section>
 
     <!-- Main Footer -->
     <footer class="thedung-main-footer-wrapper">
-        <div class="thedung-footer-main-container">
-            <div class="thedung-footer-columns-grid">
-                <!-- Brand Section -->
-                <div class="thedung-footer-brand-section thedung-footer-content-column">
-                    <div class="thedung-footer-brand-logo-container">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h1 class="thedung-footer-brand-name-text">THEDUNG</h1>
-                    <p class="thedung-footer-brand-tagline-text">Streaming Platform</p>
-                    <div class="thedung-footer-brand-divider-line"></div>
-                    <p class="thedung-footer-brand-description-paragraph">
-                        Liên hệ chúng tôi qua nền tảng mạng xã hội
-                    </p>
-                    <div class="thedung-footer-social-icons-container">
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
+      <div class="thedung-footer-main-container">
+        <div class="thedung-footer-columns-grid">
+          <!-- Brand Section -->
+          <div
+            class="thedung-footer-brand-section thedung-footer-content-column"
+          >
+            <div class="thedung-footer-brand-logo-container">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <h1 class="thedung-footer-brand-name-text">THEDUNG</h1>
+            <p class="thedung-footer-brand-tagline-text">Streaming Platform</p>
+            <div class="thedung-footer-brand-divider-line"></div>
+            <p class="thedung-footer-brand-description-paragraph">
+              Liên hệ chúng tôi qua nền tảng mạng xã hội
+            </p>
+            <div class="thedung-footer-social-icons-container">
+              <a
+                href="#"
+                class="thedung-footer-social-icon-link"
+                aria-label="Facebook"
+              >
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a
+                href="#"
+                class="thedung-footer-social-icon-link"
+                aria-label="Twitter"
+              >
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a
+                href="#"
+                class="thedung-footer-social-icon-link"
+                aria-label="LinkedIn"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a
+                href="#"
+                class="thedung-footer-social-icon-link"
+                aria-label="Instagram"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- About Column -->
+          <div class="thedung-footer-content-column">
+            <h3 class="thedung-footer-column-heading-title">About</h3>
+            <ul class="thedung-footer-navigation-links-list">
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Planning</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Research</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Consulting</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Analysis</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Menu Column -->
+          <div class="thedung-footer-content-column">
+            <h3 class="thedung-footer-column-heading-title">Menu</h3>
+            <ul class="thedung-footer-navigation-links-list">
+              <li>
+                <a href="index.html" class="thedung-footer-navigation-link-item"
+                  >Trang chủ</a
+                >
+              </li>
+              <li>
+                <a
+                  href="courses.html"
+                  class="thedung-footer-navigation-link-item"
+                  >Khóa học</a
+                >
+              </li>
+              <li>
+                <a href="music.html" class="thedung-footer-navigation-link-item"
+                  >Âm nhạc</a
+                >
+              </li>
+              <li>
+                <a
+                  href="netflix.html"
+                  class="thedung-footer-navigation-link-item"
+                  >Phim</a
+                >
+              </li>
+              <li>
+                <a
+                  href="contact.html"
+                  class="thedung-footer-navigation-link-item"
+                  >Liên hệ</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Services Column -->
+          <div class="thedung-footer-content-column">
+            <h3 class="thedung-footer-column-heading-title">Services</h3>
+            <ul class="thedung-footer-navigation-links-list">
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Movies</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Series</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Documentaries</a
+                >
+              </li>
+              <li>
+                <a href="#" class="thedung-footer-navigation-link-item"
+                  >Originals</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact Column -->
+          <div class="thedung-footer-content-column">
+            <h3 class="thedung-footer-column-heading-title">Contact</h3>
+
+            <div class="thedung-footer-contact-info-box">
+              <div class="thedung-footer-contact-icon-wrapper">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              <div class="thedung-footer-contact-text-wrapper">
+                <div class="thedung-footer-contact-label-text">Call</div>
+                <div class="thedung-footer-contact-value-text">
+                  +091 984 4429
                 </div>
-
-                <!-- About Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">About</h3>
-                    <ul class="thedung-footer-navigation-links-list">
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Planning</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Research</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Consulting</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Analysis</a></li>
-                    </ul>
-                </div>
-
-                <!-- Menu Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">Menu</h3>
-                    <ul class="thedung-footer-navigation-links-list">
-                        <li><a href="index.html" class="thedung-footer-navigation-link-item">Trang chủ</a></li>
-                        <li><a href="courses.html" class="thedung-footer-navigation-link-item">Khóa học</a></li>
-                        <li><a href="music.html" class="thedung-footer-navigation-link-item">Âm nhạc</a></li>
-                        <li><a href="netflix.html" class="thedung-footer-navigation-link-item">Phim</a></li>
-                        <li><a href="contact.html" class="thedung-footer-navigation-link-item">Liên hệ</a></li>
-                    </ul>
-                </div>
-
-                <!-- Services Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">Services</h3>
-                    <ul class="thedung-footer-navigation-links-list">
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Movies</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Series</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Documentaries</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Originals</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">Contact</h3>
-                    
-                    <div class="thedung-footer-contact-info-box">
-                        <div class="thedung-footer-contact-icon-wrapper">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="thedung-footer-contact-text-wrapper">
-                            <div class="thedung-footer-contact-label-text">Call</div>
-                            <div class="thedung-footer-contact-value-text">+091 984 4429</div>
-                        </div>
-                    </div>
-
-                    <div class="thedung-footer-contact-info-box">
-                        <div class="thedung-footer-contact-icon-wrapper">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="thedung-footer-contact-text-wrapper">
-                            <div class="thedung-footer-contact-label-text">Email</div>
-                            <div class="thedung-footer-contact-value-text"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="214d544e4f4655494445544f4661464c40484d0f424e4c">[email&#160;protected]</a></div>
-                        </div>
-                    </div>
-
-                    <div class="thedung-footer-map-display-container">
-                        <div class="thedung-footer-map-placeholder-area">
-                            <div class="thedung-footer-map-location-pin">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
 
-            <!-- Bottom Footer -->
-            <div class="thedung-footer-bottom-copyright-wrapper">
-                <div>&copy; 2025 THEDUNG. All rights reserved.</div>
-                <ul class="thedung-footer-bottom-links-list">
-                    <li><a href="#" class="thedung-footer-bottom-link-item">Privacy Policy</a></li>
-                    <li><a href="#" class="thedung-footer-bottom-link-item">Our History</a></li>
-                    <li><a href="#" class="thedung-footer-bottom-link-item">What We Do</a></li>
-                </ul>
+            <div class="thedung-footer-contact-info-box">
+              <div class="thedung-footer-contact-icon-wrapper">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="thedung-footer-contact-text-wrapper">
+                <div class="thedung-footer-contact-label-text">Email</div>
+                <div class="thedung-footer-contact-value-text">
+                  <a
+                    href="/cdn-cgi/l/email-protection"
+                    class="__cf_email__"
+                    data-cfemail="214d544e4f4655494445544f4661464c40484d0f424e4c"
+                    >[email&#160;protected]</a
+                  >
+                </div>
+              </div>
             </div>
+
+            <div class="thedung-footer-map-display-container">
+              <div class="thedung-footer-map-placeholder-area">
+                <div class="thedung-footer-map-location-pin">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Bottom Footer -->
+        <div class="thedung-footer-bottom-copyright-wrapper">
+          <div>&copy; 2025 THEDUNG. All rights reserved.</div>
+          <ul class="thedung-footer-bottom-links-list">
+            <li>
+              <a href="#" class="thedung-footer-bottom-link-item"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" class="thedung-footer-bottom-link-item"
+                >Our History</a
+              >
+            </li>
+            <li>
+              <a href="#" class="thedung-footer-bottom-link-item">What We Do</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </footer>
 
     <!-- Back to Top Button -->
     <button id="backToTop" title="Lên đầu trang">
-        <span class="sun-ring">
-            <i class="fas fa-sun"></i>
-        </span>
-        <span class="arrow-up">
-            <i class="fas fa-chevron-up"></i>
-        </span>
+      <span class="sun-ring">
+        <i class="fas fa-sun"></i>
+      </span>
+      <span class="arrow-up">
+        <i class="fas fa-chevron-up"></i>
+      </span>
     </button>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/bootstrap.min.js"></script>
+    <script
+      data-cfasync="false"
+      src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    
+
     <script>
-        // Back to top button
-        const backToTopBtn = document.getElementById("backToTop");
+      // Back to top button
+      const backToTopBtn = document.getElementById("backToTop");
 
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.style.display = "flex";
-            } else {
-                backToTopBtn.style.display = "none";
-            }
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.style.display = "flex";
+        } else {
+          backToTopBtn.style.display = "none";
+        }
+      });
+
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      // Newsletter form submission
+      document
+        .querySelector(".footer-newsletter-subscribe-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          alert("Cảm ơn bạn đã đăng ký!");
+          this.reset();
         });
 
-        backToTopBtn.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
+      // Initialize AOS
+      AOS.init({
+        duration: 900,
+        easing: "ease-out-cubic",
+        once: true,
+        offset: 120,
+      });
+
+      // Movie scroll arrows
+      document.querySelectorAll(".scroll-arrow").forEach((arrow) => {
+        arrow.addEventListener("click", function () {
+          const scrollContainer =
+            this.parentElement.querySelector(".movies-scroll");
+          const scrollAmount = 400;
+
+          if (this.classList.contains("left")) {
+            scrollContainer.scrollBy({
+              left: -scrollAmount,
+              behavior: "smooth",
             });
-        });
-
-        // Newsletter form submission
-        document.querySelector('.footer-newsletter-subscribe-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Cảm ơn bạn đã đăng ký!');
-            this.reset();
-        });
-
-        // Initialize AOS
-        AOS.init({
-            duration: 900,
-            easing: 'ease-out-cubic',
-            once: true,
-            offset: 120
-        });
-
-          // Movie scroll arrows
-        document.querySelectorAll('.scroll-arrow').forEach(arrow => {
-            arrow.addEventListener('click', function() {
-                const scrollContainer = this.parentElement.querySelector('.movies-scroll');
-                const scrollAmount = 400;
-                
-                if (this.classList.contains('left')) {
-                    scrollContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-                } else {
-                    scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-                }
+          } else {
+            scrollContainer.scrollBy({
+              left: scrollAmount,
+              behavior: "smooth",
             });
+          }
         });
+      });
     </script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // ===== HANDLE LOGIN STATUS =====
+      function updateUserUI() {
+        const user = JSON.parse(localStorage.getItem("currentUser"));
 
+        const desktopArea = document.getElementById("userAreaDesktop");
+        const mobileArea = document.getElementById("userAreaMobile");
+
+        if (!desktopArea || !mobileArea) return;
+
+        if (user) {
+          // Desktop
+          desktopArea.innerHTML = `
+  <div class="dropdown user-dropdown">
+    <button class="btn user-btn dropdown-toggle"
+            data-bs-toggle="dropdown"
+            data-bs-auto-close="true">
+      <i class="fa-solid fa-user user-icon"></i>
+      <span class="username-text">${user.username.toUpperCase()}</span>
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark user-menu">
+      <li>
+        <button class="dropdown-item text-danger" onclick="logout()">
+          <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+        </button>
+      </li>
+    </ul>
+  </div>
+`;
+
+          // Mobile
+          mobileArea.innerHTML = `
+      <div class="menu-item">
+        <i class="fas fa-user"></i>
+        ${user.username}
+      </div>
+      <div class="menu-item text-danger" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        Đăng xuất
+      </div>
+    `;
+        } else {
+          // Desktop
+          desktopArea.innerHTML = `
+      <a href="login.html" class="icon-btn">
+        <i class="fa-regular fa-user"></i>
+      </a>
+    `;
+
+          // Mobile
+          mobileArea.innerHTML = `
+      <a href="login.html" class="menu-item">
+        <i class="fas fa-sign-in-alt"></i>
+        Đăng nhập
+      </a>
+    `;
+        }
+      }
+
+      // ===== LOGOUT =====
+      function logout() {
+        localStorage.removeItem("currentUser");
+        window.location.reload();
+      }
+
+      // Run when page loads
+      document.addEventListener("DOMContentLoaded", updateUserUI);
+    </script>
+  </body>
 </html>

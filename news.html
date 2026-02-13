@@ -236,9 +236,14 @@
             display:flex; align-items:center; justify-content:center; font-size:2.2rem;
             position:relative;
         }
+        .hsc-img img {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 10px; position: absolute; inset: 0;
+        }
         .hsc-img::after {
             content:''; position:absolute; inset:0;
             background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(255,23,68,0.06));
+            pointer-events:none; z-index:1;
         }
         .hsc-tag {
             font-family:'Space Mono',monospace; font-size:0.58rem; letter-spacing:2px;
@@ -255,10 +260,15 @@
         /* Center — featured big card */
         .hero-col-center { position:relative; min-height:520px; cursor:pointer; }
         .hero-featured-bg {
-            position:absolute; inset:0;
-            background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,0.97) 100%),
-                        linear-gradient(135deg,rgba(0,20,80,0.75),rgba(81,32,187,0.5),rgba(0,0,0,0.2));
-            display:flex; align-items:center; justify-content:center; font-size:8rem; opacity:0.3;
+            position:absolute; inset:0; overflow:hidden;
+        }
+        .hero-featured-bg img {
+            width:100%; height:100%; object-fit:cover; opacity:0.55;
+        }
+        .hero-featured-bg::after {
+            content:''; position:absolute; inset:0;
+            background:linear-gradient(180deg,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.98) 100%);
+            pointer-events:none;
         }
         .hero-featured-body {
             position:absolute; bottom:0; left:0; right:0; padding:32px 28px;
@@ -310,9 +320,9 @@
         .latest-item:hover { background:rgba(255,255,255,0.04); }
         .li-img {
             width:58px; height:58px; border-radius:8px; flex-shrink:0;
-            background:linear-gradient(135deg,rgba(81,32,187,0.55),rgba(0,229,255,0.15));
-            display:flex; align-items:center; justify-content:center; font-size:1.3rem;
+            overflow:hidden; background:linear-gradient(135deg,rgba(81,32,187,0.55),rgba(0,229,255,0.15));
         }
+        .li-img img { width:100%; height:100%; object-fit:cover; display:block; }
         .li-title { font-size:0.8rem; font-weight:600; line-height:1.3; margin-bottom:5px; color:rgba(255,255,255,0.88); }
         .li-date { font-family:'Space Mono',monospace; font-size:0.58rem; color:rgba(255,255,255,0.3); }
 
@@ -344,11 +354,16 @@
         }
         .nc-img {
             aspect-ratio:16/10; position:relative; overflow:hidden;
-            display:flex; align-items:center; justify-content:center; font-size:2.6rem;
         }
+        .nc-img img {
+            width:100%; height:100%; object-fit:cover; display:block;
+            transition: transform 0.4s ease;
+        }
+        .news-card:hover .nc-img img { transform: scale(1.05); }
         .nc-img::after {
             content:''; position:absolute; inset:0;
             background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,0.55) 100%);
+            pointer-events:none; z-index:1;
         }
         .bg-1 { background:linear-gradient(135deg,rgba(81,32,187,0.7),rgba(8,23,156,0.4)); }
         .bg-2 { background:linear-gradient(135deg,rgba(255,23,68,0.4),rgba(81,32,187,0.6)); }
@@ -564,6 +579,42 @@
             .thedung-footer-brand-divider-line { margin:1.5rem auto; }
         }
     </style>
+      <style>
+      .user-dropdown {
+  margin-left: 10px;
+}
+
+.user-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.user-btn:hover {
+  background: rgba(81, 32, 187, 0.2);
+}
+
+.user-icon {
+  font-size: 16px;
+}
+
+.username-text {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #00e5ff;
+}
+
+.user-menu {
+  border-radius: 12px;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
+}
+
+    </style>
 </head>
 <body>
 
@@ -588,7 +639,8 @@
             <div class="d-flex align-items-center gap-2">
                 <button class="icon-btn"><i class="fa-regular fa-comment"></i></button>
                 <button class="icon-btn"><i class="fa-regular fa-bell"></i><span class="notification-dot"></span></button>
-                <a href="login.html" class="icon-btn"><i class="fa-regular fa-user"></i></a>
+                <div id="userAreaDesktop"></div>
+                
             </div>
         </div>
     </div>
@@ -616,7 +668,7 @@
         <div class="d-inline-flex gap-1">
             <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
             <a href="courses.html" class="day-btn mobile-day-btn">Khóa học</a>
-            <a href="netflix.html" class="day-btn mobile-day-btn">Netflix</a>
+               <a href="netflix.html" class="day-btn mobile-day-btn">Netflix</a>
             <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
             <a href="news.html" class="day-btn mobile-day-btn active">Tin tức</a>
             <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
@@ -651,7 +703,7 @@
         <div class="menu-divider"></div>
         <div class="menu-section">
             <div class="section-title">Account</div>
-            <a href="login.html" class="menu-item"><i class="fas fa-sign-in-alt"></i>Đăng nhập</a>
+            <div id="userAreaMobile"></div>
             <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i>Cài đặt</a>
         </div>
     </div>
@@ -664,7 +716,7 @@
     <!-- Page Header -->
     <div class="news-page-header" data-aos="fade-down">
         <div class="news-eyebrow">ĐH Kiến Trúc Đà Nẵng · Cổng Thông Tin Học Tập</div>
-        <h1 class="news-page-title">Tin Tức & Sự Kiện</h1>
+        <!-- <h1 class="news-page-title">Tin Tức & Sự Kiện</h1> -->
         <p class="news-page-sub">Cập nhật tin tức mới nhất từ Trường Đại học Kiến trúc Đà Nẵng</p>
     </div>
 
@@ -687,13 +739,13 @@
             <!-- Left: 2 small cards -->
             <div class="hero-col-left">
                 <div class="hero-small-card">
-                    <div class="hsc-img">🏛️</div>
+                    <div class="hsc-img"><img src="https://i.pinimg.com/736x/a4/c1/f1/a4c1f178a8a7f9d004da2283ee393b8c.jpg" alt="Quy hoạch đô thị"></div>
                     <span class="hsc-tag">Học thuật</span>
                     <div class="hsc-title">Hội thảo Đồ án Quy hoạch đô thị quốc gia 2025 tại UDAC</div>
                     <div class="hsc-date">08 tháng 1, 2025</div>
                 </div>
                 <div class="hero-small-card">
-                    <div class="hsc-img">📐</div>
+                    <div class="hsc-img"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&h=260&fit=crop&auto=format" alt="Thiết kế kiến trúc"></div>
                     <span class="hsc-tag red">Nghiên cứu · Thiết kế</span>
                     <div class="hsc-title">Sinh viên đoạt giải nhất thiết kế kiến trúc xanh ASEAN</div>
                     <div class="hsc-date">08 tháng 1, 2025</div>
@@ -702,7 +754,7 @@
 
             <!-- Center: Featured -->
             <div class="hero-col-center">
-                <div class="hero-featured-bg">🏗️</div>
+                <div class="hero-featured-bg"><img src="https://jobtest.vn/hrblog/wp-content/uploads/2022/12/diem-chuan-dai-hoc-kien-truc-da-nang-3.jpg" alt="Trường Kiến Trúc" style="width:100%;height:100%;object-fit:cover;opacity:0.55;"></div>
                 <div class="hero-featured-body">
                     <div class="hf-category">✦ Tin nổi bật · Tuyển sinh 2025</div>
                     <h2 class="hf-title">Trường ĐH Kiến Trúc Đà Nẵng công bố 1.200 chỉ tiêu tuyển sinh năm học 2025–2026</h2>
@@ -721,35 +773,35 @@
             <div class="hero-col-right">
                 <div class="latest-header">Mới nhất</div>
                 <div class="latest-item">
-                    <div class="li-img">🎓</div>
+                    <div class="li-img"><img src="https://jobtest.vn/hrblog/wp-content/uploads/2022/08/hoc-phi-dai-hoc-kien-truc-da-nang-3.jpg" alt="Tốt nghiệp"></div>
                     <div>
                         <div class="li-title">Lễ tốt nghiệp khoá 2021–2025 dự kiến tháng 6/2025</div>
                         <div class="li-date">08 tháng 1, 2025</div>
                     </div>
                 </div>
                 <div class="latest-item">
-                    <div class="li-img">🤝</div>
+                    <div class="li-img"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=120&h=120&fit=crop&auto=format" alt="Hợp tác"></div>
                     <div>
                         <div class="li-title">Ký kết hợp tác với Đại học Kiến trúc Tokyo, Nhật Bản</div>
                         <div class="li-date">08 tháng 1, 2025</div>
                     </div>
                 </div>
                 <div class="latest-item">
-                    <div class="li-img">🏆</div>
+                    <div class="li-img"><img src="https://media.dau.edu.vn/Media/31_TH1044/Images/img-2007jpg.jpg" alt="Giải thưởng"></div>
                     <div>
                         <div class="li-title">Đội thi UDAC top 3 cuộc thi thiết kế toàn quốc 2024</div>
                         <div class="li-date">08 tháng 1, 2025</div>
                     </div>
                 </div>
                 <div class="latest-item">
-                    <div class="li-img">📚</div>
+                    <div class="li-img"><img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=120&h=120&fit=crop&auto=format" alt="Thư viện"></div>
                     <div>
                         <div class="li-title">Thư viện số mở rộng thêm 5.000 đầu sách kiến trúc mới</div>
                         <div class="li-date">08 tháng 1, 2025</div>
                     </div>
                 </div>
                 <div class="latest-item">
-                    <div class="li-img">🌏</div>
+                    <div class="li-img"><img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=120&h=120&fit=crop&auto=format" alt="Sinh viên quốc tế"></div>
                     <div>
                         <div class="li-title">Chương trình trao đổi sinh viên ASEAN 2025 mở đăng ký</div>
                         <div class="li-date">08 tháng 1, 2025</div>
@@ -773,7 +825,7 @@
 
     <div class="four-grid section-gap" data-aos="fade-up" data-aos-delay="120">
         <div class="news-card">
-            <div class="nc-img bg-1">🏛️</div>
+            <div class="nc-img bg-1"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=500&h=320&fit=crop&auto=format" alt="Hội nghị kiến trúc"></div>
             <div class="nc-body">
                 <span class="nc-tag">Học thuật</span>
                 <div class="nc-title">Hội nghị KH Kiến trúc – Xây dựng UDAC 2025 thu hút 200 tham luận</div>
@@ -782,7 +834,7 @@
             <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Ban KH&amp;CN</span></div>
         </div>
         <div class="news-card">
-            <div class="nc-img bg-2">📏</div>
+            <div class="nc-img bg-2"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=500&h=320&fit=crop&auto=format" alt="Nghiên cứu xây dựng"></div>
             <div class="nc-body">
                 <span class="nc-tag red">Nghiên cứu</span>
                 <div class="nc-title">Mô hình nhà ở thích ứng khí hậu miền Trung — đề tài cấp Nhà nước</div>
@@ -791,7 +843,7 @@
             <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Phòng NCKH</span></div>
         </div>
         <div class="news-card">
-            <div class="nc-img bg-5">🌿</div>
+            <div class="nc-img bg-5"><img src="https://images.unsplash.com/photo-1448630360428-65456885c650?w=500&h=320&fit=crop&auto=format" alt="Kiến trúc xanh"></div>
             <div class="nc-body">
                 <span class="nc-tag green">Triển lãm</span>
                 <div class="nc-title">60 đồ án Kiến trúc Xanh sinh viên năm 4 trưng bày tại sảnh chính</div>
@@ -800,7 +852,7 @@
             <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Khoa Kiến Trúc</span></div>
         </div>
         <div class="news-card">
-            <div class="nc-img bg-4">📋</div>
+            <div class="nc-img bg-4"><img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&h=320&fit=crop&auto=format" alt="Lịch thi"></div>
             <div class="nc-body">
                 <span class="nc-tag yellow">Thông báo</span>
                 <div class="nc-title">Lịch thi kết thúc học kỳ II năm học 2024–2025 chính thức ban hành</div>
@@ -823,7 +875,7 @@
 
     <div class="two-one-grid section-gap" data-aos="fade-up" data-aos-delay="120">
         <div class="news-card">
-            <div class="nc-img bg-2">🎨</div>
+            <div class="nc-img bg-2"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=320&fit=crop&auto=format" alt="Sinh viên thiết kế"></div>
             <div class="nc-body">
                 <span class="nc-tag red">Sinh viên</span>
                 <div class="nc-title">CLB Kiến trúc UDAC đoạt giải nhất thiết kế toàn quốc lần thứ 12</div>
@@ -832,7 +884,7 @@
             <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Đoàn Thanh Niên</span></div>
         </div>
         <div class="news-card">
-            <div class="nc-img bg-3">🎓</div>
+            <div class="nc-img bg-3"><img src="https://i.pinimg.com/736x/26/7c/33/267c332d4bfb704bf43d3f82222d0dcc.jpg" alt="Trao học bổng"></div>
             <div class="nc-body">
                 <span class="nc-tag">Học bổng</span>
                 <div class="nc-title">45 sinh viên đạt GPA 3.6+ nhận học bổng khuyến khích học kỳ I</div>
@@ -841,7 +893,7 @@
             <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Phòng CTCT</span></div>
         </div>
         <div class="news-card">
-            <div class="nc-img bg-5">🌍</div>
+            <div class="nc-img bg-5"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=500&h=320&fit=crop&auto=format" alt="Hợp tác quốc tế"></div>
             <div class="nc-body">
                 <span class="nc-tag green">Quốc tế</span>
                 <div class="nc-title">15 sinh viên xuất sắc được chọn thực tập hè 2025 tại Hàn Quốc</div>
@@ -904,7 +956,7 @@
 
     <div class="three-grid section-gap" data-aos="fade-up" data-aos-delay="120">
         <div class="news-card">
-            <div class="nc-img bg-4">🤝</div>
+            <div class="nc-img bg-4"><img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=500&h=320&fit=crop&auto=format" alt="Ký kết hợp tác"></div>
             <div class="nc-body">
                 <span class="nc-tag yellow">Hợp tác</span>
                 <div class="nc-title">UDAC ký MOU đào tạo & tuyển dụng với 3 tập đoàn xây dựng miền Trung</div>
@@ -913,7 +965,7 @@
             <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Phòng QHDN</span></div>
         </div>
         <div class="news-card">
-            <div class="nc-img bg-3">🌏</div>
+            <div class="nc-img bg-3"><img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=500&h=320&fit=crop&auto=format" alt="Hợp tác quốc tế"></div>
             <div class="nc-body">
                 <span class="nc-tag">Quốc tế</span>
                 <div class="nc-title">Phái đoàn 8 giáo sư NUS Singapore thăm và thảo luận chương trình song bằng</div>
@@ -922,7 +974,7 @@
             <div class="nc-footer"><span>8 tháng 1, 2025</span><span>Phòng HTQT</span></div>
         </div>
         <div class="news-card">
-            <div class="nc-img bg-6">🏙️</div>
+            <div class="nc-img bg-6"><img src="https://images.unsplash.com/photo-1473042904451-00171c69419d?w=500&h=320&fit=crop&auto=format" alt="Công viên đô thị Đà Nẵng"></div>
             <div class="nc-body">
                 <span class="nc-tag green">Cộng đồng</span>
                 <div class="nc-title">120 sinh viên tình nguyện cải tạo 5 công viên trong dự án "Đà Nẵng Xanh"</div>
@@ -1058,5 +1110,79 @@
         this.reset();
     });
 </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+ <script>
+      // ===== HANDLE LOGIN STATUS =====
+function updateUserUI() {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+
+  const desktopArea = document.getElementById("userAreaDesktop");
+  const mobileArea = document.getElementById("userAreaMobile");
+
+  if (!desktopArea || !mobileArea) return;
+
+  if (user) {
+    
+    // Desktop
+ desktopArea.innerHTML = `
+  <div class="dropdown user-dropdown">
+    <button class="btn user-btn dropdown-toggle"
+            data-bs-toggle="dropdown"
+            data-bs-auto-close="true">
+      <i class="fa-solid fa-user user-icon"></i>
+      <span class="username-text">${user.username.toUpperCase()}</span>
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark user-menu">
+      <li>
+        <button class="dropdown-item text-danger" onclick="logout()">
+          <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+        </button>
+      </li>
+    </ul>
+  </div>
+`;
+
+
+
+    // Mobile
+    mobileArea.innerHTML = `
+      <div class="menu-item">
+        <i class="fas fa-user"></i>
+        ${user.username}
+      </div>
+      <div class="menu-item text-danger" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        Đăng xuất
+      </div>
+    `;
+  } else {
+    // Desktop
+    desktopArea.innerHTML = `
+      <a href="login.html" class="icon-btn">
+        <i class="fa-regular fa-user"></i>
+      </a>
+    `;
+
+    // Mobile
+    mobileArea.innerHTML = `
+      <a href="login.html" class="menu-item">
+        <i class="fas fa-sign-in-alt"></i>
+        Đăng nhập
+      </a>
+    `;
+  }
+}
+
+// ===== LOGOUT =====
+function logout() {
+  localStorage.removeItem("currentUser");
+  window.location.reload();
+}
+
+// Run when page loads
+document.addEventListener("DOMContentLoaded", updateUserUI);
+
+    </script>
 </body>
 </html>
