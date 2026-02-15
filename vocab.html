@@ -1214,7 +1214,7 @@
     <option value="travel">Du lịch</option>
   </select>
 
-  <button class="btn btn-success mb-4" onclick="showAddForm()">
+  <button class="btn btn-success mb-4" onclick="quickAddWord()">
     ➕ Thêm từ mới
   </button>
 
@@ -1423,10 +1423,10 @@ import {
   addDoc, 
   getDocs 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { 
-  getAuth, 
-  onAuthStateChanged 
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+// import { 
+//   getAuth, 
+//   onAuthStateChanged 
+// } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDnkVx1-W4Ia16ZnFmKq6BxU1XABv2m_aQ",
@@ -1440,23 +1440,31 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
+// const auth = getAuth(app);
 
-let currentUser = null;
+// let currentUser = null;
 let allWords = [];
 
 /* ================================
    LOAD USER
 ================================ */
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    currentUser = user;
-    loadWords();
-  } else {
-    alert("Vui lòng đăng nhập để học từ vựng");
-  }
-});
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     currentUser = user;
+//     loadWords();
+//   } else {
+//     alert("Vui lòng đăng nhập để học từ vựng");
+//   }
+// });
+let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+if (!currentUser) {
+  localStorage.setItem("redirectAfterLogin", window.location.href);
+  window.location.href = "login.html";
+} else {
+  loadWords();
+}
 
 /* ================================
    LOAD GLOBAL + USER WORDS
@@ -1476,14 +1484,18 @@ async function loadWords() {
 
   // USER WORDS
   const userSnap = await getDocs(
-    collection(db, "vocabulary", "users", currentUser.uid, "words")
+    // collection(db, "vocabulary", "users", currentUser.uid, "words")
+    collection(db, "vocabulary", "users", currentUser.username, "words")
+
   );
 
   userSnap.forEach(doc => {
     allWords.push(doc.data());
   });
 
-  console.log("Loaded words:", allWords);
+ console.log("Loaded words:", allWords);
+filterByTopic(document.getElementById("topicSelect").value);
+
 }
 
 /* ================================
@@ -1526,7 +1538,84 @@ window.addGlobalWord = async function(word, meaning, topic) {
   loadWords();
 }
 
+/* ================================
+   FLASHCARD LOGIC
+================================ */
+
+let currentIndex = 0;
+let filteredWords = [];
+
+/* LỌC THEO CHỦ ĐỀ */
+document.getElementById("topicSelect").addEventListener("change", function () {
+  filterByTopic(this.value);
+});
+
+function filterByTopic(topic) {
+  filteredWords = allWords.filter(w => w.topic === topic);
+
+  if (filteredWords.length === 0) {
+    document.getElementById("englishWord").innerText = "Chưa có từ";
+    document.getElementById("cardFront").innerText = "";
+    return;
+  }
+
+  currentIndex = 0;
+  showWord();
+}
+
+/* HIỂN THỊ TỪ */
+function showWord() {
+  const wordObj = filteredWords[currentIndex];
+
+  document.getElementById("englishWord").innerText = wordObj.word;
+  document.getElementById("cardFront").innerText = wordObj.meaning;
+
+  document.getElementById("wordImage").src = wordObj.image || "";
+}
+
+/* FLIP */
+window.flipCard = function () {
+  document.querySelector(".flashcard").classList.toggle("flipped");
+};
+
+/* PHÁT ÂM */
+window.speakWord = function () {
+  const text = document.getElementById("englishWord").innerText;
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.lang = "en-US";
+  window.speechSynthesis.speak(speech);
+};
+
+/* QUICK ADD */
+window.quickAddWord = async function () {
+
+  if (!currentUser) {
+    alert("Bạn phải đăng nhập trước!");
+    return;
+  }
+
+  const word = prompt("Nhập từ tiếng Anh:");
+  const meaning = prompt("Nhập nghĩa tiếng Việt:");
+  const topic = document.getElementById("topicSelect").value;
+
+  if (!word || !meaning) return;
+
+  await addDoc(
+    collection(db, "vocabulary", "users", currentUser.uid, "words"),
+    {
+      word,
+      meaning,
+      topic,
+      createdAt: new Date()
+    }
+  );
+
+  alert("Đã thêm từ!");
+  loadWords();
+};
+
 </script>
+
 
 </body>
 
