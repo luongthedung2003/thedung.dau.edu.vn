@@ -1475,7 +1475,7 @@ async function loadWords() {
 
   // GLOBAL WORDS
   const globalSnap = await getDocs(
-    collection(db, "vocabulary", "globalWords")
+   collection(db, "globalWords")
   );
 
   globalSnap.forEach(doc => {
@@ -1526,7 +1526,7 @@ window.addUserWord = async function(word, meaning, topic) {
 
 window.addGlobalWord = async function(word, meaning, topic) {
   await addDoc(
-    collection(db, "vocabulary", "globalWords"),
+   collection(db, "globalWords"),
     {
       word,
       meaning,
