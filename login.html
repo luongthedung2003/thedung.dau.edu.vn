@@ -220,7 +220,7 @@
     .modal-overlay {
       position:fixed; inset:0; background:rgba(0,0,0,0.72);
       backdrop-filter:blur(7px); z-index:9999;
-      display:none; align-items:center; justify-content:center; padding:20px;
+      display:none; align-items:center; justify-content:center; padding:10px;
     }
     .modal-overlay.show { display:flex; animation:overlayIn 0.3s ease; }
     @keyframes overlayIn { from{opacity:0}to{opacity:1} }
@@ -236,8 +236,8 @@
     @keyframes receiptPop { from{opacity:0;transform:scale(0.82) translateY(28px)}to{opacity:1;transform:scale(1) translateY(0)} }
 
     /* Receipt top section */
-    .receipt-top { padding:36px 28px 24px; text-align:center; background:#f2f2f7; }
-    .receipt-emoji { font-size:3rem; display:block; margin-bottom:14px; }
+    .receipt-top { padding:16px 28px 14px; text-align:center; background:#f2f2f7; }
+    .receipt-emoji { font-size:3rem; display:block; margin-bottom:8px; }
     .receipt-thank { font-family:"Space Mono",monospace; font-size:1.35rem; font-weight:700; color:#111; margin-bottom:6px; }
     .receipt-desc { font-size:0.78rem; color:#888; font-family:"Space Mono",monospace; line-height:1.5; }
 
@@ -249,13 +249,13 @@
     .tear-hole.right { margin-right:-13px; }
 
     /* Receipt body */
-    .receipt-body { padding:22px 28px 18px; background:#f2f2f7; }
+    .receipt-body { padding:12px 28px 10px; background:#f2f2f7; }
     .receipt-row { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; }
     .r-label { font-family:"Space Mono",monospace; font-size:0.6rem; font-weight:700; color:#aaa; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; }
     .r-value { font-family:"Space Mono",monospace; font-size:1.05rem; font-weight:700; color:#111; }
     .r-value.big { font-size:1.1rem; }
 
-    .payment-chip { background:white; border-radius:13px; padding:13px 15px; display:flex; align-items:center; gap:14px; margin-bottom:22px; box-shadow:0 2px 10px rgba(0,0,0,0.07); }
+    .payment-chip { background:white; border-radius:13px; padding:13px 15px; display:flex; align-items:center; gap:14px; margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.07); }
     .mc-wrap { position:relative; width:42px; height:26px; flex-shrink:0; }
     .mc-c { position:absolute; width:26px; height:26px; border-radius:50%; }
     .mc-red { background:#eb001b; left:0; }

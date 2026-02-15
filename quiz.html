@@ -2087,7 +2087,7 @@ if (!currentUser) {
 
       // ========== LOAD QUIZ ==========
       if (!file) {
-        quizContainer.innerHTML = "<h3>Không tìm thấy bài quiz!</h3>";
+        quizContainer.innerHTML = "<h3 style='text-align:center'>Không tìm thấy bài quiz!</h3>";
       } else {
         fetch(file + "?v=" + Date.now())
           .then((res) => res.json())

@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <title>THEDUNG - Trắc Nghiệm</title>
+    <link rel="icon" href="images/logo.png">
+
+    <style>
+        :root {
+            --gold-color: #5120bb;
+            --gold-light: #08179c;
+            --gold-dark: #1c1d7a;
+        }
+
+        * {
+            font-family: 'Space Mono', monospace;
+            color: white;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ========================================
+           NAVIGATION STYLES
+           ======================================== */
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(175, 134, 80, 0.2);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+        }
+
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(175, 134, 80, 0.3);
+        }
+
+        .logo-box i {
+            color: white;
+            font-size: 20px;
+        }
+
+        .brand-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            margin-left: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .day-navigator {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid rgba(175, 134, 80, 0.2);
+        }
+
+        .day-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #d1d5db;
+            transition: all 0.2s;
+            white-space: nowrap;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .day-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .day-btn::after {
+            content: "";
+            position: absolute;
+            left: 15%;
+            bottom: 2px;
+            width: 70%;
+            height: 2px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #00e5ff, #ff1744);
+            opacity: 0;
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+        }
+
+        .day-btn:hover::after {
+            opacity: 1;
+            transform: scaleX(1);
+            box-shadow: 0 0 6px #00e5ff, 0 0 12px #ff1744;
+        }
+
+        .day-btn.active {
+            color: white;
+        }
+
+        .day-btn.active::after {
+            opacity: 1;
+            transform: scaleX(1);
+            background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
+            background-size: 200% 100%;
+            animation: glowMove 2s linear infinite;
+            box-shadow: 0 0 8px #00e5ff, 0 0 18px #ff1744;
+        }
+
+        @keyframes glowMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .nav-arrow {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--gold-color);
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            color: #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .icon-btn:hover {
+            background: rgba(175, 134, 80, 0.2);
+            color: var(--gold-color);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 0, 0, 0.95);
+        }
+
+        .mobile-day-nav {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 0.5rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+        }
+
+        .mobile-day-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-day-btn {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+            display: inline-block;
+        }
+
+        .offcanvas-end {
+            width: 100% !important;
+            max-width: 320px !important;
+            background: rgba(0, 0, 0, 0.98);
+            border-left: 1px solid rgba(175, 134, 80, 0.2);
+        }
+
+        .offcanvas-header {
+            background: rgba(0, 0, 0, 0.95);
+            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
+            padding: 1rem 1.25rem;
+        }
+
+        .offcanvas-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin: 0;
+            color: white;
+        }
+
+        .offcanvas-header .btn-close {
+            opacity: 0.5;
+            font-size: 0.875rem;
+            filter: invert(1);
+        }
+
+        .offcanvas-body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
+            padding: 1rem;
+        }
+
+        .menu-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem 0.75rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #d1d5db;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: 0.2s;
+            margin-bottom: 0.25rem;
+        }
+
+        .menu-item:hover {
+            background: rgba(175, 134, 80, 0.2);
+            color: white;
+        }
+
+        .menu-item.active {
+            background: rgba(175, 134, 80, 0.3);
+            color: var(--gold-color);
+        }
+
+        .menu-item i {
+            width: 20px;
+            font-size: 1rem;
+            color: #9ca3af;
+        }
+
+        .menu-item.active i {
+            color: var(--gold-color);
+        }
+
+        .menu-divider {
+            margin: 1rem 0;
+            border: none;
+            height: 1px;
+            background: rgba(175, 134, 80, 0.2);
+        }
+
+        /* ========================================
+           MAIN CONTENT STYLES
+           ======================================== */
+
+        main {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            padding: 60px 0;
+        }
+
+        
+        /* Footer styles */
+        :root {
+            --footer-primary-purple: #5120bb;
+            --footer-light-purple: #08179c;
+            --footer-dark-purple: #1c1d7a;
+            --footer-neon-cyan: #00e5ff;
+            --footer-neon-red: #ff1744;
+            --footer-neon-yellow: #ffcc33;
+        }
+
+        .footer-newsletter-wrapper {
+            background: linear-gradient(135deg, rgba(81, 32, 187, 0.1) 0%, rgba(0, 0, 0, 0.95) 100%);
+            padding: 3rem 0;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-newsletter-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255, 23, 68, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .footer-newsletter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-newsletter-content-grid {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .footer-newsletter-main-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--footer-neon-cyan) 0%, var(--footer-primary-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Space Mono', monospace;
+            color: white;
+        }
+
+        .footer-newsletter-description-text {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            font-size: 0.9rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .footer-newsletter-subscribe-form {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 450px;
+        }
+
+        .footer-newsletter-email-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-newsletter-email-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .footer-newsletter-email-input:focus {
+            outline: none;
+            border-color: var(--footer-neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .footer-newsletter-submit-button {
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, var(--footer-neon-red) 0%, var(--footer-primary-purple) 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+        }
+
+        .footer-newsletter-submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
+        }
+
+        .footer-newsletter-submit-button i {
+            font-size: 1.2rem;
+        }
+
+        .thedung-main-footer-wrapper {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(28, 29, 122, 0.1) 50%, rgba(0, 0, 0, 0.95) 100%);
+            padding: 4rem 0 2rem;
+            position: relative;
+        }
+
+        .thedung-main-footer-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 2px 2px, rgba(0, 229, 255, 0.1) 1px, transparent 0);
+            background-size: 40px 40px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .thedung-footer-main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .thedung-footer-columns-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .thedung-footer-brand-section {
+            animation: thedungFooterFadeInUp 0.6s ease-out;
+        }
+
+        @keyframes thedungFooterFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .thedung-footer-brand-logo-container {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--footer-light-purple), var(--footer-primary-purple));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 30px rgba(81, 32, 187, 0.5);
+            animation: thedungFooterLogoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes thedungFooterLogoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .thedung-footer-brand-logo-container i {
+            color: white;
+            font-size: 30px;
+        }
+
+        .thedung-footer-brand-name-text {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 3px;
+            color: white;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .thedung-footer-brand-tagline-text {
+            color: var(--footer-neon-cyan);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .thedung-footer-brand-divider-line {
+            height: 2px;
+            width: 80px;
+            background: linear-gradient(90deg, var(--footer-neon-cyan) 0%, var(--footer-neon-red) 100%);
+            margin: 1.5rem 0;
+            box-shadow: 0 0 10px var(--footer-neon-cyan);
+        }
+
+        .thedung-footer-brand-description-paragraph {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 0.85rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .thedung-footer-social-icons-container {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .thedung-footer-social-icon-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .thedung-footer-social-icon-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--footer-neon-cyan) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+
+        .thedung-footer-social-icon-link:hover::before {
+            width: 100px;
+            height: 100px;
+        }
+
+        .thedung-footer-social-icon-link:hover {
+            transform: translateY(-5px);
+            border-color: var(--footer-neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+        }
+
+        .thedung-footer-social-icon-link i {
+            position: relative;
+            z-index: 1;
+        }
+
+        .thedung-footer-content-column {
+            animation: thedungFooterFadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .thedung-footer-content-column:nth-child(2) { animation-delay: 0.1s; }
+        .thedung-footer-content-column:nth-child(3) { animation-delay: 0.2s; }
+        .thedung-footer-content-column:nth-child(4) { animation-delay: 0.3s; }
+        .thedung-footer-content-column:nth-child(5) { animation-delay: 0.4s; }
+
+        .thedung-footer-column-heading-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 0.75rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .thedung-footer-column-heading-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--footer-neon-cyan), var(--footer-neon-red));
+            box-shadow: 0 0 10px var(--footer-neon-cyan);
+        }
+
+        .thedung-footer-navigation-links-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .thedung-footer-navigation-links-list li {
+            margin-bottom: 0.75rem;
+        }
+
+        .thedung-footer-navigation-link-item {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            padding-left: 0;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .thedung-footer-navigation-link-item::before {
+            content: '→';
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+            color: var(--footer-neon-cyan);
+        }
+
+        .thedung-footer-navigation-link-item:hover {
+            color: white;
+            transform: translateX(10px);
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+
+        .thedung-footer-navigation-link-item:hover::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .thedung-footer-contact-info-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .thedung-footer-contact-info-box:hover {
+            background: rgba(0, 0, 0, 0.5);
+            border-color: var(--footer-neon-cyan);
+            transform: translateX(5px);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+
+        .thedung-footer-contact-icon-wrapper {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--footer-neon-cyan) 0%, var(--footer-primary-purple) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+        }
+
+        .thedung-footer-contact-text-wrapper {
+            flex: 1;
+        }
+
+        .thedung-footer-contact-label-text {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .thedung-footer-contact-value-text {
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .thedung-footer-map-display-container {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 180px;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+            margin-top: 1rem;
+        }
+
+        .thedung-footer-map-placeholder-area {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(81, 32, 187, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%), repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .thedung-footer-map-location-pin {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .thedung-footer-map-location-pin::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            background: var(--footer-neon-red);
+            border-radius: 50% 50% 50% 0;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.8);
+            animation: thedungFooterMapPinBounce 2s ease-in-out infinite;
+        }
+
+        .thedung-footer-map-location-pin i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1rem;
+            z-index: 1;
+        }
+
+        @keyframes thedungFooterMapPinBounce {
+            0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) translateY(0); }
+            50% { transform: translate(-50%, -50%) rotate(-45deg) translateY(-10px); }
+        }
+
+        .thedung-footer-bottom-copyright-wrapper {
+            padding: 2rem 0;
+            border-top: 1px solid rgba(0, 229, 255, 0.2);
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .thedung-footer-bottom-links-list {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .thedung-footer-bottom-link-item {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .thedung-footer-bottom-link-item:hover {
+            color: var(--footer-neon-cyan);
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: none;
+            z-index: 999;
+            padding: 0;
+        }
+
+        #backToTop .sun-ring {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: sunRotate 6s linear infinite;
+        }
+
+        #backToTop .sun-ring i {
+            font-size: 56px;
+            color: #ffcc33;
+            filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
+        }
+
+        #backToTop .arrow-up {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #backToTop .arrow-up i {
+            font-size: 18px;
+            color: white;
+            text-shadow: 0 0 6px rgba(255,255,255,0.8);
+            z-index: 2;
+        }
+
+        #backToTop:hover {
+            transform: translateY(-6px) scale(1.05);
+            transition: 0.3s ease;
+        }
+
+        @keyframes sunRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .lessons-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .lesson-main-stat {
+                font-size: 1.75rem;
+            }
+
+            .lesson-details {
+                gap: 15px;
+            }
+
+            .lessons-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lesson-card {
+                padding: 20px;
+            }
+
+            .lesson-main-stat {
+                font-size: 1.5rem;
+            }
+
+            .mini-chart {
+                height: 50px;
+            }
+
+            .lessons-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .thedung-footer-columns-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 2.5rem;
+            }
+
+            .thedung-footer-content-column:nth-child(5) {
+                grid-column: 1 / -1;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-newsletter-content-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-newsletter-subscribe-form {
+                max-width: 100%;
+            }
+
+            .thedung-footer-columns-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .thedung-footer-brand-section {
+                grid-column: 1 / -1;
+            }
+
+            .thedung-footer-content-column:nth-child(5) {
+                grid-column: 1 / -1;
+            }
+
+            .thedung-footer-brand-name-text {
+                font-size: 1.75rem;
+            }
+
+            .footer-newsletter-main-title {
+                font-size: 2rem;
+            }
+
+            .thedung-footer-bottom-copyright-wrapper {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .thedung-footer-bottom-links-list {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-newsletter-container {
+                padding: 0 1rem;
+            }
+
+            .thedung-footer-main-container {
+                padding: 0 1rem;
+            }
+
+            .footer-newsletter-wrapper {
+                padding: 2rem 0;
+            }
+
+            .thedung-main-footer-wrapper {
+                padding: 3rem 0 2rem;
+            }
+
+            .footer-newsletter-main-title {
+                font-size: 1.5rem;
+            }
+
+            .footer-newsletter-subscribe-form {
+                flex-direction: column;
+            }
+
+            .footer-newsletter-submit-button {
+                width: 100%;
+            }
+
+            .thedung-footer-brand-name-text {
+                font-size: 1.5rem;
+            }
+
+            .thedung-footer-social-icons-container {
+                justify-content: center;
+            }
+
+            .thedung-footer-bottom-links-list {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding-left: 0;
+            }
+
+            .thedung-footer-brand-logo-container {
+                margin: 0 auto 1rem;
+            }
+
+            .thedung-footer-brand-divider-line {
+                margin: 1.5rem auto;
+            }
+        }
+    </style>
+    <style>
+        .card-container {
+  perspective: 1000px;
+  width: 300px;
+  margin: auto;
+}
+
+.flashcard {
+  width: 100%;
+  height: 350px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: 0.6s;
+  cursor: pointer;
+}
+
+.flashcard.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: #111;
+  color: white;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+    </style>
+</head>
+
+<body>
+    <!-- Desktop Navigation -->
+    <nav class="navbar d-none d-md-block">
+        <div class="container px-4">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="d-flex align-items-center">
+                    <div class="logo-box">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <span class="brand-text">THEDUNG</span>
+                </div>
+
+                <div class="day-navigator">
+                    <button class="nav-arrow">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <a href="index.html" class="day-btn">TRANG CHỦ</a>
+                    <a href="courses.html" class="day-btn active">KHÓA HỌC</a>
+                    <a href="music.html" class="day-btn">ÂM NHẠC</a>
+                    <a href="news.html" class="day-btn">TIN TỨC</a>
+                    <a href="contact.html" class="day-btn">LIÊN HỆ</a>
+                    <button class="nav-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <div class="d-flex align-items-center gap-2">
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-comment"></i>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <a href="login.html" class="icon-btn">
+                        <i class="fa-regular fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <nav class="navbar d-md-none">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="d-flex align-items-center">
+                    <div class="logo-box">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <span class="brand-text">THEDUNG</span>
+                </div>
+
+                <div class="d-flex align-items-center gap-1">
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-comment"></i>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Day Navigator -->
+    <div class="mobile-day-nav d-md-none">
+        <div class="d-flex align-items-center gap-2">
+            <button class="nav-arrow">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="d-inline-flex gap-1">
+                <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
+                <a href="courses.html" class="day-btn mobile-day-btn active">Khóa học</a>
+                <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
+                <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
+                <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
+            </div>
+            <button class="nav-arrow">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Offcanvas Menu -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="menu-section">
+                <div class="section-title">Navigation</div>
+                <a href="index.html" class="menu-item">
+                    <i class="fas fa-home"></i>
+                    Trang chủ
+                </a>
+                <a href="courses.html" class="menu-item active">
+                    <i class="fas fa-sun"></i>
+                    Khóa học
+                </a>
+                <a href="music.html" class="menu-item">
+                    <i class="fas fa-music"></i>
+                    Âm nhạc
+                </a>
+                <a href="news.html" class="menu-item">
+                    <i class="fas fa-newspaper"></i>
+                    Tin tức
+                </a>
+                <a href="contact.html" class="menu-item">
+                    <i class="fas fa-envelope"></i>
+                    Liên hệ
+                </a>
+            </div>
+
+            <div class="menu-divider"></div>
+
+            <div class="menu-section">
+                <div class="section-title">Explore</div>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-sun"></i>
+                    Trắc nghiệm
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-circle"></i>
+                    Tài liệu
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-circle"></i>
+                    Thi thử
+                </a>
+            </div>
+            <div class="menu-divider"></div>
+
+            <div class="menu-section">
+                <div class="section-title">Account</div>
+                <a href="login.html" class="menu-item">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Đăng nhập
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    Cài đặt
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Lessons Header -->
+        <div class="account-header" data-aos="fade-down">
+            <h1>DANH SÁCH TRẮC NGHIỆM</h1>
+            <p>Luyện tập và kiểm tra kiến thức với các bài trắc nghiệm chất lượng</p>
+        </div>
+
+        <!-- Lessons Container -->
+       <div class="container mt-5">
+
+  <!-- CHỌN CHỦ ĐỀ -->
+  <select id="topicSelect" class="form-select mb-3">
+    <option value="family">Gia đình</option>
+    <option value="cooking">Nấu ăn</option>
+    <option value="travel">Du lịch</option>
+  </select>
+
+  <button class="btn btn-success mb-4" onclick="showAddForm()">
+    ➕ Thêm từ mới
+  </button>
+
+  <!-- FLASHCARD -->
+  <div class="card-container">
+    <div class="flashcard" onclick="flipCard()">
+      <div class="card-front" id="cardFront">
+        Nghĩa tiếng Việt
+      </div>
+
+      <div class="card-back" id="cardBack">
+        <h3 id="englishWord">Family</h3>
+        <img id="wordImage" src="" width="150">
+        <br>
+        <button onclick="speakWord()">🔊 Phát âm</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+    </main>
+
+    <!-- Newsletter Section -->
+    <section class="footer-newsletter-wrapper">
+        <div class="footer-newsletter-container">
+            <div class="footer-newsletter-content-grid">
+                <h2 class="footer-newsletter-main-title">Subscribe</h2>
+                <p class="footer-newsletter-description-text">
+                    Đăng ký để nhận thông báo khi có bài trắc nghiệm mới!
+                </p>
+                <form class="footer-newsletter-subscribe-form">
+                    <input type="email" class="footer-newsletter-email-input" placeholder="Email của bạn..." required>
+                    <button type="submit" class="footer-newsletter-submit-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Footer -->
+    <footer class="thedung-main-footer-wrapper">
+        <div class="thedung-footer-main-container">
+            <div class="thedung-footer-columns-grid">
+                <!-- Brand Section -->
+                <div class="thedung-footer-brand-section thedung-footer-content-column">
+                    <div class="thedung-footer-brand-logo-container">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h1 class="thedung-footer-brand-name-text">THEDUNG</h1>
+                    <p class="thedung-footer-brand-tagline-text">Hỗ trợ học tập</p>
+                    <div class="thedung-footer-brand-divider-line"></div>
+                    <p class="thedung-footer-brand-description-paragraph">
+                        Liên hệ chúng tôi qua nền tảng mạng xã hội
+                    </p>
+                    <div class="thedung-footer-social-icons-container">
+                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="thedung-footer-social-icon-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- About Column -->
+                <div class="thedung-footer-content-column">
+                    <h3 class="thedung-footer-column-heading-title">About</h3>
+                    <ul class="thedung-footer-navigation-links-list">
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Planning</a></li>
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Research</a></li>
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Consulting</a></li>
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Analysis</a></li>
+                    </ul>
+                </div>
+
+                <!-- Menu Column -->
+                <div class="thedung-footer-content-column">
+                    <h3 class="thedung-footer-column-heading-title">Menu</h3>
+                    <ul class="thedung-footer-navigation-links-list">
+                        <li><a href="index.html" class="thedung-footer-navigation-link-item">Trang chủ</a></li>
+                        <li><a href="courses.html" class="thedung-footer-navigation-link-item">Khóa học</a></li>
+                        <li><a href="music.html" class="thedung-footer-navigation-link-item">Âm nhạc</a></li>
+                        <li><a href="news.html" class="thedung-footer-navigation-link-item">Tin tức</a></li>
+                        <li><a href="contact.html" class="thedung-footer-navigation-link-item">Liên hệ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services Column -->
+                <div class="thedung-footer-content-column">
+                    <h3 class="thedung-footer-column-heading-title">Services</h3>
+                    <ul class="thedung-footer-navigation-links-list">
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Trắc nghiệm</a></li>
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Tài liệu</a></li>
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Thi thử</a></li>
+                        <li><a href="#" class="thedung-footer-navigation-link-item">Học tập</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Column -->
+                <div class="thedung-footer-content-column">
+                    <h3 class="thedung-footer-column-heading-title">Contact</h3>
+                    
+                    <div class="thedung-footer-contact-info-box">
+                        <div class="thedung-footer-contact-icon-wrapper">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="thedung-footer-contact-text-wrapper">
+                            <div class="thedung-footer-contact-label-text">Call</div>
+                            <div class="thedung-footer-contact-value-text">+091 984 4429</div>
+                        </div>
+                    </div>
+
+                    <div class="thedung-footer-contact-info-box">
+                        <div class="thedung-footer-contact-icon-wrapper">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="thedung-footer-contact-text-wrapper">
+                            <div class="thedung-footer-contact-label-text">Email</div>
+                            <div class="thedung-footer-contact-value-text">luongthedung@gmail.com</div>
+                        </div>
+                    </div>
+
+                    <div class="thedung-footer-map-display-container">
+                        <div class="thedung-footer-map-placeholder-area">
+                            <div class="thedung-footer-map-location-pin">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="thedung-footer-bottom-copyright-wrapper">
+                <div>&copy; 2025 THEDUNG. All rights reserved.</div>
+                <ul class="thedung-footer-bottom-links-list">
+                    <li><a href="#" class="thedung-footer-bottom-link-item">Privacy Policy</a></li>
+                    <li><a href="#" class="thedung-footer-bottom-link-item">Our History</a></li>
+                    <li><a href="#" class="thedung-footer-bottom-link-item">What We Do</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" title="Lên đầu trang">
+        <span class="sun-ring">
+            <i class="fas fa-sun"></i>
+        </span>
+        <span class="arrow-up">
+            <i class="fas fa-chevron-up"></i>
+        </span>
+    </button>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    
+    <script>
+        // Back to top button
+        const backToTopBtn = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = "flex";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        });
+
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+        // Newsletter form submission
+        document.querySelector('.footer-newsletter-subscribe-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Cảm ơn bạn đã đăng ký!');
+            this.reset();
+        });
+
+        // Initialize AOS
+        AOS.init({
+            duration: 900,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 120
+        });
+    </script>
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { 
+  getFirestore, 
+  collection, 
+  addDoc, 
+  getDocs 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { 
+  getAuth, 
+  onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDnkVx1-W4Ia16ZnFmKq6BxU1XABv2m_aQ",
+  authDomain: "thedung-quiz.firebaseapp.com",
+  projectId: "thedung-quiz",
+  storageBucket: "thedung-quiz.firebasestorage.app",
+  messagingSenderId: "1063111313972",
+  appId: "1:1063111313972:web:bf88cdb084b6b178c81861",
+  measurementId: "G-38XDQPF4SE"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+let currentUser = null;
+let allWords = [];
+
+/* ================================
+   LOAD USER
+================================ */
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    currentUser = user;
+    loadWords();
+  } else {
+    alert("Vui lòng đăng nhập để học từ vựng");
+  }
+});
+
+/* ================================
+   LOAD GLOBAL + USER WORDS
+================================ */
+
+async function loadWords() {
+  allWords = [];
+
+  // GLOBAL WORDS
+  const globalSnap = await getDocs(
+    collection(db, "vocabulary", "globalWords")
+  );
+
+  globalSnap.forEach(doc => {
+    allWords.push(doc.data());
+  });
+
+  // USER WORDS
+  const userSnap = await getDocs(
+    collection(db, "vocabulary", "users", currentUser.uid, "words")
+  );
+
+  userSnap.forEach(doc => {
+    allWords.push(doc.data());
+  });
+
+  console.log("Loaded words:", allWords);
+}
+
+/* ================================
+   ADD WORD (USER)
+================================ */
+
+window.addUserWord = async function(word, meaning, topic) {
+  if (!currentUser) return;
+
+  await addDoc(
+    collection(db, "vocabulary", "users", currentUser.uid, "words"),
+    {
+      word,
+      meaning,
+      topic,
+      createdAt: new Date()
+    }
+  );
+
+  alert("Đã thêm từ vựng!");
+  loadWords();
+}
+
+/* ================================
+   ADD WORD (ADMIN - GLOBAL)
+================================ */
+
+window.addGlobalWord = async function(word, meaning, topic) {
+  await addDoc(
+    collection(db, "vocabulary", "globalWords"),
+    {
+      word,
+      meaning,
+      topic,
+      createdAt: new Date()
+    }
+  );
+
+  alert("Đã thêm từ chung!");
+  loadWords();
+}
+
+</script>
+
+</body>
+
+</html>
