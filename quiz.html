@@ -2321,6 +2321,11 @@ if (!currentUser) {
         const percent = Math.round((score / quizData.length) * 100);
 
         showBadge(percent, score);
+        const user = JSON.parse(localStorage.getItem("currentUser"));
+if (user) {
+  saveScore(user.username, file, score);
+}
+
       }
 
       // ========== BADGE ==========
@@ -2523,5 +2528,41 @@ function logout() {
 document.addEventListener("DOMContentLoaded", updateUserUI);
 
     </script>
+
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDnkVx1-W4Ia16ZnFmKq6BxU1XABv2m_aQ",
+    authDomain: "thedung-quiz.firebaseapp.com",
+    projectId: "thedung-quiz",
+    storageBucket: "thedung-quiz.firebasestorage.app",
+    messagingSenderId: "1063111313972",
+    appId: "1:1063111313972:web:bf88cdb084b6b178c81861",
+    measurementId: "G-38XDQPF4SE"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function saveScore(username, subject, score) {
+    try {
+      await addDoc(collection(db, "quizResults"), {
+        username: username,
+        subject: subject,
+        score: score,
+        createdAt: new Date()
+      });
+      console.log("Lưu điểm thành công!");
+    } catch (error) {
+      console.error("Lỗi lưu điểm:", error);
+    }
+  }
+
+  window.saveScore = saveScore;
+</script>
+
   </body>
 </html>
