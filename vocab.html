@@ -1,1432 +1,1065 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <title>THEDUNG - Trắc Nghiệm</title>
-    <link rel="icon" href="images/logo.png">
-
-    <style>
-        :root {
-            --gold-color: #5120bb;
-            --gold-light: #08179c;
-            --gold-dark: #1c1d7a;
-        }
-
-        * {
-            font-family: 'Space Mono', monospace;
-            color: white;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        body {
-            background-color: black;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* ========================================
-           NAVIGATION STYLES
-           ======================================== */
-
-        .navbar {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(175, 134, 80, 0.2);
-            padding: 0.75rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
-        }
-
-        .logo-box {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--gold-light), var(--gold-color));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 6px rgba(175, 134, 80, 0.3);
-        }
-
-        .logo-box i {
-            color: white;
-            font-size: 20px;
-        }
-
-        .brand-text {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: white;
-            margin-left: 0.75rem;
-            letter-spacing: 1px;
-        }
-
-        .day-navigator {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            border: 1px solid rgba(175, 134, 80, 0.2);
-        }
-
-        .day-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #d1d5db;
-            transition: all 0.2s;
-            white-space: nowrap;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .day-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .day-btn::after {
-            content: "";
-            position: absolute;
-            left: 15%;
-            bottom: 2px;
-            width: 70%;
-            height: 2px;
-            border-radius: 2px;
-            background: linear-gradient(90deg, #00e5ff, #ff1744);
-            opacity: 0;
-            transform: scaleX(0);
-            transition: all 0.3s ease;
-        }
-
-        .day-btn:hover::after {
-            opacity: 1;
-            transform: scaleX(1);
-            box-shadow: 0 0 6px #00e5ff, 0 0 12px #ff1744;
-        }
-
-        .day-btn.active {
-            color: white;
-        }
-
-        .day-btn.active::after {
-            opacity: 1;
-            transform: scaleX(1);
-            background: linear-gradient(90deg, #00e5ff, #ff1744, #00e5ff);
-            background-size: 200% 100%;
-            animation: glowMove 2s linear infinite;
-            box-shadow: 0 0 8px #00e5ff, 0 0 18px #ff1744;
-        }
-
-        @keyframes glowMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-
-        .nav-arrow {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            color: #9ca3af;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .nav-arrow:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--gold-color);
-        }
-
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            color: #d1d5db;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .icon-btn:hover {
-            background: rgba(175, 134, 80, 0.2);
-            color: var(--gold-color);
-        }
-
-        .notification-dot {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 8px;
-            height: 8px;
-            background: #ef4444;
-            border-radius: 50%;
-            border: 2px solid rgba(0, 0, 0, 0.95);
-        }
-
-        .mobile-day-nav {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 0.5rem;
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
-        }
-
-        .mobile-day-nav::-webkit-scrollbar {
-            display: none;
-        }
-
-        .mobile-day-btn {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.75rem;
-            display: inline-block;
-        }
-
-        .offcanvas-end {
-            width: 100% !important;
-            max-width: 320px !important;
-            background: rgba(0, 0, 0, 0.98);
-            border-left: 1px solid rgba(175, 134, 80, 0.2);
-        }
-
-        .offcanvas-header {
-            background: rgba(0, 0, 0, 0.95);
-            border-bottom: 1px solid rgba(175, 134, 80, 0.2);
-            padding: 1rem 1.25rem;
-        }
-
-        .offcanvas-title {
-            font-weight: 600;
-            font-size: 1rem;
-            margin: 0;
-            color: white;
-        }
-
-        .offcanvas-header .btn-close {
-            opacity: 0.5;
-            font-size: 0.875rem;
-            filter: invert(1);
-        }
-
-        .offcanvas-body {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
-            padding: 1rem;
-        }
-
-        .menu-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .section-title {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #9ca3af;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
-            padding: 0 0.5rem;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.625rem 0.75rem;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #d1d5db;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: 0.2s;
-            margin-bottom: 0.25rem;
-        }
-
-        .menu-item:hover {
-            background: rgba(175, 134, 80, 0.2);
-            color: white;
-        }
-
-        .menu-item.active {
-            background: rgba(175, 134, 80, 0.3);
-            color: var(--gold-color);
-        }
-
-        .menu-item i {
-            width: 20px;
-            font-size: 1rem;
-            color: #9ca3af;
-        }
-
-        .menu-item.active i {
-            color: var(--gold-color);
-        }
-
-        .menu-divider {
-            margin: 1rem 0;
-            border: none;
-            height: 1px;
-            background: rgba(175, 134, 80, 0.2);
-        }
-
-        /* ========================================
-           MAIN CONTENT STYLES
-           ======================================== */
-
-        main {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
-            min-height: 100vh;
-            background-size: cover;
-            background-position: center;
-            padding: 60px 0;
-        }
-
-        
-        /* Footer styles */
-        :root {
-            --footer-primary-purple: #5120bb;
-            --footer-light-purple: #08179c;
-            --footer-dark-purple: #1c1d7a;
-            --footer-neon-cyan: #00e5ff;
-            --footer-neon-red: #ff1744;
-            --footer-neon-yellow: #ffcc33;
-        }
-
-        .footer-newsletter-wrapper {
-            background: linear-gradient(135deg, rgba(81, 32, 187, 0.1) 0%, rgba(0, 0, 0, 0.95) 100%);
-            padding: 3rem 0;
-            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer-newsletter-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255, 23, 68, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .footer-newsletter-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-newsletter-content-grid {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .footer-newsletter-main-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--footer-neon-cyan) 0%, var(--footer-primary-purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: 'Space Mono', monospace;
-            color: white;
-        }
-
-        .footer-newsletter-description-text {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-            font-size: 0.9rem;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .footer-newsletter-subscribe-form {
-            display: flex;
-            gap: 0.5rem;
-            max-width: 450px;
-        }
-
-        .footer-newsletter-email-input {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            border-radius: 8px;
-            color: white;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .footer-newsletter-email-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .footer-newsletter-email-input:focus {
-            outline: none;
-            border-color: var(--footer-neon-cyan);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        .footer-newsletter-submit-button {
-            padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, var(--footer-neon-red) 0%, var(--footer-primary-purple) 100%);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 60px;
-            box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
-        }
-
-        .footer-newsletter-submit-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
-        }
-
-        .footer-newsletter-submit-button i {
-            font-size: 1.2rem;
-        }
-
-        .thedung-main-footer-wrapper {
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(28, 29, 122, 0.1) 50%, rgba(0, 0, 0, 0.95) 100%);
-            padding: 4rem 0 2rem;
-            position: relative;
-        }
-
-        .thedung-main-footer-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: radial-gradient(circle at 2px 2px, rgba(0, 229, 255, 0.1) 1px, transparent 0);
-            background-size: 40px 40px;
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .thedung-footer-main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .thedung-footer-columns-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .thedung-footer-brand-section {
-            animation: thedungFooterFadeInUp 0.6s ease-out;
-        }
-
-        @keyframes thedungFooterFadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .thedung-footer-brand-logo-container {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--footer-light-purple), var(--footer-primary-purple));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            box-shadow: 0 0 30px rgba(81, 32, 187, 0.5);
-            animation: thedungFooterLogoFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes thedungFooterLogoFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .thedung-footer-brand-logo-container i {
-            color: white;
-            font-size: 30px;
-        }
-
-        .thedung-footer-brand-name-text {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: 3px;
-            color: white;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-brand-tagline-text {
-            color: var(--footer-neon-cyan);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-brand-divider-line {
-            height: 2px;
-            width: 80px;
-            background: linear-gradient(90deg, var(--footer-neon-cyan) 0%, var(--footer-neon-red) 100%);
-            margin: 1.5rem 0;
-            box-shadow: 0 0 10px var(--footer-neon-cyan);
-        }
-
-        .thedung-footer-brand-description-paragraph {
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            font-size: 0.85rem;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-social-icons-container {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .thedung-footer-social-icon-link {
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-        }
-
-        .thedung-footer-social-icon-link::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--footer-neon-cyan) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            transition: all 0.4s ease;
-        }
-
-        .thedung-footer-social-icon-link:hover::before {
-            width: 100px;
-            height: 100px;
-        }
-
-        .thedung-footer-social-icon-link:hover {
-            transform: translateY(-5px);
-            border-color: var(--footer-neon-cyan);
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
-        }
-
-        .thedung-footer-social-icon-link i {
-            position: relative;
-            z-index: 1;
-        }
-
-        .thedung-footer-content-column {
-            animation: thedungFooterFadeInUp 0.6s ease-out;
-            animation-fill-mode: both;
-        }
-
-        .thedung-footer-content-column:nth-child(2) { animation-delay: 0.1s; }
-        .thedung-footer-content-column:nth-child(3) { animation-delay: 0.2s; }
-        .thedung-footer-content-column:nth-child(4) { animation-delay: 0.3s; }
-        .thedung-footer-content-column:nth-child(5) { animation-delay: 0.4s; }
-
-        .thedung-footer-column-heading-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            padding-bottom: 0.75rem;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-column-heading-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--footer-neon-cyan), var(--footer-neon-red));
-            box-shadow: 0 0 10px var(--footer-neon-cyan);
-        }
-
-        .thedung-footer-navigation-links-list {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-        }
-
-        .thedung-footer-navigation-links-list li {
-            margin-bottom: 0.75rem;
-        }
-
-        .thedung-footer-navigation-link-item {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            position: relative;
-            padding-left: 0;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-navigation-link-item::before {
-            content: '→';
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s ease;
-            color: var(--footer-neon-cyan);
-        }
-
-        .thedung-footer-navigation-link-item:hover {
-            color: white;
-            transform: translateX(10px);
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
-        }
-
-        .thedung-footer-navigation-link-item:hover::before {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .thedung-footer-contact-info-box {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1.25rem;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .thedung-footer-contact-info-box:hover {
-            background: rgba(0, 0, 0, 0.5);
-            border-color: var(--footer-neon-cyan);
-            transform: translateX(5px);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
-        }
-
-        .thedung-footer-contact-icon-wrapper {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, var(--footer-neon-cyan) 0%, var(--footer-primary-purple) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            flex-shrink: 0;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-        }
-
-        .thedung-footer-contact-text-wrapper {
-            flex: 1;
-        }
-
-        .thedung-footer-contact-label-text {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.25rem;
-            font-weight: 700;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-contact-value-text {
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 500;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-map-display-container {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            height: 180px;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
-            margin-top: 1rem;
-        }
-
-        .thedung-footer-map-placeholder-area {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(81, 32, 187, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%), repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 229, 255, 0.05) 2px, rgba(0, 229, 255, 0.05) 4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .thedung-footer-map-location-pin {
-            width: 50px;
-            height: 50px;
-            position: relative;
-        }
-
-        .thedung-footer-map-location-pin::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 30px;
-            height: 30px;
-            background: var(--footer-neon-red);
-            border-radius: 50% 50% 50% 0;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            box-shadow: 0 0 20px rgba(255, 23, 68, 0.8);
-            animation: thedungFooterMapPinBounce 2s ease-in-out infinite;
-        }
-
-        .thedung-footer-map-location-pin i {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 1rem;
-            z-index: 1;
-        }
-
-        @keyframes thedungFooterMapPinBounce {
-            0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) translateY(0); }
-            50% { transform: translate(-50%, -50%) rotate(-45deg) translateY(-10px); }
-        }
-
-        .thedung-footer-bottom-copyright-wrapper {
-            padding: 2rem 0;
-            border-top: 1px solid rgba(0, 229, 255, 0.2);
-            margin-top: 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.8rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-bottom-links-list {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-        }
-
-        .thedung-footer-bottom-link-item {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .thedung-footer-bottom-link-item:hover {
-            color: var(--footer-neon-cyan);
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
-        }
-
-        #backToTop {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 56px;
-            height: 56px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            display: none;
-            z-index: 999;
-            padding: 0;
-        }
-
-        #backToTop .sun-ring {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: sunRotate 6s linear infinite;
-        }
-
-        #backToTop .sun-ring i {
-            font-size: 56px;
-            color: #ffcc33;
-            filter: drop-shadow(0 0 6px rgba(255, 204, 51, 0.8));
-        }
-
-        #backToTop .arrow-up {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #backToTop .arrow-up i {
-            font-size: 18px;
-            color: white;
-            text-shadow: 0 0 6px rgba(255,255,255,0.8);
-            z-index: 2;
-        }
-
-        #backToTop:hover {
-            transform: translateY(-6px) scale(1.05);
-            transition: 0.3s ease;
-        }
-
-        @keyframes sunRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .lessons-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .lesson-main-stat {
-                font-size: 1.75rem;
-            }
-
-            .lesson-details {
-                gap: 15px;
-            }
-
-            .lessons-header h1 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .lesson-card {
-                padding: 20px;
-            }
-
-            .lesson-main-stat {
-                font-size: 1.5rem;
-            }
-
-            .mini-chart {
-                height: 50px;
-            }
-
-            .lessons-header h1 {
-                font-size: 1.5rem;
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .thedung-footer-columns-grid {
-                grid-template-columns: 1fr 1fr 1fr;
-                gap: 2.5rem;
-            }
-
-            .thedung-footer-content-column:nth-child(5) {
-                grid-column: 1 / -1;
-                max-width: 500px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .footer-newsletter-content-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                text-align: center;
-            }
-
-            .footer-newsletter-subscribe-form {
-                max-width: 100%;
-            }
-
-            .thedung-footer-columns-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
-
-            .thedung-footer-brand-section {
-                grid-column: 1 / -1;
-            }
-
-            .thedung-footer-content-column:nth-child(5) {
-                grid-column: 1 / -1;
-            }
-
-            .thedung-footer-brand-name-text {
-                font-size: 1.75rem;
-            }
-
-            .footer-newsletter-main-title {
-                font-size: 2rem;
-            }
-
-            .thedung-footer-bottom-copyright-wrapper {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .thedung-footer-bottom-links-list {
-                gap: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .footer-newsletter-container {
-                padding: 0 1rem;
-            }
-
-            .thedung-footer-main-container {
-                padding: 0 1rem;
-            }
-
-            .footer-newsletter-wrapper {
-                padding: 2rem 0;
-            }
-
-            .thedung-main-footer-wrapper {
-                padding: 3rem 0 2rem;
-            }
-
-            .footer-newsletter-main-title {
-                font-size: 1.5rem;
-            }
-
-            .footer-newsletter-subscribe-form {
-                flex-direction: column;
-            }
-
-            .footer-newsletter-submit-button {
-                width: 100%;
-            }
-
-            .thedung-footer-brand-name-text {
-                font-size: 1.5rem;
-            }
-
-            .thedung-footer-social-icons-container {
-                justify-content: center;
-            }
-
-            .thedung-footer-bottom-links-list {
-                flex-direction: column;
-                gap: 0.5rem;
-                padding-left: 0;
-            }
-
-            .thedung-footer-brand-logo-container {
-                margin: 0 auto 1rem;
-            }
-
-            .thedung-footer-brand-divider-line {
-                margin: 1.5rem auto;
-            }
-        }
-    </style>
-    <style>
-        .card-container {
-  perspective: 1000px;
-  width: 300px;
-  margin: auto;
-}
-
-.flashcard {
-  width: 100%;
-  height: 350px;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: 0.6s;
-  cursor: pointer;
-}
-
-.flashcard.flipped {
-  transform: rotateY(180deg);
-}
-
-.card-front, .card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  background: #111;
-  color: white;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-}
-
-.card-back {
-  transform: rotateY(180deg);
-}
-
-    </style>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <title>THEDUNG - Học Từ Vựng</title>
+  <link rel="icon" href="images/logo.png" />
+
+  <style>
+    :root {
+      --gold-color: #5120bb;
+      --gold-light: #08179c;
+      --gold-dark: #1c1d7a;
+      --cyan: #00e5ff;
+      --red: #ff1744;
+      --yellow: #ffcc33;
+      --green: #1db954;
+      --card-bg: #1a1a1c;
+      --card-dark: #111113;
+      --surface: #1e1e20;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0a0a0b; font-family: 'DM Sans', sans-serif; color: white; }
+    a { text-decoration: none; }
+
+    /* ── NAV ── */
+    .navbar { background:rgba(0,0,0,0.95); backdrop-filter:blur(10px); box-shadow:0 2px 10px rgba(175,134,80,0.2); padding:0.75rem 0; position:sticky; top:0; z-index:1000; border-bottom:1px solid rgba(175,134,80,0.2); }
+    .logo-box { width:40px; height:40px; background:linear-gradient(135deg,var(--gold-light),var(--gold-color)); border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 6px rgba(175,134,80,0.3); }
+    .logo-box i { color:white; font-size:20px; }
+    .brand-text { font-family:'Space Mono',monospace; font-size:1.25rem; font-weight:600; color:white; margin-left:0.75rem; letter-spacing:1px; }
+    .day-navigator { background:rgba(255,255,255,0.05); border-radius:12px; padding:0.5rem; display:flex; align-items:center; gap:1rem; border:1px solid rgba(175,134,80,0.2); }
+    .day-btn { font-family:'Space Mono',monospace; padding:0.5rem 1rem; border:none; background:transparent; border-radius:8px; font-size:0.875rem; font-weight:500; color:#d1d5db; transition:all 0.2s; white-space:nowrap; cursor:pointer; position:relative; }
+    .day-btn:hover { background:rgba(255,255,255,0.1); color:white; }
+    .day-btn::after { content:""; position:absolute; left:15%; bottom:2px; width:70%; height:2px; border-radius:2px; background:linear-gradient(90deg,#00e5ff,#ff1744); opacity:0; transform:scaleX(0); transition:all 0.3s ease; }
+    .day-btn:hover::after { opacity:1; transform:scaleX(1); box-shadow:0 0 6px #00e5ff,0 0 12px #ff1744; }
+    .day-btn.active { color:white; }
+    .day-btn.active::after { opacity:1; transform:scaleX(1); background:linear-gradient(90deg,#00e5ff,#ff1744,#00e5ff); background-size:200% 100%; animation:glowMove 2s linear infinite; box-shadow:0 0 8px #00e5ff,0 0 18px #ff1744; }
+    @keyframes glowMove { 0%{background-position:0% 50%}100%{background-position:200% 50%} }
+    .nav-arrow { width:32px; height:32px; border:none; background:transparent; border-radius:8px; color:#9ca3af; display:flex; align-items:center; justify-content:center; transition:all 0.2s; cursor:pointer; }
+    .nav-arrow:hover { background:rgba(255,255,255,0.1); color:var(--gold-color); }
+    .icon-btn { width:40px; height:40px; border:none; background:transparent; border-radius:8px; color:#d1d5db; display:flex; align-items:center; justify-content:center; position:relative; transition:all 0.2s; cursor:pointer; }
+    .icon-btn:hover { background:rgba(175,134,80,0.2); color:var(--gold-color); }
+    .notification-dot { position:absolute; top:8px; right:8px; width:8px; height:8px; background:#ef4444; border-radius:50%; border:2px solid rgba(0,0,0,0.95); }
+    .mobile-day-nav { background:rgba(0,0,0,0.9); padding:0.5rem; overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; border-bottom:1px solid rgba(175,134,80,0.2); }
+    .mobile-day-nav::-webkit-scrollbar { display:none; }
+    .mobile-day-btn { padding:0.5rem 0.75rem; font-size:0.75rem; display:inline-block; }
+    .offcanvas-end { width:100%!important; max-width:320px!important; background:rgba(0,0,0,0.98); border-left:1px solid rgba(175,134,80,0.2); }
+    .offcanvas-header { background:rgba(0,0,0,0.95); border-bottom:1px solid rgba(175,134,80,0.2); padding:1rem 1.25rem; }
+    .offcanvas-title { font-family:'Space Mono',monospace; font-weight:600; font-size:1rem; margin:0; color:white; }
+    .offcanvas-header .btn-close { opacity:0.5; font-size:0.875rem; filter:invert(1); }
+    .offcanvas-body { background-image:linear-gradient(rgba(0,0,0,0.95),rgba(0,0,0,0.2),rgba(0,0,0,0.2),rgba(0,0,0,0.95)),url("images/2k_stars_milky_way.jpg"); padding:1rem; }
+    .menu-section { margin-bottom:1.5rem; }
+    .section-title { font-family:'Space Mono',monospace; font-size:0.75rem; font-weight:600; color:#9ca3af; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem; padding:0 0.5rem; }
+    .menu-item { display:flex; align-items:center; gap:0.75rem; padding:0.625rem 0.75rem; border-radius:8px; text-decoration:none; color:#d1d5db; font-family:'Space Mono',monospace; font-size:0.875rem; font-weight:500; transition:0.2s; margin-bottom:0.25rem; }
+    .menu-item:hover { background:rgba(175,134,80,0.2); color:white; }
+    .menu-item.active { background:rgba(175,134,80,0.3); color:var(--gold-color); }
+    .menu-item i { width:20px; font-size:1rem; color:#9ca3af; }
+    .menu-item.active i { color:var(--gold-color); }
+    .menu-divider { margin:1rem 0; border:none; height:1px; background:rgba(175,134,80,0.2); }
+    .user-dropdown { margin-left:10px; }
+    .user-btn { display:flex; align-items:center; gap:8px; padding:6px 12px; border-radius:8px; transition:0.3s ease; }
+    .user-btn:hover { background:rgba(81,32,187,0.2); }
+    .username-text { font-family:'Space Mono',monospace; font-size:14px; font-weight:600; letter-spacing:1px; color:#00e5ff; }
+    .user-menu { border-radius:12px; border:1px solid rgba(0,229,255,0.3); box-shadow:0 10px 30px rgba(0,229,255,0.2); }
+
+    /* ════════════════════════════════════
+       MAIN LAYOUT
+    ════════════════════════════════════ */
+    main {
+      background-image: linear-gradient(rgba(0,0,0,0.96),rgba(0,0,0,0.15),rgba(0,0,0,0.15),rgba(0,0,0,0.98)), url("images/2k_stars_milky_way.jpg");
+      min-height: 100vh;
+      background-size: cover; background-position: center;
+      padding: 48px 0 80px;
+    }
+
+    .page-header { text-align:center; margin-bottom:40px; padding:0 20px; }
+    .page-eyebrow { font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:4px; text-transform:uppercase; color:var(--cyan); margin-bottom:10px; opacity:0.8; }
+    .page-title { font-family:'DM Sans',sans-serif; font-size:clamp(2rem,5vw,3.2rem); font-weight:700; letter-spacing:-1px; line-height:1.1; margin-bottom:10px; }
+    .page-title span { color:var(--cyan); }
+    .page-sub { font-size:0.9rem; color:rgba(255,255,255,0.45); font-weight:300; }
+
+    /* CONTROL BAR */
+    .control-bar { display:flex; align-items:center; gap:12px; max-width:520px; margin:0 auto 36px; padding:0 20px; flex-wrap:wrap; justify-content:center; }
+    .topic-select-wrapper { position:relative; flex:1; min-width:220px; }
+    .topic-select-wrapper::after { content:'\f107'; font-family:'Font Awesome 6 Free'; font-weight:900; position:absolute; right:16px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.4); pointer-events:none; font-size:0.8rem; }
+    #topicSelect { width:100%; padding:13px 40px 13px 18px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:50px; color:white; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; appearance:none; cursor:pointer; transition:all 0.3s; outline:none; }
+    #topicSelect:focus { border-color:rgba(0,229,255,0.5); background:rgba(255,255,255,0.08); box-shadow:0 0 0 3px rgba(0,229,255,0.1); }
+    #topicSelect option { background:#1a1a1c; color:white; }
+    .btn-pill-add { display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border:none; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.3s; white-space:nowrap; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); color:white; }
+    .btn-pill-add:hover { background:rgba(255,255,255,0.14); border-color:rgba(255,255,255,0.25); transform:translateY(-1px); }
+
+    /* STATS ROW */
+    .stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:500px; margin:0 auto 32px; padding:0 20px; }
+    .stat-chip { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px; text-align:center; }
+    .stat-chip .number { font-family:'DM Sans',sans-serif; font-size:1.5rem; font-weight:700; margin-bottom:3px; }
+    .stat-chip .number.cyan { color:var(--cyan); }
+    .stat-chip .number.green { color:var(--green); }
+    .stat-chip .label-text { font-size:0.7rem; color:rgba(255,255,255,0.4); font-weight:500; text-transform:uppercase; letter-spacing:1px; }
+
+    /* ══════════════════════════════════════
+       SINGLE CARD — Sophie Bennett style
+    ══════════════════════════════════════ */
+    .card-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    /* 3D flip scene */
+    .flip-scene {
+      width: 320px;
+      height: 460px;
+      perspective: 1400px;
+      cursor: pointer;
+      margin-bottom: 28px;
+    }
+    @media(max-width:380px){ .flip-scene{ width:290px; height:420px; } }
+
+    .flip-inner {
+      width: 100%; height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+      border-radius: 28px;
+    }
+    .flip-inner.is-flipped { transform: rotateY(180deg); }
+
+    .flip-face {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 28px;
+      overflow: hidden;
+    }
+
+    /* ── FRONT: full-bleed image + text overlay ── */
+    .flip-front {
+      background: #1a1a1c;
+      box-shadow:
+        0 2px 0 rgba(255,255,255,0.06) inset,
+        0 24px 60px rgba(0,0,0,0.7),
+        0 4px 16px rgba(0,0,0,0.5);
+    }
+
+    /* The image fills entire card */
+    .fc-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .flip-scene:hover .fc-img { transform: scale(1.03); }
+
+    /* Emoji placeholder when no image */
+    .fc-emoji-bg {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+      background: linear-gradient(145deg, #1c2535 0%, #0d1420 100%);
+    }
+
+    /* gradient scrim — fades image into text area */
+    .fc-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0,0,0,0) 35%,
+        rgba(0,0,0,0.55) 60%,
+        rgba(0,0,0,0.92) 100%
+      );
+    }
+
+    /* text content pinned to bottom */
+    .fc-body {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px 20px 18px;
+    }
+
+    /* word + verified badge row */
+    .fc-name-row {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 5px;
+    }
+    .fc-word {
+      font-size: 1.55rem; font-weight: 700;
+      color: white; letter-spacing: -0.3px;
+      line-height: 1.15;
+    }
+    .fc-badge {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #1db954;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(29,185,84,0.6);
+    }
+    .fc-badge i { font-size: 9px; color: white; }
+
+    /* hint text */
+    .fc-hint {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.58);
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    /* stats + speak pill row */
+    .fc-bottom-row {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .fc-stats {
+      display: flex; align-items: center; gap: 14px;
+      color: rgba(255,255,255,0.55); font-size: 0.8rem; font-weight: 500;
+    }
+    .fc-stats span { display: flex; align-items: center; gap: 5px; }
+    .fc-stats i { font-size: 0.72rem; }
+
+    /* "Follow +" style pill button */
+    .fc-speak-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 18px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255,255,255,0.22);
+      border-radius: 50px;
+      color: white; font-family: 'DM Sans',sans-serif;
+      font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .fc-speak-btn:hover { background:rgba(255,255,255,0.22); border-color:rgba(255,255,255,0.45); transform:translateY(-1px); }
+
+    /* ── BACK: dark, meaning display ── */
+    .flip-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(145deg, #0d1420 0%, #111820 50%, #0a0f18 100%);
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.7);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 36px 28px;
+      text-align: center;
+    }
+
+    .fb-emoji { font-size: 3.2rem; margin-bottom: 20px; display: block; }
+
+    .fb-word {
+      font-size: 2.4rem; font-weight: 700;
+      color: var(--cyan); letter-spacing: -0.5px;
+      margin-bottom: 6px; line-height: 1.1;
+    }
+    .fb-phonetic {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; color: rgba(255,255,255,0.3);
+      margin-bottom: 18px; letter-spacing: 1px;
+    }
+
+    /* horizontal rule */
+    .fb-rule {
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,229,255,0.4), transparent);
+      margin: 0 auto 18px;
+    }
+
+    .fb-meaning {
+      font-size: 1.1rem; color: rgba(255,255,255,0.82);
+      line-height: 1.6; margin-bottom: 8px;
+    }
+    .fb-example {
+      font-size: 0.78rem; color: rgba(255,255,255,0.3);
+      font-style: italic; line-height: 1.5; margin-bottom: 28px;
+    }
+
+    .fb-speak-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 24px;
+      background: rgba(0,229,255,0.08);
+      border: 1px solid rgba(0,229,255,0.25);
+      border-radius: 50px;
+      color: var(--cyan); font-family: 'DM Sans',sans-serif;
+      font-size: 0.84rem; font-weight: 600;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .fb-speak-btn:hover { background:rgba(0,229,255,0.16); border-color:rgba(0,229,255,0.5); transform:translateY(-1px); }
+
+    .fb-flip-hint {
+      margin-top: 20px;
+      font-size: 0.63rem; color: rgba(255,255,255,0.18);
+      font-family: 'Space Mono', monospace; letter-spacing: 1px;
+    }
+
+    /* NAV ROW */
+    .card-nav-section { display:flex; align-items:center; gap:16px; margin-bottom:16px; justify-content:center; }
+    .nav-btn { width:50px; height:50px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.06); color:white; font-size:1rem; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; }
+    .nav-btn:hover { background:rgba(255,255,255,0.14); border-color:rgba(255,255,255,0.3); transform:scale(1.08); }
+    .progress-pill { flex:1; max-width:260px; }
+    .progress-track { height:3px; background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden; margin-bottom:7px; }
+    .progress-fill { height:100%; background:linear-gradient(90deg,var(--cyan),var(--gold-color)); border-radius:2px; transition:width 0.4s cubic-bezier(0.4,0,0.2,1); }
+    .progress-label { text-align:center; font-size:0.72rem; color:rgba(255,255,255,0.35); font-family:'Space Mono',monospace; }
+
+    /* key hint */
+    #keyHint { text-align:center; font-size:0.68rem; color:rgba(255,255,255,0.18); font-family:'Space Mono',monospace; letter-spacing:0.5px; }
+
+    /* LOADING / EMPTY */
+    .loading-card { display:flex; align-items:center; justify-content:center; width:320px; height:200px; background:rgba(255,255,255,0.03); border-radius:28px; border:1px solid rgba(255,255,255,0.06); }
+    .loading-spinner { width:40px; height:40px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--cyan); border-radius:50%; animation:spin 0.8s linear infinite; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .empty-state { text-align:center; padding:60px 20px; }
+    .empty-emoji { font-size:3.5rem; margin-bottom:16px; display:block; }
+    .empty-title { font-size:1.2rem; font-weight:700; margin-bottom:8px; }
+    .empty-sub { font-size:0.85rem; color:rgba(255,255,255,0.4); }
+
+    /* ══════════════════════════════════════
+       MODAL — ADD WORD
+    ══════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(0,0,0,0.78);
+      backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; animation: mFade 0.2s ease; }
+    @keyframes mFade { from{opacity:0} to{opacity:1} }
+
+    .modal-box {
+      background: #111315;
+      border-radius: 26px;
+      width: 100%; max-width: 430px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 32px 90px rgba(0,0,0,0.8);
+      animation: mPop 0.4s cubic-bezier(0.34,1.3,0.64,1);
+      overflow: hidden;
+    }
+    @keyframes mPop { from{opacity:0;transform:scale(0.86) translateY(24px)} to{opacity:1;transform:scale(1) translateY(0)} }
+
+    .modal-top {
+      padding: 24px 26px 0;
+      display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .modal-title { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.3px; }
+    .modal-sub { font-size: 0.78rem; color: rgba(255,255,255,0.35); margin-top: 3px; }
+    .modal-x {
+      width: 32px; height: 32px; border: none;
+      background: rgba(255,255,255,0.07); border-radius: 50%;
+      color: rgba(255,255,255,0.5); font-size: 0.78rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .modal-x:hover { background: rgba(255,255,255,0.14); color: white; }
+
+    .modal-body { padding: 22px 26px 28px; }
+
+    /* Upload area */
+    .upload-zone {
+      border: 2px dashed rgba(255,255,255,0.1);
+      border-radius: 16px; overflow: hidden;
+      cursor: pointer; transition: all 0.3s;
+      margin-bottom: 18px; position: relative;
+    }
+    .upload-zone:hover { border-color: rgba(0,229,255,0.35); background: rgba(0,229,255,0.03); }
+    .upload-zone input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; z-index:2; }
+
+    /* preview mode */
+    .upload-preview {
+      width: 100%; height: 180px;
+      object-fit: cover; display: block;
+    }
+    .upload-preview-actions {
+      position: absolute; top: 10px; right: 10px; z-index: 3;
+      display: none;
+    }
+    .upload-zone.has-image .upload-preview-actions { display: flex; gap: 6px; }
+    .upload-zone.has-image .upload-placeholder { display: none; }
+    .upload-zone:not(.has-image) .upload-preview { display: none; }
+    .preview-remove {
+      width: 30px; height: 30px;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%; color: white; font-size: 0.72rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .preview-remove:hover { background: rgba(255,23,68,0.7); }
+
+    .upload-placeholder {
+      padding: 24px; text-align: center;
+    }
+    .upload-icon-big { font-size: 2.2rem; display: block; margin-bottom: 8px; color: rgba(255,255,255,0.2); }
+    .upload-label { font-size: 0.82rem; color: rgba(255,255,255,0.35); }
+    .upload-label strong { color: rgba(0,229,255,0.7); }
+    .upload-opt { font-size: 0.66rem; color: rgba(255,255,255,0.18); margin-top: 4px; }
+
+    /* fields */
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block; font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.38);
+      margin-bottom: 8px;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 13px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 14px; color: white;
+      font-family: 'DM Sans', sans-serif; font-size: 0.92rem;
+      outline: none; transition: all 0.3s; resize: none;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: rgba(0,229,255,0.4);
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 0 0 3px rgba(0,229,255,0.08);
+    }
+    .field select option { background: #1a1a1c; }
+
+    /* two-col row */
+    .fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .modal-submit {
+      width: 100%; padding: 15px;
+      border: none; border-radius: 50px;
+      background: linear-gradient(135deg, rgba(0,229,255,0.9), rgba(81,32,187,0.9));
+      color: white; font-family: 'DM Sans', sans-serif;
+      font-size: 0.98rem; font-weight: 700;
+      cursor: pointer; transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(0,229,255,0.2);
+      margin-top: 6px;
+      letter-spacing: 0.3px;
+    }
+    .modal-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,229,255,0.35); }
+    .modal-submit:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+    /* ════════ FOOTER ════════ */
+    :root {
+      --footer-primary-purple: #5120bb;
+      --footer-light-purple: #08179c;
+      --footer-dark-purple: #1c1d7a;
+      --footer-neon-cyan: #00e5ff;
+      --footer-neon-red: #ff1744;
+      --footer-neon-yellow: #ffcc33;
+    }
+    .footer-newsletter-wrapper { background:linear-gradient(135deg,rgba(81,32,187,0.1) 0%,rgba(0,0,0,0.95) 100%); padding:3rem 0; border-bottom:1px solid rgba(0,229,255,0.2); position:relative; overflow:hidden; }
+    .footer-newsletter-wrapper::before { content:""; position:absolute; top:0; left:0; right:0; bottom:0; background:radial-gradient(circle at 20% 50%,rgba(0,229,255,0.05) 0%,transparent 50%),radial-gradient(circle at 80% 50%,rgba(255,23,68,0.05) 0%,transparent 50%); pointer-events:none; }
+    .footer-newsletter-container { max-width:1200px; margin:0 auto; padding:0 2rem; position:relative; z-index:1; }
+    .footer-newsletter-content-grid { display:grid; grid-template-columns:auto 1fr auto; gap:2rem; align-items:center; }
+    .footer-newsletter-main-title { font-family:'Space Mono',monospace; font-size:2.5rem; font-weight:700; background:linear-gradient(135deg,var(--footer-neon-cyan) 0%,var(--footer-primary-purple) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; text-transform:uppercase; letter-spacing:2px; color:white; }
+    .footer-newsletter-description-text { color:rgba(255,255,255,0.7); line-height:1.6; font-size:0.9rem; font-family:'Space Mono',monospace; }
+    .footer-newsletter-subscribe-form { display:flex; gap:0.5rem; max-width:450px; }
+    .footer-newsletter-email-input { flex:1; padding:1rem 1.5rem; background:rgba(0,0,0,0.5); border:1px solid rgba(0,229,255,0.3); border-radius:8px; color:white; font-family:'Space Mono',monospace; font-size:0.9rem; transition:all 0.3s ease; }
+    .footer-newsletter-email-input::placeholder { color:rgba(255,255,255,0.4); }
+    .footer-newsletter-email-input:focus { outline:none; border-color:var(--footer-neon-cyan); box-shadow:0 0 15px rgba(0,229,255,0.3); background:rgba(0,0,0,0.7); }
+    .footer-newsletter-submit-button { padding:1rem 1.5rem; background:linear-gradient(135deg,var(--footer-neon-red) 0%,var(--footer-primary-purple) 100%); border:none; border-radius:8px; color:white; font-weight:700; cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; min-width:60px; box-shadow:0 0 20px rgba(255,23,68,0.4); }
+    .footer-newsletter-submit-button:hover { transform:translateY(-2px); box-shadow:0 0 30px rgba(255,23,68,0.6); }
+    .footer-newsletter-submit-button i { font-size:1.2rem; }
+    .thedung-main-footer-wrapper { background:linear-gradient(180deg,rgba(0,0,0,0.95) 0%,rgba(28,29,122,0.1) 50%,rgba(0,0,0,0.95) 100%); padding:4rem 0 2rem; position:relative; }
+    .thedung-main-footer-wrapper::before { content:""; position:absolute; top:0; left:0; right:0; bottom:0; background-image:radial-gradient(circle at 2px 2px,rgba(0,229,255,0.1) 1px,transparent 0); background-size:40px 40px; opacity:0.3; pointer-events:none; }
+    .thedung-footer-main-container { max-width:1200px; margin:0 auto; padding:0 2rem; position:relative; z-index:1; }
+    .thedung-footer-columns-grid { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr 1.2fr; gap:3rem; margin-bottom:3rem; position:relative; z-index:1; }
+    .thedung-footer-brand-section { animation:thedungFooterFadeInUp 0.6s ease-out; }
+    @keyframes thedungFooterFadeInUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+    .thedung-footer-brand-logo-container { width:60px; height:60px; background:linear-gradient(135deg,var(--footer-light-purple),var(--footer-primary-purple)); border-radius:15px; display:flex; align-items:center; justify-content:center; margin-bottom:1rem; box-shadow:0 0 30px rgba(81,32,187,0.5); animation:thedungFooterLogoFloat 3s ease-in-out infinite; }
+    @keyframes thedungFooterLogoFloat { 0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)} }
+    .thedung-footer-brand-logo-container i { color:white; font-size:30px; }
+    .thedung-footer-brand-name-text { font-family:'Space Mono',monospace; font-size:2rem; font-weight:700; margin-bottom:0.5rem; letter-spacing:3px; color:white; }
+    .thedung-footer-brand-tagline-text { color:var(--footer-neon-cyan); font-family:'Space Mono',monospace; font-size:0.85rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:1.5rem; font-weight:700; }
+    .thedung-footer-brand-divider-line { height:2px; width:80px; background:linear-gradient(90deg,var(--footer-neon-cyan) 0%,var(--footer-neon-red) 100%); margin:1.5rem 0; box-shadow:0 0 10px var(--footer-neon-cyan); }
+    .thedung-footer-brand-description-paragraph { color:rgba(255,255,255,0.6); line-height:1.8; margin-bottom:2rem; font-size:0.85rem; font-family:'Space Mono',monospace; }
+    .thedung-footer-social-icons-container { display:flex; gap:0.75rem; }
+    .thedung-footer-social-icon-link { width:45px; height:45px; border-radius:10px; background:rgba(0,0,0,0.5); border:1px solid rgba(0,229,255,0.3); display:flex; align-items:center; justify-content:center; color:white; transition:all 0.3s ease; cursor:pointer; position:relative; overflow:hidden; text-decoration:none; }
+    .thedung-footer-social-icon-link::before { content:""; position:absolute; top:50%; left:50%; width:0; height:0; border-radius:50%; background:radial-gradient(circle,var(--footer-neon-cyan) 0%,transparent 70%); transform:translate(-50%,-50%); transition:all 0.4s ease; }
+    .thedung-footer-social-icon-link:hover::before { width:100px; height:100px; }
+    .thedung-footer-social-icon-link:hover { transform:translateY(-5px); border-color:var(--footer-neon-cyan); box-shadow:0 0 20px rgba(0,229,255,0.5); }
+    .thedung-footer-social-icon-link i { position:relative; z-index:1; }
+    .thedung-footer-content-column { animation:thedungFooterFadeInUp 0.6s ease-out; animation-fill-mode:both; }
+    .thedung-footer-content-column:nth-child(2){animation-delay:0.1s}.thedung-footer-content-column:nth-child(3){animation-delay:0.2s}.thedung-footer-content-column:nth-child(4){animation-delay:0.3s}.thedung-footer-content-column:nth-child(5){animation-delay:0.4s}
+    .thedung-footer-column-heading-title { font-family:'Space Mono',monospace; font-size:1.1rem; font-weight:700; margin-bottom:1.5rem; color:white; text-transform:uppercase; letter-spacing:1px; position:relative; padding-bottom:0.75rem; }
+    .thedung-footer-column-heading-title::after { content:""; position:absolute; bottom:0; left:0; width:40px; height:2px; background:linear-gradient(90deg,var(--footer-neon-cyan),var(--footer-neon-red)); box-shadow:0 0 10px var(--footer-neon-cyan); }
+    .thedung-footer-navigation-links-list { list-style:none; padding-left:0; margin:0; }
+    .thedung-footer-navigation-links-list li { margin-bottom:0.75rem; }
+    .thedung-footer-navigation-link-item { color:rgba(255,255,255,0.6); text-decoration:none; font-family:'Space Mono',monospace; font-size:0.85rem; transition:all 0.3s ease; display:inline-flex; align-items:center; gap:0.5rem; position:relative; }
+    .thedung-footer-navigation-link-item::before { content:"→"; opacity:0; transform:translateX(-10px); transition:all 0.3s ease; color:var(--footer-neon-cyan); }
+    .thedung-footer-navigation-link-item:hover { color:white; transform:translateX(10px); text-shadow:0 0 10px rgba(0,229,255,0.5); }
+    .thedung-footer-navigation-link-item:hover::before { opacity:1; transform:translateX(0); }
+    .thedung-footer-contact-info-box { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.25rem; padding:1rem; background:rgba(0,0,0,0.3); border-radius:10px; border:1px solid rgba(0,229,255,0.2); transition:all 0.3s ease; }
+    .thedung-footer-contact-info-box:hover { background:rgba(0,0,0,0.5); border-color:var(--footer-neon-cyan); transform:translateX(5px); box-shadow:0 0 15px rgba(0,229,255,0.2); }
+    .thedung-footer-contact-icon-wrapper { width:40px; height:40px; border-radius:8px; background:linear-gradient(135deg,var(--footer-neon-cyan) 0%,var(--footer-primary-purple) 100%); display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0; box-shadow:0 0 15px rgba(0,229,255,0.3); }
+    .thedung-footer-contact-text-wrapper { flex:1; }
+    .thedung-footer-contact-label-text { font-family:'Space Mono',monospace; font-size:0.7rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.25rem; font-weight:700; }
+    .thedung-footer-contact-value-text { font-family:'Space Mono',monospace; color:white; font-size:0.85rem; font-weight:500; }
+    .thedung-footer-map-display-container { position:relative; border-radius:12px; overflow:hidden; height:180px; border:1px solid rgba(0,229,255,0.3); box-shadow:0 0 20px rgba(0,229,255,0.2); margin-top:1rem; }
+    .thedung-footer-map-placeholder-area { width:100%; height:100%; background:linear-gradient(135deg,rgba(81,32,187,0.3) 0%,rgba(0,0,0,0.8) 100%),repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,229,255,0.05) 2px,rgba(0,229,255,0.05) 4px),repeating-linear-gradient(90deg,transparent,transparent 2px,rgba(0,229,255,0.05) 2px,rgba(0,229,255,0.05) 4px); display:flex; align-items:center; justify-content:center; position:relative; }
+    .thedung-footer-map-location-pin { width:50px; height:50px; position:relative; }
+    .thedung-footer-map-location-pin::before { content:""; position:absolute; top:50%; left:50%; width:30px; height:30px; background:var(--footer-neon-red); border-radius:50% 50% 50% 0; transform:translate(-50%,-50%) rotate(-45deg); box-shadow:0 0 20px rgba(255,23,68,0.8); animation:thedungFooterMapPinBounce 2s ease-in-out infinite; }
+    .thedung-footer-map-location-pin i { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; font-size:1rem; z-index:1; }
+    @keyframes thedungFooterMapPinBounce { 0%,100%{transform:translate(-50%,-50%) rotate(-45deg) translateY(0)}50%{transform:translate(-50%,-50%) rotate(-45deg) translateY(-10px)} }
+    .thedung-footer-bottom-copyright-wrapper { padding:2rem 0; border-top:1px solid rgba(0,229,255,0.2); margin-top:3rem; display:flex; justify-content:space-between; align-items:center; color:rgba(255,255,255,0.5); font-family:'Space Mono',monospace; font-size:0.8rem; flex-wrap:wrap; gap:1rem; }
+    .thedung-footer-bottom-links-list { display:flex; gap:2rem; list-style:none; padding-left:0; margin:0; }
+    .thedung-footer-bottom-link-item { font-family:'Space Mono',monospace; color:rgba(255,255,255,0.5); text-decoration:none; transition:all 0.3s ease; }
+    .thedung-footer-bottom-link-item:hover { color:var(--footer-neon-cyan); text-shadow:0 0 10px rgba(0,229,255,0.5); }
+    #backToTop { position:fixed; bottom:30px; right:30px; width:56px; height:56px; background:transparent; border:none; cursor:pointer; display:none; z-index:999; padding:0; }
+    #backToTop .sun-ring { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; animation:sunRotate 6s linear infinite; }
+    #backToTop .sun-ring i { font-size:56px; color:#ffcc33; filter:drop-shadow(0 0 6px rgba(255,204,51,0.8)); }
+    #backToTop .arrow-up { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+    #backToTop .arrow-up i { font-size:18px; color:white; text-shadow:0 0 6px rgba(255,255,255,0.8); z-index:2; }
+    #backToTop:hover { transform:translateY(-6px) scale(1.05); transition:0.3s ease; }
+    @keyframes sunRotate { from{transform:rotate(0deg)}to{transform:rotate(360deg)} }
+    @media(max-width:768px){ .footer-newsletter-content-grid{grid-template-columns:1fr;gap:1.5rem;text-align:center} .footer-newsletter-subscribe-form{max-width:100%} .thedung-footer-columns-grid{grid-template-columns:1fr 1fr;gap:2rem} .thedung-footer-brand-section{grid-column:1/-1} .thedung-footer-content-column:nth-child(5){grid-column:1/-1} .thedung-footer-bottom-copyright-wrapper{flex-direction:column;text-align:center} .thedung-footer-bottom-links-list{gap:1rem} }
+    @media(max-width:480px){ .footer-newsletter-subscribe-form{flex-direction:column} .footer-newsletter-submit-button{width:100%} .thedung-footer-columns-grid{grid-template-columns:1fr} .thedung-footer-social-icons-container{justify-content:center} }
+    @media(max-width:1024px){ .thedung-footer-columns-grid{grid-template-columns:1fr 1fr 1fr;gap:2.5rem} .thedung-footer-content-column:nth-child(5){grid-column:1/-1;max-width:500px} }
+  </style>
 </head>
 
 <body>
-    <!-- Desktop Navigation -->
-    <nav class="navbar d-none d-md-block">
-        <div class="container px-4">
-            <div class="d-flex justify-content-between align-items-center w-100">
-                <div class="d-flex align-items-center">
-                    <div class="logo-box">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <span class="brand-text">THEDUNG</span>
-                </div>
 
-                <div class="day-navigator">
-                    <button class="nav-arrow">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <a href="index.html" class="day-btn">TRANG CHỦ</a>
-                    <a href="courses.html" class="day-btn active">KHÓA HỌC</a>
-                    <a href="music.html" class="day-btn">ÂM NHẠC</a>
-                    <a href="news.html" class="day-btn">TIN TỨC</a>
-                    <a href="contact.html" class="day-btn">LIÊN HỆ</a>
-                    <button class="nav-arrow">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-
-                <div class="d-flex align-items-center gap-2">
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-comment"></i>
-                    </button>
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-bell"></i>
-                        <span class="notification-dot"></span>
-                    </button>
-                    <a href="login.html" class="icon-btn">
-                        <i class="fa-regular fa-user"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Mobile Navigation -->
-    <nav class="navbar d-md-none">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center w-100">
-                <div class="d-flex align-items-center">
-                    <div class="logo-box">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <span class="brand-text">THEDUNG</span>
-                </div>
-
-                <div class="d-flex align-items-center gap-1">
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-comment"></i>
-                    </button>
-                    <button class="icon-btn">
-                        <i class="fa-regular fa-bell"></i>
-                        <span class="notification-dot"></span>
-                    </button>
-                    <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Mobile Day Navigator -->
-    <div class="mobile-day-nav d-md-none">
-        <div class="d-flex align-items-center gap-2">
-            <button class="nav-arrow">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <div class="d-inline-flex gap-1">
-                <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
-                <a href="courses.html" class="day-btn mobile-day-btn active">Khóa học</a>
-                <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
-                <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
-                <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
-            </div>
-            <button class="nav-arrow">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- Mobile Offcanvas Menu -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Menu</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="menu-section">
-                <div class="section-title">Navigation</div>
-                <a href="index.html" class="menu-item">
-                    <i class="fas fa-home"></i>
-                    Trang chủ
-                </a>
-                <a href="courses.html" class="menu-item active">
-                    <i class="fas fa-sun"></i>
-                    Khóa học
-                </a>
-                <a href="music.html" class="menu-item">
-                    <i class="fas fa-music"></i>
-                    Âm nhạc
-                </a>
-                <a href="news.html" class="menu-item">
-                    <i class="fas fa-newspaper"></i>
-                    Tin tức
-                </a>
-                <a href="contact.html" class="menu-item">
-                    <i class="fas fa-envelope"></i>
-                    Liên hệ
-                </a>
-            </div>
-
-            <div class="menu-divider"></div>
-
-            <div class="menu-section">
-                <div class="section-title">Explore</div>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-sun"></i>
-                    Trắc nghiệm
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-circle"></i>
-                    Tài liệu
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-circle"></i>
-                    Thi thử
-                </a>
-            </div>
-            <div class="menu-divider"></div>
-
-            <div class="menu-section">
-                <div class="section-title">Account</div>
-                <a href="login.html" class="menu-item">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Đăng nhập
-                </a>
-                <a href="settings.html" class="menu-item">
-                    <i class="fas fa-cog"></i>
-                    Cài đặt
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main>
-        <!-- Lessons Header -->
-        <div class="account-header" data-aos="fade-down">
-            <h1>DANH SÁCH TRẮC NGHIỆM</h1>
-            <p>Luyện tập và kiểm tra kiến thức với các bài trắc nghiệm chất lượng</p>
-        </div>
-
-        <!-- Lessons Container -->
-       <div class="container mt-5">
-
-  <!-- CHỌN CHỦ ĐỀ -->
-  <select id="topicSelect" class="form-select mb-3">
-    <option value="family">Gia đình</option>
-    <option value="cooking">Nấu ăn</option>
-    <option value="travel">Du lịch</option>
-  </select>
-
-  <button class="btn btn-success mb-4" onclick="quickAddWord()">
-    ➕ Thêm từ mới
-  </button>
-
-  <!-- FLASHCARD -->
-  <div class="card-container">
-    <div class="flashcard" onclick="flipCard()">
-      <div class="card-front" id="cardFront">
-        Nghĩa tiếng Việt
+<!-- Desktop Nav -->
+<nav class="navbar d-none d-md-block">
+  <div class="container px-4">
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <div class="d-flex align-items-center">
+        <div class="logo-box"><i class="fas fa-rocket"></i></div>
+        <span class="brand-text">THEDUNG</span>
       </div>
-
-      <div class="card-back" id="cardBack">
-        <h3 id="englishWord">Family</h3>
-        <img id="wordImage" src="" width="150">
-        <br>
-        <button onclick="speakWord()">🔊 Phát âm</button>
+      <div class="day-navigator">
+        <button class="nav-arrow"><i class="fas fa-chevron-left"></i></button>
+        <a href="index.html" class="day-btn">TRANG CHỦ</a>
+        <a href="courses.html" class="day-btn active">KHÓA HỌC</a>
+        <a href="netflix.html" class="day-btn">NETFLIX</a>
+        <a href="music.html" class="day-btn">ÂM NHẠC</a>
+        <a href="news.html" class="day-btn">TIN TỨC</a>
+        <a href="contact.html" class="day-btn">LIÊN HỆ</a>
+        <button class="nav-arrow"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <button class="icon-btn"><i class="fa-regular fa-comment"></i></button>
+        <button class="icon-btn"><i class="fa-regular fa-bell"></i><span class="notification-dot"></span></button>
+        <div id="userAreaDesktop"></div>
       </div>
     </div>
   </div>
+</nav>
 
+<!-- Mobile Nav -->
+<nav class="navbar d-md-none">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <div class="d-flex align-items-center">
+        <div class="logo-box"><i class="fas fa-rocket"></i></div>
+        <span class="brand-text">THEDUNG</span>
+      </div>
+      <div class="d-flex align-items-center gap-1">
+        <button class="icon-btn"><i class="fa-regular fa-comment"></i></button>
+        <button class="icon-btn"><i class="fa-regular fa-bell"></i><span class="notification-dot"></span></button>
+        <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-day-nav d-md-none">
+  <div class="d-flex align-items-center gap-2">
+    <button class="nav-arrow"><i class="fas fa-chevron-left"></i></button>
+    <div class="d-inline-flex gap-1">
+      <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
+      <a href="courses.html" class="day-btn mobile-day-btn active">Khóa học</a>
+      <a href="netflix.html" class="day-btn mobile-day-btn">Netflix</a>
+      <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
+      <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
+      <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
+    </div>
+    <button class="nav-arrow"><i class="fas fa-chevron-right"></i></button>
+  </div>
 </div>
 
-    </main>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Menu</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="menu-section">
+      <div class="section-title">Navigation</div>
+      <a href="index.html" class="menu-item"><i class="fas fa-home"></i>Trang chủ</a>
+      <a href="courses.html" class="menu-item active"><i class="fas fa-sun"></i>Khóa học</a>
+      <a href="netflix.html" class="menu-item"><i class="fas fa-film"></i>Netflix</a>
+      <a href="music.html" class="menu-item"><i class="fas fa-music"></i>Âm nhạc</a>
+      <a href="news.html" class="menu-item"><i class="fas fa-newspaper"></i>Tin tức</a>
+      <a href="contact.html" class="menu-item"><i class="fas fa-envelope"></i>Liên hệ</a>
+    </div>
+    <div class="menu-divider"></div>
+    <div class="menu-section">
+      <div class="section-title">Explore</div>
+      <a href="#" class="menu-item"><i class="fas fa-sun"></i>Trắc nghiệm</a>
+      <a href="#" class="menu-item"><i class="fas fa-circle"></i>Tài liệu</a>
+      <a href="#" class="menu-item"><i class="fas fa-circle"></i>Thi thử</a>
+    </div>
+    <div class="menu-divider"></div>
+    <div class="menu-section">
+      <div class="section-title">Account</div>
+      <div id="userAreaMobile"></div>
+      <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i>Cài đặt</a>
+    </div>
+  </div>
+</div>
 
-    <!-- Newsletter Section -->
-    <section class="footer-newsletter-wrapper">
-        <div class="footer-newsletter-container">
-            <div class="footer-newsletter-content-grid">
-                <h2 class="footer-newsletter-main-title">Subscribe</h2>
-                <p class="footer-newsletter-description-text">
-                    Đăng ký để nhận thông báo khi có bài trắc nghiệm mới!
-                </p>
-                <form class="footer-newsletter-subscribe-form">
-                    <input type="email" class="footer-newsletter-email-input" placeholder="Email của bạn..." required>
-                    <button type="submit" class="footer-newsletter-submit-button">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
+<!-- ════════ MAIN ════════ -->
+<main>
+  <div class="page-header" data-aos="fade-down">
+    <div class="page-eyebrow">English Vocabulary · THEDUNG</div>
+    <h1 class="page-title">Học Từ Vựng<br><span>Tiếng Anh</span></h1>
+    <p class="page-sub">Lật thẻ để xem nghĩa — nhấn 🔊 để nghe phát âm</p>
+  </div>
 
-    <!-- Main Footer -->
-    <footer class="thedung-main-footer-wrapper">
-        <div class="thedung-footer-main-container">
-            <div class="thedung-footer-columns-grid">
-                <!-- Brand Section -->
-                <div class="thedung-footer-brand-section thedung-footer-content-column">
-                    <div class="thedung-footer-brand-logo-container">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h1 class="thedung-footer-brand-name-text">THEDUNG</h1>
-                    <p class="thedung-footer-brand-tagline-text">Hỗ trợ học tập</p>
-                    <div class="thedung-footer-brand-divider-line"></div>
-                    <p class="thedung-footer-brand-description-paragraph">
-                        Liên hệ chúng tôi qua nền tảng mạng xã hội
-                    </p>
-                    <div class="thedung-footer-social-icons-container">
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="thedung-footer-social-icon-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
+  <!-- Stats Row -->
+  <div class="stats-row" data-aos="fade-up" data-aos-delay="80">
+    <div class="stat-chip">
+      <div class="number cyan" id="statTotal">—</div>
+      <div class="label-text">Tổng từ</div>
+    </div>
+    <div class="stat-chip">
+      <div class="number green" id="statCurrent">—</div>
+      <div class="label-text">Đang xem</div>
+    </div>
+    <div class="stat-chip">
+      <div class="number" id="statTopic" style="font-size:0.9rem;color:rgba(255,255,255,0.6)">—</div>
+      <div class="label-text">Chủ đề</div>
+    </div>
+  </div>
 
-                <!-- About Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">About</h3>
-                    <ul class="thedung-footer-navigation-links-list">
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Planning</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Research</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Consulting</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Analysis</a></li>
-                    </ul>
-                </div>
-
-                <!-- Menu Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">Menu</h3>
-                    <ul class="thedung-footer-navigation-links-list">
-                        <li><a href="index.html" class="thedung-footer-navigation-link-item">Trang chủ</a></li>
-                        <li><a href="courses.html" class="thedung-footer-navigation-link-item">Khóa học</a></li>
-                        <li><a href="music.html" class="thedung-footer-navigation-link-item">Âm nhạc</a></li>
-                        <li><a href="news.html" class="thedung-footer-navigation-link-item">Tin tức</a></li>
-                        <li><a href="contact.html" class="thedung-footer-navigation-link-item">Liên hệ</a></li>
-                    </ul>
-                </div>
-
-                <!-- Services Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">Services</h3>
-                    <ul class="thedung-footer-navigation-links-list">
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Trắc nghiệm</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Tài liệu</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Thi thử</a></li>
-                        <li><a href="#" class="thedung-footer-navigation-link-item">Học tập</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Column -->
-                <div class="thedung-footer-content-column">
-                    <h3 class="thedung-footer-column-heading-title">Contact</h3>
-                    
-                    <div class="thedung-footer-contact-info-box">
-                        <div class="thedung-footer-contact-icon-wrapper">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="thedung-footer-contact-text-wrapper">
-                            <div class="thedung-footer-contact-label-text">Call</div>
-                            <div class="thedung-footer-contact-value-text">+091 984 4429</div>
-                        </div>
-                    </div>
-
-                    <div class="thedung-footer-contact-info-box">
-                        <div class="thedung-footer-contact-icon-wrapper">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="thedung-footer-contact-text-wrapper">
-                            <div class="thedung-footer-contact-label-text">Email</div>
-                            <div class="thedung-footer-contact-value-text">luongthedung@gmail.com</div>
-                        </div>
-                    </div>
-
-                    <div class="thedung-footer-map-display-container">
-                        <div class="thedung-footer-map-placeholder-area">
-                            <div class="thedung-footer-map-location-pin">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom Footer -->
-            <div class="thedung-footer-bottom-copyright-wrapper">
-                <div>&copy; 2025 THEDUNG. All rights reserved.</div>
-                <ul class="thedung-footer-bottom-links-list">
-                    <li><a href="#" class="thedung-footer-bottom-link-item">Privacy Policy</a></li>
-                    <li><a href="#" class="thedung-footer-bottom-link-item">Our History</a></li>
-                    <li><a href="#" class="thedung-footer-bottom-link-item">What We Do</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Back to Top Button -->
-    <button id="backToTop" title="Lên đầu trang">
-        <span class="sun-ring">
-            <i class="fas fa-sun"></i>
-        </span>
-        <span class="arrow-up">
-            <i class="fas fa-chevron-up"></i>
-        </span>
+  <!-- Control Bar -->
+  <div class="control-bar" data-aos="fade-up" data-aos-delay="120">
+    <div class="topic-select-wrapper">
+      <select id="topicSelect">
+        <option value="family">🏠 Gia đình</option>
+        <option value="daily_routine">⏰ Hoạt động hằng ngày</option>
+        <option value="school">🏫 Trường học</option>
+        <option value="jobs">💼 Nghề nghiệp</option>
+        <option value="time">⌛ Thời gian</option>
+        <option value="food">🍜 Đồ ăn thức uống</option>
+        <option value="cooking">🍳 Nấu ăn</option>
+        <option value="shopping">🛒 Mua sắm</option>
+        <option value="clothes">👔 Quần áo</option>
+        <option value="house">🏡 Nhà cửa</option>
+        <option value="weather">🌤 Thời tiết</option>
+        <option value="health">💊 Sức khỏe</option>
+        <option value="emotions">😊 Cảm xúc</option>
+        <option value="sports">⚽ Thể thao</option>
+        <option value="hobbies">🎨 Sở thích</option>
+        <option value="travel">✈️ Du lịch</option>
+        <option value="transportation">🚌 Phương tiện giao thông</option>
+        <option value="directions">🗺 Chỉ đường</option>
+        <option value="hotel">🏨 Khách sạn</option>
+        <option value="airport">✈️ Sân bay</option>
+        <option value="technology">💻 Công nghệ</option>
+        <option value="internet">🌐 Internet</option>
+        <option value="social_media">📱 Mạng xã hội</option>
+        <option value="environment">🌿 Môi trường</option>
+        <option value="business">📊 Kinh doanh</option>
+        <option value="education">📚 Giáo dục</option>
+        <option value="culture">🎭 Văn hóa</option>
+        <option value="science">🔬 Khoa học</option>
+        <option value="crime">⚖️ Tội phạm</option>
+        <option value="economy">💰 Kinh tế</option>
+        <option value="politics">🏛 Chính trị</option>
+        <option value="animals">🐾 Động vật</option>
+        <option value="nature">🌲 Thiên nhiên</option>
+        <option value="music">🎵 Âm nhạc</option>
+        <option value="movies">🎬 Phim ảnh</option>
+        <option value="books">📖 Sách</option>
+        <option value="friends">👫 Bạn bè</option>
+        <option value="relationships">❤️ Mối quan hệ</option>
+        <option value="communication">💬 Giao tiếp</option>
+        <option value="festivals">🎉 Lễ hội</option>
+        <option value="feelings">🌀 Tâm trạng</option>
+      </select>
+    </div>
+    <button class="btn-pill-add" onclick="openModal()">
+      <i class="fas fa-plus"></i> Thêm từ
     </button>
+  </div>
 
-    <script src="js/bootstrap.min.js"></script>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    
-    <script>
-        // Back to top button
-        const backToTopBtn = document.getElementById("backToTop");
+  <!-- ══ CARD ZONE ══ -->
+  <div class="card-zone" data-aos="fade-up" data-aos-delay="160">
 
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.style.display = "flex";
-            } else {
-                backToTopBtn.style.display = "none";
-            }
-        });
+    <!-- Loading -->
+    <div class="loading-card" id="loadingState">
+      <div class="loading-spinner"></div>
+    </div>
 
-        backToTopBtn.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
+    <!-- Empty -->
+    <div class="empty-state" id="emptyState" style="display:none">
+      <span class="empty-emoji">🌱</span>
+      <div class="empty-title">Chưa có từ vựng nào</div>
+      <div class="empty-sub">Nhấn "+ Thêm từ" để bắt đầu thêm từ vựng cho chủ đề này</div>
+    </div>
 
-        // Newsletter form submission
-        document.querySelector('.footer-newsletter-subscribe-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Cảm ơn bạn đã đăng ký!');
-            this.reset();
-        });
+    <!-- THE CARD -->
+    <div class="flip-scene" id="flipScene" style="display:none" onclick="flipCard()">
+      <div class="flip-inner" id="flipInner">
 
-        // Initialize AOS
-        AOS.init({
-            duration: 900,
-            easing: 'ease-out-cubic',
-            once: true,
-            offset: 120
-        });
-    </script>
-    <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { 
-  getFirestore, 
-  collection, 
-  addDoc, 
-  getDocs 
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-// import { 
-//   getAuth, 
-//   onAuthStateChanged 
-// } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        <!-- FRONT -->
+        <div class="flip-face flip-front">
+          <!-- image fills full card -->
+          <div id="fcImgArea">
+            <div class="fc-emoji-bg" id="fcEmojiBg"><span id="fcEmoji">📚</span></div>
+          </div>
+          <!-- gradient scrim -->
+          <div class="fc-scrim"></div>
+          <!-- bottom text -->
+          <div class="fc-body">
+            <div class="fc-name-row">
+              <span class="fc-word" id="fcWord">Word</span>
+              <div class="fc-badge"><i class="fas fa-check"></i></div>
+            </div>
+            <div class="fc-hint" id="fcHint">Nhấn thẻ để xem nghĩa tiếng Việt</div>
+            <div class="fc-bottom-row">
+              <div class="fc-stats">
+                <span><i class="fas fa-layer-group"></i> <span id="fcIdx">1</span></span>
+                <span><i class="fas fa-book-open"></i> <span id="fcTotal">0</span></span>
+              </div>
+              <button class="fc-speak-btn" onclick="event.stopPropagation(); speakWord()">
+                🔊 Phát âm
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- BACK -->
+        <div class="flip-face flip-back">
+          <span class="fb-emoji" id="fbEmoji">📚</span>
+          <div class="fb-word" id="fbWord">Word</div>
+          <div class="fb-phonetic" id="fbPhonetic"></div>
+          <div class="fb-rule"></div>
+          <div class="fb-meaning" id="fbMeaning">Nghĩa tiếng Việt</div>
+          <div class="fb-example" id="fbExample"></div>
+          <button class="fb-speak-btn" onclick="event.stopPropagation(); speakWord()">
+            <i class="fas fa-volume-up"></i> Nghe phát âm
+          </button>
+          <div class="fb-flip-hint">NHẤN ĐỂ LẬT LẠI</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <div class="card-nav-section" id="navSection" style="display:none">
+      <button class="nav-btn" onclick="prevWord()"><i class="fas fa-arrow-left"></i></button>
+      <div class="progress-pill">
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width:0%"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">0 / 0</div>
+      </div>
+      <button class="nav-btn" onclick="nextWord()"><i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <div id="keyHint" style="display:none">← → để điều hướng &nbsp;·&nbsp; Nhấn thẻ để lật</div>
+  </div>
+</main>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <div>
+        <div class="modal-title">✦ Thêm từ mới</div>
+        <div class="modal-sub">Điền thông tin từ vựng bên dưới</div>
+      </div>
+      <button class="modal-x" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Image upload -->
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="fileInput" accept="image/*" onchange="onFileChange(event)" />
+        <div class="upload-preview-actions">
+          <button class="preview-remove" onclick="removeImg(event)" type="button">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <img class="upload-preview" id="imgPreview" src="" alt="" />
+        <div class="upload-placeholder">
+          <span class="upload-icon-big">🖼️</span>
+          <div class="upload-label">Kéo thả hoặc <strong>chọn ảnh</strong></div>
+          <div class="upload-opt">JPG · PNG · WEBP — Không bắt buộc</div>
+        </div>
+      </div>
+
+      <div class="fields-row">
+        <div class="field">
+          <label>Từ tiếng Anh *</label>
+          <input type="text" id="mWord" placeholder="Family" />
+        </div>
+        <div class="field">
+          <label>Nghĩa tiếng Việt *</label>
+          <input type="text" id="mMeaning" placeholder="Gia đình" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Chủ đề *</label>
+        <select id="mTopic">
+          <option value="family">🏠 Gia đình</option>
+          <option value="daily_routine">⏰ Hoạt động hằng ngày</option>
+          <option value="school">🏫 Trường học</option>
+          <option value="jobs">💼 Nghề nghiệp</option>
+          <option value="time">⌛ Thời gian</option>
+          <option value="food">🍜 Đồ ăn thức uống</option>
+          <option value="cooking">🍳 Nấu ăn</option>
+          <option value="shopping">🛒 Mua sắm</option>
+          <option value="clothes">👔 Quần áo</option>
+          <option value="house">🏡 Nhà cửa</option>
+          <option value="weather">🌤 Thời tiết</option>
+          <option value="health">💊 Sức khỏe</option>
+          <option value="emotions">😊 Cảm xúc</option>
+          <option value="sports">⚽ Thể thao</option>
+          <option value="hobbies">🎨 Sở thích</option>
+          <option value="travel">✈️ Du lịch</option>
+          <option value="transportation">🚌 Phương tiện</option>
+          <option value="directions">🗺 Chỉ đường</option>
+          <option value="hotel">🏨 Khách sạn</option>
+          <option value="airport">✈️ Sân bay</option>
+          <option value="technology">💻 Công nghệ</option>
+          <option value="internet">🌐 Internet</option>
+          <option value="social_media">📱 Mạng xã hội</option>
+          <option value="environment">🌿 Môi trường</option>
+          <option value="business">📊 Kinh doanh</option>
+          <option value="education">📚 Giáo dục</option>
+          <option value="culture">🎭 Văn hóa</option>
+          <option value="science">🔬 Khoa học</option>
+          <option value="crime">⚖️ Tội phạm</option>
+          <option value="economy">💰 Kinh tế</option>
+          <option value="politics">🏛 Chính trị</option>
+          <option value="animals">🐾 Động vật</option>
+          <option value="nature">🌲 Thiên nhiên</option>
+          <option value="music">🎵 Âm nhạc</option>
+          <option value="movies">🎬 Phim ảnh</option>
+          <option value="books">📖 Sách</option>
+          <option value="friends">👫 Bạn bè</option>
+          <option value="relationships">❤️ Mối quan hệ</option>
+          <option value="communication">💬 Giao tiếp</option>
+          <option value="festivals">🎉 Lễ hội</option>
+          <option value="feelings">🌀 Tâm trạng</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Câu ví dụ <span style="color:rgba(255,255,255,0.2);font-size:0.85em">· không bắt buộc</span></label>
+        <textarea id="mExample" rows="2" placeholder="She comes from a big family."></textarea>
+      </div>
+
+      <button class="modal-submit" id="mSubmit" onclick="submitWord()">
+        Thêm từ vựng
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<section class="footer-newsletter-wrapper">
+  <div class="footer-newsletter-container">
+    <div class="footer-newsletter-content-grid">
+      <h2 class="footer-newsletter-main-title">Subscribe</h2>
+      <p class="footer-newsletter-description-text">Đăng ký để nhận thông báo khi có từ vựng và bài kiểm tra mới!</p>
+      <form class="footer-newsletter-subscribe-form">
+        <input type="email" class="footer-newsletter-email-input" placeholder="Email của bạn..." required />
+        <button type="submit" class="footer-newsletter-submit-button"><i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+</section>
+<footer class="thedung-main-footer-wrapper">
+  <div class="thedung-footer-main-container">
+    <div class="thedung-footer-columns-grid">
+      <div class="thedung-footer-brand-section thedung-footer-content-column">
+        <div class="thedung-footer-brand-logo-container"><i class="fas fa-rocket"></i></div>
+        <h1 class="thedung-footer-brand-name-text">THEDUNG</h1>
+        <p class="thedung-footer-brand-tagline-text">Hỗ trợ học tập</p>
+        <div class="thedung-footer-brand-divider-line"></div>
+        <p class="thedung-footer-brand-description-paragraph">Liên hệ chúng tôi qua nền tảng mạng xã hội</p>
+        <div class="thedung-footer-social-icons-container">
+          <a href="#" class="thedung-footer-social-icon-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="thedung-footer-social-icon-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="thedung-footer-social-icon-link"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="thedung-footer-social-icon-link"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="thedung-footer-content-column">
+        <h3 class="thedung-footer-column-heading-title">About</h3>
+        <ul class="thedung-footer-navigation-links-list">
+          <li><a href="#" class="thedung-footer-navigation-link-item">Planning</a></li>
+          <li><a href="#" class="thedung-footer-navigation-link-item">Research</a></li>
+          <li><a href="#" class="thedung-footer-navigation-link-item">Consulting</a></li>
+          <li><a href="#" class="thedung-footer-navigation-link-item">Analysis</a></li>
+        </ul>
+      </div>
+      <div class="thedung-footer-content-column">
+        <h3 class="thedung-footer-column-heading-title">Menu</h3>
+        <ul class="thedung-footer-navigation-links-list">
+          <li><a href="index.html" class="thedung-footer-navigation-link-item">Trang chủ</a></li>
+          <li><a href="courses.html" class="thedung-footer-navigation-link-item">Khóa học</a></li>
+          <li><a href="music.html" class="thedung-footer-navigation-link-item">Âm nhạc</a></li>
+          <li><a href="news.html" class="thedung-footer-navigation-link-item">Tin tức</a></li>
+          <li><a href="contact.html" class="thedung-footer-navigation-link-item">Liên hệ</a></li>
+        </ul>
+      </div>
+      <div class="thedung-footer-content-column">
+        <h3 class="thedung-footer-column-heading-title">Services</h3>
+        <ul class="thedung-footer-navigation-links-list">
+          <li><a href="#" class="thedung-footer-navigation-link-item">Trắc nghiệm</a></li>
+          <li><a href="#" class="thedung-footer-navigation-link-item">Tài liệu</a></li>
+          <li><a href="#" class="thedung-footer-navigation-link-item">Thi thử</a></li>
+          <li><a href="#" class="thedung-footer-navigation-link-item">Học tập</a></li>
+        </ul>
+      </div>
+      <div class="thedung-footer-content-column">
+        <h3 class="thedung-footer-column-heading-title">Contact</h3>
+        <div class="thedung-footer-contact-info-box">
+          <div class="thedung-footer-contact-icon-wrapper"><i class="fas fa-phone-alt"></i></div>
+          <div class="thedung-footer-contact-text-wrapper">
+            <div class="thedung-footer-contact-label-text">Call</div>
+            <div class="thedung-footer-contact-value-text">+091 984 4429</div>
+          </div>
+        </div>
+        <div class="thedung-footer-contact-info-box">
+          <div class="thedung-footer-contact-icon-wrapper"><i class="fas fa-envelope"></i></div>
+          <div class="thedung-footer-contact-text-wrapper">
+            <div class="thedung-footer-contact-label-text">Email</div>
+            <div class="thedung-footer-contact-value-text">luongthedung@gmail.com</div>
+          </div>
+        </div>
+        <div class="thedung-footer-map-display-container">
+          <div class="thedung-footer-map-placeholder-area">
+            <div class="thedung-footer-map-location-pin"><i class="fas fa-map-marker-alt"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="thedung-footer-bottom-copyright-wrapper">
+      <div>&copy; 2025 THEDUNG. All rights reserved.</div>
+      <ul class="thedung-footer-bottom-links-list">
+        <li><a href="#" class="thedung-footer-bottom-link-item">Privacy Policy</a></li>
+        <li><a href="#" class="thedung-footer-bottom-link-item">Our History</a></li>
+        <li><a href="#" class="thedung-footer-bottom-link-item">What We Do</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<button id="backToTop" title="Lên đầu trang">
+  <span class="sun-ring"><i class="fas fa-sun"></i></span>
+  <span class="arrow-up"><i class="fas fa-chevron-up"></i></span>
+</button>
+
+<script src="js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+/* ── USER UI ── */
+function updateUserUI() {
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  const dA = document.getElementById('userAreaDesktop');
+  const mA = document.getElementById('userAreaMobile');
+  if (!dA || !mA) return;
+  if (user) {
+    dA.innerHTML = `<div class="dropdown user-dropdown"><button class="btn user-btn dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-user"></i><span class="username-text">${user.username.toUpperCase()}</span></button><ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark user-menu"><li><button class="dropdown-item text-danger" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</button></li></ul></div>`;
+    mA.innerHTML = `<div class="menu-item"><i class="fas fa-user"></i>${user.username}</div><div class="menu-item text-danger" onclick="logout()" style="cursor:pointer"><i class="fas fa-sign-out-alt"></i>Đăng xuất</div>`;
+  } else {
+    dA.innerHTML = `<a href="login.html" class="icon-btn"><i class="fa-regular fa-user"></i></a>`;
+    mA.innerHTML = `<a href="login.html" class="menu-item"><i class="fas fa-sign-in-alt"></i>Đăng nhập</a>`;
+  }
+}
+function logout() { localStorage.removeItem('currentUser'); window.location.reload(); }
+
+/* ── BACK TO TOP ── */
+const btt = document.getElementById('backToTop');
+window.addEventListener('scroll', () => btt.style.display = window.scrollY > 300 ? 'flex' : 'none');
+btt.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+/* ── NEWSLETTER ── */
+document.querySelector('.footer-newsletter-subscribe-form').addEventListener('submit', e => { e.preventDefault(); alert('Cảm ơn bạn đã đăng ký!'); e.target.reset(); });
+
+/* ── CARD FLIP ── */
+let isFlipped = false;
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flipInner').classList.toggle('is-flipped', isFlipped);
+}
+
+/* ── SPEAK ── */
+window.speakWord = function() {
+  const t = document.getElementById('fcWord').textContent;
+  if (!t || t === 'Word') return;
+  const u = new SpeechSynthesisUtterance(t);
+  u.lang = 'en-US'; u.rate = 0.9;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+};
+
+/* ── TOPIC EMOJI ── */
+const EMOJI = {
+  family:'👨‍👩‍👧', daily_routine:'⏰', school:'📚', jobs:'💼', time:'⌛',
+  food:'🍜', cooking:'🍳', shopping:'🛒', clothes:'👔', house:'🏡',
+  weather:'🌤', health:'💊', emotions:'😊', sports:'⚽', hobbies:'🎨',
+  travel:'✈️', transportation:'🚌', directions:'🗺', hotel:'🏨', airport:'🛫',
+  technology:'💻', internet:'🌐', social_media:'📱', environment:'🌿',
+  business:'📊', education:'📖', culture:'🎭', science:'🔬', crime:'⚖️',
+  economy:'💰', politics:'🏛', animals:'🐾', nature:'🌲', music:'🎵',
+  movies:'🎬', books:'📖', friends:'👫', relationships:'❤️',
+  communication:'💬', festivals:'🎉', feelings:'🌀'
+};
+
+/* ── MODAL ── */
+let imgB64 = null;
+function openModal() {
+  document.getElementById('mTopic').value = document.getElementById('topicSelect').value;
+  document.getElementById('addModal').classList.add('open');
+}
+function closeModal() { document.getElementById('addModal').classList.remove('open'); }
+document.getElementById('addModal').addEventListener('click', e => { if (e.target === document.getElementById('addModal')) closeModal(); });
+
+function onFileChange(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    imgB64 = ev.target.result;
+    document.getElementById('imgPreview').src = imgB64;
+    document.getElementById('uploadZone').classList.add('has-image');
+  };
+  r.readAsDataURL(f);
+}
+function removeImg(e) {
+  e.stopPropagation();
+  imgB64 = null;
+  document.getElementById('imgPreview').src = '';
+  document.getElementById('uploadZone').classList.remove('has-image');
+  document.getElementById('fileInput').value = '';
+}
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown', e => {
+  if (document.getElementById('addModal').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') nextWord();
+  else if (e.key === 'ArrowLeft') prevWord();
+  else if (e.key === ' ') { e.preventDefault(); flipCard(); }
+});
+
+AOS.init({ duration:900, easing:'ease-out-cubic', once:true, offset:120 });
+document.addEventListener('DOMContentLoaded', updateUserUI);
+</script>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, addDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDnkVx1-W4Ia16ZnFmKq6BxU1XABv2m_aQ",
@@ -1437,190 +1070,137 @@ const firebaseConfig = {
   appId: "1:1063111313972:web:bf88cdb084b6b178c81861",
   measurementId: "G-38XDQPF4SE"
 };
-
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-// const auth = getAuth(app);
+const db  = getFirestore(app);
 
-// let currentUser = null;
-let allWords = [];
+let allWords = [], filteredWords = [], currentIndex = 0;
 
-/* ================================
-   LOAD USER
-================================ */
-
-// onAuthStateChanged(auth, (user) => {
-//   if (user) {
-//     currentUser = user;
-//     loadWords();
-//   } else {
-//     alert("Vui lòng đăng nhập để học từ vựng");
-//   }
-// });
-let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 if (!currentUser) {
-  localStorage.setItem("redirectAfterLogin", window.location.href);
-  window.location.href = "login.html";
-} else {
-  loadWords();
-}
-
-/* ================================
-   LOAD GLOBAL + USER WORDS
-================================ */
+  localStorage.setItem('redirectAfterLogin', window.location.href);
+  window.location.href = 'login.html';
+} else { loadWords(); }
 
 async function loadWords() {
   allWords = [];
+  document.getElementById('loadingState').style.display = 'flex';
+  document.getElementById('flipScene').style.display    = 'none';
 
-  // GLOBAL WORDS
-  const globalSnap = await getDocs(
-   collection(db, "globalWords")
-  );
+  const [gs, us] = await Promise.all([
+    getDocs(collection(db, 'globalWords')),
+    getDocs(collection(db, 'users', currentUser.username, 'words'))
+  ]);
+  gs.forEach(d => allWords.push(d.data()));
+  us.forEach(d => allWords.push(d.data()));
 
-  globalSnap.forEach(doc => {
-    allWords.push(doc.data());
-  });
-
-  // USER WORDS
-  const userSnap = await getDocs(
-    // collection(db, "vocabulary", "users", currentUser.uid, "words")
-   collection(db, "users", currentUser.username, "words")
-
-
-  );
-
-  userSnap.forEach(doc => {
-    allWords.push(doc.data());
-  });
-
- console.log("Loaded words:", allWords);
-filterByTopic(document.getElementById("topicSelect").value);
-
+  document.getElementById('statTotal').textContent = allWords.length;
+  filterByTopic(document.getElementById('topicSelect').value);
 }
-
-/* ================================
-   ADD WORD (USER)
-================================ */
-
-window.addUserWord = async function(word, meaning, topic) {
-  if (!currentUser) return;
-
-  await addDoc(
-   collection(db, "users", currentUser.username, "words")
-,
-
-    {
-      word,
-      meaning,
-      topic,
-      createdAt: new Date()
-    }
-  );
-
-  alert("Đã thêm từ vựng!");
-  loadWords();
-}
-
-/* ================================
-   ADD WORD (ADMIN - GLOBAL)
-================================ */
-
-window.addGlobalWord = async function(word, meaning, topic) {
-  await addDoc(
-   collection(db, "globalWords"),
-    {
-      word,
-      meaning,
-      topic,
-      createdAt: new Date()
-    }
-  );
-
-  alert("Đã thêm từ chung!");
-  loadWords();
-}
-
-/* ================================
-   FLASHCARD LOGIC
-================================ */
-
-let currentIndex = 0;
-let filteredWords = [];
-
-/* LỌC THEO CHỦ ĐỀ */
-document.getElementById("topicSelect").addEventListener("change", function () {
-  filterByTopic(this.value);
-});
 
 function filterByTopic(topic) {
   filteredWords = allWords.filter(w => w.topic === topic);
+  currentIndex  = 0;
+  isFlipped = false;
+  document.getElementById('flipInner').classList.remove('is-flipped');
 
-  if (filteredWords.length === 0) {
-    document.getElementById("englishWord").innerText = "Chưa có từ";
-    document.getElementById("cardFront").innerText = "";
-    return;
+  const opt = document.querySelector(`#topicSelect option[value="${topic}"]`);
+  document.getElementById('statTopic').textContent = opt ? opt.textContent.slice(3) : topic;
+  document.getElementById('loadingState').style.display = 'none';
+
+  if (!filteredWords.length) {
+    document.getElementById('flipScene').style.display   = 'none';
+    document.getElementById('emptyState').style.display  = 'block';
+    document.getElementById('navSection').style.display  = 'none';
+    document.getElementById('keyHint').style.display     = 'none';
+    document.getElementById('statCurrent').textContent   = 0;
+  } else {
+    document.getElementById('emptyState').style.display  = 'none';
+    document.getElementById('flipScene').style.display   = 'block';
+    document.getElementById('navSection').style.display  = 'flex';
+    document.getElementById('keyHint').style.display     = 'block';
+    showWord();
   }
-
-  currentIndex = 0;
-  showWord();
 }
 
-/* HIỂN THỊ TỪ */
 function showWord() {
-  const wordObj = filteredWords[currentIndex];
+  const w = filteredWords[currentIndex];
+  if (!w) return;
+  const emoji = EMOJI[w.topic] || '📚';
+  const total = filteredWords.length;
+  const idx   = currentIndex + 1;
 
-  document.getElementById("englishWord").innerText = wordObj.word;
-  document.getElementById("cardFront").innerText = wordObj.meaning;
+  isFlipped = false;
+  document.getElementById('flipInner').classList.remove('is-flipped');
 
-  document.getElementById("wordImage").src = wordObj.image || "";
-}
+  /* FRONT */
+  document.getElementById('fcWord').textContent  = w.word || '—';
+  document.getElementById('fcHint').textContent  = w.example || 'Nhấn thẻ để xem nghĩa tiếng Việt';
+  document.getElementById('fcIdx').textContent   = idx;
+  document.getElementById('fcTotal').textContent = total;
 
-/* FLIP */
-window.flipCard = function () {
-  document.querySelector(".flashcard").classList.toggle("flipped");
-};
-
-/* PHÁT ÂM */
-window.speakWord = function () {
-  const text = document.getElementById("englishWord").innerText;
-  const speech = new SpeechSynthesisUtterance(text);
-  speech.lang = "en-US";
-  window.speechSynthesis.speak(speech);
-};
-
-/* QUICK ADD */
-window.quickAddWord = async function () {
-
-  if (!currentUser) {
-    alert("Bạn phải đăng nhập trước!");
-    return;
+  const imgArea = document.getElementById('fcImgArea');
+  if (w.image) {
+    imgArea.innerHTML = `<img class="fc-img" src="${w.image}" alt="${w.word}" />`;
+  } else {
+    imgArea.innerHTML = `<div class="fc-emoji-bg"><span id="fcEmoji">${emoji}</span></div>`;
   }
 
-  const word = prompt("Nhập từ tiếng Anh:");
-  const meaning = prompt("Nhập nghĩa tiếng Việt:");
-  const topic = document.getElementById("topicSelect").value;
+  /* BACK */
+  document.getElementById('fbEmoji').textContent   = emoji;
+  document.getElementById('fbWord').textContent    = w.word || '—';
+  document.getElementById('fbPhonetic').textContent = w.phonetic ? `/ ${w.phonetic} /` : '';
+  document.getElementById('fbMeaning').textContent  = w.meaning || '—';
+  document.getElementById('fbExample').textContent  = w.example ? `"${w.example}"` : '';
 
-  if (!word || !meaning) return;
+  /* Progress */
+  const pct = Math.round(idx / total * 100);
+  document.getElementById('progressFill').style.width  = pct + '%';
+  document.getElementById('progressLabel').textContent = `${idx} / ${total}`;
+  document.getElementById('statCurrent').textContent   = idx;
+}
 
-  await addDoc(
-  collection(db, "users", currentUser.username, "words")
-,
-    {
-      word,
-      meaning,
-      topic,
-      createdAt: new Date()
-    }
-  );
-
-  alert("Đã thêm từ!");
-  loadWords();
+window.nextWord = function() {
+  if (!filteredWords.length) return;
+  currentIndex = (currentIndex + 1) % filteredWords.length;
+  showWord();
+};
+window.prevWord = function() {
+  if (!filteredWords.length) return;
+  currentIndex = (currentIndex - 1 + filteredWords.length) % filteredWords.length;
+  showWord();
 };
 
+document.getElementById('topicSelect').addEventListener('change', function() {
+  filterByTopic(this.value);
+});
+
+window.submitWord = async function() {
+  const word    = document.getElementById('mWord').value.trim();
+  const meaning = document.getElementById('mMeaning').value.trim();
+  const topic   = document.getElementById('mTopic').value;
+  const example = document.getElementById('mExample').value.trim();
+  if (!word || !meaning) { alert('Vui lòng nhập từ và nghĩa!'); return; }
+
+  const btn = document.getElementById('mSubmit');
+  btn.disabled = true; btn.textContent = 'Đang lưu...';
+
+  await addDoc(collection(db, 'users', currentUser.username, 'words'), {
+    word, meaning, topic, createdAt: new Date(),
+    ...(example && { example }),
+    ...(imgB64   && { image: imgB64 })
+  });
+
+  btn.disabled = false; btn.textContent = 'Thêm từ vựng';
+  document.getElementById('mWord').value = '';
+  document.getElementById('mMeaning').value = '';
+  document.getElementById('mExample').value = '';
+  removeImg({ stopPropagation: ()=>{} });
+  closeModal();
+
+  document.getElementById('topicSelect').value = topic;
+  await loadWords();
+  filterByTopic(topic);
+};
 </script>
-
-
 </body>
-
 </html>
