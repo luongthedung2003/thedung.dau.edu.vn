@@ -1506,7 +1506,8 @@ window.addUserWord = async function(word, meaning, topic) {
   if (!currentUser) return;
 
   await addDoc(
-    collection(db, "vocabulary", "users", currentUser.uid, "words"),
+    collection(db, "vocabulary", "users", currentUser.username, "words"),
+
     {
       word,
       meaning,
@@ -1601,7 +1602,8 @@ window.quickAddWord = async function () {
   if (!word || !meaning) return;
 
   await addDoc(
-    collection(db, "vocabulary", "users", currentUser.uid, "words"),
+  collection(db, "vocabulary", "users", currentUser.username, "words")
+,
     {
       word,
       meaning,
