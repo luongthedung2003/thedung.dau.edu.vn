@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Poppins:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <title>THEDUNG - Bảng Xếp Hạng</title>
+  <link rel="icon" href="images/logo.png" />
+
+  <style>
+    :root {
+      --gold-color: #5120bb;
+      --gold-light: #08179c;
+      --cyan: #00e5ff;
+      --red: #ff1744;
+      --yellow: #ffcc33;
+      --green: #1db954;
+      
+      /* Leaderboard specific */
+      --purple-light: #8b5cf6;
+      --purple-mid: #7c3aed;
+      --purple-dark: #6d28d9;
+      --bg-dark: #1a1625;
+      --bg-darker: #0f0b18;
+      --card-gradient-start: rgba(139, 92, 246, 0.4);
+      --card-gradient-end: rgba(109, 40, 217, 0.2);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: linear-gradient(135deg, #0f0b18 0%, #1a1625 50%, #0f0b18 100%);
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      min-height: 100vh;
+    }
+    a { text-decoration: none; }
+
+    /* ══════════════════════════════
+       NAVIGATION (kept from original)
+    ══════════════════════════════ */
+    .navbar { background:rgba(0,0,0,0.95); backdrop-filter:blur(10px); box-shadow:0 2px 10px rgba(175,134,80,0.2); padding:0.75rem 0; position:sticky; top:0; z-index:1000; border-bottom:1px solid rgba(175,134,80,0.2); }
+    .logo-box { width:40px; height:40px; background:linear-gradient(135deg,var(--gold-light),var(--gold-color)); border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 6px rgba(175,134,80,0.3); }
+    .logo-box i { color:white; font-size:20px; }
+    .brand-text { font-family:'Space Mono',monospace; font-size:1.25rem; font-weight:600; color:white; margin-left:0.75rem; letter-spacing:1px; }
+    .day-navigator { background:rgba(255,255,255,0.05); border-radius:12px; padding:0.5rem; display:flex; align-items:center; gap:1rem; border:1px solid rgba(175,134,80,0.2); }
+    .day-btn { font-family:'Space Mono',monospace; padding:0.5rem 1rem; border:none; background:transparent; border-radius:8px; font-size:0.875rem; font-weight:500; color:#d1d5db; transition:all 0.2s; white-space:nowrap; cursor:pointer; position:relative; }
+    .day-btn:hover { background:rgba(255,255,255,0.1); color:white; }
+    .day-btn::after { content:""; position:absolute; left:15%; bottom:2px; width:70%; height:2px; border-radius:2px; background:linear-gradient(90deg,#00e5ff,#ff1744); opacity:0; transform:scaleX(0); transition:all 0.3s ease; }
+    .day-btn:hover::after { opacity:1; transform:scaleX(1); }
+    .day-btn.active { color:white; }
+    .day-btn.active::after { opacity:1; transform:scaleX(1); background:linear-gradient(90deg,#00e5ff,#ff1744,#00e5ff); background-size:200% 100%; animation:glowMove 2s linear infinite; }
+    @keyframes glowMove { 0%{background-position:0% 50%}100%{background-position:200% 50%} }
+    .nav-arrow { width:32px; height:32px; border:none; background:transparent; border-radius:8px; color:#9ca3af; display:flex; align-items:center; justify-content:center; transition:all 0.2s; cursor:pointer; }
+    .nav-arrow:hover { background:rgba(255,255,255,0.1); }
+    .icon-btn { width:40px; height:40px; border:none; background:transparent; border-radius:8px; color:#d1d5db; display:flex; align-items:center; justify-content:center; position:relative; transition:all 0.2s; cursor:pointer; }
+    .icon-btn:hover { background:rgba(175,134,80,0.2); }
+    .notification-dot { position:absolute; top:8px; right:8px; width:8px; height:8px; background:#ef4444; border-radius:50%; border:2px solid black; }
+    .mobile-day-nav { background:rgba(0,0,0,0.9); padding:0.5rem; overflow-x:auto; white-space:nowrap; border-bottom:1px solid rgba(175,134,80,0.2); }
+    .mobile-day-nav::-webkit-scrollbar { display:none; }
+    .mobile-day-btn { padding:0.5rem 0.75rem; font-size:0.75rem; display:inline-block; }
+    .offcanvas-end { width:100%!important; max-width:320px!important; background:rgba(0,0,0,0.98); border-left:1px solid rgba(175,134,80,0.2); }
+    .offcanvas-header { background:rgba(0,0,0,0.95); border-bottom:1px solid rgba(175,134,80,0.2); padding:1rem 1.25rem; }
+    .offcanvas-title { font-family:'Space Mono',monospace; font-weight:600; font-size:1rem; margin:0; }
+    .offcanvas-header .btn-close { opacity:0.5; filter:invert(1); }
+    .offcanvas-body { background-image:linear-gradient(rgba(0,0,0,0.95),rgba(0,0,0,0.2),rgba(0,0,0,0.2),rgba(0,0,0,0.95)),url("images/2k_stars_milky_way.jpg"); padding:1rem; }
+    .menu-section { margin-bottom:1.5rem; }
+    .section-title { font-family:'Space Mono',monospace; font-size:0.75rem; font-weight:600; color:#9ca3af; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem; padding:0 0.5rem; }
+    .menu-item { display:flex; align-items:center; gap:0.75rem; padding:0.625rem 0.75rem; border-radius:8px; color:#d1d5db; font-family:'Space Mono',monospace; font-size:0.875rem; font-weight:500; transition:0.2s; margin-bottom:0.25rem; }
+    .menu-item:hover { background:rgba(175,134,80,0.2); color:white; }
+    .menu-item.active { background:rgba(175,134,80,0.3); color:var(--gold-color); }
+    .menu-item i { width:20px; font-size:1rem; color:#9ca3af; }
+    .menu-divider { margin:1rem 0; height:1px; background:rgba(175,134,80,0.2); }
+    .user-dropdown { margin-left:10px; }
+    .user-btn { display:flex; align-items:center; gap:8px; padding:6px 12px; border-radius:8px; transition:0.3s; }
+    .user-btn:hover { background:rgba(81,32,187,0.2); }
+    .username-text { font-family:'Space Mono',monospace; font-size:14px; font-weight:600; letter-spacing:1px; color:#00e5ff; }
+    .user-menu { border-radius:12px; border:1px solid rgba(0,229,255,0.3); box-shadow:0 10px 30px rgba(0,229,255,0.2); }
+
+    /* ══════════════════════════════
+       MAIN CONTAINER
+    ══════════════════════════════ */
+    main {
+      padding: 60px 20px 80px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ══════ TIME FILTER PILLS ══════ */
+    .filter-pills {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .pill {
+      padding: 10px 24px;
+      border-radius: 50px;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.5);
+    }
+    .pill.active {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+    }
+    .pill:hover:not(.active) {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* ══════ TOP 3 PODIUM ══════ */
+    .podium {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 36px;
+      padding: 0 10px;
+    }
+
+    .podium-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      max-width: 130px;
+    }
+
+    /* Position 2 and 3 slightly smaller */
+    .podium-item.rank-2,
+    .podium-item.rank-3 {
+      transform: translateY(12px);
+    }
+
+    .podium-avatar-wrap {
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .podium-avatar-ring {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .podium-item.rank-1 .podium-avatar-ring {
+      width: 110px;
+      height: 110px;
+      background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.6); }
+      50% { box-shadow: 0 0 45px rgba(139, 92, 246, 0.8); }
+    }
+
+    .podium-item.rank-2 .podium-avatar-ring {
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .podium-item.rank-3 .podium-avatar-ring {
+      background: linear-gradient(135deg, #fb923c, #f97316);
+      box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
+    }
+
+    .podium-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--bg-darker);
+    }
+
+    /* Crown for #1 */
+    .crown {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.2rem;
+      filter: drop-shadow(0 4px 8px rgba(255, 215, 0, 0.5));
+      animation: crownFloat 2.5s ease-in-out infinite;
+    }
+    @keyframes crownFloat {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-6px); }
+    }
+
+    /* Rank badge */
+    .podium-rank {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: 2.5px solid var(--bg-darker);
+    }
+    .podium-item.rank-1 .podium-rank {
+      background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+      color: white;
+    }
+    .podium-item.rank-2 .podium-rank {
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+      color: white;
+    }
+    .podium-item.rank-3 .podium-rank {
+      background: linear-gradient(135deg, #fb923c, #f97316);
+      color: white;
+    }
+
+    .podium-name {
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 4px;
+      color: rgba(255,255,255,0.95);
+      text-align: center;
+      line-height: 1.2;
+    }
+    .podium-item.rank-1 .podium-name {
+      font-size: 0.95rem;
+    }
+
+    .podium-points {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .podium-points i {
+      font-size: 0.7rem;
+      color: #fbbf24;
+    }
+
+    /* ══════ RANK TABLE HEADER ══════ */
+    .table-header {
+      display: grid;
+      grid-template-columns: 60px 1fr 100px;
+      padding: 12px 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    /* ══════ LEADERBOARD LIST ══════ */
+    .leaderboard-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lb-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 100px;
+      align-items: center;
+      padding: 14px 20px;
+      border-radius: 20px;
+      background: linear-gradient(
+        135deg,
+        var(--card-gradient-start) 0%,
+        var(--card-gradient-end) 100%
+      );
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: slideUp 0.4s cubic-bezier(0.34, 1.3, 0.64, 1) backwards;
+    }
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Stagger animation delays */
+    .lb-row:nth-child(1) { animation-delay: 0.05s; }
+    .lb-row:nth-child(2) { animation-delay: 0.1s; }
+    .lb-row:nth-child(3) { animation-delay: 0.15s; }
+    .lb-row:nth-child(4) { animation-delay: 0.2s; }
+    .lb-row:nth-child(5) { animation-delay: 0.25s; }
+    .lb-row:nth-child(6) { animation-delay: 0.3s; }
+    .lb-row:nth-child(7) { animation-delay: 0.35s; }
+
+    .lb-row:hover {
+      transform: translateX(4px);
+      background: linear-gradient(
+        135deg,
+        rgba(139, 92, 246, 0.5) 0%,
+        rgba(109, 40, 217, 0.3) 100%
+      );
+      border-color: rgba(139, 92, 246, 0.4);
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.25);
+    }
+
+    /* Highlight current user */
+    .lb-row.you {
+      background: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.4) 0%,
+        rgba(37, 99, 235, 0.2) 100%
+      );
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+    .lb-row.you:hover {
+      background: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.5) 0%,
+        rgba(37, 99, 235, 0.3) 100%
+      );
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+
+    .lb-rank {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .lb-player {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lb-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255,255,255,0.15);
+      flex-shrink: 0;
+    }
+    .lb-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: white;
+    }
+
+    .lb-points {
+      text-align: right;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* ══════ EMPTY STATE ══════ */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .empty-icon {
+      font-size: 3.5rem;
+      margin-bottom: 16px;
+      display: block;
+      opacity: 0.3;
+    }
+    .empty-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: rgba(255,255,255,0.6);
+    }
+    .empty-sub {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* Loading spinner */
+    .loading {
+      display: flex;
+      justify-content: center;
+      padding: 60px;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(139, 92, 246, 0.2);
+      border-top-color: #8b5cf6;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ══════ BACK TO TOP ══════ */
+    #backToTop { position:fixed; bottom:30px; right:30px; width:56px; height:56px; background:transparent; border:none; cursor:pointer; display:none; z-index:999; }
+    #backToTop .sun-ring { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; animation:sunSpin 6s linear infinite; }
+    #backToTop .sun-ring i { font-size:56px; color:#ffcc33; filter:drop-shadow(0 0 6px rgba(255,204,51,0.8)); }
+    #backToTop .arrow-up { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+    #backToTop .arrow-up i { font-size:18px; color:white; z-index:2; }
+    #backToTop:hover { transform:translateY(-6px) scale(1.05); transition:0.3s; }
+    @keyframes sunSpin { to{transform:rotate(360deg)} }
+
+    /* ══════ RESPONSIVE ══════ */
+    @media (max-width: 480px) {
+      .podium-item.rank-1 .podium-avatar-ring { width: 95px; height: 95px; }
+      .podium-avatar-ring { width: 75px; height: 75px; }
+      .crown { font-size: 1.8rem; top: -15px; }
+      .podium-name { font-size: 0.8rem; }
+      .lb-row { padding: 12px 16px; }
+      .table-header { padding: 10px 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Desktop Nav -->
+<nav class="navbar d-none d-md-block">
+  <div class="container px-4">
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <div class="d-flex align-items-center">
+        <div class="logo-box"><i class="fas fa-rocket"></i></div>
+        <span class="brand-text">THEDUNG</span>
+      </div>
+      <div class="day-navigator">
+        <button class="nav-arrow"><i class="fas fa-chevron-left"></i></button>
+        <a href="index.html" class="day-btn">TRANG CHỦ</a>
+        <a href="courses.html" class="day-btn active">KHÓA HỌC</a>
+        <a href="netflix.html" class="day-btn">NETFLIX</a>
+        <a href="music.html" class="day-btn">ÂM NHẠC</a>
+        <a href="news.html" class="day-btn">TIN TỨC</a>
+        <a href="contact.html" class="day-btn">LIÊN HỆ</a>
+        <button class="nav-arrow"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <button class="icon-btn"><i class="fa-regular fa-comment"></i></button>
+        <button class="icon-btn"><i class="fa-regular fa-bell"></i><span class="notification-dot"></span></button>
+        <div id="userAreaDesktop"></div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<nav class="navbar d-md-none">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <div class="d-flex align-items-center">
+        <div class="logo-box"><i class="fas fa-rocket"></i></div>
+        <span class="brand-text">THEDUNG</span>
+      </div>
+      <div class="d-flex align-items-center gap-1">
+        <button class="icon-btn"><i class="fa-regular fa-comment"></i></button>
+        <button class="icon-btn"><i class="fa-regular fa-bell"></i><span class="notification-dot"></span></button>
+        <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-day-nav d-md-none">
+  <div class="d-flex align-items-center gap-2">
+    <button class="nav-arrow"><i class="fas fa-chevron-left"></i></button>
+    <div class="d-inline-flex gap-1">
+      <a href="index.html" class="day-btn mobile-day-btn">Trang chủ</a>
+      <a href="courses.html" class="day-btn mobile-day-btn active">Khóa học</a>
+      <a href="netflix.html" class="day-btn mobile-day-btn">Netflix</a>
+      <a href="music.html" class="day-btn mobile-day-btn">Âm nhạc</a>
+      <a href="news.html" class="day-btn mobile-day-btn">Tin tức</a>
+      <a href="contact.html" class="day-btn mobile-day-btn">Liên hệ</a>
+    </div>
+    <button class="nav-arrow"><i class="fas fa-chevron-right"></i></button>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Menu</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="menu-section">
+      <div class="section-title">Navigation</div>
+      <a href="index.html" class="menu-item"><i class="fas fa-home"></i>Trang chủ</a>
+      <a href="courses.html" class="menu-item active"><i class="fas fa-sun"></i>Khóa học</a>
+      <a href="netflix.html" class="menu-item"><i class="fas fa-film"></i>Netflix</a>
+      <a href="music.html" class="menu-item"><i class="fas fa-music"></i>Âm nhạc</a>
+      <a href="news.html" class="menu-item"><i class="fas fa-newspaper"></i>Tin tức</a>
+      <a href="contact.html" class="menu-item"><i class="fas fa-envelope"></i>Liên hệ</a>
+    </div>
+    <div class="menu-divider"></div>
+    <div class="menu-section">
+      <div class="section-title">Account</div>
+      <div id="userAreaMobile"></div>
+      <a href="settings.html" class="menu-item"><i class="fas fa-cog"></i>Cài đặt</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════
+     MAIN CONTENT
+══════════════════════ -->
+<main>
+
+  <!-- Filter Pills -->
+  <div class="filter-pills" data-aos="fade-down">
+    <button class="pill active" onclick="setFilter('daily')">Daily</button>
+    <button class="pill" onclick="setFilter('monthly')">Monthly</button>
+    <button class="pill" onclick="setFilter('alltime')">All time</button>
+  </div>
+
+  <!-- Top 3 Podium -->
+  <div class="podium" id="podium" data-aos="zoom-in" data-aos-delay="100">
+    <!-- Will be populated by JS -->
+  </div>
+
+  <!-- Table Header -->
+  <div class="table-header" data-aos="fade-up" data-aos-delay="200">
+    <div>Rank</div>
+    <div>Player</div>
+    <div>Points</div>
+  </div>
+
+  <!-- Leaderboard List (4-10) -->
+  <div class="leaderboard-list" id="leaderboard" data-aos="fade-up" data-aos-delay="250">
+    <!-- Will be populated by JS -->
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" id="loadingState">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="emptyState" style="display:none">
+    <span class="empty-icon">🏆</span>
+    <div class="empty-title">Chưa có dữ liệu</div>
+    <div class="empty-sub">Hãy là người đầu tiên tham gia!</div>
+  </div>
+
+</main>
+
+<button id="backToTop" title="Lên đầu trang">
+  <span class="sun-ring"><i class="fas fa-sun"></i></span>
+  <span class="arrow-up"><i class="fas fa-chevron-up"></i></span>
+</button>
+
+<script src="js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+/* ══════ USER UI ══════ */
+function updateUserUI() {
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  const dA = document.getElementById('userAreaDesktop');
+  const mA = document.getElementById('userAreaMobile');
+  if (!dA || !mA) return;
+  if (user) {
+    dA.innerHTML = `<div class="dropdown user-dropdown"><button class="btn user-btn dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-user"></i><span class="username-text">${user.username.toUpperCase()}</span></button><ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark user-menu"><li><button class="dropdown-item text-danger" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</button></li></ul></div>`;
+    mA.innerHTML = `<div class="menu-item"><i class="fas fa-user"></i>${user.username}</div><div class="menu-item text-danger" onclick="logout()" style="cursor:pointer"><i class="fas fa-sign-out-alt"></i>Đăng xuất</div>`;
+  } else {
+    dA.innerHTML = `<a href="login.html" class="icon-btn"><i class="fa-regular fa-user"></i></a>`;
+    mA.innerHTML = `<a href="login.html" class="menu-item"><i class="fas fa-sign-in-alt"></i>Đăng nhập</a>`;
+  }
+}
+function logout() { localStorage.removeItem('currentUser'); window.location.reload(); }
+
+/* ══════ BACK TO TOP ══════ */
+const btt = document.getElementById('backToTop');
+window.addEventListener('scroll', () => btt.style.display = window.scrollY > 300 ? 'flex' : 'none');
+btt.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+/* ══════ FILTER ══════ */
+let currentFilter = 'daily';
+function setFilter(filter) {
+  currentFilter = filter;
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  loadLeaderboard();
+}
+
+/* ══════ AVATAR GENERATOR ══════ */
+function getAvatar(username, index) {
+  // Generate colorful avatar using DiceBear API or placeholder
+  const seed = username || `user${index}`;
+  return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
+}
+
+AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true });
+document.addEventListener('DOMContentLoaded', updateUserUI);
+</script>
+
+<!-- ══════════════════════
+     FIREBASE LOGIC
+══════════════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDnkVx1-W4Ia16ZnFmKq6BxU1XABv2m_aQ",
+  authDomain: "thedung-quiz.firebaseapp.com",
+  projectId: "thedung-quiz",
+  storageBucket: "thedung-quiz.firebasestorage.app",
+  messagingSenderId: "1063111313972",
+  appId: "1:1063111313972:web:bf88cdb084b6b178c81861"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+window.loadLeaderboard = async function() {
+  document.getElementById('loadingState').style.display = 'flex';
+  document.getElementById('podium').innerHTML = '';
+  document.getElementById('leaderboard').innerHTML = '';
+  document.getElementById('emptyState').style.display = 'none';
+
+  const q = query(
+    collection(db, "quizResults"),
+    orderBy("score", "desc"),
+    limit(10)
+  );
+
+  try {
+    const querySnapshot = await getDocs(q);
+    const results = [];
+    
+    querySnapshot.forEach(doc => {
+      results.push(doc.data());
+    });
+
+    document.getElementById('loadingState').style.display = 'none';
+
+    if (results.length === 0) {
+      document.getElementById('emptyState').style.display = 'block';
+      return;
+    }
+
+    // Top 3 for podium
+    const top3 = results.slice(0, 3);
+    let podiumHTML = '';
+
+    // Reorder for visual: 2nd, 1st, 3rd
+    const podiumOrder = [
+      top3[1] ? { ...top3[1], rank: 2 } : null,
+      top3[0] ? { ...top3[0], rank: 1 } : null,
+      top3[2] ? { ...top3[2], rank: 3 } : null
+    ].filter(Boolean);
+
+    podiumOrder.forEach(item => {
+      const avatar = getAvatar(item.username, item.rank);
+      const crown = item.rank === 1 ? '<div class="crown">👑</div>' : '';
+      
+      podiumHTML += `
+        <div class="podium-item rank-${item.rank}">
+          <div class="podium-avatar-wrap">
+            ${crown}
+            <div class="podium-avatar-ring">
+              <img class="podium-avatar" src="${avatar}" alt="${item.username}" />
+            </div>
+            <div class="podium-rank">${item.rank}</div>
+          </div>
+          <div class="podium-name">${item.username}</div>
+          <div class="podium-points">
+            <i class="fas fa-fire"></i> ${item.score} points
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById('podium').innerHTML = podiumHTML;
+
+    // Ranks 4-10 for list
+    const restOfList = results.slice(3);
+    let listHTML = '';
+
+    restOfList.forEach((item, idx) => {
+      const rank = idx + 4;
+      const avatar = getAvatar(item.username, rank);
+      const isYou = currentUser && item.username === currentUser.username;
+      
+      listHTML += `
+        <div class="lb-row ${isYou ? 'you' : ''}">
+          <div class="lb-rank">${rank}</div>
+          <div class="lb-player">
+            <img class="lb-avatar" src="${avatar}" alt="${item.username}" />
+            <span class="lb-name">${item.username}${isYou ? ' (You)' : ''}</span>
+          </div>
+          <div class="lb-points">${item.score} points</div>
+        </div>
+      `;
+    });
+
+    document.getElementById('leaderboard').innerHTML = listHTML;
+
+  } catch (error) {
+    console.error("Error loading leaderboard:", error);
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('emptyState').style.display = 'block';
+  }
+};
+
+// Initial load
+loadLeaderboard();
+</script>
+
+</body>
+</html>

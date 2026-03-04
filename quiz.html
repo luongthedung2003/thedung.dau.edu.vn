@@ -2061,17 +2061,38 @@ if (!currentUser) {
       let timeLeft = 2400;
 
       // ========== UI HEADER (PROGRESS + TIMER) ==========
-      function renderTopBar() {
-        return `
+function renderTopBar() {
+  return `
   <div class="quiz-topbar">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <div style="font-weight:bold;color:#00e5ff">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px;flex-wrap:wrap;">
+
+      <div style="font-weight:bold;color:#00e5ff;font-size:13px">
         Tiến độ: <span id="progressText">0%</span>
       </div>
-      <div style="font-weight:bold;color:#ff1744">
-        ⏳ <span id="timer">15:00</span>
+
+      <div style="display:flex;align-items:center;gap:10px">
+
+        <div style="font-weight:bold;color:#ff1744;font-size:13px">
+          ⏳ <span id="timer">15:00</span>
+        </div>
+
+        <button onclick="goLeaderboard()" style="
+          background:linear-gradient(135deg,#00e5ff,#5120bb);
+          border:none;
+          padding:6px 14px;
+          border-radius:8px;
+        font-size:13px;
+          cursor:pointer;
+          box-shadow:0 0 10px rgba(0,229,255,0.6);
+        ">
+          🏆 Xếp hạng
+        </button>
+
       </div>
+
     </div>
+
     <div style="height:8px;background:rgba(255,255,255,0.1);border-radius:6px;">
       <div id="progressBar" style="
         height:100%;
@@ -2081,9 +2102,10 @@ if (!currentUser) {
         transition:0.3s;
       "></div>
     </div>
+
   </div>
   `;
-      }
+}
 
       // ========== LOAD QUIZ ==========
       if (!file) {
@@ -2092,19 +2114,7 @@ if (!currentUser) {
         fetch(file + "?v=" + Date.now())
           .then((res) => res.json())
           .then((data) => {
-            const savedOrder = localStorage.getItem(quizKey + "_order");
-
-            if (savedOrder) {
-              // Nếu đang làm dở → dùng thứ tự cũ
-              quizData = JSON.parse(savedOrder);
-            } else {
-              // Nếu chưa làm → shuffle
-              quizData = shuffle(data);
-              localStorage.setItem(
-                quizKey + "_order",
-                JSON.stringify(quizData),
-              );
-            }
+           quizData = shuffle(data);
 
             renderQuiz();
             startTimer();
@@ -2116,9 +2126,14 @@ if (!currentUser) {
       }
 
       // ========== RANDOM ==========
-      function shuffle(array) {
-        return array.sort(() => Math.random() - 0.5);
-      }
+     function shuffle(array) {
+  let arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
       // ========== RENDER ==========
       function renderQuiz() {
@@ -2127,27 +2142,12 @@ if (!currentUser) {
           renderTopBar() +
           quizData
             .map((q, index) => {
-              let savedAnswersOrder = localStorage.getItem(
-                quizKey + "_answers_" + index,
-              );
-
-              let answers;
-
-              if (savedAnswersOrder) {
-                answers = JSON.parse(savedAnswersOrder);
-              } else {
-                answers = shuffle([
-                  { key: "A", text: q.A },
-                  { key: "B", text: q.B },
-                  { key: "C", text: q.C },
-                  { key: "D", text: q.D },
-                ]);
-
-                localStorage.setItem(
-                  quizKey + "_answers_" + index,
-                  JSON.stringify(answers),
-                );
-              }
+            let answers = shuffle([
+  { key: "A", text: q.A },
+  { key: "B", text: q.B },
+  { key: "C", text: q.C },
+  { key: "D", text: q.D },
+]);
 
               return `
     <div class="question-card">
@@ -2182,30 +2182,30 @@ if (!currentUser) {
       Nộp bài
     </button>
   `;
-        restoreState();
+      
         updateProgress();
       }
 
-      function restoreState() {
-        const saved = localStorage.getItem(quizKey);
-        if (!saved) return;
+      // function restoreState() {
+      //   const saved = localStorage.getItem(quizKey);
+      //   if (!saved) return;
 
-        userAnswers = JSON.parse(saved);
+      //   userAnswers = JSON.parse(saved);
 
-        Object.keys(userAnswers).forEach((index) => {
-          const options = document
-            .querySelectorAll(".question-card")
-            [index].querySelectorAll(".answer-option");
+      //   Object.keys(userAnswers).forEach((index) => {
+      //     const options = document
+      //       .querySelectorAll(".question-card")
+      //       [index].querySelectorAll(".answer-option");
 
-          options.forEach((opt) => {
-            if (opt.getAttribute("data-key") === userAnswers[index]) {
-              opt.classList.add("selected");
-            }
-          });
-        });
+      //     options.forEach((opt) => {
+      //       if (opt.getAttribute("data-key") === userAnswers[index]) {
+      //         opt.classList.add("selected");
+      //       }
+      //     });
+      //   });
 
-        updateProgress();
-      }
+      //   updateProgress();
+      // }
 
       // ========== SELECT ==========
       function selectAnswer(index, key, element) {
@@ -2215,7 +2215,7 @@ if (!currentUser) {
         element.classList.add("selected");
         userAnswers[index] = key;
         updateProgress();
-        localStorage.setItem(quizKey, JSON.stringify(userAnswers));
+       
       }
 
       // ========== PROGRESS ==========
@@ -2277,12 +2277,10 @@ if (!currentUser) {
           return;
         }
 
-        localStorage.removeItem(quizKey);
-        localStorage.removeItem(quizKey + "_order");
-        quizData.forEach((_, index) => {
-          localStorage.removeItem(quizKey + "_answers_" + index);
-        });
-
+     
+  quizData.forEach((q, index) => {
+ 
+});
         clearInterval(timerInterval);
         // Ẩn nút nộp bài
         const submitBtn = document.getElementById("submitBtn");
@@ -2368,12 +2366,9 @@ if (user) {
         clearInterval(timerInterval);
 
         quizSubmitted = false;
-        localStorage.removeItem(quizKey);
-        localStorage.removeItem(quizKey + "_order");
-        quizData.forEach((_, index) => {
-          localStorage.removeItem(quizKey + "_answers_" + index);
-        });
-
+       
+   quizData.forEach((q, index) => {
+});
         timeLeft = 2400;
         userAnswers = {};
         quizData = shuffle(quizData);
@@ -2521,7 +2516,7 @@ function updateUserUI() {
 // ===== LOGOUT =====
 function logout() {
   localStorage.removeItem("currentUser");
-  window.location.reload();
+  window.location.href = "login.html";
 }
 
 // Run when page loads
@@ -2562,6 +2557,9 @@ document.addEventListener("DOMContentLoaded", updateUserUI);
   }
 
   window.saveScore = saveScore;
+ window.goLeaderboard = function(){
+  window.location.href = "leaderboard.html";
+}
 </script>
 
   </body>

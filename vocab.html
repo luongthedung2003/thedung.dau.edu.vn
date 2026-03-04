@@ -97,12 +97,12 @@
     .btn-pill-add:hover { background:rgba(255,255,255,0.14); border-color:rgba(255,255,255,0.25); transform:translateY(-1px); }
 
     /* STATS ROW */
-    .stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:500px; margin:0 auto 32px; padding:0 20px; }
-    .stat-chip { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px; text-align:center; }
-    .stat-chip .number { font-family:'DM Sans',sans-serif; font-size:1.5rem; font-weight:700; margin-bottom:3px; }
+    .stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:500px; margin:0 auto 10px; padding:0 20px; }
+    .stat-chip { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:5px; text-align:center;overflow: hidden;width: 100px;height: 50px; }
+    .stat-chip .number { font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:600; margin-bottom:1px; }
     .stat-chip .number.cyan { color:var(--cyan); }
     .stat-chip .number.green { color:var(--green); }
-    .stat-chip .label-text { font-size:0.7rem; color:rgba(255,255,255,0.4); font-weight:500; text-transform:uppercase; letter-spacing:1px; }
+    .stat-chip .label-text { font-size:0.6rem; color:rgba(255,255,255,0.4); font-weight:500; text-transform:uppercase; letter-spacing:1px; }
 
     /* ══════════════════════════════════════
        SINGLE CARD — Sophie Bennett style
@@ -614,8 +614,8 @@
 <main>
   <div class="page-header" data-aos="fade-down">
     <div class="page-eyebrow">English Vocabulary · THEDUNG</div>
-    <h1 class="page-title">Học Từ Vựng<br><span>Tiếng Anh</span></h1>
-    <p class="page-sub">Lật thẻ để xem nghĩa — nhấn 🔊 để nghe phát âm</p>
+    <!-- <h1 class="page-title">Học Từ Vựng<br><span>Tiếng Anh</span></h1>
+    <p class="page-sub">Lật thẻ để xem nghĩa — nhấn 🔊 để nghe phát âm</p> -->
   </div>
 
   <!-- Stats Row -->
@@ -1027,7 +1027,16 @@ function closeModal() { document.getElementById('addModal').classList.remove('op
 document.getElementById('addModal').addEventListener('click', e => { if (e.target === document.getElementById('addModal')) closeModal(); });
 
 function onFileChange(e) {
-  const f = e.target.files[0]; if (!f) return;
+  const f = e.target.files[0];
+  if (!f) return;
+
+  // 🔥 Giới hạn 500KB
+  if (f.size > 500 * 1024) {
+    alert("Ảnh quá lớn! Vui lòng chọn ảnh dưới 500KB.");
+    document.getElementById('fileInput').value = '';
+    return;
+  }
+
   const r = new FileReader();
   r.onload = ev => {
     imgB64 = ev.target.result;
@@ -1036,6 +1045,7 @@ function onFileChange(e) {
   };
   r.readAsDataURL(f);
 }
+
 function removeImg(e) {
   e.stopPropagation();
   imgB64 = null;
@@ -1175,32 +1185,52 @@ document.getElementById('topicSelect').addEventListener('change', function() {
 });
 
 window.submitWord = async function() {
-  const word    = document.getElementById('mWord').value.trim();
-  const meaning = document.getElementById('mMeaning').value.trim();
-  const topic   = document.getElementById('mTopic').value;
-  const example = document.getElementById('mExample').value.trim();
-  if (!word || !meaning) { alert('Vui lòng nhập từ và nghĩa!'); return; }
+  try {
+    const word    = document.getElementById('mWord').value.trim();
+    const meaning = document.getElementById('mMeaning').value.trim();
+    const topic   = document.getElementById('mTopic').value;
+    const example = document.getElementById('mExample').value.trim();
 
-  const btn = document.getElementById('mSubmit');
-  btn.disabled = true; btn.textContent = 'Đang lưu...';
+    if (!word || !meaning) {
+      alert('Vui lòng nhập từ và nghĩa!');
+      return;
+    }
 
-  await addDoc(collection(db, 'users', currentUser.username, 'words'), {
-    word, meaning, topic, createdAt: new Date(),
-    ...(example && { example }),
-    ...(imgB64   && { image: imgB64 })
-  });
+    const btn = document.getElementById('mSubmit');
+    btn.disabled = true;
+    btn.textContent = 'Đang lưu...';
 
-  btn.disabled = false; btn.textContent = 'Thêm từ vựng';
-  document.getElementById('mWord').value = '';
-  document.getElementById('mMeaning').value = '';
-  document.getElementById('mExample').value = '';
-  removeImg({ stopPropagation: ()=>{} });
-  closeModal();
+    await addDoc(
+      collection(db, 'users', currentUser.username, 'words'),
+      {
+        word,
+        meaning,
+        topic,
+        createdAt: new Date(),
+        ...(example && { example }),
+        ...(imgB64 && { image: imgB64 })
+      }
+    );
 
-  document.getElementById('topicSelect').value = topic;
-  await loadWords();
-  filterByTopic(topic);
+    alert("Lưu thành công!");
+
+    btn.disabled = false;
+    btn.textContent = 'Thêm từ vựng';
+
+    closeModal();
+    await loadWords();
+    filterByTopic(topic);
+
+  } catch (err) {
+    console.error(err);
+    alert("Lỗi khi lưu: " + err.message);
+
+    const btn = document.getElementById('mSubmit');
+    btn.disabled = false;
+    btn.textContent = 'Thêm từ vựng';
+  }
 };
+
 </script>
 </body>
 </html>
