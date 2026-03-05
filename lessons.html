@@ -1531,95 +1531,7 @@
         box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
       }
     </style>
-    <style>
-      /* ===== LOGIN MODAL MODERN ===== */
-
-      .login-modal {
-        font-size: 0.85rem;
-        border-radius: 20px;
-        border-color: red;
-        background: #ffffff;
-        color: #c90d0d;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
-        overflow: hidden;
-        background-image:
-          linear-gradient(
-            rgba(0, 0, 0, 0.95),
-            rgba(0, 0, 0, 0),
-            rgba(0, 0, 0, 0.95)
-          ),
-          url(images/2k_stars.jpg);
-      }
-
-      .login-modal-body {
-        padding: 40px 30px;
-      }
-
-      .login-modal-icon {
-        width: 70px;
-        height: 70px;
-        margin: 0 auto 20px;
-        background: #db171b;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .login-modal-icon i {
-        font-size: 30px;
-        color: white;
-      }
-
-      .login-modal-title {
-        font-size: 1.6rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        color: #111;
-      }
-
-      .login-modal-text {
-        font-size: 0.95rem;
-        color: #666;
-        margin-bottom: 30px;
-      }
-
-      .login-modal-actions {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-      }
-
-      .btn-cancel {
-        flex: 1;
-        padding: 12px;
-        border-radius: 12px;
-        border: none;
-        background: #90db9b;
-        font-weight: 600;
-        transition: 0.3s;
-      }
-
-      .btn-cancel:hover {
-        background: #d4d4d4;
-      }
-
-      .btn-login {
-        flex: 1;
-        padding: 12px;
-        border-radius: 12px;
-        border: none;
-        background: #e61010;
-        color: white;
-        font-weight: 600;
-        transition: 0.3s;
-      }
-
-      .btn-login:hover {
-        background: #115e59;
-        transform: translateY(-2px);
-      }
-    </style>
+    
     <style>
       /* ===== NO LESSON IMAGE ===== */
 
@@ -1773,6 +1685,430 @@
         }
       }
     </style>
+    <STYle>/* ===== LOGIN SLIDE NOTIFICATION ===== */
+
+.login-notice{
+position:fixed;
+top:20px;
+right:-420px;
+width:340px;
+background:#f3f4f6;
+border-radius:14px;
+padding:16px;
+display:flex;
+align-items:center;
+gap:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+z-index:9999;
+transition:all .5s ease;
+font-family:"Space Mono", monospace;
+}
+
+.login-notice.show{
+right:20px;
+}
+
+.notice-time{
+font-size:0.75rem;
+color:#6b7280;
+position:absolute;
+top:8px;
+left:16px;
+}
+
+.notice-content{
+flex:1;
+margin-top:10px;
+}
+
+.notice-title{
+font-weight:700;
+font-size:1rem;
+color:#4f46e5;
+}
+
+.notice-desc{
+font-size:0.8rem;
+color:#6b7280;
+}
+
+.notice-icon{
+width:40px;
+height:40px;
+background:#e5e7eb;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+color:#6b7280;
+}</STYle>
+
+
+<style>
+/* ===== NOTIFICATION STACK STYLES ===== */
+#notificationStack {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
+  width: auto;
+}
+
+.notification-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  animation: slideInRight 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-origin: right center;
+  min-width: 320px;
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(600px) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.notification-card.removing {
+  animation: slideOutRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  pointer-events: none;
+}
+
+@keyframes slideOutRight {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(600px) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.notification-card:hover {
+  transform: translateX(-8px) scale(1.02);
+}
+
+.notification-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.notification-card:hover::before {
+  opacity: 1;
+}
+
+/* Pink/Red Card */
+.notification-card.pink {
+  background: linear-gradient(135deg, #ff2d6e 0%, #ff5a7c 100%);
+}
+
+/* Green Card */
+.notification-card.green {
+  background: linear-gradient(135deg, #32cd32 0%, #7fff00 100%);
+}
+
+/* Blue Card */
+.notification-card.blue {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+}
+
+/* Gray/Dark Card */
+.notification-card.gray {
+  background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+}
+
+/* Icon Section */
+.notification-icon {
+  min-width: 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.notification-card:hover .notification-icon {
+  transform: scale(1.15) rotate(10deg);
+}
+
+.notification-card.pink .notification-icon {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.notification-card.green .notification-icon {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.notification-card.blue .notification-icon {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.notification-card.gray .notification-icon {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Content Section */
+.notification-content {
+  flex: 1;
+  color: white;
+  z-index: 1;
+}
+
+.notification-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing: -0.3px;
+  line-height: 1.3;
+}
+
+.notification-desc {
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0.95;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Badge */
+.notification-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  margin-top: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.notification-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Image Section for First Card */
+.notification-image {
+  width: 110px;
+  height: 100%;
+  min-height: 85px;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.notification-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Button for Last Card */
+.notification-button {
+  padding: 7px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+
+.notification-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* Close Button */
+.notification-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+  opacity: 0;
+}
+
+.notification-card:hover .notification-close {
+  opacity: 1;
+}
+
+.notification-close:hover {
+  background: rgba(0, 0, 0, 0.5);
+  transform: rotate(90deg);
+}
+
+.notification-close svg {
+  width: 13px;
+  height: 13px;
+  stroke: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #notificationStack {
+    right: 15px;
+    top: 15px;
+    max-width: calc(100vw - 30px);
+  }
+
+  .notification-card {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  #notificationStack {
+    right: 12px;
+    top: 12px;
+    gap: 10px;
+    max-width: calc(100vw - 24px);
+  }
+
+  .notification-card {
+    padding: 14px;
+    gap: 10px;
+    border-radius: 16px;
+  }
+
+  .notification-icon {
+    min-width: 42px;
+    width: 42px;
+    height: 42px;
+    font-size: 22px;
+    border-radius: 12px;
+  }
+
+  .notification-title {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+
+  .notification-desc {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+
+  .notification-badge {
+    padding: 4px 10px;
+    font-size: 11px;
+    margin-top: 6px;
+  }
+
+  .notification-badge svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .notification-image {
+    width: 85px;
+    min-height: 70px;
+    border-radius: 12px;
+  }
+
+  .notification-button {
+    padding: 6px 14px;
+    font-size: 11px;
+    margin-top: 6px;
+  }
+
+  .notification-close {
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .notification-close svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  #notificationStack {
+    right: 10px;
+    top: 10px;
+    gap: 8px;
+    max-width: calc(100vw - 20px);
+  }
+
+  .notification-card {
+    padding: 12px;
+    gap: 8px;
+    border-radius: 14px;
+  }
+
+  .notification-icon {
+    min-width: 38px;
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
+  }
+
+  .notification-title {
+    font-size: 13px;
+  }
+
+  .notification-desc {
+    font-size: 11px;
+  }
+
+  .notification-image {
+    width: 70px;
+    min-height: 60px;
+  }
+}
+</style>
+
   </head>
 
   <body>
@@ -2174,40 +2510,23 @@
       </div>
     </footer>
     <!-- Login Required Modal -->
-    <div class="modal fade" id="loginRequiredModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content login-modal">
-          <div class="login-modal-body text-center">
-            <div class="login-modal-icon">
-              <i class="fas fa-lock"></i>
-            </div>
+    <!-- <div id="loginNotice" class="login-notice">
+  <div class="notice-time">THÔNG BÁO</div>
 
-            <h3 style="color: white" class="login-modal-title">
-              Vui lòng đăng nhập
-            </h3>
+  <div class="notice-content">
+    <div class="notice-title">Bạn chưa đăng nhập</div>
 
-            <p class="login-modal-text">
-              Bạn cần đăng nhập để bắt đầu làm bài thi.
-            </p>
-
-            <div class="login-modal-actions">
-              <button type="button" class="btn-cancel" data-bs-dismiss="modal">
-                Hủy
-              </button>
-
-              <button
-                type="button"
-                class="btn-login"
-                onclick="window.location.href = 'login.html'"
-              >
-                Đăng nhập
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="notice-desc">
+      Vui lòng đăng nhập để bắt đầu làm bài.
     </div>
+  </div>
 
+  <div class="notice-icon">
+    <i class="fas fa-user-lock"></i>
+  </div>
+</div> -->
+!-- ===== BEAUTIFUL NOTIFICATION STACK ===== -->
+<div id="notificationStack"></div>
     <!-- Back to Top Button -->
     <button id="backToTop" title="Lên đầu trang">
       <span class="sun-ring">
@@ -2225,7 +2544,156 @@
     ></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
+<script>
+// Notification data
+const notifications = [
+ {
+  type: 'pink',
+  icon: '🔐',
+  title: 'Bạn chưa đăng nhập',
+  desc: 'Vui lòng đăng nhập để bắt đầu làm bài trắc nghiệm.',
+  badge: {
+     
+      icon: '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+    },
+    image: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=300&h=200&fit=crop',
+  button: 'Đăng nhập ngay',
+  delay: 0
+},
+  {
+    type: 'green',
+    icon: '✨',
+    title: 'Khuyến nghị mới từ Coach!',
+    desc: 'Tôi đã tạo 3 bài học mới giúp bạn đạt mục tiêu học tập nhanh hơn 2 ngày!',
+    delay: 1000
+  },
+  {
+    type: 'blue',
+    icon: '🏃',
+    title: '3 chủ đề mới!',
+    desc: 'Khám phá các bài học từ vựng và ngữ pháp vừa được cập nhật.',
+    delay: 2000
+  },
+  {
+    type: 'gray',
+    icon: '🔧',
+    title: 'Phiên bản 1.08.2!',
+    desc: 'Cập nhật mới với nhiều tính năng và cải tiến.',
+    button: 'Xem chi tiết',
+    delay: 3000
+  }
+];
+
+// Function to create notification element
+function createNotification(data) {
+  const card = document.createElement('div');
+  card.className = `notification-card ${data.type}`;
+  
+  let content = `
+    <div class="notification-icon">${data.icon}</div>
+    <div class="notification-content">
+      <div class="notification-title">${data.title}</div>
+      <div class="notification-desc">${data.desc}</div>
+  `;
+  
+  if (data.badge) {
+    content += `
+      <div class="notification-badge">
+        ${data.badge.icon}
+        <span>${data.badge.text}</span>
+      </div>
+    `;
+  }
+  
+  if (data.button) {
+    content += `
+      <button class="notification-button" onclick="handleNotificationAction()">${data.button}</button>
+    `;
+  }
+  
+  content += '</div>';
+  
+  if (data.image) {
+    content += `
+      <div class="notification-image">
+        <img src="${data.image}" alt="notification">
+      </div>
+    `;
+  }
+  
+  content += `
+    <button class="notification-close" onclick="closeNotification(this)">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  `;
+  
+  card.innerHTML = content;
+  
+  // Click handler
+  card.addEventListener('click', (e) => {
+    if (!e.target.closest('.notification-close') && !e.target.closest('.notification-button')) {
+      console.log('Clicked notification:', data.title);
+    }
+  });
+  
+  return card;
+}
+
+// Function to show all notifications
+function showLoginNotifications() {
+  const stack = document.getElementById('notificationStack');
+  
+  notifications.forEach((data) => {
+    setTimeout(() => {
+      const notification = createNotification(data);
+      stack.appendChild(notification);
+      
+      // Auto remove after 7 seconds
+      setTimeout(() => {
+        closeNotification(notification.querySelector('.notification-close'));
+      }, 7000);
+    }, data.delay);
+  });
+}
+
+// Function to close notification
+function closeNotification(closeBtn) {
+  const card = closeBtn ? closeBtn.closest('.notification-card') : null;
+  if (!card) return;
+  
+  card.classList.add('removing');
+  setTimeout(() => {
+    card.remove();
+  }, 400);
+}
+
+// Function to handle notification action
+function handleNotificationAction() {
+  window.location.href = "login.html";
+}
+
+// Auto show notifications when page loads (optional)
+// window.addEventListener('load', () => {
+//   setTimeout(showLoginNotifications, 500);
+// });
+
+// Or call manually when user tries to access protected content
+// showLoginNotifications();
+</script>
     <script>
+      function showLoginNotice(){
+
+const notice=document.getElementById("loginNotice");
+
+notice.classList.add("show");
+
+setTimeout(()=>{
+notice.classList.remove("show");
+},5000);
+
+}
       // Back to top button
       const backToTopBtn = document.getElementById("backToTop");
 
@@ -2495,10 +2963,8 @@
 
   if (!user) {
     localStorage.setItem("redirectAfterLogin", window.location.href);
-    const loginModal = new bootstrap.Modal(
-      document.getElementById("loginRequiredModal")
-    );
-    loginModal.show();
+  //  showLoginNotice();
+   showLoginNotifications();
     return;
   }
 
@@ -2917,5 +3383,6 @@ window.addEventListener("keydown", (e) => {
         setTimeout(startDinoGame, 200);
       });
     </script>
+    <script src="js/pageTransition.js"></script>
   </body>
 </html>
