@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
     <title>THEDUNG</title>
     <link rel="icon" href="images/logo.png">
 
@@ -847,7 +848,9 @@
                 height: 32px;
                 font-size: 0.875rem;
             }
-
+.icon-btn >i{
+font-size: 16px;
+}
             main {
                 min-height: 700px;
             }
@@ -1853,6 +1856,20 @@
 }
 
     </style>
+    <style>
+        #solar-wrapper{
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+}
+#solar-section{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    margin-bottom: 200px;
+}
+    </style>
 </head>
 
 <body>
@@ -2009,60 +2026,120 @@
         </div>
     </div>
 
-    <main>
-        <h1 id="typingText">Hỗ trợ học tập</h1>
-        <audio id="typeSound" src="sounds/typ.mp3" preload="auto"></audio>
-        <p>
-        Khám phá không gian học tập trực quan và sinh động<br>
-        Kết hợp kiến thức – hình ảnh – mô hình 3D<br>
-      
-    </p>
-
-    <h3>Chọn nội dung bạn muốn học</h3>
-        <div class="container-solarsystem">
-            <a href="#sun" class="sun">
-                <model-viewer interaction-prompt="none" src="assets/Sun.glb" alt="Sun" auto-rotate camera-controls ar
-                    ios-src="assets/sun.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#mercury" class="mercury">
-                <model-viewer interaction-prompt="none" src="assets/Mercury.glb" alt="Mercury" auto-rotate camera-controls ar
-                    ios-src="assets/Mercury.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#venus" class="venus">
-                <model-viewer interaction-prompt="none" src="assets/Venus(surface).glb" alt="Venus" auto-rotate camera-controls ar
-                    ios-src="assets/Venus(surface).glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#earth" class="earth">
-                <model-viewer interaction-prompt="none" src="assets/Earth.glb" alt="Earth" auto-rotate camera-controls ar
-                    ios-src="assets/Earth.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#mars" class="mars">
-                <model-viewer interaction-prompt="none" src="assets/Mars.glb" alt="Mars" auto-rotate camera-controls ar
-                    ios-src="assets/Mars.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#jupiter" class="jupiter">
-                <model-viewer interaction-prompt="none" src="assets/Jupiter.glb" alt="Jupiter" auto-rotate camera-controls ar
-                    ios-src="assets/Jupiter.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#saturn" class="saturn">
-                <model-viewer interaction-prompt="none" src="assets/Saturn.glb" alt="Saturn" auto-rotate camera-controls ar
-                    ios-src="assets/Saturn.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#uranus" class="uranus">
-                <model-viewer interaction-prompt="none" src="assets/Uranus.glb" alt="Uranus" auto-rotate camera-controls ar
-                    ios-src="assets/Uranus.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#neptune" class="neptune">
-                <model-viewer interaction-prompt="none" src="assets/Neptune.glb" alt="Neptune" auto-rotate camera-controls ar
-                    ios-src="assets/Neptune.glb" loading="lazy"></model-viewer>
-            </a>
-        </div>
-    </main>
+   
     <!-- Mobile GIF Section -->
-<section class="mobile-gif-section">
+<!-- <section class="mobile-gif-section">
     <img src="images/hero.gif" alt="Learning GIF">
-</section>
+</section> -->
 
+<div class="" id="solar-section">
+ 
+  <div id="universe" class="scale-stretched set-speed">
+    <div id="galaxy">
+      <div id="solar-system" class="earth">
+        <div id="mercury" class="orbit">
+          <div class="pos">
+            <div class="planet">
+              <dl class="infos">
+                <dt>Mercury</dt>
+                <dd><span></span></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div id="venus" class="orbit">
+          <div class="pos">
+            <div class="planet">
+              <dl class="infos">
+                <dt>Venus</dt>
+                <dd><span></span></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div id="earth" class="orbit">
+          <div class="pos">
+            <div class="orbit">
+              <div class="pos">
+                <div class="moon"></div>
+              </div>
+            </div>
+            <div class="planet">
+              <dl class="infos">
+                <dt>TheDung</dt>
+                <dd>Tận hưởng khóa học của bạn ☀</dd>
+                <!-- Subtitle removed -->
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div id="mars" class="orbit">
+          <div class="pos">
+            <div class="planet">
+              <dl class="infos">
+                <dt>Mars</dt>
+                <dd><span></span></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div id="jupiter" class="orbit">
+          <div class="pos">
+            <div class="planet">
+              <dl class="infos">
+                <dt>Jupiter</dt>
+                <dd><span></span></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div id="saturn" class="orbit">
+          <div class="pos">
+            <div class="planet">
+              <div class="ring"></div>
+              <dl class="infos">
+                <dt>Saturn</dt>
+                <dd><span></span></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div id="uranus" class="orbit">
+          <div class="pos">
+            <div class="planet">
+              <dl class="infos">
+                <dt>Uranus</dt>
+                <dd><span></span></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div id="neptune" class="orbit">
+          <div class="pos">
+            <div class="planet">
+              <dl class="infos">
+                <dt>Neptune</dt>
+                <dd><span></span></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div id="sun">
+          <dl class="infos">
+            <dt>Sun</dt>
+            <dd><span></span></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="bg-audio" autoplay loop>
+    <source src="audio/1.mp3" type="audio/mpeg">
+  </audio>
+  <script src="js/prefixfree.min.js"></script>
+  <script src="js/scripts.js"></script>
+</div>
 
 
        <section class="container-solar" id="earth">
