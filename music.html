@@ -1291,13 +1291,14 @@
 .control{font-size:28px;color:#333;cursor:pointer;}
 
 /* ======== MINI PLAYER ======== */
-.mini-player{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;background:linear-gradient(to bottom,#f7d2db 0%,#f7dde4 50%,#faf2f5 80%,#ffffff 100%);border-radius:16px;box-shadow:0 6px 28px rgba(0,0,0,.25);display:flex;align-items:center;padding:10px 14px;z-index:99999;opacity:0;pointer-events:none;transition:.3s;}
+.mini-player{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;            background-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.95)), url("images/2k_stars_milky_way.jpg");
+border-radius:16px;box-shadow:0 6px 28px rgba(0,0,0,.25);display:flex;align-items:center;padding:10px 14px;z-index:99999;opacity:0;pointer-events:none;transition:.3s;}
 .mini-player.active{opacity:1;pointer-events:auto;}
 .mini-player img{width:46px;height:46px;border-radius:12px;object-fit:cover;margin-right:12px;}
 .mini-info{flex:1;display:flex;flex-direction:column;}
 .mini-info span:first-child{font-weight:700;font-size:14px;margin-bottom:2px;}
-.mini-info span:last-child{font-size:12px;color:#777;}
-.mini-controls i{font-size:26px;margin-left:12px;color:#111;cursor:pointer;}
+.mini-info span:last-child{font-size:12px;color:#fcf8f8;}
+.mini-controls i{font-size:26px;margin-left:12px;color:#fefbfb;cursor:pointer;}
 
 /* ======== SCROLLBAR HIDDEN ======== */
 ::-webkit-scrollbar{height:0;width:0;}
