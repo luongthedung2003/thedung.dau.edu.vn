@@ -1249,6 +1249,616 @@
 }
 
     </style>
+    <style>
+    /* ======== MUSIC UI - MOBILE VERSION ======== */
+
+.discovery-section{padding:10px 20px 0;margin-top:0px;}
+.discovery-title{font-size:1.4rem;font-weight:700;color:#edecec;}
+.discovery-sub{font-size:.9rem;color:#888;margin-top:4px;}
+.discovery-search{margin-top:18px;padding:10px 16px;border-radius:14px;display:flex;align-items:center;gap:8px;}
+.discovery-search input{border:none;outline:none;background:none;flex:1;font-size:.9rem;}
+
+.recently-list{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;margin-top:16px;}
+.recent-card{width:130px;flex-shrink:0;cursor:pointer;}
+.recent-card img{width:100%;height:130px;border-radius:14px;object-fit:cover;}
+.recent-title{font-weight:600;font-size:.9rem;margin-top:6px;color:#eae6e6;}
+.recent-artist{font-size:.75rem;color:#777;}
+
+.popular-item{display:flex;gap:14px;align-items:center;padding:10px 6px;border-radius:12px;cursor:pointer;transition:.25s;}
+.popular-item:hover{background:#f2f2f2;}
+.popular-item img{width:60px;height:60px;border-radius:12px;object-fit:cover;}
+.pop-title{font-weight:600;font-size:.95rem;color:#e3dcdc;}
+.pop-artist{font-size:.75rem;color:#777;margin-top:2px;}
+.pop-play{margin-left:auto;font-size:20px;color:#4caf50;}
+
+/* ======== MUSIC SECTION MOBILE ======== */
+.music-mobile-section{padding:40px 20px;}
+.music-card{width:130px;flex-shrink:0;cursor:pointer;transition:.3s;}
+.music-card:hover{transform:translateY(-5px);}
+.music-card img{width:100%;height:120px;border-radius:16px;object-fit:cover;box-shadow:0 4px 12px rgba(0,0,0,.15);}
+.music-card p{font-size:.9rem;margin:0;}
+
+/* ======== MOBILE PLAYER (FULL PLAYER) ======== */
+.music-player{position:fixed;left:0;right:0;bottom:-100%;background:#fff;box-shadow:0 -8px 30px rgba(0,0,0,.15);border-radius:22px 22px 0 0;padding:20px;transition:.4s;z-index:9999;}
+.music-player.active{bottom:0;}
+.player-header{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-bottom:20px;}
+.player-header i{cursor:pointer;font-size:1.5rem;}
+.player-body{text-align:center;margin-bottom:20px;}
+.player-body img{width:150px;height:150px;border-radius:20px;object-fit:cover;margin-bottom:15px;box-shadow:0 8px 20px rgba(0,0,0,.2);}
+.player-controls{padding:0 10px;}
+.player-controls input[type=range]{width:100%;margin-bottom:15px;}
+.play-btn{font-size:48px;color:#ff4c70;cursor:pointer;}
+.control{font-size:28px;color:#333;cursor:pointer;}
+
+/* ======== MINI PLAYER ======== */
+.mini-player{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;background:linear-gradient(to bottom,#f7d2db 0%,#f7dde4 50%,#faf2f5 80%,#ffffff 100%);border-radius:16px;box-shadow:0 6px 28px rgba(0,0,0,.25);display:flex;align-items:center;padding:10px 14px;z-index:99999;opacity:0;pointer-events:none;transition:.3s;}
+.mini-player.active{opacity:1;pointer-events:auto;}
+.mini-player img{width:46px;height:46px;border-radius:12px;object-fit:cover;margin-right:12px;}
+.mini-info{flex:1;display:flex;flex-direction:column;}
+.mini-info span:first-child{font-weight:700;font-size:14px;margin-bottom:2px;}
+.mini-info span:last-child{font-size:12px;color:#777;}
+.mini-controls i{font-size:26px;margin-left:12px;color:#111;cursor:pointer;}
+
+/* ======== SCROLLBAR HIDDEN ======== */
+::-webkit-scrollbar{height:0;width:0;}
+.recently-list,#popularArea,#recentArea,.music-mobile-section .d-flex{-ms-overflow-style:none;scrollbar-width:none;}
+.recently-list::-webkit-scrollbar,#popularArea::-webkit-scrollbar,#recentArea::-webkit-scrollbar,.music-mobile-section .d-flex::-webkit-scrollbar{display:none;}
+
+/* ======== SMALL SCREEN REFINES ======== */
+@media(max-width:576px){
+.discovery-title{font-size:1.3rem;}
+.music-card img{height:110px;}
+.recent-card img{height:120px;}
+.popular-item img{width:54px;height:54px;}
+}
+
+</style>
+<style>
+    /* ======== DESKTOP RESPONSIVE (>= 992px) ======== */
+
+/* Ẩn giao diện desktop cũ (music-desktop + desktop-player) */
+/* ===================== DESKTOP MODE (>= 992px) ===================== */
+
+@media (min-width: 992px) {
+
+    /* Tổng layout */
+    .discovery-section,
+    .music-mobile-section {
+        max-width: 1180px;
+        margin: 40px auto;
+        padding: 0 20px;
+        display: block !important;
+    }
+
+    /* Tiêu đề */
+    .discovery-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+    }
+    .discovery-sub {
+        font-size: 1.1rem;
+        color: #666;
+    }
+
+    /* ===================== RECENTLY (Phát gần đây) ===================== */
+    .recently-list {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 26px;
+        overflow: visible !important;
+        padding-bottom: 0 !important;
+    }
+
+    .recent-card {
+        width: 100% !important;
+        cursor: pointer;
+        transition: .3s;
+    }
+    .recent-card:hover {
+        transform: translateY(-6px);
+    }
+    .recent-card img {
+        height: 210px !important;
+        border-radius: 18px;
+        object-fit: cover;
+        box-shadow: 0 6px 18px rgba(0,0,0,.12);
+    }
+    .recent-title { font-size: 1.05rem; margin-top: 12px; }
+    .recent-artist { font-size: .9rem; }
+
+    /* ===================== POPULAR AREA ===================== */
+    #popularArea {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 26px;
+    }
+
+    .popular-item {
+        flex-direction: column !important;
+        text-align: center;
+        padding: 20px;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 5px 14px rgba(0,0,0,.06);
+        transition: .25s;
+        border: 1px solid #eee;
+    }
+    .popular-item:hover {
+        transform: translateY(-6px);
+        background: #fafafa;
+    }
+    .popular-item img {
+        width: 100% !important;
+        height: 210px !important;
+        object-fit: cover;
+        border-radius: 18px;
+        margin-bottom: 10px;
+    }
+    .pop-title {
+        margin-top: 8px;
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+    .pop-artist {
+        font-size: .9rem;
+        color: #666;
+        margin-top: 0;
+    }
+    .pop-play {
+        font-size: 32px !important;
+        margin-top: 10px;
+        margin-left: 0 !important;
+        color: var(--teal-color);
+    }
+
+    /* ===================== MUSIC CARDS ===================== */
+    .music-mobile-section .d-flex {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 26px;
+        overflow: visible !important;
+    }
+
+    .music-card {
+        width: 100% !important;
+        transition: .3s;
+    }
+    .music-card:hover {
+        transform: translateY(-8px);
+    }
+    .music-card img {
+        height: 220px !important;
+        object-fit: cover;
+        border-radius: 18px;
+        box-shadow: 0 6px 18px rgba(0,0,0,.12);
+    }
+    .music-card p {
+        font-size: 1rem;
+        margin-top: 10px;
+    }
+
+    /* ===================== PLAYER (GIỮ NGUYÊN) ===================== */
+    .music-player,
+    .mini-player {
+        min-width: 600px;
+        margin: 0 auto;
+        border-radius: 20px;
+    }
+}
+
+
+/* Hiện lại giao diện mobile trên desktop */
+@media(min-width:992px){
+.discovery-section{display:block!important;max-width:1200px;margin:40px auto 0;padding:40px 0;}
+.music-mobile-section{display:block!important;max-width:1200px;margin:40px auto;padding:40px 0;}
+}
+
+/* --- Grid 4 cột chung --- */
+@media(min-width:992px){
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+}
+
+/* ----- RECENTLY LIST (Phát gần đây) ----- */
+@media(min-width:992px){
+.recently-list{display:grid!important;grid-template-columns:repeat(4,1fr);gap:24px;overflow:visible;padding-bottom:0;margin-top:20px;}
+.recent-card{width:100%!important;}
+.recent-card img{height:200px!important;border-radius:18px;}
+.recent-title{font-size:1rem;margin-top:10px;}
+.recent-artist{font-size:.85rem;}
+}
+
+/* ----- POPULAR LIST (Nổi bật nhất) ----- */
+@media(min-width:992px){
+#popularArea{display:grid!important;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:20px;}
+.popular-item{flex-direction:column!important;text-align:center;padding:20px;background:#fafafa;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.05);transition:.25s;}
+.popular-item:hover{transform:translateY(-4px);background:#fff;}
+.popular-item img{width:100%!important;height:200px!important;border-radius:18px;margin-bottom:10px;}
+.pop-title{font-size:1rem;font-weight:700;color:#222;margin-top:4px;}
+.pop-artist{font-size:.85rem;margin-top:0;color:#666;}
+.pop-play{margin-left:0!important;font-size:30px;margin-top:10px;color:#4caf50;}
+}
+
+/* ----- MUSIC CARDS (Mới phát hành + Dành cho bạn) ----- */
+@media(min-width:992px){
+.music-mobile-section .d-flex{display:grid!important;grid-template-columns:repeat(4,1fr);gap:24px;overflow:visible!important;padding-bottom:0!important;}
+.music-card{width:100%!important;transition:.3s;}
+.music-card:hover{transform:translateY(-6px);}
+.music-card img{height:220px!important;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.12);}
+.music-card p{font-size:1rem;margin-top:10px;}
+}
+
+/* ----- TIÊU ĐỀ ----- */
+@media(min-width:992px){
+.discovery-title{font-size:2rem;}
+.discovery-sub{font-size:1rem;}
+.music-mobile-section h4{font-size:1.6rem;}
+}
+
+/* ----- PLAYER MOBILE (Desktop vẫn dùng player mobile) ----- */
+@media(min-width:992px){
+.music-player{max-width:420px;margin:0 auto;border-radius:22px;box-shadow:0 8px 26px rgba(0,0,0,.15);}
+.mini-player{max-width:420px;}
+}
+
+/* ----- SPACE TỔNG THỂ DESKTOP ----- */
+@media(min-width:992px){
+.discovery-section,.music-mobile-section{padding-left:20px;padding-right:20px;}
+}
+/* ===== MINI PLAYER DESKTOP — CENTER & BIGGER ===== */
+@media (min-width: 992px) {
+    .mini-player{
+        width: 520px;                 /* to hơn */
+        bottom:5px;                 /* cách bottom */
+        left: 50%;                    /* căn giữa */
+        transform: translateX(-50%);  /* dịch đúng tâm */
+        
+        border-radius: 20px;
+        padding: 18px 22px;
+
+        background: #ffffff;
+        box-shadow: 0 10px 28px rgba(0,0,0,.22);
+
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        z-index: 9999;
+    }
+
+    .mini-player img{
+        width: 65px;                  /* to hơn mobile */
+        height: 65px;
+        border-radius: 14px;
+        object-fit: cover;
+    }
+
+    .mini-info span:first-child{
+        font-size: 17px;
+        font-weight: 700;
+    }
+    .mini-info span:last-child{
+        font-size: 14px;
+        color: #666;
+    }
+
+    .mini-controls i{
+        font-size: 30px;              /* lớn hơn */
+        margin-left: 14px;
+        cursor: pointer;
+        color: #111;
+    }
+}
+
+
+
+</style>
+  <style>
+    /* ===== FULL PLAYER MODERN ===== */
+
+.full-player {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 99999;
+    transform: translateY(100%);
+    transition: .4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Show */
+.full-player.active {
+    transform: translateY(0);
+}
+
+/* Header */
+.full-player-header {
+    padding: 18px 22px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.full-player-header span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #8a8a8a;
+}
+
+.full-player-header i {
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Cover */
+.full-player-body {
+    padding: 0 24px;
+    text-align: center;
+    flex: 1;
+}
+
+.full-player-body img {
+    width: 100%;
+    border-radius: 16px;
+    height: 300px;
+    object-fit: cover;
+    margin-top: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+}
+
+/* Song Text */
+.full-song-info h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+    margin-top: 18px;
+}
+
+.full-song-info p {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+/* Progress bar */
+.progress-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    height: 4px;
+    width: 100%;
+    background: #e5e7eb;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #111;
+    border-radius: 4px;
+    transition: width .1s linear;
+}
+
+.time-info {
+    margin-top: 6px;
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+    font-size: 12px;
+   
+}
+
+/* Playback Controls */
+.playback-controls {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.playback-controls i {
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Central Play Button */
+.play-button {
+    width: 60px;
+    height: 60px;
+    background: #111;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 28px rgba(0,0,0,.25);
+}
+
+.play-button i {
+    font-size: 30px;
+    color: #fff;
+}
+
+/* Desktop upscale */
+@media (min-width: 768px) {
+    .full-player-body img {
+        width: 360px;
+        height: 360px;
+    }
+
+    .full-song-info h3 {
+        font-size: 26px;
+    }
+
+    .playback-controls i {
+        font-size: 30px;
+    }
+}
+
+  </style>
+   <style>
+    .scroll-nav-btn-glass {
+  position: fixed;
+  bottom: 26px;
+  right: 22px;
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  
+  /* Glassmorphism */
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 22px;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 999999;
+}
+
+/* Hiện khi cuộn xuống */
+.scroll-nav-btn-glass.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Icon hover đẹp */
+.scroll-nav-btn-glass:hover {
+  background: rgba(255, 255, 255, 0.32);
+  transform: scale(1.09);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+}
+
+/* Icon màu neon nhẹ */
+.scroll-nav-btn-glass i {
+  color: #6ee7ff;
+  text-shadow: 0 0 12px rgba(110, 231, 255, 0.7);
+}
+
+   </style>
+    <style>
+    /* MODAL OVERLAY */
+.notify-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    backdrop-filter: blur(4px);
+}
+
+/* MODAL BOX */
+.notify-modal-box {
+    width: 420px;
+    background: #fff;
+    padding: 30px 28px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+    animation: popup 0.3s ease;
+}
+
+@keyframes popup {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+/* IMAGE */
+.notify-img {
+    width: 90px;
+    margin-bottom: 12px;
+}
+
+/* TEXT */
+.notify-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #111;
+}
+
+.notify-subtitle {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* TEXTAREA */
+.notify-textarea {
+    width: 100%;
+    min-height: 110px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    resize: none;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.notify-textarea:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.25);
+}
+
+/* BUTTON */
+.notify-submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.25s;
+}
+
+.notify-submit-btn:hover {
+    background: #16a34a;
+}
+
+.notify-close-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #e5e7eb;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #444;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.25s;
+}
+
+.notify-close-btn:hover {
+    background: #d1d5db;
+}
+
+   </style>
 </head>
 
 <body>
@@ -1406,47 +2016,246 @@
     </div>
 
     <main>
-       <div class="container">
-         <h3 style="margin: 50px 0;">Âm nhạc đang chờ Admin phát triển sau...</h3>
-        <div class="container-solarsystem">
-            <a href="#sun" class="sun">
-                <model-viewer interaction-prompt="none" src="assets/Sun.glb" alt="Sun" auto-rotate camera-controls ar
-                    ios-src="assets/sun.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#mercury" class="mercury">
-                <model-viewer interaction-prompt="none" src="assets/Mercury.glb" alt="Mercury" auto-rotate camera-controls ar
-                    ios-src="assets/Mercury.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#venus" class="venus">
-                <model-viewer interaction-prompt="none" src="assets/Venus(surface).glb" alt="Venus" auto-rotate camera-controls ar
-                    ios-src="assets/Venus(surface).glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#earth" class="earth">
-                <model-viewer interaction-prompt="none" src="assets/Earth.glb" alt="Earth" auto-rotate camera-controls ar
-                    ios-src="assets/Earth.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#mars" class="mars">
-                <model-viewer interaction-prompt="none" src="assets/Mars.glb" alt="Mars" auto-rotate camera-controls ar
-                    ios-src="assets/Mars.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#jupiter" class="jupiter">
-                <model-viewer interaction-prompt="none" src="assets/Jupiter.glb" alt="Jupiter" auto-rotate camera-controls ar
-                    ios-src="assets/Jupiter.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#saturn" class="saturn">
-                <model-viewer interaction-prompt="none" src="assets/Saturn.glb" alt="Saturn" auto-rotate camera-controls ar
-                    ios-src="assets/Saturn.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#uranus" class="uranus">
-                <model-viewer interaction-prompt="none" src="assets/Uranus.glb" alt="Uranus" auto-rotate camera-controls ar
-                    ios-src="assets/Uranus.glb" loading="lazy"></model-viewer>
-            </a>
-            <a href="#neptune" class="neptune">
-                <model-viewer interaction-prompt="none" src="assets/Neptune.glb" alt="Neptune" auto-rotate camera-controls ar
-                    ios-src="assets/Neptune.glb" loading="lazy"></model-viewer>
-            </a>
+       
+    <!-- DISCOVERY SECTION -->
+<section class="discovery-section d-lg-none" data-aos="fade-up">
+
+  <div>
+    <div class="discovery-title">Listen to your music today</div>
+    <div class="discovery-sub">Tìm kiếm bài hát yêu thích của bạn...</div>
+
+    <div class="discovery-search mt-3">
+      <i class="fa fa-search text-muted"></i>
+      <input type="text" placeholder="Tìm kiếm…" id="discoverSearch">
+    </div>
+  </div>
+
+  <!-- RECENTLY PLAYED -->
+  <div class="d-flex justify-content-between align-items-center mt-4 mb-2">
+    <h5 class="fw-bold">Phát gần đây</h5>
+    <a href="#" class="text-muted small">Xem thêm</a>
+  </div>
+
+  <div class="recently-list" id="recentArea">
+
+    <!-- generate bằng JS -->
+  </div>
+
+  <!-- MOST POPULAR -->
+  <div class="d-flex justify-content-between align-items-center mt-4 mb-2">
+    <h5 class="fw-bold">Nổi bật nhất</h5>
+    <a href="#" class="text-muted small">Xem thêm</a>
+  </div>
+
+  <div id="popularArea">
+    <!-- generate bằng JS -->
+  </div>
+
+</section>
+
+
+    <!-- ====================================== -->
+    <!--          MUSIC SECTION MOBILE          -->
+    <!-- ====================================== -->
+    <section class="music-mobile-section d-lg-none" data-aos="fade-up" data-aos-delay="50">
+      <!-- New Releases -->
+      <h4 class="fw-bold mb-3">Mới phát hành</h4>
+      <div class="d-flex gap-3 overflow-auto pb-3">
+       <div
+          class="music-card"
+          onclick="playSongEl(this)"
+          data-src="audio/trachoanh.mp3"
+          data-title="Trả cho anh - Huy PT"
+          data-img="https://i.pinimg.com/1200x/c1/4e/d7/c14ed7224d4e37d99f99c42ea399bf93.jpg"
+        >
+          <img
+            src="https://i.pinimg.com/1200x/c1/4e/d7/c14ed7224d4e37d99f99c42ea399bf93.jpg"
+          />
+          <p class="fw-bold mt-2 mb-0 small">Trả cho anh</p>
+          <p class="text-muted small mb-0">Huy PT</p>
         </div>
-       </div>
+
+        <div
+          class="music-card"
+          onclick="playSongEl(this)"
+          data-src="audio/WeDontTalkAnymore.mp3"
+          data-title="WeDontTalkAnymore - CharliePuth"
+          data-img="https://i1.sndcdn.com/artworks-AJFS1FOcZcX3-0-t500x500.jpg"
+        >
+          <img
+            src="https://i1.sndcdn.com/artworks-AJFS1FOcZcX3-0-t500x500.jpg"
+          />
+          <p class="fw-bold mt-2 mb-0 small">We dont talk anymore</p>
+          <p class="text-muted small mb-0">CharliePuth</p>
+        </div>
+
+        <div
+          class="music-card"
+          onclick="playSongEl(this)"
+          data-src="audio/lynd.mp3"
+          data-title="Lời yêu ngây dại - Kha"
+          data-img="https://photo-resize-zmp3.zadn.vn/w600_r1x1_jpeg/cover/6/5/a/2/65a2d34ee86086126ee5f8b5ca6e4ce1.jpg"
+        >
+          <img
+            src="https://photo-resize-zmp3.zadn.vn/w600_r1x1_jpeg/cover/6/5/a/2/65a2d34ee86086126ee5f8b5ca6e4ce1.jpg"
+          />
+          <p class="fw-bold mt-2 mb-0 small">Lời yêu ngây dại</p>
+          <p class="text-muted small mb-0">Kha</p>
+        </div>
+      </div>
+
+      <!-- Popular -->
+      <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <h4 class="fw-bold mb-0">Dành cho bạn</h4>
+        <a href="#" class="text-muted small">Xem thêm</a>
+      </div>
+
+      <div class="d-flex gap-3 overflow-auto pb-3">
+        <div
+          class="music-card"
+          onclick="playSongEl(this)"
+          data-src="audio/duaemvenha.mp3"
+          data-title="Đưa em về nhà"
+          data-img="https://images2.thanhnien.vn/528068263637045248/2023/4/25/unnamed-1-1682394754655613406955.jpg"
+        >
+          <img
+            src="https://images2.thanhnien.vn/528068263637045248/2023/4/25/unnamed-1-1682394754655613406955.jpg"
+          />
+          <p class="fw-bold mt-2 mb-0 small">Đưa em về nhà</p>
+          <p class="text-muted small mb-0">Gray-D</p>
+        </div>
+
+        <div
+          class="music-card"
+          onclick="playSongEl(this)"
+          data-src="audio/muayeuthuongdandangden.mp3"
+          data-title="Tuyết yêu thương"
+          data-img="https://i.pinimg.com/736x/ce/de/e5/cedee5f8d7dcc3057b1bdd4710adc098.jpg"
+        >
+          <img
+            src="https://i.pinimg.com/736x/ce/de/e5/cedee5f8d7dcc3057b1bdd4710adc098.jpg"
+          />
+          <p class="fw-bold mt-2 mb-0 small">Tuyết yêu thương</p>
+          <p class="text-muted small mb-0">Will M</p>
+        </div>
+
+        <div
+          class="music-card"
+          onclick="playSongEl(this)"
+          data-src="audio/noinaycoanh.mp3"
+          data-title="Nơi này có anh"
+          data-img="https://img.vuahanghieu.com/unsafe/0x0/left/top/smart/filters:quality(90)/https://admin.vuahanghieu.com/upload/news/content/2025/05/kieu-toc-cua-son-tung-mpt-18-jpg-1747369454-16052025112414.jpg"
+        >
+          <img
+            src="https://img.vuahanghieu.com/unsafe/0x0/left/top/smart/filters:quality(90)/https://admin.vuahanghieu.com/upload/news/content/2025/05/kieu-toc-cua-son-tung-mpt-18-jpg-1747369454-16052025112414.jpg"
+          />
+          <p class="fw-bold mt-2 mb-0 small">Nơi này có anh</p>
+          <p class="text-muted small mb-0">Sơn Tùng-MTP</p>
+        </div>
+          <div
+          class="music-card"
+          onclick="playSongEl(this)"
+          data-src="audio/mttb.mp3"
+          data-title="Một thuở thanh bình"
+          data-img="https://i.pinimg.com/736x/ec/85/1e/ec851ecb2be6c08c14e6a4e5af85d6f8.jpg"
+        >
+          <img
+            src="https://i.pinimg.com/736x/ec/85/1e/ec851ecb2be6c08c14e6a4e5af85d6f8.jpg"
+          />
+          <p class="fw-bold mt-2 mb-0 small">Một thuở thanh bình</p>
+          <p class="text-muted small mb-0">TeA ft Tuyết</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MINI MOBILE PLAYER -->
+    <div id="miniPlayer" class="mini-player ">
+      <img id="miniImg" src="" alt="" />
+      <div class="mini-info">
+        <span id="miniTitle"></span>
+        <span id="miniArtist"></span>
+      </div>
+      <div class="mini-controls">
+        <i id="miniPlayPause"onclick='togglePlay()'  class="bi bi-pause-fill"></i>
+        <i id="miniNext" class="bi bi-skip-forward-fill"></i>
+        <i class="bi bi-x-circle" onclick="stopAllMusic()" style="font-size:22px; margin-left:10px; cursor:pointer;"></i>
+
+      </div>
+    </div>
+
+    <!-- FULL SCREEN PLAYER -->
+<div id="fullPlayer" class="full-player">
+    <div class="full-player-header">
+        <i class="fas fa-chevron-down" onclick="closeFullPlayer()"></i>
+        <span>Đang phát</span>
+        <i class="fas fa-ellipsis-h"></i>
+    </div>
+    
+    <div class="full-player-body">
+        <img id="fullImg" src="" alt="">
+        
+        <div class="full-song-info">
+            <h3 id="fullTitle">Unsayable</h3>
+            <p id="fullArtist">Brambles</p>
+        </div>
+        
+        <div class="full-controls">
+            <i class="far fa-heart"></i>
+            <i class="fas fa-ellipsis-h"></i>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div id="fullProgress" class="progress-fill"></div>
+            </div>
+            <div class="time-info">
+                <span id="currentTime">1:04</span>
+                <span id="totalTime">2:52</span>
+            </div>
+        </div>
+        
+        <div class="playback-controls">
+            <i class="fas fa-random"></i>
+            <i class="fas fa-step-backward" onclick="prevSong()"></i>
+            <div class="play-button" onclick="togglePlay()">
+                <i id="fullPlayIcon" class="fas fa-pause"></i>
+            </div>
+            <i class="fas fa-step-forward" onclick="nextSong()"></i>
+            <i class="fas fa-redo"></i>
+        </div>
+    </div>
+</div>
+
+  
+
+
+
+<!-- NOTIFICATION MODAL -->
+<div id="notifyModal" class="notify-modal-overlay">
+    <div class="notify-modal-box">
+
+        <img src="image/qr.jpg" 
+             class="notify-img">
+
+        <h3 class="notify-title">Cảm ơn bạn đã quan tâm!</h3>
+        <p class="notify-subtitle">
+            Hãy ủng hộ mình để phát triển THEDUNG-EDUCATION có nhiều bài tập hơn nhé, há há
+        </p>
+
+        <textarea id="notifyMessage" class="notify-textarea"
+                  placeholder="Nhập nội dung Donate tại đây, ví dụ: Mình gửi 10 triệu mong bạn phát triển website hoàn thiện hơn nhé..."></textarea>
+
+        <button class="notify-submit-btn" id="sendNotifyBtn">
+            Gửi ngay 
+        </button>
+
+        <button class="notify-close-btn" id="closeNotifyBtn">
+            Đóng
+        </button>
+
+    </div>
+</div>
+
 
    
     </main>
@@ -1456,7 +2265,7 @@
 
 
  <!-- Newsletter Section -->
-    <section class="footer-newsletter-wrapper">
+    <!-- <section class="footer-newsletter-wrapper">
         <div class="footer-newsletter-container">
             <div class="footer-newsletter-content-grid">
                 <h2 class="footer-newsletter-main-title">Subscribe</h2>
@@ -1471,13 +2280,13 @@
                 </form>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Main Footer -->
-    <footer class="thedung-main-footer-wrapper">
+    <!-- <footer class="thedung-main-footer-wrapper">
         <div class="thedung-footer-main-container">
             <div class="thedung-footer-columns-grid">
-                <!-- Brand Section -->
+              
                 <div class="thedung-footer-brand-section thedung-footer-content-column">
                     <div class="thedung-footer-brand-logo-container">
                         <i class="fas fa-rocket"></i>
@@ -1504,7 +2313,7 @@
                     </div>
                 </div>
 
-                <!-- About Column -->
+              
                 <div class="thedung-footer-content-column">
                     <h3 class="thedung-footer-column-heading-title">About</h3>
                     <ul class="thedung-footer-navigation-links-list">
@@ -1515,7 +2324,7 @@
                     </ul>
                 </div>
 
-                <!-- Menu Column -->
+               
                 <div class="thedung-footer-content-column">
                     <h3 class="thedung-footer-column-heading-title">Menu</h3>
                     <ul class="thedung-footer-navigation-links-list">
@@ -1527,7 +2336,7 @@
                     </ul>
                 </div>
 
-                <!-- Services Column -->
+              
                 <div class="thedung-footer-content-column">
                     <h3 class="thedung-footer-column-heading-title">Services</h3>
                     <ul class="thedung-footer-navigation-links-list">
@@ -1538,7 +2347,6 @@
                     </ul>
                 </div>
 
-                <!-- Contact Column -->
                 <div class="thedung-footer-content-column">
                     <h3 class="thedung-footer-column-heading-title">Contact</h3>
                     
@@ -1573,7 +2381,6 @@
             </div>
 
         
-            <!-- Bottom Footer -->
             <div class="thedung-footer-bottom-copyright-wrapper">
                 <div>&copy; 2025 THEDUNG. All rights reserved.</div>
                 <ul class="thedung-footer-bottom-links-list">
@@ -1583,7 +2390,7 @@
                 </ul>
             </div>
         </div>
-    </footer>
+    </footer> -->
 
   
      <button id="backToTop" title="Lên đầu trang">
@@ -1798,6 +2605,392 @@ document.addEventListener("DOMContentLoaded", updateUserUI);
 
     </script>
 <script src="js/pageTransition.js"></script>
+
+  <script>
+      let currentSong = null;
+
+     // ============================
+// DISCOVERY MUSIC LIST
+// ============================
+
+const discoverySongs = [
+{
+    title: "Exit sign",
+    artist: "Hieuthuhai",
+    img: "https://images.genius.com/a7c69b14897ffc5feb3febaa21f945c3.1000x1000x1.jpg",
+    src: "audio/exs.mp3"
+  },
+  {
+    title: "Chúng ta không thuộc về nhau",
+    artist: "Sơn Tùng MTP",
+    img: "https://image-cdn.nct.vn/mv/2016/08/04/c/e/1/9/1470277194346_640.jpg",
+    src: "audio/ctktvn.mp3"
+  },
+  {
+    title: "Không thể say",
+    artist: "Hieuthuhai",
+    img: "https://media.baoquangninh.vn/upload/image/202304/medium/2076266_65fe9adfeeb2cf3b5636dcf37d1ac631.jpg",
+    src: "audio/kts.mp3"
+  },
+{
+    title: "Ghen",
+    artist: "Erik ft Min",
+    img: "https://photo-resize-zmp3.zadn.vn/w600_r1x1_jpeg/covers/d/0/d05f9b3c87cf7ccda468174b28757489_1495770525.jpg",
+    src: "audio/g.mp3"
+  },
+  {
+    title: "Dại kher",
+    artist: "Tage ft SonTran",
+    img: "https://i1.sndcdn.com/artworks-eyl0UTQ3h1eYayaI-hkIpBw-t500x500.jpg",
+    src: "audio/dk.mp3"
+  },
+  {
+    title: "Nắng ấm xa dần",
+    artist: "Sơn Tùng-MTP",
+    img: "https://i.pinimg.com/736x/40/3b/ca/403bca0db96494ffde30acd94a4c11f6.jpg",
+    src: "audio/naxd.mp3"
+  },
+  {
+    title: "Mùa hạ đi qua",
+    artist: "Nguyễn Đình Toàn",
+    img: "https://i.pinimg.com/1200x/e3/47/5e/e3475e32f98df6dd346fbb46b01875fc.jpg",
+    src: "audio/nnmhdqccmr.mp3"
+  },
+  {
+    title: "Vì điều gì",
+    artist: "Buitruonglinh",
+    img: "https://i.pinimg.com/736x/7b/c8/d9/7bc8d9a65598fcab714a616c6171a07a.jpg",
+    src: "audio/vdg.mp3"
+  },
+  {
+    title: "Roi mot ngay",
+    artist: "Dewie",
+    img: "https://image-cdn.nct.vn/song/2023/04/25/b/2/1/2/1682419438232_300.jpg",
+    src: "audio/rmn.mp3"
+  },
+];
+
+const popularSongs = [
+  {
+    title: "Miên man",
+    artist: "Minh Huy",
+    img: "https://i.pinimg.com/1200x/a6/1c/db/a61cdba4af7acede93dfb75ae4b62608.jpg",
+    src: "audio/mm.mp3"
+  },
+  {
+    title: "Girl Hà Nội",
+    artist: "Dangrangto",
+    img: "https://tse2.mm.bing.net/th/id/OIP.wzgR_OCa_2QBOsXt-hgdRQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
+    src: "audio/ghn.mp3"
+  },
+  {
+    title: "Nơi này có anh",
+    artist: "Sơn Tùng MTP",
+    img: "https://kenh14cdn.com/2017/34-1487093041598.jpg",
+    src: "audio/noinaycoanh.mp3"
+  },
+  {
+    title: "Last night 2",
+    artist: "Hazel",
+    img: "https://i.pinimg.com/736x/41/5d/24/415d240f31058e79a9198dff14ddf693.jpg",
+    src: "audio/ln.mp3"
+  }
+];
+
+function renderDiscovery() {
+  const recent = document.getElementById("recentArea");
+  const popular = document.getElementById("popularArea");
+
+  recent.innerHTML = discoverySongs
+    .map((s, i) => `
+      <div class="recent-card" onclick="playDiscover(${i}, 'recent')">
+        <img src="${s.img}">
+        <div class="recent-title">${s.title}</div>
+        <div class="recent-artist">${s.artist}</div>
+      </div>
+    `)
+    .join("");
+
+  popular.innerHTML = popularSongs
+    .map((s, i) => `
+      <div class="popular-item" onclick="playDiscover(${i}, 'popular')">
+        <img src="${s.img}">
+        <div>
+          <div class="pop-title">${s.title}</div>
+          <div class="pop-artist">${s.artist}</div>
+        </div>
+        <i class="bi bi-play-circle-fill pop-play"></i>
+      </div>
+    `)
+    .join("");
+}
+
+renderDiscovery();
+
+// ======================
+// PLAY FUNCTION
+// ======================
+function playDiscover(index, type) {
+  const list = type === "recent" ? discoverySongs : popularSongs;
+  const song = list[index];
+
+  audio.pause();
+  audio.currentTime = 0;
+
+  audio.src = song.src;
+  audio.play();
+
+  showMiniPlayer(song);
+}
+
+
+      // ===== MUSIC PLAYER (MOBILE) =====
+      const tracks = [
+        {
+          title: "Reputation – Taylor Swift",
+          img: "https://i.pinimg.com/564x/b1/0f/cc/b10fcc55c0e0ac5a1e3690700122972e.jpg",
+          src: "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav",
+        },
+        {
+          title: "Divide – Ed Sheeran",
+          img: "https://i.pinimg.com/564x/66/f4/95/66f495e2392d4e2f6c343144cec5d0af.jpg",
+          src: "https://www2.cs.uic.edu/~i101/SoundFiles/ImperialMarch60.wav",
+        },
+        {
+          title: "Thriller – Michael Jackson",
+          img: "https://i.pinimg.com/564x/d7/71/c8/d771c8cda9b7ef426f1187b473788f24.jpg",
+          src: "https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav",
+        },
+      ];
+
+      let currentIndex = 0;
+      let audio = new Audio();
+
+      function playSong(index) {
+  currentIndex = index;
+  const song = tracks[index];
+
+  audio.pause();
+  audio.currentTime = 0;
+
+  audio.src = song.src;
+  audio.play();
+
+  showMiniPlayer(song);
+
+  document.getElementById("playPauseIcon").className =
+      "bi bi-pause-circle-fill play-btn";
+}
+
+
+      function togglePlay() {
+    const icon = document.getElementById("playPauseIcon");
+    const miniBtn = document.getElementById("miniPlayPause");
+
+    if (audio.paused) {
+        audio.play();
+        miniBtn.className = "bi bi-pause-circle-fill play-btn";
+        miniBtn.className = "bi bi-pause-fill";
+    } else {
+        audio.pause();
+        miniBtn.className = "bi bi-play-circle-fill play-btn";
+        miniBtn.className = "bi bi-play-fill";
+    }
+}
+
+
+      function nextSong() {
+        currentIndex = (currentIndex + 1) % tracks.length;
+        playSong(currentIndex);
+      }
+
+      function prevSong() {
+        currentIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+        playSong(currentIndex);
+      }
+
+    
+
+      // ===== AUTH STATUS =====
+      function renderAuth() {
+        const box = document.getElementById("authArea");
+
+        if (localStorage.getItem("loggedIn") === "true") {
+          const user = JSON.parse(localStorage.getItem("user"));
+
+          box.innerHTML = `
+            <span class="me-2 fw-semibold">${user.fullname.toUpperCase()}</span>
+            <button class="btn btn-danger px-3 py-1" onclick="logout()">Đăng xuất</button>
+          `;
+        } else {
+          box.innerHTML = `
+            <a href="#" class="btn btn-outline-dark px-3 py-1">Đăng nhập</a>
+            <a href="#" class="btn btn-success px-3 py-1">Đăng ký</a>
+          `;
+        }
+      }
+
+      function logout() {
+        localStorage.removeItem("loggedIn");
+        renderAuth();
+      }
+
+      renderAuth();
+
+     function playSongEl(el) {
+    const src = el.dataset.src;
+    const title = el.dataset.title;
+    const img = el.dataset.img;
+
+    audio.pause();
+    audio.currentTime = 0;
+
+    audio.src = src;
+    audio.play();
+
+    showMiniPlayer({ img: img, title: title });
+}
+
+function showMiniPlayer(song) {
+    currentSong = song; // ⬅ LƯU BÀI ĐANG PHÁT
+
+    document.getElementById("miniImg").src = song.img;
+    document.getElementById("miniTitle").innerText = song.title;
+    
+    document.getElementById("miniArtist").innerText =
+        song.artist || song.title.split("–")[1] || "";
+
+    const miniBtn = document.getElementById("miniPlayPause");
+    miniBtn.className = audio.paused ? "bi bi-play-fill" : "bi bi-pause-fill";
+
+    document.getElementById("miniPlayer").classList.add("active");
+}
+
+
+
+  // ========= MINI PLAYER PLAY / PAUSE =========
+document.getElementById("miniPlayPause").addEventListener("click", function () {
+    const miniBtn = document.getElementById("miniPlayPause");
+
+    if (!currentSong) return; // ⬅ Nếu đã stop → không play nữa
+
+    if (audio.paused) {
+        audio.play();
+        miniBtn.className = "bi bi-pause-fill";
+    } else {
+        audio.pause();
+        miniBtn.className = "bi bi-play-fill";
+    }
+});
+
+
+
+
+
+      document.getElementById("miniNext").onclick = nextSong;
+    </script>
+    <script>
+       function stopAllMusic() {
+    audio.pause();
+    audio.currentTime = 0;
+
+    currentSong = null;   // ⬅ stop hoàn toàn, không play lại nữa
+
+    document.getElementById("miniPlayer").classList.remove("active");
+    document.getElementById("miniPlayPause").className = "bi bi-play-fill";
+}
+
+
+
+    </script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 900,
+        once: false,
+        mirror: true,
+        easing: "ease-out-cubic",
+      });
+    </script>
+    <script>
+      // Mở Full Player khi click vào Mini Player
+document.getElementById("miniPlayer").addEventListener("click", function(e) {
+    // Không mở nếu click vào controls
+    if (e.target.closest('.mini-controls')) return;
+    
+    openFullPlayer();
+});
+
+function openFullPlayer() {
+    const fullPlayer = document.getElementById("fullPlayer");
+    const miniPlayer = document.getElementById("miniPlayer");
+    
+    if (!currentSong) return;
+    
+    // Sync data
+    document.getElementById("fullImg").src = document.getElementById("miniImg").src;
+    document.getElementById("fullTitle").innerText = document.getElementById("miniTitle").innerText;
+    document.getElementById("fullArtist").innerText = document.getElementById("miniArtist").innerText;
+    
+    // Sync play/pause icon
+    const fullIcon = document.getElementById("fullPlayIcon");
+    fullIcon.className = audio.paused ? "fas fa-play" : "fas fa-pause";
+    
+    // Show full player, hide mini
+    fullPlayer.classList.add("active");
+    miniPlayer.classList.remove("active");
+}
+
+function closeFullPlayer() {
+    const fullPlayer = document.getElementById("fullPlayer");
+    const miniPlayer = document.getElementById("miniPlayer");
+    
+    fullPlayer.classList.remove("active");
+    miniPlayer.classList.add("active");
+}
+
+// Update progress bar
+audio.addEventListener('timeupdate', function() {
+    const progress = (audio.currentTime / audio.duration) * 100;
+    document.getElementById("fullProgress").style.width = progress + '%';
+    
+    // Update time
+    document.getElementById("currentTime").innerText = formatTime(audio.currentTime);
+    document.getElementById("totalTime").innerText = formatTime(audio.duration);
+});
+
+function formatTime(seconds) {
+    if (isNaN(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+// Click progress bar to seek
+document.querySelector('.progress-bar').addEventListener('click', function(e) {
+    const rect = this.getBoundingClientRect();
+    const percent = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = percent * audio.duration;
+});
+
+// Update play/pause trong full player
+function togglePlay() {
+    const miniBtn = document.getElementById("miniPlayPause");
+    const fullIcon = document.getElementById("fullPlayIcon");
+
+    if (!currentSong) return;
+
+    if (audio.paused) {
+        audio.play();
+        miniBtn.className = "bi bi-pause-fill";
+        fullIcon.className = "fas fa-pause";
+    } else {
+        audio.pause();
+        miniBtn.className = "bi bi-play-fill";
+        fullIcon.className = "fas fa-play";
+    }
+}
+    </script>
 </body>
 
 </html>
